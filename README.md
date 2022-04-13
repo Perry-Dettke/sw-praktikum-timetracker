@@ -1,6 +1,2 @@
 # sw-praktikum-timetracker
 
-
-
-
-
