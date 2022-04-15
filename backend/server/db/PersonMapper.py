@@ -45,7 +45,7 @@ class PersonMapper (Mapper):
     def find_by_vor_name(self, vor_name):
         """Auslesen aller Benutzer anhand des Vornamens.
 
-        :param vor_name Vorame der zugehörigen Benutzer.
+        :param vor_name Vorname der zugehörigen Benutzer.
         :return Eine Sammlung mit Personen-Objekten, die sämtliche Benutzer
             mit dem gewünschten Vornamen enthält.
         """
