@@ -28,6 +28,7 @@ class AktivitaetMapper (Mapper):
             aktivitaet = Aktivitaet()
             aktivitaet.set_id(id)
             aktivitaet.set_letzte_aenderung(letzte_aenderung)
+            aktivitaet.set_bezeichnung(bezeichnung)
             aktivitaet.set_kapazitaet(kapazitaet)
 
         self._cnx.commit()
