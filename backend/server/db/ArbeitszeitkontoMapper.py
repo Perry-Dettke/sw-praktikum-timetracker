@@ -95,71 +95,71 @@ class ArbeitszeitkontoMapper (Mapper):
 
         return result
 
-        def insert(self, arbeitszeitkonto):
-            """Einfügen eines Arbeitszeitkonto-Objekts in die Datenbank.
+    def insert(self, arbeitszeitkonto):
+        """Einfügen eines Arbeitszeitkonto-Objekts in die Datenbank.
 
-            Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
-            berichtigt.
+        Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
+        berichtigt.
 
-            :param arbeitszeitkonto das zu speichernde Objekt
-            :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
-            """
+        :param arbeitszeitkonto das zu speichernde Objekt
+        :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
+        """
 
-            cursor = self._cnx.cursor()
-            cursor.execute("SELECT MAX(id) AS maxid FROM arbeitszeitkonto ")
-            tuples = cursor.fetchall()
+        cursor = self._cnx.cursor()
+        cursor.execute("SELECT MAX(id) AS maxid FROM arbeitszeitkonto ")
+        tuples = cursor.fetchall()
 
-            for (maxid) in tuples:
-                arbeitszeitkonto.set_id(maxid[0] + 1)
+        for (maxid) in tuples:
+            arbeitszeitkonto.set_id(maxid[0] + 1)
 
-            command = "INSERT INTO arbeitszeitkonto (id, letzte_aenderung, arbeitsleistung, buchung_id) VALUES (%s,%s,%s,%s)"
-            data = (arbeitszeitkonto.get_id(),
-                    arbeitszeitkonto.get_letzte_aenderung(),
-                    arbeitszeitkonto.get_arbeitsleistung(),
-                    arbeitszeitkonto.get_buchung_id())
-            cursor.execute(command, data)
+        command = "INSERT INTO arbeitszeitkonto (id, letzte_aenderung, arbeitsleistung, buchung_id) VALUES (%s,%s,%s,%s)"
+        data = (arbeitszeitkonto.get_id(),
+                arbeitszeitkonto.get_letzte_aenderung(),
+                arbeitszeitkonto.get_arbeitsleistung(),
+                arbeitszeitkonto.get_buchung_id())
+        cursor.execute(command, data)
 
-            self._cnx.commit()
-            cursor.close()
+        self._cnx.commit()
+        cursor.close()
 
-            return arbeitszeitkonto
+        return arbeitszeitkonto
 
-        def update(self, arbeitszeitkonto):
-            """Wiederholtes Schreiben eines Objekts in die Datenbank.
+    def update(self, arbeitszeitkonto):
+        """Wiederholtes Schreiben eines Objekts in die Datenbank.
 
-            :param arbeitszeitkonto das Objekt, das in die DB geschrieben werden soll
-            """
-            cursor = self._cnx.cursor()
+        :param arbeitszeitkonto das Objekt, das in die DB geschrieben werden soll
+        """
+        cursor = self._cnx.cursor()
 
-            command = "UPDATE arbeitszeitkonto " + "SET letzte_aenderung=%s, arbeitsleistung=%s, buchung_id=%s WHERE id=%s"
-            data = (arbeitszeitkonto.get_letzte_aenderung(),
-                    arbeitszeitkonto.get_arbeitsleistung(),
-                    arbeitszeitkonto.get_buchung_id(),
-                    arbeitszeitkonto.get_id())
-            cursor.execute(command, data)
+        command = "UPDATE arbeitszeitkonto " + "SET letzte_aenderung=%s, arbeitsleistung=%s, buchung_id=%s WHERE id=%s"
+        data = (arbeitszeitkonto.get_letzte_aenderung(),
+                arbeitszeitkonto.get_arbeitsleistung(),
+                arbeitszeitkonto.get_buchung_id(),
+                arbeitszeitkonto.get_id())
+        cursor.execute(command, data)
 
-            self._cnx.commit()
-            cursor.close()
+        self._cnx.commit()
+        cursor.close()
 
-        def delete(self, arbeitszeitkonto):
-            """Löschen der Daten eines Transaction-Objekts aus der Datenbank.
+    def delete(self, arbeitszeitkonto):
+        """Löschen der Daten eines Transaction-Objekts aus der Datenbank.
 
-            :param arbeitszeitkonto das aus der DB zu löschende "Objekt"
-            """
-            cursor = self._cnx.cursor()
+        :param arbeitszeitkonto das aus der DB zu löschende "Objekt"
+        """
+        cursor = self._cnx.cursor()
 
-            command = "DELETE FROM arbeitszeitkonto WHERE id={}".format(arbeitszeitkonto.get_id())
-            cursor.execute(command)
+        command = "DELETE FROM arbeitszeitkonto WHERE id={}".format(arbeitszeitkonto.get_id())
+        cursor.execute(command)
 
-            self._cnx.commit()
-            cursor.close()
+        self._cnx.commit()
+        cursor.close()
 
-    """Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
-    um die grundsätzliche Funktion zu überprüfen.
-
-    Anmerkung: Nicht professionell aber hilfreich..."""
-    if (__name__ == "__main__"):
-        with ArbeitszeitkontoMapper() as mapper:
-            result = mapper.find_all()
-            for t in result:
-                print(t)
+        """Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
+        um die grundsätzliche Funktion zu überprüfen.
+    
+        Anmerkung: Nicht professionell aber hilfreich..."""
+if (__name__ == "__main__"):
+    with ArbeitszeitkontoMapper() as mapper:
+        result = mapper.find_all()
+        for t in result:
+            print(t)

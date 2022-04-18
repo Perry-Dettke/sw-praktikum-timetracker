@@ -197,26 +197,26 @@ class BuchungMapper(Mapper):
         self._connection.commit()
         cursor.close()
 
-        def delete(self, Buchung):
-            """Löschen der Daten einer Buchung aus der Datenbank
+    def delete(self, Buchung):
+        """Löschen der Daten einer Buchung aus der Datenbank
 
-            :param Buchung -> Buchung-Objekt
-            """
-            cursor = self._connection.cursor()
+        :param Buchung -> Buchung-Objekt
+        """
+        cursor = self._connection.cursor()
 
-            command = "DELETE FROM Buchung WHERE id={}".format(Buchung.get_id())
-            cursor.execute(command)
+        command = "DELETE FROM Buchung WHERE id={}".format(Buchung.get_id())
+        cursor.execute(command)
 
-            self._connection.commit()
-            cursor.close()
+        self._connection.commit()
+        cursor.close()
 
-    '''Only for testing purpose'''
+'''Only for testing purpose'''
 
-    if (__name__ == "__main__"):
-        with BuchungMapper() as mapper:
-            result = mapper.find_all()
-            for Buchung in result:
-                print(Buchung)
+if (__name__ == "__main__"):
+    with BuchungMapper() as mapper:
+        result = mapper.find_all()
+        for Buchung in result:
+            print(Buchung)
 
 
 

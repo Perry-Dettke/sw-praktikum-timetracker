@@ -68,70 +68,70 @@ class AktivitaetMapper (Mapper):
 
         return result
 
-        def insert(self, aktivitaet):
+    def insert(self, aktivitaet):
 
-            """Einfügen eines Aktivitaet-Objekts in die Datenbank.
+        """Einfügen eines Aktivitaet-Objekts in die Datenbank.
 
-            Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
-            berichtigt.
+        Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
+        berichtigt.
 
-            :param aktivitaet
-            :return das bereits übergebene Objekt, mit aktualisierten Daten.
-            """
+        :param aktivitaet
+        :return das bereits übergebene Objekt, mit aktualisierten Daten.
+        """
 
-            cursor = self._cnx.cursor()
-            cursor.execute("SELECT MAX(id) AS maxid FROM aktivitaet ")
-            tuples = cursor.fetchall()
+        cursor = self._cnx.cursor()
+        cursor.execute("SELECT MAX(id) AS maxid FROM aktivitaet ")
+        tuples = cursor.fetchall()
 
-            for (maxid) in tuples:
-                aktivitaet.set_id(maxid[0] + 1)
+        for (maxid) in tuples:
+            aktivitaet.set_id(maxid[0] + 1)
 
-            command = "INSERT INTO aktivitaet (id, letzte_aenderung, bezeichnung, kapazitaet) VALUES (%s,%s,%s,%s)"
-            data = (aktivitaet.get_id(),
-                    aktivitaet.get_letzte_aenderung(),
-                    aktivitaet.get_bezeichnug(),
-                    aktivitaet.get_kapazitaet())
-            cursor.execute(command, data)
+        command = "INSERT INTO aktivitaet (id, letzte_aenderung, bezeichnung, kapazitaet) VALUES (%s,%s,%s,%s)"
+        data = (aktivitaet.get_id(),
+                aktivitaet.get_letzte_aenderung(),
+                aktivitaet.get_bezeichnug(),
+                aktivitaet.get_kapazitaet())
+        cursor.execute(command, data)
 
-            self._cnx.commit()
-            cursor.close()
+        self._cnx.commit()
+        cursor.close()
 
-            return aktivitaet
+        return aktivitaet
 
-        def update(self, aktivitaet):
-            """Wiederholtes Schreiben eines Objekts in die Datenbank.
+    def update(self, aktivitaet):
+        """Wiederholtes Schreiben eines Objekts in die Datenbank.
 
-            :param aktivitaet
-            """
-            cursor = self._cnx.cursor()
+        :param aktivitaet
+        """
+        cursor = self._cnx.cursor()
 
-            command = "UPDATE aktivitaet " + "SET letzte_aenderung=%s, bezeichnung=%s, kapazitaet=%s WHERE id=%s"
-            data = (aktivitaet.get_letzte_aenderung(),
-                    aktivitaet.get_bezeichnug(),
-                    aktivitaet.get_kapazitaet(),
-                    aktivitaet.get_id())
-            cursor.execute(command, data)
-            self._cnx.commit()
-            cursor.close()
+        command = "UPDATE aktivitaet " + "SET letzte_aenderung=%s, bezeichnung=%s, kapazitaet=%s WHERE id=%s"
+        data = (aktivitaet.get_letzte_aenderung(),
+                aktivitaet.get_bezeichnug(),
+                aktivitaet.get_kapazitaet(),
+                aktivitaet.get_id())
+        cursor.execute(command, data)
+        self._cnx.commit()
+        cursor.close()
 
-        def delete(self, aktivitaet):
-            """Löschen der Daten eines Aktivitaet-Objekts aus der Datenbank.
+    def delete(self, aktivitaet):
+        """Löschen der Daten eines Aktivitaet-Objekts aus der Datenbank.
 
-            :param aktivitaet
-            """
-            cursor = self._cnx.cursor()
+        :param aktivitaet
+        """
+        cursor = self._cnx.cursor()
 
-            command = "DELETE FROM aktivitaet WHERE id={}".format(aktivitaet.get_id())
-            cursor.execute(command)
-            self._cnx.commit()
-            cursor.close()
+        command = "DELETE FROM aktivitaet WHERE id={}".format(aktivitaet.get_id())
+        cursor.execute(command)
+        self._cnx.commit()
+        cursor.close()
 
     """Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
     um die grundsätzliche Funktion zu überprüfen.
-
+    
     Anmerkung: Nicht professionell aber hilfreich..."""
-    if (__name__ == "__main__"):
-        with AktivitaetMapper() as mapper:
-            result = mapper.find_all()
-            for t in result:
-                print(t)
+if (__name__ == "__main__"):
+    with AktivitaetMapper() as mapper:
+        result = mapper.find_all()
+        for t in result:
+            print(t)
