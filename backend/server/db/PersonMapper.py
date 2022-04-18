@@ -21,7 +21,7 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT * from persom")
+        cursor.execute("SELECT * from person")
         tuples = cursor.fetchall()
 
         for (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id) in tuples:
