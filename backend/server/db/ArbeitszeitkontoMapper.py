@@ -44,8 +44,7 @@ class ArbeitszeitkontoMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, arbeitsleistung FROM arbeitszeitkonto WHERE buchung_id={}".format(
-            buchung_id)
+        command = "SELECT id, letzte_aenderung, arbeitsleistung FROM arbeitszeitkonto WHERE buchung_id={}".format(buchung_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 

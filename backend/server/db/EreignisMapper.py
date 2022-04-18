@@ -19,16 +19,16 @@ class EreignisMapper(Mapper):
 
         cursor = self._connection.cursor()
 
-        command = "SELECT id, letzte_aenderung, erstellungs_zeitpunkt rolle FROM Ereignis"
+        command = "SELECT id, letzte_aenderung, erstellungs_zeitpunkt FROM Ereignis"
 
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, letzte_aenderung, erstellungs_zeitpunk) in tuples:
+        for (id, letzte_aenderung, erstellungs_zeitpunkt) in tuples:
             ereignis = Ereignis()
             ereignis.set_id(id)
             ereignis.set_letzte_aenderung(letzte_aenderung)
-            ereignis.erstellungs_zeitpunkt(erstellungs_zeitpunkt)
+            ereignis.set_erstellungs_zeitpunkt(erstellungs_zeitpunkt)
             result.append(ereignis)
 
         self._connection.commit()
@@ -143,11 +143,7 @@ class EreignisMapper(Mapper):
         result = ereignis
         cursor.execute(command, data)
 
-        if (__name__ == "__main__"):
-            with EreignisMapper() as mapper:
-                result = mapper.find_all()
-                for ereignis in result:
-                    print(ereignis)
+
 
         self._connection.commit()
         cursor.close()
@@ -155,5 +151,9 @@ class EreignisMapper(Mapper):
         return result
 
 
-
+if (__name__ == "__main__"):
+    with EreignisMapper() as mapper:
+        result = mapper.find_all()
+        for ereignis in result:
+            print(ereignis)
 

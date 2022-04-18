@@ -1,4 +1,4 @@
-from server.bo.Account import Aktivitaet
+from server.bo.Aktivitaet import Aktivitaet
 from server.db.Mapper import Mapper
 
 
@@ -21,7 +21,7 @@ class AktivitaetMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT id, letzte_aenderung, bezeichnung, kapazitaet")
+        cursor.execute("SELECT id, letzte_aenderung, bezeichnung, kapazitaet FROM Aktivitaet")
         tuples = cursor.fetchall()
 
         for (id, letzte_aenderung, bezeichnung, kapazitaet) in tuples:
