@@ -1,5 +1,5 @@
 /**
- * Hier wird die komplette API als geschlossenes Modul exportieren
+ * Hier wird die komplette API als geschlossenes Modul exportiert
  */
  export {default as TimetrackerAPI} from './TimertrackerAPI';
  export {default as AktivitaetBO} from './AktivitaetBO';
