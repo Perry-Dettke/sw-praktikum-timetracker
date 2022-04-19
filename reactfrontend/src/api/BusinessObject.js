@@ -5,22 +5,22 @@ export default class BusinessObject {
       this.letzte_aenderung = 0;
     }
   
+    // ID setzen
     setID(id) {
-      // ID setzen
       this.id = id;
     }
-  
+
+    // ID auslesen
     getID() {
-      // ID auslesen
       return this.id;
     }
 
+    // letzte_aenderung setzen
     setLetzte_aenderung(letzte_aenderung) {
-      // letzte_aenderung setzen
       this.letzte_aenderung = letzte_aenderung
     }
+    // letzte_aenderung auslesen
     getLetzte_aenderung() {
-      // letzte_aenderung auslesen
       return this.letzte_aenderung
     }
   }
