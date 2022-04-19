@@ -1,3 +1,4 @@
+import AktivitaetBO from './AktivitaetBO';
 import ArbeitszeitkontoBO from './ArbeitszeitkontoBO';
 import BuchungBO from './BuchungBO';
 import EreignisBO from './EreignisBO';
