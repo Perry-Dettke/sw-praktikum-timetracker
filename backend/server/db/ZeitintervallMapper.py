@@ -35,3 +35,81 @@ class ZeitintervallMapper (Mapper):
         cursor.close()
 
         return result
+
+
+    def insert(self, zeitintervall):
+        """Einfügen eines Zeitintervall-Objekts in die Datenbank.
+
+        Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
+        berichtigt.
+
+        :param zeitintervall das zu speichernde Objekt
+        :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
+        """
+        cursor = self._cnx.cursor()
+        cursor.execute("SELECT MAX(id) AS maxid FROM Zeitintervall ")
+        tuples = cursor.fetchall()
+
+        for (maxid) in tuples:
+            if maxid[0] is not None:
+                """Wenn wir eine maximale ID festellen konnten, zählen wir diese
+                um 1 hoch und weisen diesen Wert als ID dem Zeitintervall-Objekt zu."""
+                zeitintervall.set_id(maxid[0] + 1)
+            else:
+                """Wenn wir KEINE maximale ID feststellen konnten, dann gehen wir
+                davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
+                zeitintervall.set_id(1)
+
+        command = "INSERT INTO Zeitintervall (id, letzte_aenderung, start, ende) VALUES (%s,%s,%s,%s,)"
+        data = (
+            zeitintervall.get_id(),
+            zeitintervall.get_letzte_aenderung,
+            zeitintervall.get_start,
+            zeitintervall.get_ende())
+        cursor.execute(command, data)
+
+        self._cnx.commit()
+        cursor.close()
+
+        return zeitintervall
+
+    def update(self, zeitintervall):
+        """Wiederholtes Schreiben eines Objekts in die Datenbank.
+
+        :param zeitintervall das Objekt, das in die DB geschrieben werden soll
+        """
+        cursor = self._cnx.cursor()
+
+        command = "UPDATE Zeitintervall " + "SET start=%s, ende=%s WHERE id=%s"
+        data = (
+            zeitintervall.get_start(),
+            zeitintervall.get_ende(),
+            zeitintervall.get_id())
+        cursor.execute(command, data)
+
+        self._cnx.commit()
+        cursor.close()
+
+    def delete(self, zeitintervall):
+        """Löschen der Daten eines Zeitintervall-Objekts aus der Datenbank.
+
+        :param zeitintervall das aus der DB zu löschende "Objekt"
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM Zeitintervall WHERE id={}".format(zeitintervall.get_id())
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+
+
+"""Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
+um die grundsätzliche Funktion zu überprüfen.
+
+Anmerkung: Nicht professionell aber hilfreich..."""
+if (__name__ == "__main__"):
+    with ZeitintervallMapper() as mapper:
+        result = mapper.find_all()
+        for zeitintervall in result:
+            print(zeitintervall)
