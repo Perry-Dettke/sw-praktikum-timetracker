@@ -1,24 +1,19 @@
-from server.bo.Person import Person
-from server.db.Mapper import Mapper
 
+from Mapper import Mapper       # so werden keine Import Fehler angezeigt - ist aber noch nicht getestet, da BO noch fehlt
+                                #
+import sys                      #   
+sys.path.append("..")           #
+                                #
+from bo import *                #
 
 class PersonMapper (Mapper):
-    """Mapper-Klasse, die Person-Objekte auf eine relationale
-    Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
-    gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
-    gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
-    in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
-    """
+
 
     def __init__(self):
         super().__init__()
 
     def find_all(self):
-        """Auslesen aller Personen unseres Systems.
 
-        :return Eine Sammlung mit Personen-Objekten, die sämtliche Benutzer
-                des Systems repräsentieren.
-        """
         result = []
         cursor = self._cnx.cursor()
         cursor.execute("SELECT * from person")
@@ -276,7 +271,5 @@ um die grundsätzliche Funktion zu überprüfen.
 
 Anmerkung: Nicht professionell aber hilfreich..."""
 if (__name__ == "__main__"):
-    with PersonMapper() as mapper:
-        result = mapper.find_all()
-        for person in result:
-            print(person)
+    print(i)
+
