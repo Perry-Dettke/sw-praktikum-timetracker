@@ -51,7 +51,7 @@ aktivitaet = api.inherit('Aktivitaet', bo, {
                                 description='Kapazitaet einer Aktivitaet in Stunden'),
 })
 
-arbeitszeikonto = api.inherit('Arbeitszeitkonto', bo, {
+arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {
     'arbeitsleistung': fields.String(attribute='_arbeitsleistung',
                                 description='Arbeitsleistung im Arbeitszeitkonto'),
     'buchung_id': fields.Integer(attribute='_buchung_id',
@@ -105,7 +105,7 @@ ereignis = api.inherit('Ereignis', bo, zeitintervall, {
 
 
 #Aktivitaet related
-@timetracker.route('/aktiviteat')
+@timetracker.route('/aktivitaet')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class AktivitaetOperations(Resource):
     @timetracker.marshal_with(aktivitaet)
@@ -171,4 +171,73 @@ class AktivitaetDeleteOperations(Resource):
             return '', 200
         else:
             '''Wenn unter id keine Aktivitaet existiert.'''
+            return '', 500
+
+#Arbeitszeitkonto related
+@timetracker.route('/arbeitszeitkonto')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ArbeitszeitkontoOperations(Resource):
+    @timetracker.marshal_with(arbeitszeitkonto)
+    #@secured
+    def get(self):
+        """Auslesen aller Arbeitszeitkonto-Objekte
+        """
+        adm = TimetrackerAdministration()
+        azt = adm.get_all_arbeitszeitkonto()
+        return azt
+
+    @timetracker.marshal_list_with(arbeitszeitkonto, code=200)
+    @timetracker.expect(arbeitszeitkonto)
+    #@secured
+    def post(self):
+        """Anlegen eines neuen Arbeitszeitkonto-Objekts.
+        **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
+        So ist zum Beispiel die Vergabe der ID nicht Aufgabe des Clients.
+        Selbst wenn der Client eine ID in dem Proposal vergeben sollte, so
+        liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
+        zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
+        """
+        adm = TimetrackerAdministration()
+        proposal = Arbeitszeitkonto.from_dict(api.payload)
+
+        """RATSCHLAG: Prüfen Sie stets die Referenzen auf valide Werte, bevor Sie diese verwenden!"""
+        if proposal is not None:
+            """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
+            wird auch dem Client zurückgegeben. 
+            """
+            ak = adm.create_arbeitszeitkonto(proposal)
+            return ak, 200
+        else:
+            '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
+            return '', 500
+
+    @timetracker.marshal_with(arbeitszeitkonto, code=200)
+    @timetracker.expect(arbeitszeitkonto)  
+    #@secured
+    def put(self):
+        """Update eines bestimmten Arbeitszeitkonto-Objekts."""
+        adm = TimetrackerAdministration()
+        azt = Arbeitszeitkonto.from_dict(api.payload)
+        if azt is not None:
+            adm.save_arbeitszeitkonto(azt)
+            return '', 200
+        else:
+            return '', 500
+
+@timetracker.route('/arbeitszeitkonto/<int:id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('id', 'Die ID des Arbeitszeitkonto-Objekts.')
+class ArbeitszeitkontoDeleteOperations(Resource):
+
+    def delete(self, id):
+        """Löschen eines bestimmten Arbeitszeitkonto-Objekts.
+        Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        azt = adm.get_arbeitszeitkonto_by_id(id)
+        if azt is not None:
+            adm.delete_arbeitszeitkonto(azt)
+            return '', 200
+        else:
+            '''Wenn unter id kein Arbeitszeitkonto existiert.'''
             return '', 500
