@@ -142,23 +142,11 @@ class AktivitaetOperations(Resource):
             '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
             return '', 500
 
-    @timetracker.marshal_with(aktivitaet, code=200)
-    @timetracker.expect(aktivitaet)  
-    #@secured
-    def put(self):
-        """Update eines bestimmten Aktivitaet-Objekts."""
-        adm = TimetrackerAdministration()
-        a = Aktivitaet.from_dict(api.payload)
-        if a is not None:
-            adm.save_aktivitaet(a)
-            return '', 200
-        else:
-            return '', 500
 
 @timetracker.route('/aktivitaet/<int:id>')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @timetracker.param('id', 'Die ID des Aktivitaet-Objekts.')
-class AktivitaetDeleteOperations(Resource):
+class AktivitaetIDperations(Resource):
 
     def delete(self, id):
         """Löschen eines bestimmten Aktivitaet-Objekts.
@@ -172,6 +160,24 @@ class AktivitaetDeleteOperations(Resource):
         else:
             '''Wenn unter id keine Aktivitaet existiert.'''
             return '', 500
+
+    @timetracker.marshal_with(aktivitaet, code=200)
+    @timetracker.expect(aktivitaet)  # Wir erwarten ein Aktivitaet-Objekt von Client-Seite.
+    @secured
+    def put(self, id):
+        """Update eines bestimmten Aktivitaet-Objekts."""
+        adm = TimetrackerAdministration()
+        ak = Aktivitaet.from_dict(api.payload)
+        
+        if ak is not None:
+            ak.set_id(id)
+            adm.save_student(ak)
+            return '', 200
+        else:
+            return '', 500
+
+
+
 
 #Arbeitszeitkonto related
 @timetracker.route('/arbeitszeitkonto')
@@ -211,23 +217,11 @@ class ArbeitszeitkontoOperations(Resource):
             '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
             return '', 500
 
-    @timetracker.marshal_with(arbeitszeitkonto, code=200)
-    @timetracker.expect(arbeitszeitkonto)  
-    #@secured
-    def put(self):
-        """Update eines bestimmten Arbeitszeitkonto-Objekts."""
-        adm = TimetrackerAdministration()
-        azt = Arbeitszeitkonto.from_dict(api.payload)
-        if azt is not None:
-            adm.save_arbeitszeitkonto(azt)
-            return '', 200
-        else:
-            return '', 500
 
 @timetracker.route('/arbeitszeitkonto/<int:id>')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @timetracker.param('id', 'Die ID des Arbeitszeitkonto-Objekts.')
-class ArbeitszeitkontoDeleteOperations(Resource):
+class ArbeitszeitkontoIDOperations(Resource):
 
     def delete(self, id):
         """Löschen eines bestimmten Arbeitszeitkonto-Objekts.
@@ -241,3 +235,19 @@ class ArbeitszeitkontoDeleteOperations(Resource):
         else:
             '''Wenn unter id kein Arbeitszeitkonto existiert.'''
             return '', 500
+
+    @timetracker.marshal_with(arbeitszeitkonto, code=200)
+    @timetracker.expect(arbeitszeitkonto)  # Wir erwarten ein Arbeitszeitkonto-Objekt von Client-Seite.
+    @secured
+    def put(self, id):
+        """Update eines bestimmten Arbeitszeitkonto-Objekts."""
+        adm = TimetrackerAdministration()
+        azt = Arbeitszeitkonto.from_dict(api.payload)
+        
+        if azt is not None:
+            azt.set_id(id)
+            adm.save_student(azt)
+            return '', 200
+        else:
+            return '', 500
+
