@@ -1,4 +1,5 @@
 '''Unser Service basiert auf Flask'''
+from re import A
 from flask import Flask
 '''Auf Flask aufbauend nutzen wir RestX'''
 from flask_restx import Api, Resource, fields
@@ -77,6 +78,8 @@ person = api.inherit('Person', bo, {
                                 description='ID des Arbeitszeitkonto einer Person'),
     'projekt_id': fields.Integer(attribute='_projekt_id',
                                 description='ID eines Projekts an dem die Person arbeitet'),
+    'google_user_id': fields.String(attribute='_google_user_id',
+                                description='Gegebene ID von Google'),
 })
 
 projekt = api.inherit('Projekt', bo, {
@@ -99,3 +102,73 @@ ereignis = api.inherit('Ereignis', bo, zeitintervall, {
     'erstellungs_zeitpunkt': fields.DateTime(attribute='_erstellungs_zeitpunkt',       #DateTime richtig?
                             description='Erstellungszeitpunkt eines Ereignis'),
 })
+
+
+#Aktivitaet related
+@timetracker.route('/aktiviteat')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class AktivitaetOperations(Resource):
+    @timetracker.marshal_with(aktivitaet)
+    #@secured
+    def get(self):
+        """Auslesen aller Aktivitaet-Objekte
+        """
+        adm = TimetrackerAdministration()
+        akt = adm.get_all_aktivitaet()
+        return akt
+
+    @timetracker.marshal_list_with(aktivitaet, code=200)
+    @timetracker.expect(aktivitaet)
+    #@secured
+    def post(self):
+        """Anlegen eines neuen Aktivitaet-Objekts.
+        **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
+        So ist zum Beispiel die Vergabe der ID nicht Aufgabe des Clients.
+        Selbst wenn der Client eine ID in dem Proposal vergeben sollte, so
+        liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
+        zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
+        """
+        adm = TimetrackerAdministration()
+        proposal = Aktivitaet.from_dict(api.payload)
+
+        """RATSCHLAG: Prüfen Sie stets die Referenzen auf valide Werte, bevor Sie diese verwenden!"""
+        if proposal is not None:
+            """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
+            wird auch dem Client zurückgegeben. 
+            """
+            a = adm.create_aktivitaet(proposal)
+            return a, 200
+        else:
+            '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
+            return '', 500
+
+    @timetracker.marshal_with(aktivitaet, code=200)
+    @timetracker.expect(aktivitaet)  
+    #@secured
+    def put(self):
+        """Update eines bestimmten Aktivitaet-Objekts."""
+        adm = TimetrackerAdministration()
+        a = Aktivitaet.from_dict(api.payload)
+        if a is not None:
+            adm.save_aktivitaet(a)
+            return '', 200
+        else:
+            return '', 500
+
+@timetracker.route('/aktivitaet/<int:id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('id', 'Die ID des Aktivitaet-Objekts.')
+class AktivitaetDeleteOperations(Resource):
+
+    def delete(self, id):
+        """Löschen eines bestimmten Aktivitaet-Objekts.
+        Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        akt = adm.get_aktivitaet_by_id(id)
+        if akt is not None:
+            adm.delete_aktivitaet(akt)
+            return '', 200
+        else:
+            '''Wenn unter id keine Aktivitaet existiert.'''
+            return '', 500
