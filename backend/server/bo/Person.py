@@ -6,11 +6,11 @@ class Person(bo):
         """ Definieren der Attribute, der Klasse Person. """
         super().__init__()
         self._vor_name = ""
-	self._nach_name = ""
-	self._email = ""
-	self._benutzer_name = ""
-	self._arbeitszeitkonto_id = 0
-	self._projekt_id = 0
+	    self._nach_name = ""
+	    self._email = ""
+	    self._benutzer_name = ""
+	    self._arbeitszeitkonto_id = 0
+	    self._projekt_id = 0
         
     def get_vor_name(self):
         """ Ausgeben des Vornamens. """

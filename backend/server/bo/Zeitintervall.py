@@ -6,7 +6,7 @@ class Zeitintervall(bo):
         """ Definieren der Attribute, der Klasse Ereignis. """
         super().__init__()
         self._start = 0.0
-	self._ende = 0.0
+	    self._ende = 0.0
         
     def get_start(self):
         """ Ausgeben des Startzeitpunkts. """

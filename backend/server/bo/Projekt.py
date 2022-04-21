@@ -6,8 +6,8 @@ class Projekt(bo):
         """ Definieren der Attribute, der Klasse Ereignis. """
         super().__init__()
         self._bezeichnung = ""
-	self._auftraggeber = ""
-	self._aktivitaet_id = 0
+	    self._auftraggeber = ""
+	    self._aktivitaet_id = 0
         
     def get_bezeichnung(self):
         """ Ausgeben der Bezeichnung. """
