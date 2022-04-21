@@ -6,11 +6,11 @@ class Person(bo):
         """ Definieren der Attribute, der Klasse Person. """
         super().__init__()
         self._vor_name = ""
-	self._nach_name = ""
-	self._email = ""
-	self._benutzer_name = ""
-	self._arbeitszeitkonto_id = 0
-	self._projekt_id = 0
+	    self._nach_name = ""
+	    self._email = ""
+	    self._benutzer_name = ""
+	    self._arbeitszeitkonto_id = 0
+	    self._projekt_id = 0
         
     def get_vor_name(self):
         """ Ausgeben des Vornamens. """
@@ -69,11 +69,11 @@ class Person(bo):
         """ Umwandeln eines Python dict() in eine Person(). """
         obj = Person()
         obj.set_vor_name(dictionary["vor_name"])
-	obj.set_nach_name(dictionary["nach_name"])
-	obj.set_email(dictionary["email"])
-	obj.set_benutzer_name(dictionary["benutzer_name"])
-	obj.set_arbeitszeitkonto_id(dictionary["arbeitszeitkonto_id"])
-	obj.set_projekt_id(dictionary["projekt_id"])
+	    obj.set_nach_name(dictionary["nach_name"])
+	    obj.set_email(dictionary["email"])
+	    obj.set_benutzer_name(dictionary["benutzer_name"])
+	    obj.set_arbeitszeitkonto_id(dictionary["arbeitszeitkonto_id"])
+	    obj.set_projekt_id(dictionary["projekt_id"])
         return obj
 
 # erstellt von Rosalie Kripp
