@@ -1,4 +1,5 @@
 '''Unser Service basiert auf Flask'''
+from distutils.command.build import build
 from re import A
 from flask import Flask
 '''Auf Flask aufbauend nutzen wir RestX'''
@@ -238,7 +239,7 @@ class ArbeitszeitkontoIDOperations(Resource):
 
     @timetracker.marshal_with(arbeitszeitkonto, code=200)
     @timetracker.expect(arbeitszeitkonto)  # Wir erwarten ein Arbeitszeitkonto-Objekt von Client-Seite.
-    @secured
+    #@secured
     def put(self, id):
         """Update eines bestimmten Arbeitszeitkonto-Objekts."""
         adm = TimetrackerAdministration()
@@ -251,3 +252,226 @@ class ArbeitszeitkontoIDOperations(Resource):
         else:
             return '', 500
 
+
+
+#Buchung related
+@timetracker.route('/buchung')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class BuchungOperations(Resource):
+    @timetracker.marshal_with(buchung)
+    #@secured
+    def get(self):
+        """Auslesen aller Buchung-Objekte
+        """
+        adm = TimetrackerAdministration()
+        bu = adm.get_all_buchung()
+        return bu
+
+    @timetracker.marshal_list_with(buchung, code=200)
+    @timetracker.expect(buchung)
+    #@secured
+    def post(self):
+        """Anlegen eines neuen Buchung-Objekts.
+        **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
+        So ist zum Beispiel die Vergabe der ID nicht Aufgabe des Clients.
+        Selbst wenn der Client eine ID in dem Proposal vergeben sollte, so
+        liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
+        zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
+        """
+        adm = TimetrackerAdministration()
+        proposal = Buchung.from_dict(api.payload)
+
+        """RATSCHLAG: Prüfen Sie stets die Referenzen auf valide Werte, bevor Sie diese verwenden!"""
+        if proposal is not None:
+            """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
+            wird auch dem Client zurückgegeben. 
+            """
+            bu = adm.create_buchung(proposal)
+            return bu, 200
+        else:
+            '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
+            return '', 500
+
+
+@timetracker.route('/buchung/<int:id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('id', 'Die ID des Buchung-Objekts.')
+class BuchungIDOperations(Resource):
+
+    def delete(self, id):
+        """Löschen eines bestimmten Buchung-Objekts.
+        Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        bu = adm.get_buchung_by_id(id)
+        if bu is not None:
+            adm.delete_buchung(bu)
+            return '', 200
+        else:
+            '''Wenn unter id kein Buchung existiert.'''
+            return '', 500
+
+    @timetracker.marshal_with(buchung, code=200)
+    @timetracker.expect(buchung)  # Wir erwarten ein Buchung-Objekt von Client-Seite.
+    #@secured
+    def put(self, id):
+        """Update eines bestimmten Buchung-Objekts."""
+        adm = TimetrackerAdministration()
+        bu = Buchung.from_dict(api.payload)
+        
+        if bu is not None:
+            bu.set_id(id)
+            adm.save_student(bu)
+            return '', 200
+        else:
+            return '', 500
+
+
+
+#Ereignis related
+@timetracker.route('/ereignis')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class EreignisOperations(Resource):
+    @timetracker.marshal_with(ereignis)
+    #@secured
+    def get(self):
+        """Auslesen aller Ereignis-Objekte
+        """
+        adm = TimetrackerAdministration()
+        er = adm.get_all_ereignis()
+        return er
+
+    @timetracker.marshal_list_with(ereignis, code=200)
+    @timetracker.expect(ereignis)
+    #@secured
+    def post(self):
+        """Anlegen eines neuen Ereignis-Objekts.
+        **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
+        So ist zum Beispiel die Vergabe der ID nicht Aufgabe des Clients.
+        Selbst wenn der Client eine ID in dem Proposal vergeben sollte, so
+        liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
+        zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
+        """
+        adm = TimetrackerAdministration()
+        proposal = Ereignis.from_dict(api.payload)
+
+        """RATSCHLAG: Prüfen Sie stets die Referenzen auf valide Werte, bevor Sie diese verwenden!"""
+        if proposal is not None:
+            """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
+            wird auch dem Client zurückgegeben. 
+            """
+            er = adm.create_ereignis(proposal)
+            return er, 200
+        else:
+            '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
+            return '', 500
+
+
+@timetracker.route('/ereignis/<int:id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('id', 'Die ID des Ereignis-Objekts.')
+class EreignisIDOperations(Resource):
+
+    def delete(self, id):
+        """Löschen eines bestimmten Ereignis-Objekts.
+        Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        er = adm.get_ereignis_by_id(id)
+        if er is not None:
+            adm.delete_ereignis(er)
+            return '', 200
+        else:
+            '''Wenn unter id kein Ereignis existiert.'''
+            return '', 500
+
+    @timetracker.marshal_with(ereignis, code=200)
+    @timetracker.expect(ereignis)  # Wir erwarten ein Ereignis-Objekt von Client-Seite.
+    #@secured
+    def put(self, id):
+        """Update eines bestimmten Ereignis-Objekts."""
+        adm = TimetrackerAdministration()
+        er = Ereignis.from_dict(api.payload)
+        
+        if er is not None:
+            er.set_id(id)
+            adm.save_student(er)
+            return '', 200
+        else:
+            return '', 500
+
+
+#Person related
+@timetracker.route('/person')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class PersonOperations(Resource):
+    @timetracker.marshal_with(person)
+    #@secured
+    def get(self):
+        """Auslesen aller Person-Objekte
+        """
+        adm = TimetrackerAdministration()
+        per = adm.get_all_person()
+        return per
+
+    @timetracker.marshal_list_with(person, code=200)
+    @timetracker.expect(person)
+    #@secured
+    def post(self):
+        """Anlegen eines neuen Person-Objekts.
+        **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
+        So ist zum Beispiel die Vergabe der ID nicht Aufgabe des Clients.
+        Selbst wenn der Client eine ID in dem Proposal vergeben sollte, so
+        liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
+        zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
+        """
+        adm = TimetrackerAdministration()
+        proposal = Person.from_dict(api.payload)
+
+        """RATSCHLAG: Prüfen Sie stets die Referenzen auf valide Werte, bevor Sie diese verwenden!"""
+        if proposal is not None:
+            """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
+            wird auch dem Client zurückgegeben. 
+            """
+            per = adm.create_person(proposal)
+            return per, 200
+        else:
+            '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
+            return '', 500
+
+
+@timetracker.route('/person/<int:id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('id', 'Die ID des Person-Objekts.')
+class PersonIDOperations(Resource):
+
+    def delete(self, id):
+        """Löschen eines bestimmten Person-Objekts.
+        Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        per = adm.get_person_by_id(id)
+        if per is not None:
+            adm.delete_person(per)
+            return '', 200
+        else:
+            '''Wenn unter id kein Person existiert.'''
+            return '', 500
+
+    @timetracker.marshal_with(person, code=200)
+    @timetracker.expect(person)  # Wir erwarten ein Person-Objekt von Client-Seite.
+    #@secured
+    def put(self, id):
+        """Update eines bestimmten Person-Objekts."""
+        adm = TimetrackerAdministration()
+        per = Person.from_dict(api.payload)
+        
+        if per is not None:
+            per.set_id(id)
+            adm.save_student(per)
+            return '', 200
+        else:
+            return '', 500
+
+
+            
