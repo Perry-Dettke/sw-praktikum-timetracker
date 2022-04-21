@@ -474,4 +474,149 @@ class PersonIDOperations(Resource):
             return '', 500
 
 
-            
+
+
+#Projekt related
+@timetracker.route('/projekt')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjektOperations(Resource):
+    @timetracker.marshal_with(projekt)
+    #@secured
+    def get(self):
+        """Auslesen aller Projekt-Objekte
+        """
+        adm = TimetrackerAdministration()
+        pro = adm.get_all_projekt()
+        return pro
+
+    @timetracker.marshal_list_with(projekt, code=200)
+    @timetracker.expect(projekt)
+    #@secured
+    def post(self):
+        """Anlegen eines neuen Projekt-Objekts.
+        **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
+        So ist zum Beispiel die Vergabe der ID nicht Aufgabe des Clients.
+        Selbst wenn der Client eine ID in dem Proposal vergeben sollte, so
+        liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
+        zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
+        """
+        adm = TimetrackerAdministration()
+        proposal = Projekt.from_dict(api.payload)
+
+        """RATSCHLAG: Prüfen Sie stets die Referenzen auf valide Werte, bevor Sie diese verwenden!"""
+        if proposal is not None:
+            """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
+            wird auch dem Client zurückgegeben. 
+            """
+            pro = adm.create_projekt(proposal)
+            return pro, 200
+        else:
+            '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
+            return '', 500
+
+
+@timetracker.route('/projekt/<int:id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('id', 'Die ID des Projekt-Objekts.')
+class ProjektIDOperations(Resource):
+
+    def delete(self, id):
+        """Löschen eines bestimmten Projekt-Objekts.
+        Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        pro = adm.get_projekt_by_id(id)
+        if pro is not None:
+            adm.delete_projekt(pro)
+            return '', 200
+        else:
+            '''Wenn unter id kein Projekt existiert.'''
+            return '', 500
+
+    @timetracker.marshal_with(projekt, code=200)
+    @timetracker.expect(projekt)  # Wir erwarten ein Projekt-Objekt von Client-Seite.
+    #@secured
+    def put(self, id):
+        """Update eines bestimmten Projekt-Objekts."""
+        adm = TimetrackerAdministration()
+        pro = Projekt.from_dict(api.payload)
+        
+        if pro is not None:
+            pro.set_id(id)
+            adm.save_student(pro)
+            return '', 200
+        else:
+            return '', 500
+
+
+#Zeitintervall related
+@timetracker.route('/zeitintervall')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ZeitintervallOperations(Resource):
+    @timetracker.marshal_with(zeitintervall)
+    #@secured
+    def get(self):
+        """Auslesen aller Zeitintervall-Objekte
+        """
+        adm = TimetrackerAdministration()
+        zi = adm.get_all_zeitintervall()
+        return zi
+
+    @timetracker.marshal_list_with(zeitintervall, code=200)
+    @timetracker.expect(zeitintervall)
+    #@secured
+    def post(self):
+        """Anlegen eines neuen Zeitintervall-Objekts.
+        **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
+        So ist zum Beispiel die Vergabe der ID nicht Aufgabe des Clients.
+        Selbst wenn der Client eine ID in dem Proposal vergeben sollte, so
+        liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
+        zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
+        """
+        adm = TimetrackerAdministration()
+        proposal = Zeitintervall.from_dict(api.payload)
+
+        """RATSCHLAG: Prüfen Sie stets die Referenzen auf valide Werte, bevor Sie diese verwenden!"""
+        if proposal is not None:
+            """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
+            wird auch dem Client zurückgegeben. 
+            """
+            zi = adm.create_zeitintervall(proposal)
+            return zi, 200
+        else:
+            '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
+            return '', 500
+
+
+@timetracker.route('/zeitintervall/<int:id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('id', 'Die ID des Zeitintervall-Objekts.')
+class ZeitintervallIDOperations(Resource):
+
+    def delete(self, id):
+        """Löschen eines bestimmten Zeitintervall-Objekts.
+        Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        zi = adm.get_zeitintervall_by_id(id)
+        if zi is not None:
+            adm.delete_zeitintervall(zi)
+            return '', 200
+        else:
+            '''Wenn unter id kein Zeitintervall existiert.'''
+            return '', 500
+
+    @timetracker.marshal_with(zeitintervall, code=200)
+    @timetracker.expect(zeitintervall)  # Wir erwarten ein Zeitintervall-Objekt von Client-Seite.
+    #@secured
+    def put(self, id):
+        """Update eines bestimmten Zeitintervall-Objekts."""
+        adm = TimetrackerAdministration()
+        zi = Zeitintervall.from_dict(api.payload)
+        
+        if zi is not None:
+            zi.set_id(id)
+            adm.save_student(zi)
+            return '', 200
+        else:
+            return '', 500
