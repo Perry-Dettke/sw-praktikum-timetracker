@@ -1,4 +1,5 @@
 '''Unser Service basiert auf Flask'''
+from curses import erasechar
 from distutils.command.build import build
 from re import A
 from flask import Flask
@@ -172,10 +173,24 @@ class AktivitaetIDperations(Resource):
         
         if ak is not None:
             ak.set_id(id)
-            adm.save_student(ak)
+            adm.save_aktivitaet(ak)
             return '', 200
         else:
             return '', 500
+
+
+    @timetracker.marshal_with(aktivitaet)
+    def get(self, id):
+        """Auslesen eines bestimmten Aktivitaet-Objekts.
+        Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        akt = adm.get_aktivitaet_by_key(id)
+
+        if akt is not None:
+            return akt
+        else:
+            return '', 500 
 
 
 
@@ -247,10 +262,23 @@ class ArbeitszeitkontoIDOperations(Resource):
         
         if azt is not None:
             azt.set_id(id)
-            adm.save_student(azt)
+            adm.save_arbeitszeitkonto(azt)
             return '', 200
         else:
             return '', 500
+
+    @timetracker.marshal_with(arbeitszeitkonto)
+    def get(self, id):
+        """Auslesen eines bestimmten Arbeitszeitkonto-Objekts.
+        Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        azt = adm.get_arbeitszeitkonto_by_key(id)
+
+        if azt is not None:
+            return azt
+        else:
+            return '', 500 
 
 
 
@@ -321,10 +349,24 @@ class BuchungIDOperations(Resource):
         
         if bu is not None:
             bu.set_id(id)
-            adm.save_student(bu)
+            adm.save_buchung(bu)
             return '', 200
         else:
             return '', 500
+
+
+    @timetracker.marshal_with(buchung)
+    def get(self, id):
+        """Auslesen eines bestimmten Buchung-Objekts.
+        Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        bu = adm.get_buchung_by_key(id)
+
+        if bu is not None:
+            return bu
+        else:
+            return '', 500 
 
 
 
@@ -395,10 +437,24 @@ class EreignisIDOperations(Resource):
         
         if er is not None:
             er.set_id(id)
-            adm.save_student(er)
+            adm.save_ereignis(er)
             return '', 200
         else:
             return '', 500
+
+
+    @timetracker.marshal_with(ereignis)
+    def get(self, id):
+        """Auslesen eines bestimmten Ereignis-Objekts.
+        Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        er = adm.get_ereignis_by_key(id)
+
+        if er is not None:
+            return er
+        else:
+            return '', 500 
 
 
 #Person related
@@ -468,10 +524,23 @@ class PersonIDOperations(Resource):
         
         if per is not None:
             per.set_id(id)
-            adm.save_student(per)
+            adm.save_person(per)
             return '', 200
         else:
             return '', 500
+
+    @timetracker.marshal_with(person)
+    def get(self, id):
+        """Auslesen eines bestimmten Person-Objekts.
+        Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        pe = adm.get_person_by_key(id)
+
+        if pe is not None:
+            return pe
+        else:
+            return '', 500 
 
 
 
@@ -543,10 +612,24 @@ class ProjektIDOperations(Resource):
         
         if pro is not None:
             pro.set_id(id)
-            adm.save_student(pro)
+            adm.save_projekt(pro)
             return '', 200
         else:
             return '', 500
+
+
+    @timetracker.marshal_with(projekt)
+    def get(self, id):
+        """Auslesen eines bestimmten Projekt-Objekts.
+        Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        pro = adm.get_projekt_by_key(id)
+
+        if pro is not None:
+            return pro
+        else:
+            return '', 500 
 
 
 #Zeitintervall related
@@ -616,7 +699,25 @@ class ZeitintervallIDOperations(Resource):
         
         if zi is not None:
             zi.set_id(id)
-            adm.save_student(zi)
+            adm.save_zeitintervall(zi)
             return '', 200
         else:
             return '', 500
+
+
+    @timetracker.marshal_with(zeitintervall)
+    def get(self, id):
+        """Auslesen eines bestimmten Zeitintervall-Objekts.
+        Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        zi = adm.get_zeitintervall_by_key(id)
+
+        if zi is not None:
+            return zi
+        else:
+            return '', 500 
+
+
+
+
