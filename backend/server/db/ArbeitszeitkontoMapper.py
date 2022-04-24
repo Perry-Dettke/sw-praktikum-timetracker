@@ -1,4 +1,4 @@
-from server.bo.Transaction import Arbeitszeitkonto
+from server.bo.Arbeitszeitkonto import Arbeitszeitkonto
 from server.db.Mapper import Mapper
 
 
