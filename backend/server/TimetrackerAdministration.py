@@ -153,3 +153,83 @@ class TimetrackerAdministration (object):
         """Das gegebenene Arbeitszeitkonto aus unserem System löschen."""
         with Arbeitszeitkonto() as mapper:
             mapper.delete(arbeitszeitkonto)
+
+
+
+    """
+    Buchung-spezifische Methoden
+    """
+    def create_buchung(self, letzte_aenderung, erstellt_von):
+        """Eine Buchung anlegen"""
+        buchung = Buchung()
+        buchung.set_letzte_aenderung(letzte_aenderung)
+        buchung.set_erstellt_von(erstellt_von)
+        buchung.set_id(1)
+
+        with BuchungMapper() as mapper:
+            return mapper.insert(buchung)
+
+    def get_buchung_by_id(self, key):
+        """Die Buchung mit der gegebenen ID auslesen."""
+        with BuchungMapper() as mapper:
+            return mapper.find_by_key(key)
+
+    def get_buchung_by_erstellt_von(self, erstellt_von):       
+        """Die Buchung mit der gegebenen Person, die die Buchung erstellt hat auslesen."""
+        with BuchungMapper() as mapper:
+            return mapper.find_by_erstellt_von(erstellt_von)                #muss noch im Mapper geschrieben werden
+
+    def get_all_buchung(self):
+        """Alle Buchungen auslesen."""
+        with BuchungMapper() as mapper:
+            return mapper.find_all()
+
+    def save_buchung(self, buchung):
+        """Die gegebenen Buchung speichern."""
+        with BuchungMapper() as mapper:
+            mapper.update(buchung)
+
+    def delete_buchung(self, buchung):
+        """Die gegebenene Buchung aus unserem System löschen."""
+        with BuchungMapper() as mapper:
+            mapper.delete(buchung)
+
+
+    """
+    Ereignis-spezifische Methoden
+    """
+    def create_ereignis(self, letzte_aenderung, erstellungs_zeitpunkt):
+        """Ein Ereignis anlegen"""
+        ereignis = Ereignis()
+        ereignis.set_letzte_aenderung(letzte_aenderung)
+        ereignis.set_erstellungs_zeitpunkt(erstellungs_zeitpunkt)
+        ereignis.set_id(1)
+
+        with EreignisMapper() as mapper:
+            return mapper.insert(ereignis)
+
+    def get_ereignis_by_id(self, key):
+        """Das Ereignis mit der gegebenen ID auslesen."""
+        with EreignisMapper() as mapper:
+            return mapper.find_by_key(key)
+
+    def get_ereignis_by_erstellungs_zeitpunkt(self, erstellungs_zeitpunkt):       
+        """Das Ereignis mit dem gegebenen Erstellungszeitpunkt auslesen."""
+        with EreignisMapper() as mapper:
+            return mapper.find_by_erstellungs_zeitpunkt(erstellungs_zeitpunkt)     #muss noch im Mapper geschrieben werden
+                                                                                    #falls benötigt wird
+
+    def get_all_ereignis(self):
+        """Alle Ereignise auslesen."""
+        with EreignisMapper() as mapper:
+            return mapper.find_all()
+
+    def save_ereignis(self, ereignis):
+        """Das gegebenen Ereignis speichern."""
+        with EreignisMapper() as mapper:
+            mapper.update(ereignis)
+
+    def delete_ereignis(self, ereignis):
+        """Das gegebenene Ereignis aus unserem System löschen."""
+        with EreignisMapper() as mapper:
+            mapper.delete(ereignis)
