@@ -8,19 +8,19 @@ export default class ProjektBO extends BusinessObject {
         this.bezeichnung = bezeichnung;
         this.auftraggeber = auftraggeber;
     }
-
+    // Bezeichnung setzen
     setBezeichnung(bezeichnung){
         this.bezeichnung = bezeichnung;
     }
-
+    // Bezeichnung auslesen
     getBezeichnung(){
         return this.bezeichnung;
     }
-
+    // Auftraggeber setzen
     setAuftraggeber(auftraggeber){
         this.auftraggeber = auftraggeber;
     }
-
+    // Auftraggeber auslesen
     getAuftraggeber(){
         return this.auftraggeber;
     }
