@@ -16,11 +16,11 @@ export default class EreignisBO extends BusinessObject {
     getLetzte_aenderung() {
     return this.letzte_aenderung;
     }
-    // Erstellungs_zeitpunkt setzen
+    // Erstellungszeitpunkt setzen
     setErstellungs_zeitpunkt(erstellungs_zeitpunkt) {
     this.erstellungs_zeitpunkt = erstellungs_zeitpunkt;
     }
-    // Erstellungs_zeitpunkt setzen
+    // Erstellungszeitpunkt setzen
     getErstellungs_zeitpunkt() {
     return this.erstellungs_zeitpunkt;
     }
