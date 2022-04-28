@@ -310,32 +310,32 @@ export default class TimetrackerAPI {
         })
       }
 
-      getBuchung(buchungID) {
-        // Buchung abfragen
-        return this.#fetchAdvanced(this.#getBuchungURL(buchungID)).then((responseJSON) => {
-          let buchung = BuchungBO.fromJSON(responseJSON);
-          return new Promise(function (resolve) {
-            resolve(buchung)
-          })
+    getBuchung(buchungID) {
+      // Buchung abfragen
+      return this.#fetchAdvanced(this.#getBuchungURL(buchungID)).then((responseJSON) => {
+        let buchung = BuchungBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(buchung)
         })
-      }
+      })
+    }
     
-      addBuchung(buchungBO) {
-        // Buchung neu anlegen
-        return this.#fetchAdvanced(this.#addBuchungURL(), {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json, text/plain',
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(buchungBO)
-        }).then((responseJSON) => {
-          let responseBuchungBO = BuchungBO.fromJSON(responseJSON);
-          return new Promise(function (resolve) {
-            resolve(responseBuchungBO);
-          })
+    addBuchung(buchungBO) {
+      // Buchung neu anlegen
+      return this.#fetchAdvanced(this.#addBuchungURL(), {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(buchungBO)
+      }).then((responseJSON) => {
+        let responseBuchungBO = BuchungBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(responseBuchungBO);
         })
-      }
+      })
+    }
 
     
    /* updateBuchung(buchungBO) {
@@ -355,44 +355,44 @@ export default class TimetrackerAPI {
         })
       } */
 
-      deleteBuchung(BuchungBO) {
-        // Buchung löschen
-        return this.#fetchAdvanced(this.#deleteBuchungURL(buchungBO.getID()), {
-          method: 'DELETE',
-          headers: {
-            'Accept': 'application/json, text/plain',
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(buchungBO)
+    deleteBuchung(BuchungBO) {
+      // Buchung löschen
+      return this.#fetchAdvanced(this.#deleteBuchungURL(buchungBO.getID()), {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json, text/plain',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(buchungBO)
+      })
+    }
+  
+    getEreignis(ereignisID) {
+      // Ereignis abfragen
+      return this.#fetchAdvanced(this.#getEreignisURL(ereignisID)).then((responseJSON) => {
+        let ereignis = EreignisBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(ereignis)
         })
-      }
-    
-      getEreignis(ereignisID) {
-        // Ereignis abfragen
-        return this.#fetchAdvanced(this.#getEreignisURL(ereignisID)).then((responseJSON) => {
-          let ereignis = EreignisBO.fromJSON(responseJSON);
-          return new Promise(function (resolve) {
-            resolve(ereignis)
-          })
+      })
+    }
+  
+    addEreignis(ereignisBO) {
+      // Ereignis neu anlegen
+      return this.#fetchAdvanced(this.#addEreignisURL(), {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(ereignisBO)
+      }).then((responseJSON) => {
+        let responseEreignisBO = EreignisBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(responseEreignisBO);
         })
-      }
-    
-      addEreignis(ereignisBO) {
-        // Ereignis neu anlegen
-        return this.#fetchAdvanced(this.#addEreignisURL(), {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json, text/plain',
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(ereignisBO)
-        }).then((responseJSON) => {
-          let responseEreignisBO = EreignisBO.fromJSON(responseJSON);
-          return new Promise(function (resolve) {
-            resolve(responseEreignisBO);
-          })
-        })
-      }
+      })
+    }
 
     
       /* updateEreignis(ereignisBO) {
@@ -412,131 +412,131 @@ export default class TimetrackerAPI {
         })
       } */
 
-      deleteEreignis(EreignisBO) {
-        // Ereignis löschen
-        return this.#fetchAdvanced(this.#deleteEreignisURL(ereignisBO.getID()), {
-          method: 'DELETE',
-          headers: {
-            'Accept': 'application/json, text/plain',
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(ereignisBO)
-        })
-      }
+    deleteEreignis(EreignisBO) {
+      // Ereignis löschen
+      return this.#fetchAdvanced(this.#deleteEreignisURL(ereignisBO.getID()), {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json, text/plain',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(ereignisBO)
+      })
+    }
 
-      getArbeitszeitkonto(arbeitszeitkontoID) {
-        // Arbeitszeitkonto abfragen
-        return this.#fetchAdvanced(this.#getArbeitszeitkontoURL(arbeitszeitkontoID)).then((responseJSON) => {
-          let arbeitszeitkonto = ArbeitszeitkontoBO.fromJSON(responseJSON);
-          return new Promise(function (resolve) {
-            resolve(arbeitszeitkonto)
-          })
+    getArbeitszeitkonto(arbeitszeitkontoID) {
+      // Arbeitszeitkonto abfragen
+      return this.#fetchAdvanced(this.#getArbeitszeitkontoURL(arbeitszeitkontoID)).then((responseJSON) => {
+        let arbeitszeitkonto = ArbeitszeitkontoBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(arbeitszeitkonto)
         })
-      }
-    
-      addArbeitszeitkonto(arbeitszeitkontoBO) {
-        // Arbeitszeitkonto neu anlegen
-        return this.#fetchAdvanced(this.#addArbeitszeitkontoURL(), {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json, text/plain',
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(arbeitszeitkontoBO)
-        }).then((responseJSON) => {
-          let responseArbeitszeitkontoBO = ArbeitszeitkontoBO.fromJSON(responseJSON);
-          return new Promise(function (resolve) {
-            resolve(responseArbeitszeitkontoBO);
-          })
+      })
+    }
+  
+    addArbeitszeitkonto(arbeitszeitkontoBO) {
+      // Arbeitszeitkonto neu anlegen
+      return this.#fetchAdvanced(this.#addArbeitszeitkontoURL(), {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(arbeitszeitkontoBO)
+      }).then((responseJSON) => {
+        let responseArbeitszeitkontoBO = ArbeitszeitkontoBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(responseArbeitszeitkontoBO);
         })
-      }
+      })
+    }
 
-    
-      updateArbeitszeitkonto(arbeitszeitkontoBO) {
-        // Arbeitszeitkonto updaten
-        return this.#fetchAdvanced(this.#updateArbeitszeitkontoURL(arbeitszeitkontoBO.getID()), {
-          method: 'PUT',
-          headers: {
-            'Accept': 'application/json, text/plain',
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(arbeitszeitkontoBO)
-        }).then((responseJSON) => {
-          let responseArbeitszeitkontoBO = ArbeitszeitkontoBO.fromJSON(responseJSON);
-          return new Promise(function (resolve) {
-            resolve(responseArbeitszeitkontoBO);
-          })
+  
+    updateArbeitszeitkonto(arbeitszeitkontoBO) {
+      // Arbeitszeitkonto updaten
+      return this.#fetchAdvanced(this.#updateArbeitszeitkontoURL(arbeitszeitkontoBO.getID()), {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json, text/plain',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(arbeitszeitkontoBO)
+      }).then((responseJSON) => {
+        let responseArbeitszeitkontoBO = ArbeitszeitkontoBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(responseArbeitszeitkontoBO);
         })
-      } 
+      })
+    } 
 
-      deleteArbeitszeitkonto(arbeitszeitkontoBO) {
-        // Arbeitszeitkonto löschen
-        return this.#fetchAdvanced(this.#deleteArbeitszeitkontoURL(arbeitszeitkontoBO.getID()), {
-          method: 'DELETE',
-          headers: {
-            'Accept': 'application/json, text/plain',
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(arbeitszeitkontoBO)
-        })
-      }
+    deleteArbeitszeitkonto(arbeitszeitkontoBO) {
+      // Arbeitszeitkonto löschen
+      return this.#fetchAdvanced(this.#deleteArbeitszeitkontoURL(arbeitszeitkontoBO.getID()), {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json, text/plain',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(arbeitszeitkontoBO)
+      })
+    }
 
-      getZeitintervall(zeitintervallID) {
-        // Zeitintervall abfragen
-        return this.#fetchAdvanced(this.#getZeitintervallURL(zeitintervallID)).then((responseJSON) => {
-          let zeitintervall = ZeitintervallBO.fromJSON(responseJSON);
-          return new Promise(function (resolve) {
-            resolve(zeitintervall)
-          })
+    getZeitintervall(zeitintervallID) {
+      // Zeitintervall abfragen
+      return this.#fetchAdvanced(this.#getZeitintervallURL(zeitintervallID)).then((responseJSON) => {
+        let zeitintervall = ZeitintervallBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(zeitintervall)
         })
-      }
-    
-      addZeitintervall(zeitintervallBO) {
-        // Zeitintervall neu anlegen
-        return this.#fetchAdvanced(this.#addZeitintervallURL(), {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json, text/plain',
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(zeitintervallBO)
-        }).then((responseJSON) => {
-          let responseZeitintervallBO = zeitintervallBO.fromJSON(responseJSON);
-          return new Promise(function (resolve) {
-            resolve(responseZeitintervallBO);
-          })
+      })
+    }
+  
+    addZeitintervall(zeitintervallBO) {
+      // Zeitintervall neu anlegen
+      return this.#fetchAdvanced(this.#addZeitintervallURL(), {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(zeitintervallBO)
+      }).then((responseJSON) => {
+        let responseZeitintervallBO = zeitintervallBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(responseZeitintervallBO);
         })
-      }
+      })
+    }
 
-    
-      updateZeitintervall(zeitintervallBO) {
-        // Zeitintervall updaten
-        return this.#fetchAdvanced(this.#updateZeitintervallURL(zeitintervallBO.getID()), {
-          method: 'PUT',
-          headers: {
-            'Accept': 'application/json, text/plain',
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(zeitintervallBO)
-        }).then((responseJSON) => {
-          let responseZeitintervallBO = zeitintervallBO.fromJSON(responseJSON);
-          return new Promise(function (resolve) {
-            resolve(responseZeitintervallBO);
-          })
+  
+    updateZeitintervall(zeitintervallBO) {
+      // Zeitintervall updaten
+      return this.#fetchAdvanced(this.#updateZeitintervallURL(zeitintervallBO.getID()), {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json, text/plain',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(zeitintervallBO)
+      }).then((responseJSON) => {
+        let responseZeitintervallBO = zeitintervallBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(responseZeitintervallBO);
         })
-      } 
+      })
+    } 
 
-      deleteZeitintervall(zeitintervallBO) {
-        // Zeitintervall löschen
-        return this.#fetchAdvanced(this.#deleteZeitintervallURL(zeitintervallBO.getID()), {
-          method: 'DELETE',
-          headers: {
-            'Accept': 'application/json, text/plain',
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(zeitintervallBO)
-        })
-      }
+    deleteZeitintervall(zeitintervallBO) {
+      // Zeitintervall löschen
+      return this.#fetchAdvanced(this.#deleteZeitintervallURL(zeitintervallBO.getID()), {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json, text/plain',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(zeitintervallBO)
+      })
+    }
 
     
 
