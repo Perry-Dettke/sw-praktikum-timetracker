@@ -234,7 +234,9 @@ class TimetrackerAdministration (object):
         """Die gegebenene Person aus unserem System löschen."""
         with PersonMapper() as mapper:
             mapper.delete(person)
-
+    def add_person_google_user_id(self,google_user_id):
+        with PersonMapper() as mapper:
+            mapper.insert_firebase(google_user_id)
     """
     Projekt-spezifische Methoden
     """
