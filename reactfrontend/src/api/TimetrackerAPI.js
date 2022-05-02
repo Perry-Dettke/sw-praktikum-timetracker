@@ -251,7 +251,7 @@ export default class TimetrackerAPI {
 
     getAktivitaet(aktivitaetID) {
         // Aktivitaet abfragen
-        return this.#fetchAdvanced(this.#getaAtivitaetURL(aktivitaetID)).then((responseJSON) => {
+        return this.#fetchAdvanced(this.#getAktivitaetURL(aktivitaetID)).then((responseJSON) => {
           let aktivitaet = AktivitaetBO.fromJSON(responseJSON);
           return new Promise(function (resolve) {
             resolve(aktivitaet)
