@@ -19,8 +19,8 @@ export default class TimetrackerAPI {
     #getPersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
     #updatePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
     #deletePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
-    #getPersonByFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
-    #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
+    #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
+    // #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
 
     #addProjektURL = () => `${this.#ServerBaseURL}/projekt`;
     #getProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
@@ -95,9 +95,9 @@ export default class TimetrackerAPI {
       }
 
     
-    getPersonByFirebase(firebaseID) {
-        // Person anhand der FirebaseID auslesen
-        return this.#fetchAdvanced(this.#getPersonByFirebaseURL(firebaseID)).then((responseJSON) => {
+    getPersonByGoogle(googleid) {
+        // Person anhand der GoogleID auslesen
+        return this.#fetchAdvanced(this.#getPersonByGoogleURL(googleid)).then((responseJSON) => {
           let person = PersonBO.fromJSON(responseJSON);
           return new Promise(function (resolve) {
             resolve(person)
@@ -105,15 +105,15 @@ export default class TimetrackerAPI {
         })
       }
     
-    addPersonFirebase(personID, firebaseID) {
-        // Person einer FirebaseID zuweisen
-        return this.#fetchAdvanced(this.#addPersonFirebaseURL(firebaseID), {
+    addPersonGoogle(personID, googleid) {
+        // Person einer GoogleID zuweisen
+        return this.#fetchAdvanced(this.#addPersonGoogleURL(googleid), {
           method: 'POST',
           headers: {
             'Accept': 'application/json, text/plain',
             'Content-type': 'application/json',
           },
-          body: JSON.stringify({ 'personID': personID, 'firebaseID': firebaseID })
+          body: JSON.stringify({ 'personID': personID, 'googleid': googleid })
         })
       }
     
