@@ -222,7 +222,7 @@ export default class TimetrackerAPI {
             'Accept': 'application/json, text/plain',
             'Content-type': 'application/json',
           },
-          body: JSON.stringify(projektO)
+          body: JSON.stringify(projektBO)
         })
       }
 
