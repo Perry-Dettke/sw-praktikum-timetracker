@@ -19,7 +19,7 @@ class EreignisMapper(Mapper):
 
         cursor = self._connection.cursor()
 
-        command = "SELECT id, letzte_aenderung, erstellungs_zeitpunkt FROM Ereignis"
+        command = "SELECT id, letzte_aenderung, erstellungs_zeitpunkt FROM ereignis"
 
         cursor.execute(command)
         tuples = cursor.fetchall()
@@ -45,7 +45,7 @@ class EreignisMapper(Mapper):
         """
         result = None
         cursor = self._connection.cursor()
-        command = "SELECT id, letzte_aenderung,erstellungs_zeitpunk FROM Ereignis WHERE id='{}'".format(id)
+        command = "SELECT id, letzte_aenderung,erstellungs_zeitpunk FROM ereignis WHERE id='{}'".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -76,7 +76,7 @@ class EreignisMapper(Mapper):
         result = None
 
         cursor = self._connection.cursor()
-        command = "SELECT id, erstellungs_zeitpunkt, letzte_aenderung FROM Buchung WHERE id='{}'".format(
+        command = "SELECT id, erstellungs_zeitpunkt, letzte_aenderung FROM ereignis WHERE id='{}'".format(
             letzte_aenderung)
         cursor.execute(command)
         tuples = cursor.fetchall()
@@ -102,7 +102,7 @@ class EreignisMapper(Mapper):
         '''
 
         cursor = self._connection.cursor()
-        cursor.execute("SELECT MAX(id) AS maxid FROM Ereignis")
+        cursor.execute("SELECT MAX(id) AS maxid FROM ereignis")
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
@@ -111,7 +111,7 @@ class EreignisMapper(Mapper):
             else:
                 ereignis.set_id(maxid[0] + 1)
 
-        command = "INSERT INTO Ereignis (id, erstellungs_zeitpunkt, letzte_aenderung) VALUES (%s,%s,%s)"
+        command = "INSERT INTO ereignis (id, erstellungs_zeitpunkt, letzte_aenderung) VALUES (%s,%s,%s)"
         data = (
             ereignis.get_id(),
             ereignis.get_erstellungs_zeitpunkt(),
@@ -127,7 +127,7 @@ class EreignisMapper(Mapper):
     def delete(self, id):
         cursor = self._connection.cursor()
 
-        command = "DELETE FROM Ereignis WHERE id={}".format(id)
+        command = "DELETE FROM ereignis WHERE id={}".format(id)
         cursor.execute(command)
 
         self._connection.commit()
@@ -137,7 +137,7 @@ class EreignisMapper(Mapper):
 
         cursor = self._connection.cursor()
 
-        command = "UPDATE Ereignis SET letzte_aenderung=%s, erstellungs_zeitpunkt=%s,  WHERE id=%s"
+        command = "UPDATE ereignis SET letzte_aenderung=%s, erstellungs_zeitpunkt=%s,  WHERE id=%s"
         data = (ereignis.get_letzte_aenderung(), ereignis.get_erstellungs_zeitpunkt(), ereignis.get_id())
 
         result = ereignis
