@@ -61,7 +61,7 @@ class BuchungMapper(Mapper):
             buchung.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
 
             result = buchung
-        except indexError:
+        except IndexError:
             """
             Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt.
