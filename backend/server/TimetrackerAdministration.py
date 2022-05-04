@@ -22,60 +22,6 @@ class TimetrackerAdministration (object):
         pass
 
     """
-    Person-spezifische Methoden
-    """
-    def create_person(self, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id):
-        """Einen Benutzer anlegen"""
-        person = Person()
-        person.set_letzte_aenderung(letzte_aenderung)
-        person.set_vor_name(vor_name)
-        person.set_nach_name(nach_name)
-        person.set_email(email)
-        person.set_benutzer_name(benutzer_name)
-        person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-        person.set_projekt_id(projekt_id)
-        person.set_user_id(google_user_id)
-        person.set_id(1)
-
-        with PersonMapper() as mapper:
-            return mapper.insert(person)
-
-    def get_person_by_vor_name(self, vor_name):
-        """Alle Personen mit Vornamen name auslesen."""
-        with PersonMapper() as mapper:
-            return mapper.find_by_vor_name(vor_name)
-
-    def get_person_by_id(self, key):
-        """Den Personen mit der gegebenen ID auslesen."""
-        with PersonMapper() as mapper:
-            return mapper.find_by_key(key)
-
-    def get_person_by_email(self, email):
-        """Alle Personen mit gegebener E-Mail-Adresse auslesen."""
-        with PersonMapper() as mapper:
-            return mapper.find_by_email(email)
-
-    def get_person_by_google_user_id(self, id):
-        """Den Personen mit der gegebenen Google ID auslesen."""
-        with PersonMapper() as mapper:
-            return mapper.find_by_google_user_id(id)
-
-    def get_all_person(self):
-        """Alle Personen auslesen."""
-        with PersonMapper() as mapper:
-            return mapper.find_all()
-
-    def save_person(self, person):
-        """Die gegebenen Person speichern."""
-        with PersonMapper() as mapper:
-            mapper.update(person)
-
-    def delete_person(self, person):
-        """Die gegebenene Person aus unserem System löschen."""
-        with PersonMapper() as mapper:
-            mapper.delete(person)
-
-    """
     Aktivitaet-spezifische Methoden
     """
     def create_aktivitaet(self, letzte_aenderung, bezeichnung, kapazitaet):
@@ -153,3 +99,214 @@ class TimetrackerAdministration (object):
         """Das gegebenene Arbeitszeitkonto aus unserem System löschen."""
         with Arbeitszeitkonto() as mapper:
             mapper.delete(arbeitszeitkonto)
+
+
+
+    """
+    Buchung-spezifische Methoden
+    """
+    def create_buchung(self, letzte_aenderung, erstellt_von):
+        """Eine Buchung anlegen"""
+        buchung = Buchung()
+        buchung.set_letzte_aenderung(letzte_aenderung)
+        buchung.set_erstellt_von(erstellt_von)
+        buchung.set_id(1)
+
+        with BuchungMapper() as mapper:
+            return mapper.insert(buchung)
+
+    def get_buchung_by_id(self, key):
+        """Die Buchung mit der gegebenen ID auslesen."""
+        with BuchungMapper() as mapper:
+            return mapper.find_by_key(key)
+
+    def get_buchung_by_erstellt_von(self, erstellt_von):       
+        """Die Buchung mit der gegebenen Person, die die Buchung erstellt hat auslesen."""
+        with BuchungMapper() as mapper:
+            return mapper.find_by_erstellt_von(erstellt_von)                #muss noch im Mapper geschrieben werden
+
+    def get_all_buchung(self):
+        """Alle Buchungen auslesen."""
+        with BuchungMapper() as mapper:
+            return mapper.find_all()
+
+    def save_buchung(self, buchung):
+        """Die gegebenen Buchung speichern."""
+        with BuchungMapper() as mapper:
+            mapper.update(buchung)
+
+    def delete_buchung(self, buchung):
+        """Die gegebenene Buchung aus unserem System löschen."""
+        with BuchungMapper() as mapper:
+            mapper.delete(buchung)
+
+
+    """
+    Ereignis-spezifische Methoden
+    """
+    def create_ereignis(self, letzte_aenderung, erstellungs_zeitpunkt):
+        """Ein Ereignis anlegen"""
+        ereignis = Ereignis()
+        ereignis.set_letzte_aenderung(letzte_aenderung)
+        ereignis.set_erstellungs_zeitpunkt(erstellungs_zeitpunkt)
+        ereignis.set_id(1)
+
+        with EreignisMapper() as mapper:
+            return mapper.insert(ereignis)
+
+    def get_ereignis_by_id(self, key):
+        """Das Ereignis mit der gegebenen ID auslesen."""
+        with EreignisMapper() as mapper:
+            return mapper.find_by_key(key)
+
+    def get_ereignis_by_erstellungs_zeitpunkt(self, erstellungs_zeitpunkt):       
+        """Das Ereignis mit dem gegebenen Erstellungszeitpunkt auslesen."""
+        with EreignisMapper() as mapper:
+            return mapper.find_by_erstellungs_zeitpunkt(erstellungs_zeitpunkt)     #muss noch im Mapper geschrieben werden
+                                                                                    #falls benötigt wird
+
+    def get_all_ereignis(self):
+        """Alle Ereignise auslesen."""
+        with EreignisMapper() as mapper:
+            return mapper.find_all()
+
+    def save_ereignis(self, ereignis):
+        """Das gegebenen Ereignis speichern."""
+        with EreignisMapper() as mapper:
+            mapper.update(ereignis)
+
+    def delete_ereignis(self, ereignis):
+        """Das gegebenene Ereignis aus unserem System löschen."""
+        with EreignisMapper() as mapper:
+            mapper.delete(ereignis)
+
+
+    """
+    Person-spezifische Methoden
+    """
+    def create_person(self, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id):
+        """Einen Benutzer anlegen"""
+        person = Person()
+        person.set_letzte_aenderung(letzte_aenderung)
+        person.set_vor_name(vor_name)
+        person.set_nach_name(nach_name)
+        person.set_email(email)
+        person.set_benutzer_name(benutzer_name)
+        person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
+        person.set_projekt_id(projekt_id)
+        person.set_user_id(google_user_id)
+        person.set_id(1)
+
+        with PersonMapper() as mapper:
+            return mapper.insert(person)
+
+    def get_person_by_vor_name(self, vor_name):
+        """Alle Personen mit Vornamen name auslesen."""
+        with PersonMapper() as mapper:
+            return mapper.find_by_vor_name(vor_name)
+
+    def get_person_by_id(self, key):
+        """Den Personen mit der gegebenen ID auslesen."""
+        with PersonMapper() as mapper:
+            return mapper.find_by_key(key)
+
+    def get_person_by_email(self, email):
+        """Alle Personen mit gegebener E-Mail-Adresse auslesen."""
+        with PersonMapper() as mapper:
+            return mapper.find_by_email(email)
+
+    def get_person_by_google_user_id(self, id):
+        """Den Personen mit der gegebenen Google ID auslesen."""
+        with PersonMapper() as mapper:
+            return mapper.find_by_google_user_id(id)
+
+    def get_all_person(self):
+        """Alle Personen auslesen."""
+        with PersonMapper() as mapper:
+            return mapper.find_all()
+
+    def save_person(self, person):
+        """Die gegebenen Person speichern."""
+        with PersonMapper() as mapper:
+            mapper.update(person)
+
+    def delete_person(self, person):
+        """Die gegebenene Person aus unserem System löschen."""
+        with PersonMapper() as mapper:
+            mapper.delete(person)
+    def add_person_google_user_id(self,google_user_id):
+        with PersonMapper() as mapper:
+            mapper.insert_firebase(google_user_id)
+    """
+    Projekt-spezifische Methoden
+    """
+    def create_projekt(self, letzte_aenderung, bezeichnung, auftraggeber, aktivitaet_id):
+        """Ein Projekt anlegen"""
+        projekt = Projekt()
+        projekt.set_letzte_aenderung(letzte_aenderung)
+        projekt.set_bezeichnung(bezeichnung)
+        projekt.set_auftraggeber(auftraggeber)
+        projekt.set_aktivitaet_id(aktivitaet_id)
+        projekt.set_id(1)
+
+        with ProjektMapper() as mapper:
+            return mapper.insert(projekt)
+
+    def get_projekt_by_id(self, key):
+        """Das Projekt mit der gegebenen ID auslesen."""
+        with ProjektMapper() as mapper:
+            return mapper.find_by_key(key)
+
+    def get_projekt_by_auftraggeber(self, auftraggeber):       
+        """Das Projekt mit dem gegebenen Auftraggeber auslesen."""
+        with ProjektMapper() as mapper:
+            return mapper.find_by_auftraggeber(auftraggeber)     
+
+    def get_all_projekt(self):
+        """Alle Projekt auslesen."""
+        with ProjektMapper() as mapper:
+            return mapper.find_all()
+
+    def save_projekt(self, projekt):
+        """Das gegebenen Projekt speichern."""
+        with ProjektMapper() as mapper:
+            mapper.update(projekt)
+
+    def delete_projekt(self, projekt):
+        """Das gegebenene Projekt aus unserem System löschen."""
+        with ProjektMapper() as mapper:
+            mapper.delete(projekt)
+
+    """
+    Zeitintervall-spezifische Methoden
+    """
+    def create_zeitintervall(self, letzte_aenderung, start, ende):
+        """Ein Zeintervall anlegen"""
+        zeitintervall = Zeitintervall()
+        zeitintervall.set_letzte_aenderung(letzte_aenderung)
+        zeitintervall.set_start(start)
+        zeitintervall.set_ende(ende)
+        zeitintervall.set_id(1)
+
+        with ZeitintervallMapper() as mapper:
+            return mapper.insert(zeitintervall)
+
+    def get_zeitintervall_by_id(self, key):
+        """Das Zeitintervall mit der gegebenen ID auslesen."""
+        with ZeitintervallMapper() as mapper:
+            return mapper.find_by_key(key)
+   
+    def get_all_zeitintervall(self):
+        """Alle Zeitintervalle auslesen."""
+        with ZeitintervallMapper() as mapper:
+            return mapper.find_all()
+
+    def save_zeitintervall(self, zeitintervall):
+        """Das gegebenen Zeitintervall speichern."""
+        with ZeitintervallMapper() as mapper:
+            mapper.update(zeitintervall)
+
+    def delete_zeitintervall(self, zeitintervall):
+        """Das gegebenene Zeitintervall aus unserem System löschen."""
+        with ZeitintervallMapper() as mapper:
+            mapper.delete(zeitintervall)

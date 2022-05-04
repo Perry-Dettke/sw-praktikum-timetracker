@@ -557,6 +557,11 @@ class PersonGoogleOperations(Resource):
         else:
             return '', 500 
 
+    def post(self, google_user_id):
+        ''' Person das erste mal anlegen '''
+        adm = TimetrackerAdministration()
+        adm.add_person_google_user_id(google_user_id)
+        return '', 200
 
 
 

@@ -19,7 +19,7 @@ class ArbeitszeitkontoMapper (Mapper):
         result = []
         cursor = self._cnx.cursor()
 
-        cursor.execute("SELECT id, letzte_aenderung, arbeitsleistung, buchung_id from Arbeitszeitkonto")
+        cursor.execute("SELECT id, letzte_aenderung, arbeitsleistung, buchung_id from arbeitszeitkonto")
         tuples = cursor.fetchall()
 
         for (id, letzte_aenderung, arbeitsleistung, buchung_id) in tuples:
@@ -73,7 +73,7 @@ class ArbeitszeitkontoMapper (Mapper):
         result = []
 
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, arbeitsleistung,  buchung_id FROM person WHERE id={}".format(key)
+        command = "SELECT id, letzte_aenderung, arbeitsleistung,  buchung_id FROM arbeitszeitkonto WHERE id={}".format(key)
         cursor.execute(command)
         tuples = cursor.fetchall()
 

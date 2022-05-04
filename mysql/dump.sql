@@ -24,9 +24,9 @@ DROP TABLE IF EXISTS `Aktivitaet`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Aktivitaet` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `letzte_aenderung` varchar(45) DEFAULT NULL,
-  `bezeichnung` varchar(100) DEFAULT NULL,
-  `kapazitaet` decimal(4,2) DEFAULT NULL,
+  `letzte_aenderung` varchar(45) NOT NULL,
+  `bezeichnung` varchar(100) NOT NULL,
+  `kapazitaet` decimal(4,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -41,13 +41,13 @@ LOCK TABLES `Aktivitaet` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Arbeitszeitkonto`
+-- Table structure for table `arbeitszeitkonto`
 --
 
-DROP TABLE IF EXISTS `Arbeitszeitkonto`;
+DROP TABLE IF EXISTS `arbeitszeitkonto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Arbeitszeitkonto` (
+CREATE TABLE `arbeitszeitkonto` (
   `id` int NOT NULL AUTO_INCREMENT,
   `letzte_aenderung` varchar(45) NOT NULL,
   `arbeitsleistung` decimal(4,2) NOT NULL,
@@ -59,22 +59,22 @@ CREATE TABLE `Arbeitszeitkonto` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Arbeitszeitkonto`
+-- Dumping data for table `arbeitszeitkonto`
 --
 
-LOCK TABLES `Arbeitszeitkonto` WRITE;
-/*!40000 ALTER TABLE `Arbeitszeitkonto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Arbeitszeitkonto` ENABLE KEYS */;
+LOCK TABLES `arbeitszeitkonto` WRITE;
+/*!40000 ALTER TABLE `arbeitszeitkonto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `arbeitszeitkonto` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Buchung`
+-- Table structure for table `buchung`
 --
 
-DROP TABLE IF EXISTS `Buchung`;
+DROP TABLE IF EXISTS `buchung`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Buchung` (
+CREATE TABLE `buchung` (
   `id` int NOT NULL AUTO_INCREMENT,
   `letzte_aenderung` varchar(45) NOT NULL,
   `person_id` int NOT NULL,
@@ -82,18 +82,18 @@ CREATE TABLE `Buchung` (
   PRIMARY KEY (`id`),
   KEY `person_id` (`person_id`),
   KEY `arbeitszeitkonto_id` (`arbeitszeitkonto_id`),
-  CONSTRAINT `buchung_fk_1` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `buchung_fk_1` FOREIGN KEY (`person_id`) REFERENCES `Person` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `buchung_fk_2` FOREIGN KEY (`arbeitszeitkonto_id`) REFERENCES `Arbeitszeitkonto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Buchung`
+-- Dumping data for table `buchung`
 --
 
-LOCK TABLES `Buchung` WRITE;
-/*!40000 ALTER TABLE `Buchung` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Buchung` ENABLE KEYS */;
+LOCK TABLES `buchung` WRITE;
+/*!40000 ALTER TABLE `buchung` DISABLE KEYS */;
+/*!40000 ALTER TABLE `buchung` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -106,7 +106,7 @@ DROP TABLE IF EXISTS `Ereignis`;
 CREATE TABLE `Ereignis` (
   `id` int NOT NULL AUTO_INCREMENT,
   `letzte_aenderung` varchar(45) NOT NULL,
-  `erstellungs_zeitpunkt` datetime DEFAULT NULL,
+  `erstellungs_zeitpunkt` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -134,6 +134,7 @@ CREATE TABLE `Person` (
   `nach_name` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `benutzer_name` varchar(45) NOT NULL,
+  `google_user_id` varchar(45) NOT NULL,
   `arbeitszeitkonto_id` int NOT NULL,
   `projekt_id` int NOT NULL,
   PRIMARY KEY (`id`),
@@ -154,13 +155,13 @@ LOCK TABLES `Person` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Projekt`
+-- Table structure for table `projekt`
 --
 
-DROP TABLE IF EXISTS `Projekt`;
+DROP TABLE IF EXISTS `projekt`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Projekt` (
+CREATE TABLE `projekt` (
   `id` int NOT NULL AUTO_INCREMENT,
   `letzte_aenderung` varchar(45) NOT NULL,
   `bezeichnung` varchar(45) NOT NULL,
@@ -173,22 +174,22 @@ CREATE TABLE `Projekt` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Projekt`
+-- Dumping data for table `projekt`
 --
 
-LOCK TABLES `Projekt` WRITE;
-/*!40000 ALTER TABLE `Projekt` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Projekt` ENABLE KEYS */;
+LOCK TABLES `projekt` WRITE;
+/*!40000 ALTER TABLE `projekt` DISABLE KEYS */;
+/*!40000 ALTER TABLE `projekt` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Projekt_Person`
+-- Table structure for table `projekt_person`
 --
 
-DROP TABLE IF EXISTS `Projekt_Person`;
+DROP TABLE IF EXISTS `projekt_person`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Projekt_Person` (
+CREATE TABLE `projekt_person` (
   `id` int NOT NULL AUTO_INCREMENT,
   `person_id` int NOT NULL,
   `projekt_id` int NOT NULL,
@@ -201,22 +202,22 @@ CREATE TABLE `Projekt_Person` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Projekt_Person`
+-- Dumping data for table `projekt_person`
 --
 
-LOCK TABLES `Projekt_Person` WRITE;
-/*!40000 ALTER TABLE `Projekt_Person` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Projekt_Person` ENABLE KEYS */;
+LOCK TABLES `projekt_person` WRITE;
+/*!40000 ALTER TABLE `projekt_person` DISABLE KEYS */;
+/*!40000 ALTER TABLE `projekt_person` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Zeitintervall`
+-- Table structure for table `zeitintervall`
 --
 
-DROP TABLE IF EXISTS `Zeitintervall`;
+DROP TABLE IF EXISTS `zeitintervall`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Zeitintervall` (
+CREATE TABLE `zeitintervall` (
   `id` int NOT NULL AUTO_INCREMENT,
   `letzte_aenderung` varchar(45) NOT NULL,
   `start` decimal(4,2) NOT NULL,
@@ -226,12 +227,12 @@ CREATE TABLE `Zeitintervall` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Zeitintervall`
+-- Dumping data for table `zeitintervall`
 --
 
-LOCK TABLES `Zeitintervall` WRITE;
-/*!40000 ALTER TABLE `Zeitintervall` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Zeitintervall` ENABLE KEYS */;
+LOCK TABLES `zeitintervall` WRITE;
+/*!40000 ALTER TABLE `zeitintervall` DISABLE KEYS */;
+/*!40000 ALTER TABLE `zeitintervall` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -243,4 +244,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-11 18:34:34
+-- Dump completed on 2022-05-03 11:23:25

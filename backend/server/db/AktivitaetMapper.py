@@ -21,7 +21,7 @@ class AktivitaetMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT id, letzte_aenderung, bezeichnung, kapazitaet FROM Aktivitaet")
+        cursor.execute("SELECT id, letzte_aenderung, bezeichnung, kapazitaet FROM aktivitaet")
         tuples = cursor.fetchall()
 
         for (id, letzte_aenderung, bezeichnung, kapazitaet) in tuples:
@@ -45,7 +45,7 @@ class AktivitaetMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, bezeichnung, kapazitaet FROM Aktivitaet WHERE id={}".format(id)
+        command = "SELECT id, letzte_aenderung, bezeichnung, kapazitaet FROM aktivitaet WHERE id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 

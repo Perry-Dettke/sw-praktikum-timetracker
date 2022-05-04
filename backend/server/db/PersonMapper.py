@@ -270,6 +270,5 @@ class PersonMapper (Mapper):
 um die grundsätzliche Funktion zu überprüfen.
 
 Anmerkung: Nicht professionell aber hilfreich..."""
-if (__name__ == "__main__"):
-    print(i)
+# if (__name__ == "__main__"):
 
