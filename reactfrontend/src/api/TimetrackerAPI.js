@@ -34,9 +34,6 @@ export default class TimetrackerAPI {
 
     // linkPersonProjektURL = () => `${this.#ServerBaseURL}/link`;
 
-
-
-
     #addAktivitaetURL = () => `${this.#ServerBaseURL}/aktivitaet`;
     #getAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
     #updateAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
