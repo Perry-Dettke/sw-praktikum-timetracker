@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { Component } from 'react';
+import BuchungDialog from '../dialogs/BuchungDialog';
 
 class Buchung extends Component {
     
@@ -21,7 +22,9 @@ class Buchung extends Component {
 
     //BuchungDialog anzeigen
     showBuchungDialog = () => {
-        this.setState({ showBuchung: true});
+        this.setState({ showBuchung: true}, () => {
+            console.log(this.state.showBuchung);
+        });
     };
 
     //BuchungDialog schließen
@@ -54,6 +57,8 @@ class Buchung extends Component {
                     </TableBody>
                 </Table>
             </TableContainer>
+            
+            <BuchungDialog show={showBuchung} onClose={this.closeBuchungDialog}/>
             </div>
         );
     }

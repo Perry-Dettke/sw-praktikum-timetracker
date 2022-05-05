@@ -6,7 +6,7 @@ import Buchung from './components/pages/BuchungSeite';
 function App() {
   return (
     <div className="App">
-      <Header />
+      <Header/>
         <Buchung/>
     </div>
   );
