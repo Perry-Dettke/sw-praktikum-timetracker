@@ -8,7 +8,7 @@ function App() {
       <Header />
       <header className="App-header">
         <p>
-         TEST TIMTRACKER APP
+         TEST TIMETRACKER APP
         </p>
       </header>
     </div>

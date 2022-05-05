@@ -31,7 +31,7 @@ class Header extends Component {
     return (
       <Paper variant='outlined' >
         <Typography variant='h3' component='h1' align='center'>
-          TIMTRACKER
+          TIMETRACKER
         </Typography>
         <Typography variant='h4' component='h2' align='center'>
           Zeiterfassungssystem
