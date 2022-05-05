@@ -6,22 +6,45 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 import { Component } from 'react';
 
 class Buchung extends Component {
+    
+    constructor(props) {
+        super(props);
 
+    this.state = {
+        showBuchung: false
+    };
+    }
+
+    //BuchungDialog anzeigen
+    showBuchungDialog = () => {
+        this.setState({ showBuchung: true});
+    };
+
+    //BuchungDialog schließen
+    closeBuchungDialog = () => {
+        this.setState({ showBuchung: false});
+    };
+    
 
     render() {
+        const {showBuchung} = this.state;
+
         return (
-            <TableContainer component={Paper}>
+            <div>
+                <Button variant="contained"
+                    onClick={this.showBuchungDialog}>
+                +</Button>
+            <TableContainer component={Paper}  sx={{ maxWidth: 800 , margin:"auto"}}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Dessert (100g serving)</TableCell>
-                            <TableCell align="right">Calories</TableCell>
-                            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                            <TableCell>Buchung</TableCell>
+                            <TableCell align="right">löschen</TableCell>
+                            <TableCell align="right">bearbeiten</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -31,6 +54,7 @@ class Buchung extends Component {
                     </TableBody>
                 </Table>
             </TableContainer>
+            </div>
         );
     }
 }
