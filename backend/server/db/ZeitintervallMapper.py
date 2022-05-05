@@ -20,7 +20,7 @@ class ZeitintervallMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT * from Zeitintervall")
+        cursor.execute("SELECT * from zeitintervall")
         tuples = cursor.fetchall()
 
         for (id, letzte_aenderung, start, ende) in tuples:
@@ -47,7 +47,7 @@ class ZeitintervallMapper (Mapper):
         :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
         """
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT MAX(id) AS maxid FROM Zeitintervall ")
+        cursor.execute("SELECT MAX(id) AS maxid FROM zeitintervall ")
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
@@ -60,7 +60,7 @@ class ZeitintervallMapper (Mapper):
                 davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
                 zeitintervall.set_id(1)
 
-        command = "INSERT INTO Zeitintervall (id, letzte_aenderung, start, ende) VALUES (%s,%s,%s,%s,)"
+        command = "INSERT INTO zeitintervall (id, letzte_aenderung, start, ende) VALUES (%s,%s,%s,%s,)"
         data = (
             zeitintervall.get_id(),
             zeitintervall.get_letzte_aenderung,
@@ -80,7 +80,7 @@ class ZeitintervallMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE Zeitintervall " + "SET start=%s, ende=%s WHERE id=%s"
+        command = "UPDATE zeitintervall " + "SET start=%s, ende=%s WHERE id=%s"
         data = (
             zeitintervall.get_start(),
             zeitintervall.get_ende(),
@@ -97,7 +97,7 @@ class ZeitintervallMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM Zeitintervall WHERE id={}".format(zeitintervall.get_id())
+        command = "DELETE FROM zeitintervall WHERE id={}".format(zeitintervall.get_id())
         cursor.execute(command)
 
         self._cnx.commit()
