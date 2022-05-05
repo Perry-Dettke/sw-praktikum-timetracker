@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Header from './components/layout/Header';
+import Buchung from './components/pages/BuchungSeite';
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
       <Header />
       <header className="App-header">
         <p>
-         TEST TIMETRACKER APP
+         <Buchung/>
         </p>
       </header>
     </div>

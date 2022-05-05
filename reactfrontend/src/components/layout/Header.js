@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react'
 //import PropTypes from 'prop-types';
-import { Paper, Typography, Tabs, Tab } from '@material-ui/core';
+import { Paper, Typography, Tabs, Tab } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 /**
