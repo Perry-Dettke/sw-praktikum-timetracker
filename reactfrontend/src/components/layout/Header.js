@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react'
 //import PropTypes from 'prop-types';
-import { Paper, Typography, Tabs, Tab } from '@material-ui/core';
+import { Paper, Typography, Tabs, Tab } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 /**
@@ -31,7 +31,7 @@ class Header extends Component {
     return (
       <Paper variant='outlined' >
         <Typography variant='h3' component='h1' align='center'>
-          TIMTRACKER
+          TIMETRACKER
         </Typography>
         <Typography variant='h4' component='h2' align='center'>
           Zeiterfassungssystem
@@ -43,7 +43,7 @@ class Header extends Component {
             <Tab label='Aktivität' component={RouterLink} to={`/aktivitaet`} />
             <Tab label='Buchung' component={RouterLink} to={`/buchung`} />
             <Tab label='Projekt Übersicht' component={RouterLink} to={`/projekt_uebersicht`} />
-            <Tab label='Personen Übersicht' component={RouterLink} to={`/persoen_uebersicht`} />
+            <Tab label='Personen Übersicht' component={RouterLink} to={`/person_uebersicht`} />
           </Tabs>
       </Paper>
     )
