@@ -3,13 +3,27 @@ import './App.css';
 import Header from './components/layout/Header';
 import Buchung from './components/pages/BuchungSeite';
 
-function App() {
-  return (
-    <div className="App">
-      <Header/>
+class App extends React.Component {
+  constructor(props) {
+		super(props);
+
+		// Init an empty state
+		this.state = {
+			currentUser: null,
+			appError: null,
+			authError: null,
+			authLoading: false
+		};
+	}
+  
+  render(){
+    return (
+      <div className="App">
+        <Header />
         <Buchung/>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default App;
