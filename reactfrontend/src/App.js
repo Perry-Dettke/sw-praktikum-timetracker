@@ -27,8 +27,8 @@ class App extends React.Component {
           <Header />
           <div className="content">
             <Routes>
-                {/*<Route path={'/*'} element={<Home/>}/>
-                <Route path={'/home'} element={<Home/>} />*
+                <Route path={'/*'} element={<Home/>}/>
+                <Route path={'/home'} element={<Home/>} />
                 {/*<Route path={'/projekt'} element={<Projekt/>} />*/}
                 {/*<Route path={'/personen'} element={<Personen/>} />*/}
                 {/*<Route path={'/aktivitaet'} element={<Aktivitaet/>} />*/}
