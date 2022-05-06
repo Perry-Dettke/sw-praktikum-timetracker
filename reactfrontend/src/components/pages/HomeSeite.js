@@ -46,19 +46,19 @@ class Home extends Component {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Projektbezeichnung</TableCell>
-                                        <TableCell align="right">Projektleiter</TableCell>
-                                        <TableCell align="right">Auftraggeber</TableCell>
-                                        <TableCell align="right">Soll</TableCell>
-                                        <TableCell align="right">Ist</TableCell>
+                                        <TableCell align="left">Projektleiter</TableCell>
+                                        <TableCell align="left">Auftraggeber</TableCell>
+                                        <TableCell align="left">Soll</TableCell>
+                                        <TableCell align="left">Ist</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     <TableRow>
-                                        <TableCell component="th" scope="row">Test</TableCell>
-                                        <TableCell align="right">Daten</TableCell>
-                                        <TableCell align="right">Daten</TableCell>
-                                        <TableCell align="right">Daten</TableCell>
-                                        <TableCell align="right">Daten</TableCell>
+                                        <TableCell align="left">Test</TableCell>
+                                        <TableCell align="left">Daten</TableCell>
+                                        <TableCell align="left">Daten</TableCell>
+                                        <TableCell align="left">Daten</TableCell>
+                                        <TableCell align="left">Daten</TableCell>
                                     </TableRow>
                                 </TableBody>
                             </Table>

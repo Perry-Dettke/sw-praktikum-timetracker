@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Component } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,8 +7,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import { Component } from 'react';
+import {Button, Box} from '@mui/material';
+
 import BuchungDialog from '../dialogs/BuchungDialog';
 
 class Buchung extends Component {
@@ -38,26 +39,40 @@ class Buchung extends Component {
 
         return (
             <div>
-                <Button variant="contained"
+                <Button variant="contained" sx={{width:250}}
                     onClick={this.showBuchungDialog}>
                 +</Button>
-            <TableContainer component={Paper}  sx={{ maxWidth: 800 , margin:"auto"}}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Buchung</TableCell>
-                            <TableCell align="right">löschen</TableCell>
-                            <TableCell align="right">bearbeiten</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell component="th" scope="row">Test</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            
+                <Box
+                sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                '& > :not(style)': {
+                    m: 2,
+                    width: 'max',
+                    height: 300,
+                    alignItems: 'center',
+                    },
+                }}
+                >
+                    <TableContainer component={Paper}  sx={{ maxWidth: 1200 , margin:"auto", }}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align="left"><b>Buchung</b></TableCell>
+                                    <TableCell align="left"><b>löschen</b></TableCell>
+                                    <TableCell align="left"><b>bearbeiten</b></TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell align="left">Test</TableCell>
+                                    <TableCell align="left">Test</TableCell>
+                                    <TableCell align="left">Test</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Box>
             <BuchungDialog show={showBuchung} onClose={this.closeBuchungDialog}/>
             </div>
         );
