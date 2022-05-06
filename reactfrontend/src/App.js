@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Header from './components/layout/Header';
+import Buchung from './components/pages/BuchungSeite';
 
 class App extends React.Component {
   constructor(props) {
@@ -19,11 +20,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Header />
-        <header className="App-header">
-          <p>
-          TEST TIMETRACKER APP
-          </p>
-        </header>
+        <Buchung/>
       </div>
     );
   }
