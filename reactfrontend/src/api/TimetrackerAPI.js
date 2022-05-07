@@ -62,7 +62,7 @@ export default class TimetrackerAPI {
 
     static getAPI() {
         if (this.#api == null) {
-          this.#api = new TeachingbeeAPI();
+          this.#api = new TimetrackerAPI();
         }
         return this.#api;
       }

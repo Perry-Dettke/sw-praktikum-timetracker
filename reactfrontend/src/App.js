@@ -3,6 +3,7 @@ import './App.css';
 import Header from './components/layout/Header';
 import Home from './components/pages/HomeSeite';
 import Buchung from './components/pages/BuchungSeite';
+import Projekt from './components/pages/ProjektSeite';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 
@@ -29,7 +30,7 @@ class App extends React.Component {
             <Routes>
                 <Route path={'/*'} element={<Home/>}/>
                 <Route path={'/home'} element={<Home/>} />
-                {/*<Route path={'/projekt'} element={<Projekt/>} />*/}
+                <Route path={'/projekt'} element={<Projekt/>} />
                 {/*<Route path={'/personen'} element={<Personen/>} />*/}
                 {/*<Route path={'/aktivitaet'} element={<Aktivitaet/>} />*/}
                 <Route path={'/buchung'} element={<Buchung/>} />
