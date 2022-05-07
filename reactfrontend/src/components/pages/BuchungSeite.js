@@ -49,7 +49,7 @@ class Buchung extends Component {
                 '& > :not(style)': {
                     m: 2,
                     width: 'max',
-                    height: 300,
+                    height: 800,
                     alignItems: 'center',
                     },
                 }}
