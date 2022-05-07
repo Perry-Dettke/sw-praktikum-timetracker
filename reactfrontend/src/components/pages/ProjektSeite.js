@@ -6,12 +6,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
+import {Button, Box} from '@mui/material';
 import { Component } from 'react';
 import Stack from '@mui/material/Stack';
-
-
-// import ProjektDialog from '../dialogs/ProjektDialog';
+import ProjektDialog from '../dialogs/ProjektDialog';
 
 class Projekt extends Component {
     
@@ -57,13 +55,25 @@ class Projekt extends Component {
                                     <Button variant="contained">Edit</Button>
                                     <Button variant="outlined" onClick={this.showProjektDialog}>+
                                 </Button>
+                                <Box
+                                sx={{
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                '& > :not(style)': {
+                                    m:2,
+                                    width:'max',
+                                    height: 800,
+                                    alignItems: 'center',
+                                    },
+                                }}
+                                ></Box>
                                 </Stack>
                      
                         </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
-            {/* <ProjektDialog show={showProjekt} onClose={this.closeProjektDialog}/> */}
+            { <ProjektDialog show={showProjekt} onClose={this.closeProjektDialog}/> }
             </div>
         );
     }
