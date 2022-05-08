@@ -4,6 +4,7 @@ import Header from './components/layout/Header';
 import Home from './components/pages/HomeSeite';
 import Buchung from './components/pages/BuchungSeite';
 import Projekt from './components/pages/ProjektSeite';
+import Person from './components/pages/PersonSeite';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 
@@ -31,7 +32,7 @@ class App extends React.Component {
                 <Route path={'/*'} element={<Home/>}/>
                 <Route path={'/home'} element={<Home/>} />
                 <Route path={'/projekt'} element={<Projekt/>} />
-                {/*<Route path={'/personen'} element={<Personen/>} />*/}
+                <Route path={'/person'} element={<Person/>} />
                 {/*<Route path={'/aktivitaet'} element={<Aktivitaet/>} />*/}
                 <Route path={'/buchung'} element={<Buchung/>} />
                 {/*<Route path={'/projekt_uebersicht'} element={<Projektuebersicht/>} />*/}
