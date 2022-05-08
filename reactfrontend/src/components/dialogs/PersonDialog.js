@@ -1,6 +1,12 @@
+import 'date-fns';
 import React, { Component } from 'react';
-import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import PropTypes from 'prop-types';
+import { withStyles, Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, InputLabel, Select, MenuItem } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import DateFnsUtils from '@date-io/date-fns';
+import { format } from 'date-fns';
+import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
+
 
 
 class PersonDialog extends Component {
@@ -22,7 +28,7 @@ class PersonDialog extends Component {
             show ?
                 <div>
                     <Dialog open={show} onClose={this.handleClose} maxWidth='xs'>
-                        <DialogTitle id='form-dialog-title'>Test
+                        <DialogTitle id='form-dialog-title'>Neue Person anlegen
                             <IconButton onClick={this.handleClose}>
                                 <CloseIcon />
                             </IconButton>
