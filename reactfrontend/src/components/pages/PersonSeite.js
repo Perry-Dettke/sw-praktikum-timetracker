@@ -41,7 +41,7 @@ class Person extends Component {
             <div>
                 <Button variant="contained" sx={{width:250}}
                         onClick={this.showPersonDialog}>
-                </Button>
+                Neue Person Anlegen</Button>
                 <Box
                 sx={{
                 display: 'flex',
