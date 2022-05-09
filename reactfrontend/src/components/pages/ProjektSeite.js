@@ -39,7 +39,7 @@ class Projekt extends Component {
 
         return (
             <div>
-     
+            <Button variant="contained" onClick={this.showProjektDialog}>Neues Projekt erstellen</Button>
             <TableContainer component={Paper}  sx={{ maxWidth: 1000, margin:"auto"}}>
                 <Table sx={{ minWidth: 600 }} aria-label="simple table">
                     <TableHead>
@@ -51,10 +51,8 @@ class Projekt extends Component {
                         <TableRow>
                             <TableCell component="th" scope="row">Projekt 1</TableCell>
                                 <Stack spacing={2} direction="row">
-                                    <Button variant="contained">Delete</Button>
-                                    <Button variant="contained">Edit</Button>
-                                    <Button variant="outlined" onClick={this.showProjektDialog}>+
-                                </Button>
+                                    <Button variant="outlined">Delete</Button>
+                                    <Button variant="outlined">Edit</Button>
                                 <Box
                                 sx={{
                                 display: 'flex',
