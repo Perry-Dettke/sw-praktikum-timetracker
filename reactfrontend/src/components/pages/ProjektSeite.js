@@ -50,23 +50,18 @@ class Projekt extends Component {
                     <TableBody>
                         <TableRow>
                             <TableCell component="th" scope="row">Projekt 1</TableCell>
-                                <Stack spacing={2} direction="row">
-                                    <Button variant="outlined">Delete</Button>
-                                    <Button variant="outlined">Edit</Button>
-                                <Box
-                                sx={{
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                '& > :not(style)': {
-                                    m:2,
-                                    width:'max',
-                                    height: 800,
-                                    alignItems: 'center',
-                                    },
-                                }}
-                                ></Box>
-                                </Stack>
-                     
+                            <TableCell align="right"><Button variant="outlined">Delete</Button></TableCell>
+                            <TableCell align=""><Button variant="outlined">Edit</Button></TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell component="th" scope="row">Projekt 2</TableCell>
+                            <TableCell align="right"><Button variant="outlined">Delete</Button></TableCell>
+                            <TableCell align=""><Button variant="outlined">Edit</Button></TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell component="th" scope="row">Projekt 3</TableCell>
+                            <TableCell align="right"><Button variant="outlined">Delete</Button></TableCell>
+                            <TableCell align=""><Button variant="outlined">Edit</Button></TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
@@ -76,5 +71,9 @@ class Projekt extends Component {
         );
     }
 }
+
+
+
+
 
 export default Projekt;
