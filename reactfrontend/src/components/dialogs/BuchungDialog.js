@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import TextField from '@material-ui/core/TextField';
+import InputLabel from "@mui/material/InputLabel";
+
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { MenuItem } from '@mui/material';
 
 
 class BuchungDialog extends Component {
@@ -30,13 +36,13 @@ class BuchungDialog extends Component {
                         <DialogContent>
                             <div>
                                 {/* Projekt auswählen */}
-                                <FormControl sx={{ m: 0, minWidth: 1000 }}>
+                                <FormControl sx={{ m: 0, minWidth: 500 }}>
                                     <InputLabel id="projekt">Projekt</InputLabel>
                                     <Select
                                     labelId="projekt"
                                     name="projekt"
                                     // value={this.state.projekt}
-                                    size="large"
+                                    size="medium"
                                     label="projekt"
                                     autoWidth
                                     onChange={this.handleChange}
@@ -49,13 +55,13 @@ class BuchungDialog extends Component {
                             </div>
                             <div>
                                 {/* Aktivität auswählen */}
-                                <FormControl sx={{ m: 0, minWidth: 1000 }}>
+                                <FormControl sx={{ m: 0, minWidth: 500 }}>
                                     <InputLabel id="aktivitaet">Aktivität</InputLabel>
                                     <Select
                                     labelId="aktivitaet"
                                     name="aktivitaet"
                                     // value={this.stateaktivitaet}
-                                    size="large"
+                                    size="medium"
                                     label="aktivitaet"
                                     autoWidth
                                     onChange={this.handleChange}

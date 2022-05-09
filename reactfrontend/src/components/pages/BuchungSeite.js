@@ -54,7 +54,7 @@ class Buchung extends Component {
                     },
                 }}
                 >
-                    <TableContainer component={Paper}  sx={{ maxWidth: 1000 , margin:"auto", }}>
+                    <TableContainer component={Paper}  sx={{ maxWidth: 1000 , margin:"auto" }}>
                         <Table sx={{ minWidth: 600 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
@@ -63,7 +63,7 @@ class Buchung extends Component {
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell align="left">Test-Buchung</TableCell>
+                                    <TableCell align="left" component="th" scope="row">Buchung 1</TableCell>
                                     <TableCell align="right"><Button variant="outlined">Löschen</Button></TableCell>
                                     <TableCell align=""><Button variant="outlined">Bearbeiten</Button></TableCell>
                                 </TableRow>
