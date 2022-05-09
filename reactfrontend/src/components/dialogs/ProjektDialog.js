@@ -81,6 +81,23 @@ class ProjektDialog extends Component {
 
                                 ></TextField>
                                 </div>
+                                
+                                <FormControl sx={{ m: 0, minWidth: 900 }}>
+                                    <InputLabel id="projektleiter">Projektleiter</InputLabel>
+                                    <Select
+                                    labelId="projektleiter"
+                                    name="projektleiter"
+                                    // value={this.state.projektleiter}
+                                    size="small"
+                                    label="projektleiter"
+                                    autoWidth
+                                    onChange={this.handleChange}
+                                    >
+                                    <MenuItem value={1}>Person 1</MenuItem>
+                                    <MenuItem value={2}>Person 2</MenuItem>
+                                    <MenuItem value={3}>Person 3</MenuItem>
+                                    </Select>
+                                </FormControl>
 
                             </DialogContentText>
                         </DialogContent>
