@@ -6,9 +6,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {Button, Box} from '@mui/material';
+import {Button} from '@mui/material';
 import { Component } from 'react';
-import Stack from '@mui/material/Stack';
+//mport Stack from '@mui/material/Stack';
 import ProjektDialog from '../dialogs/ProjektDialog';
 
 class Projekt extends Component {
