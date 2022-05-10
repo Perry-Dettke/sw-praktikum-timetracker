@@ -102,7 +102,7 @@ export default class TimetrackerAPI {
         })
       }
     
-    addPersonGoogle(personID, googleid) {
+   /* addPersonGoogle(personID, googleid) {
         // Person einer GoogleID zuweisen
         return this.#fetchAdvanced(this.#addPersonGoogleURL(googleid), {
           method: 'POST',
@@ -112,7 +112,7 @@ export default class TimetrackerAPI {
           },
           body: JSON.stringify({ 'personID': personID, 'googleid': googleid })
         })
-      }
+      }*/
     
     updatePerson(personBO) {
         // Person updaten
@@ -226,7 +226,7 @@ export default class TimetrackerAPI {
     
 
 
-    link_person_profile(personID, projektID) {
+   /* link_person_profile(personID, projektID) {
         // Person mit einem Projekt verknüpfen
         return this.#fetchAdvanced(this.#LinkURL(), {
           method: 'PUT',
@@ -240,7 +240,7 @@ export default class TimetrackerAPI {
             resolve(responseJSON);
           })
         })
-      }
+      }*/
 
     
 
@@ -354,13 +354,13 @@ export default class TimetrackerAPI {
 
     deleteBuchung(BuchungBO) {
       // Buchung löschen
-      return this.#fetchAdvanced(this.#deleteBuchungURL(buchungBO.getID()), {
+      return this.#fetchAdvanced(this.#deleteBuchungURL(BuchungBO.getID()), {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json, text/plain',
           'Content-type': 'application/json',
         },
-        body: JSON.stringify(buchungBO)
+        body: JSON.stringify(BuchungBO)
       })
     }
   
@@ -411,13 +411,13 @@ export default class TimetrackerAPI {
 
     deleteEreignis(EreignisBO) {
       // Ereignis löschen
-      return this.#fetchAdvanced(this.#deleteEreignisURL(ereignisBO.getID()), {
+      return this.#fetchAdvanced(this.#deleteEreignisURL(EreignisBO.getID()), {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json, text/plain',
           'Content-type': 'application/json',
         },
-        body: JSON.stringify(ereignisBO)
+        body: JSON.stringify(EreignisBO)
       })
     }
 
