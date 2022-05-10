@@ -1,10 +1,15 @@
 
-from Mapper import Mapper       # so werden keine Import Fehler angezeigt - ist aber noch nicht getestet, da BO noch fehlt
+#from Mapper import Mapper       # so werden keine Import Fehler angezeigt - ist aber noch nicht getestet, da BO noch fehlt
                                 #
-import sys                      #   
-sys.path.append("..")           #
+#import sys                      #   
+#sys.path.append("..")           #
                                 #
-from bo import *                #
+#from bo import *                #
+
+from server.bo.Person import Person
+from server.db.Mapper import Mapper
+
+
 
 class PersonMapper (Mapper):
 
