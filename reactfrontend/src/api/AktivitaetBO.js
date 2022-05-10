@@ -1,7 +1,7 @@
 import BusinessObject from './BusinessObject';
 
 
-export default class ZeitintervallBO extends BusinessObject {
+export default class AktivitaetBO extends BusinessObject {
 
     constructor(letzte_aenderung, bezeichnung, kapazitaet){
         super();
