@@ -7,8 +7,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {Button, Box} from '@mui/material';
-import Stack from '@mui/material/Stack';
+import {Button} from '@mui/material';
+//import Stack from '@mui/material/Stack';
 import PersonDialog from '../dialogs/PersonDialog';
 
 class Person extends Component {
