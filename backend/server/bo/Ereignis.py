@@ -1,6 +1,7 @@
-import BusinessObjekt as bo
+#import BusinessObjekt as bo
+import server.bo.BusinessObjekt as bo
 
-class Ereignis(bo):
+class Ereignis(bo.BusinessObjekt):
     """ Die Klasse BusinessObjekt dient als Basisklasse für alle Objekte in der Klasse Ereignis. """
     def __init__(self):
         """ Definieren der Attribute, der Klasse Ereignis. """

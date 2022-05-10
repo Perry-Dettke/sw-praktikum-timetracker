@@ -1,4 +1,5 @@
-from abc import ABC
+#from abc import ABC
+from abc import ABC, abstractmethod
 
 class BusinessObjekt(ABC):
     # Die abstrakte Klasse ABC dient als Basiskalsse für alle Objekte in der Klasse BusinessObjekt

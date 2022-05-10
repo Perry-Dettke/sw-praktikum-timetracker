@@ -1,6 +1,7 @@
-from bo import BusinessObjekt
+#from bo import BusinessObjekt
+import server.bo.BusinessObjekt as bo
 
-class Person(BusinessObjekt):
+class Person(bo.BusinessObjekt):
     """ Die Klasse BusinessObjekt dient als Basisklasse für alle Objekte in der Klasse Person. """
     def __init__(self):
         """ Definieren der Attribute, der Klasse Person. """
