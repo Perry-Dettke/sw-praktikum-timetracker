@@ -44,7 +44,7 @@ class Projekt extends Component {
                 <Table sx={{ minWidth: 600 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Projekte</TableCell>
+                            <TableCell align="left"><b>Projekte</b></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
