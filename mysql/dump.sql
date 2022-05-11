@@ -4,6 +4,11 @@
 -- ------------------------------------------------------
 -- Server version	8.0.28
 
+DROP DATABASE IF EXISTS timetracker;
+CREATE DATABASE timetracker;
+
+USE timetracker;
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -16,28 +21,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `Aktivitaet`
+-- Table structure for table `aktivitaet`
 --
 
-DROP TABLE IF EXISTS `Aktivitaet`;
+DROP TABLE IF EXISTS `aktivitaet`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Aktivitaet` (
+CREATE TABLE `aktivitaet` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `letzte_aenderung` varchar(45) NOT NULL,
+  `letzte_aenderung` datetime NOT NULL,
   `bezeichnung` varchar(100) NOT NULL,
   `kapazitaet` decimal(4,2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Aktivitaet`
+-- Dumping data for table `aktivitaet`
 --
 
-LOCK TABLES `Aktivitaet` WRITE;
-/*!40000 ALTER TABLE `Aktivitaet` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Aktivitaet` ENABLE KEYS */;
+LOCK TABLES `aktivitaet` WRITE;
+/*!40000 ALTER TABLE `aktivitaet` DISABLE KEYS */;
+/*!40000 ALTER TABLE `aktivitaet` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -49,7 +54,7 @@ DROP TABLE IF EXISTS `arbeitszeitkonto`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `arbeitszeitkonto` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `letzte_aenderung` varchar(45) NOT NULL,
+  `letzte_aenderung` datetime NOT NULL,
   `arbeitsleistung` decimal(4,2) NOT NULL,
   `buchung_id` int NOT NULL,
   PRIMARY KEY (`id`),
@@ -76,14 +81,11 @@ DROP TABLE IF EXISTS `buchung`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `buchung` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `letzte_aenderung` varchar(45) NOT NULL,
+  `letzte_aenderung` datetime NOT NULL,
   `person_id` int NOT NULL,
-  `arbeitszeitkonto_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `person_id` (`person_id`),
-  KEY `arbeitszeitkonto_id` (`arbeitszeitkonto_id`),
-  CONSTRAINT `buchung_fk_1` FOREIGN KEY (`person_id`) REFERENCES `Person` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `buchung_fk_2` FOREIGN KEY (`arbeitszeitkonto_id`) REFERENCES `Arbeitszeitkonto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `buchung_fk_1` FOREIGN KEY (`person_id`) REFERENCES `Person` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -97,39 +99,40 @@ LOCK TABLES `buchung` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Ereignis`
+-- Table structure for table `ereignis`
 --
 
-DROP TABLE IF EXISTS `Ereignis`;
+DROP TABLE IF EXISTS `ereignis`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Ereignis` (
+CREATE TABLE `ereignis` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `letzte_aenderung` varchar(45) NOT NULL,
+  `letzte_aenderung` datetime NOT NULL,
   `erstellungs_zeitpunkt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Ereignis`
+-- Dumping data for table `ereignis`
 --
 
-LOCK TABLES `Ereignis` WRITE;
-/*!40000 ALTER TABLE `Ereignis` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Ereignis` ENABLE KEYS */;
+LOCK TABLES `ereignis` WRITE;
+/*!40000 ALTER TABLE `ereignis` DISABLE KEYS */;
+INSERT INTO `ereignis` VALUES (1,'2022-05-11 11:33:33','9999-12-31 23:33:33');
+/*!40000 ALTER TABLE `ereignis` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Person`
+-- Table structure for table `person`
 --
 
-DROP TABLE IF EXISTS `Person`;
+DROP TABLE IF EXISTS `person`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Person` (
+CREATE TABLE `person` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `letzte_aenderung` varchar(45) NOT NULL,
+  `letzte_aenderung` datetime NOT NULL,
   `vor_name` varchar(45) NOT NULL,
   `nach_name` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
@@ -146,12 +149,12 @@ CREATE TABLE `Person` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Person`
+-- Dumping data for table `person`
 --
 
-LOCK TABLES `Person` WRITE;
-/*!40000 ALTER TABLE `Person` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Person` ENABLE KEYS */;
+LOCK TABLES `person` WRITE;
+/*!40000 ALTER TABLE `person` DISABLE KEYS */;
+/*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -163,7 +166,7 @@ DROP TABLE IF EXISTS `projekt`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `projekt` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `letzte_aenderung` varchar(45) NOT NULL,
+  `letzte_aenderung` datetime NOT NULL,
   `bezeichnung` varchar(45) NOT NULL,
   `auftraggeber` varchar(45) NOT NULL,
   `aktivitaet_id` int NOT NULL,
@@ -219,7 +222,7 @@ DROP TABLE IF EXISTS `zeitintervall`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `zeitintervall` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `letzte_aenderung` varchar(45) NOT NULL,
+  `letzte_aenderung` datetime NOT NULL,
   `start` decimal(4,2) NOT NULL,
   `ende` decimal(4,2) NOT NULL,
   PRIMARY KEY (`id`)
@@ -234,6 +237,10 @@ LOCK TABLES `zeitintervall` WRITE;
 /*!40000 ALTER TABLE `zeitintervall` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zeitintervall` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'timetracker'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -244,4 +251,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-03 11:23:25
+-- Dump completed on 2022-05-11 13:18:40

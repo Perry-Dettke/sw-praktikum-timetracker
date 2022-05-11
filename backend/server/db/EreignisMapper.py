@@ -157,3 +157,4 @@ if (__name__ == "__main__"):
         for ereignis in result:
             print(ereignis)
 
+            print(type(ereignis))

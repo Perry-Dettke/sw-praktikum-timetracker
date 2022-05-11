@@ -41,7 +41,7 @@ bo = api.model('BusinessObject', {
     'id': fields.Integer(attribute='_id',
                          description='Der Unique Identifier eines Business Object'),
 
-    'last_change': fields.String(attribute='_person',                                          #hier eventuell DateTime
+    'last_change': fields.DateTime(attribute='_person',                                          #hier eventuell DateTime
                                 description='Die Person die am BO die letzte Änderung durchgeführt hat'),
     
 })
@@ -100,7 +100,7 @@ zeitintervall = api.inherit('Zeitintervall', bo, {
                             description='Ende eines Zeitintervall'),
 })
 
-ereignis = api.inherit('Ereignis', bo, zeitintervall, {
+ereignis = api.inherit('Ereignis', bo, {
     'erstellungs_zeitpunkt': fields.DateTime(attribute='_erstellungs_zeitpunkt',       #DateTime richtig?
                             description='Erstellungszeitpunkt eines Ereignis'),
 })
