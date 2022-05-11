@@ -68,7 +68,7 @@ buchung = api.inherit('Buchung', bo, {
 })
 
 person = api.inherit('Person', bo, {
-    'vor_name': fields.String(attribute='_nach_name',
+    'vor_name': fields.String(attribute='_vor_name',
                                 description='Vorname einer Person'),
     'nach_name': fields.String(attribute='_nach_name',
                                 description='Nachname einer Person'),
