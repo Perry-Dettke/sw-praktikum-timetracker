@@ -1,7 +1,7 @@
 '''Unser Service basiert auf Flask'''
-from curses import erasechar
-from distutils.command.build import build
-from re import A
+#from curses import erasechar
+#from distutils.command.build import build
+#from re import A
 from flask import Flask
 '''Auf Flask aufbauend nutzen wir RestX'''
 from flask_restx import Api, Resource, fields
@@ -18,7 +18,7 @@ from server.bo.Projekt import Projekt
 from server.bo.Zeitintervall import Zeitintervall
 
 '''Außerdem nutzen wir einen selbstgeschriebenen Decorator, der die Authentifikation übernimmt'''
-from SecurityDecorator import secured
+#from SecurityDecorator import secured
 
 """Hier wird Flask instanziert"""
 app = Flask(__name__)
@@ -148,7 +148,7 @@ class AktivitaetOperations(Resource):
 @timetracker.route('/aktivitaet/<int:id>')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @timetracker.param('id', 'Die ID des Aktivitaet-Objekts.')
-class AktivitaetIDperations(Resource):
+class AktivitaetIDOperations(Resource):
 
     def delete(self, id):
         """Löschen eines bestimmten Aktivitaet-Objekts.
@@ -165,7 +165,7 @@ class AktivitaetIDperations(Resource):
 
     @timetracker.marshal_with(aktivitaet, code=200)
     @timetracker.expect(aktivitaet)  # Wir erwarten ein Aktivitaet-Objekt von Client-Seite.
-    @secured
+    #@secured
     def put(self, id):
         """Update eines bestimmten Aktivitaet-Objekts."""
         adm = TimetrackerAdministration()
@@ -738,6 +738,7 @@ class ZeitintervallIDOperations(Resource):
         else:
             return '', 500 
 
-
+if __name__ == '__main__':
+    app.run(debug=True)
 
 

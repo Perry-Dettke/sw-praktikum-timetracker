@@ -1,11 +1,40 @@
 import * as React from 'react';
 import { Component } from 'react';
 import {Paper, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
+import TimetrackerAPI from "../api/TimetrackerAPI";
 
 
 class Home extends Component {
 
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+          person: null
+        
+        };
+    }
+    componentDidMount() {
+        this.getPerson();
+    }
+
+
+    getPerson = () => {
+        TimetrackerAPI.getAPI().getPerson(this.state.getPerson()).then((person) =>
+            this.setState({
+              person: person,
+            })
+          ).catch((e) =>
+            this.setState({
+              person: null,
+            })
+          );
+      };
+
+
+
     render(){
+        const { person } = this.state;
         return(
             <div>
                 <Box
@@ -27,6 +56,9 @@ class Home extends Component {
                         </h1>
                         <p>
                             Name:
+                        </p>
+                        <p>
+                        {person.getFname()}
                         </p>
                         <p>
                             Email:

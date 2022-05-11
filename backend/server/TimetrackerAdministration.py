@@ -1,4 +1,4 @@
-from re import A
+#from re import A
 from .bo.Aktivitaet import Aktivitaet
 from .bo.Arbeitszeitkonto import Arbeitszeitkonto
 from .bo.Buchung import Buchung

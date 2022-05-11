@@ -9,6 +9,10 @@ import Select from "@mui/material/Select";
 import { MenuItem } from '@mui/material';
 
 
+
+
+
+
 class ProjektDialog extends Component {
 
     constructor(props) {
@@ -33,7 +37,7 @@ class ProjektDialog extends Component {
         return (
             show ?
                 <div>
-                    <Dialog open={show} onClose={this.handleClose} maxWidth='xs'>
+                    <Dialog open={show} onClose={this.handleClose} maxWidth='xl'>
                         <DialogTitle id='form-dialog-title'>Neues Projekt
                             <IconButton onClick={this.handleClose}>
                                 <CloseIcon />
@@ -53,21 +57,19 @@ class ProjektDialog extends Component {
                                 ></TextField>
                                 </div>
                                 <div>
-                                <FormControl sx={{ m: 0, minWidth: 900 }}>
-                                    <InputLabel id="projektleiter">Projektleiter</InputLabel>
-                                    <Select
+                                <FormControl fullWidth>
+                                <InputLabel id="projektleiter">Projektleiter</InputLabel>
+                                 <Select
                                     labelId="projektleiter"
-                                    name="projektleiter"
-                                    // value={this.state.projektleiter}
-                                    size="small"
-                                    label="projektleiter"
-                                    autoWidth
+                                    id="projektleiter"
+                                    // value={projektleiter}
+                                    label="Projektleiter"
                                     onChange={this.handleChange}
-                                    >
-                                    <MenuItem value={1}>Person 1</MenuItem>
-                                    <MenuItem value={2}>Person 2</MenuItem>
-                                    <MenuItem value={3}>Person 3</MenuItem>
-                                    </Select>
+                                 >
+                                    <MenuItem value={1}>Projektleiter 1</MenuItem>
+                                    <MenuItem value={2}>Projektleiter 2</MenuItem>
+                                    <MenuItem value={3}>Projektleiter 3</MenuItem>
+                                </Select>
                                 </FormControl>
                                 </div>
                                 <div><TextField
@@ -81,24 +83,65 @@ class ProjektDialog extends Component {
 
                                 ></TextField>
                                 </div>
-                                
-                                <FormControl sx={{ m: 0, minWidth: 900 }}>
-                                    <InputLabel id="projektleiter">Projektleiter</InputLabel>
-                                    <Select
-                                    labelId="projektleiter"
-                                    name="projektleiter"
-                                    // value={this.state.projektleiter}
-                                    size="small"
-                                    label="projektleiter"
-                                    autoWidth
-                                    onChange={this.handleChange}
-                                    >
-                                    <MenuItem value={1}>Person 1</MenuItem>
-                                    <MenuItem value={2}>Person 2</MenuItem>
-                                    <MenuItem value={3}>Person 3</MenuItem>
-                                    </Select>
-                                </FormControl>
+                              
+                            <FormControl fullWidth>
+                            <InputLabel id="person">Person</InputLabel>
+                            <Select
+                                labelId="person"
+                                id="person"
+                                // value={person}
+                                label="Person"
+                                onChange={this.handleChange}
+                            >
+                                <MenuItem value={1}>Person 1</MenuItem>
+                                <MenuItem value={2}>Person 2</MenuItem>
+                                <MenuItem value={3}>Person 3</MenuItem>
+                            </Select>
+                            </FormControl>
 
+                            <FormControl fullWidth>
+                            <InputLabel id="soll_Stunden">Soll Stunden</InputLabel>
+                            <Select
+                                labelId="soll_stunden"
+                                id="soll_stunden"
+                                // value={soll_stunden}
+                                label="Soll Stunden"
+                                onChange={this.handleChange}
+                            >
+                                <MenuItem value={1}>1 Stunde</MenuItem>
+                                <MenuItem value={2}>2 Stunden</MenuItem>
+                                <MenuItem value={3}>3 Stunden</MenuItem>
+                            </Select>
+                            </FormControl>
+                            
+                            <TextField
+                                        label="Aktivität"
+                                        variant="outlined"
+                                        name="name"
+                                        size="small"
+                                        // value={this.state.name}
+                                        onChange={this.handleChange}
+                                        autocomplete='off'
+                            ></TextField>
+
+                            <FormControl fullWidth>
+                            <InputLabel id="soll_Stunden">Soll Stunden</InputLabel>
+                            <Select
+                                labelId="soll_stunden"
+                                id="soll_stunden"
+                                // value={soll_stunden}
+                                label="Soll Stunden"
+                                onChange={this.handleChange}
+                            >
+                                <MenuItem value={1}>1 Stunde</MenuItem>
+                                <MenuItem value={2}>2 Stunden</MenuItem>
+                                <MenuItem value={3}>3 Stunden</MenuItem>
+                            </Select>
+                            </FormControl>
+                        
+
+
+                  
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>

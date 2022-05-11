@@ -1,6 +1,8 @@
-import BusinessObjekt as bo
+#import BusinessObjekt as bo
+import server.bo.BusinessObjekt as bo
 
-class Buchung(bo):
+
+class Buchung(bo.BusinessObjekt):
     # Die Klasse BusinessObjekt dient als Basisklasse für alle Objekte in der Klasse Buchung
     def __init__(self):
         # Definieren der Attribute, der Klasse Buchung
