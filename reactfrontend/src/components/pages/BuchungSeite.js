@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {Button, Box} from '@mui/material';
+import {Button} from '@mui/material';
 
 import BuchungDialog from '../dialogs/BuchungDialog';
 
@@ -42,18 +42,6 @@ class Buchung extends Component {
                 <Button variant="contained" sx={{width:250}}
                     onClick={this.showBuchungDialog}>
                 Neue Buchung erstellen</Button>
-                <Box
-                sx={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                '& > :not(style)': {
-                    m: 2,
-                    width: 'max',
-                    height: 800,
-                    alignItems: 'center',
-                    },
-                }}
-                >
                     <TableContainer component={Paper}  sx={{ maxWidth: 1000 , margin:"auto" }}>
                         <Table sx={{ minWidth: 600 }} aria-label="simple table">
                             <TableHead>
@@ -70,7 +58,6 @@ class Buchung extends Component {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </Box>
            { <BuchungDialog show={showBuchung} onClose={this.closeBuchungDialog}/> }
             </div>
         );
