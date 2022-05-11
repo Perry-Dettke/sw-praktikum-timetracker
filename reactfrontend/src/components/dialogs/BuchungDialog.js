@@ -27,7 +27,7 @@ class BuchungDialog extends Component {
         return (
             show ?
                 <div>
-                    <Dialog open={show} onClose={this.handleClose} maxWidth='xs'>
+                    <Dialog open={show} onClose={this.handleClose} maxWidth='xl'>
                         <DialogTitle id='form-dialog-title'>Neue Buchung
                             <IconButton onClick={this.handleClose}>
                                 <CloseIcon />
