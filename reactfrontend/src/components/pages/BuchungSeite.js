@@ -41,7 +41,7 @@ class Buchung extends Component {
             <div>
                 <Button variant="contained" sx={{width:250}}
                     onClick={this.showBuchungDialog}>
-                +</Button>
+                Neue Buchung erstellen</Button>
                 <Box
                 sx={{
                 display: 'flex',
@@ -54,26 +54,24 @@ class Buchung extends Component {
                     },
                 }}
                 >
-                    <TableContainer component={Paper}  sx={{ maxWidth: 1200 , margin:"auto", }}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableContainer component={Paper}  sx={{ maxWidth: 1000 , margin:"auto" }}>
+                        <Table sx={{ minWidth: 600 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
                                     <TableCell align="left"><b>Buchung</b></TableCell>
-                                    <TableCell align="left"><b>löschen</b></TableCell>
-                                    <TableCell align="left"><b>bearbeiten</b></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell align="left">Test</TableCell>
-                                    <TableCell align="left">Test</TableCell>
-                                    <TableCell align="left">Test</TableCell>
+                                    <TableCell align="left" component="th" scope="row">Buchung 1</TableCell>
+                                    <TableCell align="right"><Button variant="outlined">Löschen</Button></TableCell>
+                                    <TableCell align=""><Button variant="outlined">Bearbeiten</Button></TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
                     </TableContainer>
                 </Box>
-            <BuchungDialog show={showBuchung} onClose={this.closeBuchungDialog}/>
+           { <BuchungDialog show={showBuchung} onClose={this.closeBuchungDialog}/> }
             </div>
         );
     }
