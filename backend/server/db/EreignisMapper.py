@@ -17,7 +17,7 @@ class EreignisMapper(Mapper):
         """
         result = []
 
-        cursor = self._connection.cursor()
+        cursor = self._cnx.cursor()
 
         command = "SELECT id, letzte_aenderung, erstellungs_zeitpunkt FROM ereignis"
 
@@ -31,7 +31,7 @@ class EreignisMapper(Mapper):
             ereignis.set_erstellungs_zeitpunkt(erstellungs_zeitpunkt)
             result.append(ereignis)
 
-        self._connection.commit()
+        self._cnx.commit()
         cursor.close()
 
         return result
