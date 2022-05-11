@@ -158,8 +158,9 @@ class ArbeitszeitkontoMapper (Mapper):
         um die grundsätzliche Funktion zu überprüfen.
     
         Anmerkung: Nicht professionell aber hilfreich..."""
-if (__name__ == "__main__"):
-    with ArbeitszeitkontoMapper() as mapper:
-        result = mapper.find_all()
-        for t in result:
-            print(t)
+
+
+with ArbeitszeitkontoMapper() as mapper:
+    result = mapper.find_all()
+    for t in result:    
+        print(t)

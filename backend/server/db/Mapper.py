@@ -42,10 +42,10 @@ class Mapper (AbstractContextManager, ABC):
         """Lies alle Tupel aus und gib sie als Objekte zurück."""
         pass
 
-    @abstractmethod
-    def find_by_key(self, id):
-        """Lies den einen Tupel mit der gegebenen ID (vgl. Primärschlüssel) aus."""
-        pass
+    # @abstractmethod
+    # def find_by_key(self, id):
+    #     """Lies den einen Tupel mit der gegebenen ID (vgl. Primärschlüssel) aus."""
+    #     pass
 
     @abstractmethod
     def insert(self, object):
