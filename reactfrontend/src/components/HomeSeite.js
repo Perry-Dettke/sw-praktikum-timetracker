@@ -4,9 +4,9 @@ import {Paper, Box, Table, TableBody, TableCell, TableContainer, TableHead, Tabl
 import TimetrackerAPI from "../api/TimetrackerAPI";
 
 
-class Home extends Component {
+ class Home extends Component {
 
-    constructor(props) {
+  /*  constructor(props) {
         super(props);
     
         this.state = {
@@ -31,10 +31,9 @@ class Home extends Component {
           );
       };
 
-
+*/
 
     render(){
-        const { person } = this.state;
         return(
             <div>
                 <Box
@@ -57,9 +56,7 @@ class Home extends Component {
                         <p>
                             Name:
                         </p>
-                        <p>
-                        {person.getFname()}
-                        </p>
+                      
                         <p>
                             Email:
                         </p>
