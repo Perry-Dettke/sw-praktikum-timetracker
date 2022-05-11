@@ -41,7 +41,7 @@ bo = api.model('BusinessObject', {
     'id': fields.Integer(attribute='_id',
                          description='Der Unique Identifier eines Business Object'),
 
-    'last_change': fields.DateTime(attribute='_person',                                          #hier eventuell DateTime
+    'last_change': fields.DateTime(attribute='_last_change',                                          #hier eventuell DateTime
                                 description='Die Person die am BO die letzte Änderung durchgeführt hat'),
     
 })
@@ -449,7 +449,7 @@ class EreignisIDOperations(Resource):
         Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        er = adm.get_ereignis_by_key(id)
+        er = adm.get_ereignis_by_id(id)
 
         if er is not None:
             return er

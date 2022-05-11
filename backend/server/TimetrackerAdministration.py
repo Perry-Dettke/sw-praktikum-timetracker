@@ -154,10 +154,10 @@ class TimetrackerAdministration (object):
         with EreignisMapper() as mapper:
             return mapper.insert(ereignis)
 
-    def get_ereignis_by_id(self, key):
+    def get_ereignis_by_id(self, id):
         """Das Ereignis mit der gegebenen ID auslesen."""
         with EreignisMapper() as mapper:
-            return mapper.find_by_key(key)
+            return mapper.find_by_id(id)
 
     def get_ereignis_by_erstellungs_zeitpunkt(self, erstellungs_zeitpunkt):       
         """Das Ereignis mit dem gegebenen Erstellungszeitpunkt auslesen."""
