@@ -6,6 +6,7 @@ import Buchung from './components/pages/BuchungSeite';
 import Projekt from './components/pages/ProjektSeite';
 import Person from './components/pages/PersonSeite';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import TimetrackerAPI from './api/TimetrackerAPI';
 
 
 class App extends React.Component {
@@ -21,6 +22,9 @@ class App extends React.Component {
 		};
 	}
   
+
+
+
   /** Renders the whole app */
   render(){
     return (
@@ -37,6 +41,7 @@ class App extends React.Component {
                 <Route path={'/buchung'} element={<Buchung/>} />
                 {/*<Route path={'/projekt_uebersicht'} element={<Projektuebersicht/>} />*/}
                 {/*<Route path={'/personen_uebersicht'} element={<Personenuebersicht/>} />*/}
+
             </Routes> 
           </div>
         </div>

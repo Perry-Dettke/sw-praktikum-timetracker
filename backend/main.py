@@ -30,7 +30,7 @@ api = Api(app, version='1.0', title='Timetracker API',
           description='Eine rudimentäre Demo-API für Listenerstellung.')
 
 """Namespaces"""
-timetracker = api.namespace('app', description="Funktionen der App")
+timetracker = api.namespace('timetracker', description="Funktionen der App")
 
 
 """Nachfolgend werden analog zu den BusinessObject-Klassen transferierbare Strukturen angelegt."""
