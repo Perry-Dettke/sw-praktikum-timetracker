@@ -33,6 +33,20 @@ import TimetrackerAPI from "../api/TimetrackerAPI";
 
 */
 
+
+componentDidMount() {
+  this.getEreignis(); //name frei wählbar (sollte Sinn ergeben)
+}
+
+
+
+
+
+getEreignis =  () => {     // gleicher name wie in componentdidmount
+    TimetrackerAPI.getAPI().getEreignis().then((response) => 
+    console.log(response))
+}
+
     render(){
         return(
             <div>
