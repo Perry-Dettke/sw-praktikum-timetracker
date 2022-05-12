@@ -45,7 +45,8 @@ export default class TimetrackerAPI {
     #deleteBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
 
     #addEreignisURL = () => `${this.#ServerBaseURL}/ereignis`;
-    #getEreignisURL = (id) => `${this.#ServerBaseURL}/ereignis/${id}`;
+    #getEreignisURL = () => `${this.#ServerBaseURL}/ereignis`;
+    #getEreignisbyIDURL = (id) => `${this.#ServerBaseURL}/ereignis/${id}`;
     //#updateEreignisURL = (id) => `${this.#ServerBaseURL}/ereignis/${id}`;
     #deleteEreignisURL = (id) => `${this.#ServerBaseURL}/ereignis/${id}`;
 
@@ -364,15 +365,31 @@ export default class TimetrackerAPI {
       })
     }
   
-    getEreignis(ereignisID) {
+    getEreignisbyID(ereignisID) {
       // Ereignis abfragen
-      return this.#fetchAdvanced(this.#getEreignisURL(ereignisID)).then((responseJSON) => {
+      return this.#fetchAdvanced(this.#getEreignisbyIDURL(ereignisID)).then((responseJSON) => {
         let ereignis = EreignisBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
           resolve(ereignis)
         })
       })
     }
+
+    getEreignis() {
+      // Ereignis abfragen
+      return this.#fetchAdvanced(this.#getEreignisURL()).then((responseJSON) => {
+        let ereignis = EreignisBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(ereignis)
+        })
+      })
+    }
+
+
+
+
+
+
   
     addEreignis(ereignisBO) {
       // Ereignis neu anlegen
