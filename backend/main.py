@@ -282,6 +282,7 @@ class ArbeitszeitkontoIDOperations(Resource):
 
 
 
+
 #Buchung related
 @timetracker.route('/buchung')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
