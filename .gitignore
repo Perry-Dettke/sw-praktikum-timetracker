@@ -141,4 +141,3 @@ yarn-debug.log*
 yarn-error.log*
 frontend/package-lock.json
 .vscode/settings.json
-reactfrontend/src/components/dialogs/PersonDialog.js

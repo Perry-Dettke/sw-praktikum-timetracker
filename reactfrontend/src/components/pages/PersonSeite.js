@@ -48,19 +48,19 @@ class Person extends Component {
                     </TableHead>
                     <TableBody>
                         <TableRow>
-                            <TableCell component="th" scope="row">Person 1</TableCell>
-                            <TableCell align="right"><Button variant="outlined">Löschen</Button></TableCell>
-                            <TableCell align=""><Button variant="outlined">Bearbeiten</Button></TableCell>
+                            <TableCell component="th" scope="row">Projekt 1</TableCell>
+                            <TableCell align="right"><Button variant="outlined">Delete</Button></TableCell>
+                            <TableCell align=""><Button variant="outlined">Edit</Button></TableCell>
                        </TableRow>
                         <TableRow>
-                            <TableCell component="th" scope="row">Person 2</TableCell>
-                            <TableCell align="right"><Button variant="outlined">Löschen</Button></TableCell>
-                            <TableCell align=""><Button variant="outlined">Bearbeiten</Button></TableCell>
+                            <TableCell component="th" scope="row">Projekt 2</TableCell>
+                            <TableCell align="right"><Button variant="outlined">Delete</Button></TableCell>
+                            <TableCell align=""><Button variant="outlined">Edit</Button></TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell component="th" scope="row">Person 3</TableCell>
-                            <TableCell align="right"><Button variant="outlined">Löschen</Button></TableCell>
-                            <TableCell align=""><Button variant="outlined">Bearbeiten</Button></TableCell>
+                            <TableCell component="th" scope="row">Projekt 3</TableCell>
+                            <TableCell align="right"><Button variant="outlined">Delete</Button></TableCell>
+                            <TableCell align=""><Button variant="outlined">Edit</Button></TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
