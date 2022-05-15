@@ -27,9 +27,9 @@ class ProjektMapper (Mapper):
             projekt = Projekt()
             projekt.set_id(id)
             projekt.set_letzte_aenderung(letzte_aenderung)
-            projekt.bezeichnung(bezeichnung)
-            projekt.auftraggeber(auftraggeber)
-            projekt.aktivitaet_id(aktivitaet_id)
+            projekt.set_bezeichnung(bezeichnung)
+            projekt.set_auftraggeber(auftraggeber)
+            projekt.set_aktivitaet_id(aktivitaet_id)
             result.append(projekt)
 
         self._cnx.commit()
