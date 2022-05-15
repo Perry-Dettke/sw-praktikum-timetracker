@@ -178,11 +178,11 @@ export default class TimetrackerAPI {
         })
       }
 
-    getProjekt() {
-      // Projekt abfragen
-       return this.#fetchAdvanced(this.#getProjektURL()).then((responseJSON) => {          
-        let projekt = ProjektBO.fromJSON(responseJSON);  
-        return new Promise(function (resolve) {
+      getProjekt() {
+        // Projekt abfragen
+        return this.#fetchAdvanced(this.#getProjektURL()).then((responseJSON) => {
+          let projekt = ProjektBO.fromJSON(responseJSON);
+          return new Promise(function (resolve) {
             resolve(projekt)
           })
         })
