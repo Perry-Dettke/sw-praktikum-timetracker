@@ -66,7 +66,7 @@ class Projekt extends Component {
                     </TableBody>
                 </Table>
             </TableContainer>
-            { <ProjektDialog show={showProjekt} onClose={this.closeProjektDialog}/> }
+            { <ProjektDialog show={showProjekt} onClose={this.closeProjektDialog}/> } 
             </div>
         );
     }
