@@ -18,19 +18,18 @@ class Buchung extends Component {
         super(props);
 
     this.state = {
-        showBuchung: false
+        showBuchung: false,
+        projekt: null
     };
     }
 
 
     componentDidMount() {
-        console.log("Test")
         this.getProjekt();
       }
 
 
       getProjekt = () => {
-        console.log("Hallo")
       TimetrackerAPI.getAPI()
         .getProjekt().then((projekt) =>
           this.setState({
