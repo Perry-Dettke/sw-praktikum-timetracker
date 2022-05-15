@@ -6,9 +6,6 @@ import CloseIcon from '@mui/icons-material/Close';
 //import DateFnsUtils from '@date-io/date-fns';
 //import { format } from 'date-fns';
 //import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
-
-
-
 class PersonDialog extends Component {
 
     constructor(props) {
