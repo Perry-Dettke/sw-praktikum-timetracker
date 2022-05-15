@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import {Button} from '@mui/material';
 
 import BuchungDialog from '../dialogs/BuchungDialog';
+import TimetrackerAPI from "../../api/TimetrackerAPI";
 
 class Buchung extends Component {
     
@@ -20,6 +21,32 @@ class Buchung extends Component {
         showBuchung: false
     };
     }
+
+
+    componentDidMount() {
+        console.log("Test")
+        this.getProjekt();
+      }
+
+
+      getProjekt = () => {
+        console.log("Hallo")
+      TimetrackerAPI.getAPI()
+        .getProjekt().then((projekt) =>
+          this.setState({
+            projekt: projekt,
+          })
+        ).catch((e) =>
+          this.setState({
+            projekt: null,
+          })
+        );
+    };
+
+
+
+
+
 
     //BuchungDialog anzeigen
     showBuchungDialog = () => {

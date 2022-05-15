@@ -23,7 +23,9 @@ export default class TimetrackerAPI {
     // #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
 
     #addProjektURL = () => `${this.#ServerBaseURL}/projekt`;
-    #getProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
+    #getProjektbyIDURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
+    #getProjektURL = () => `${this.#ServerBaseURL}/projekt`;
+
     #updateProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
     #deleteProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
 
@@ -41,6 +43,7 @@ export default class TimetrackerAPI {
 
     #addBuchungURL = () => `${this.#ServerBaseURL}/buchung`;
     #getBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
+    
     //#updateBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
     #deleteBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
 
