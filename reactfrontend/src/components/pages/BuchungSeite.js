@@ -11,6 +11,8 @@ import {Button, Box} from '@mui/material';
 
 import BuchungDialog from '../dialogs/BuchungDialog';
 import TimetrackerAPI from "../../api/TimetrackerAPI";
+import ProjektBO from '../../api/ProjektBO'
+
 
 class Buchung extends Component {
     
@@ -50,7 +52,7 @@ class Buchung extends Component {
     //BuchungDialog anzeigen
     showBuchungDialog = () => {
         this.setState({ showBuchung: true}, () => {
-            console.log(this.state.showBuchung);
+            console.log(this.state.projekt)
         });
     };
 
@@ -61,7 +63,7 @@ class Buchung extends Component {
     
 
     render() {
-        const {showBuchung} = this.state;
+        const {showBuchung, projekt } = this.state;
 
         return (
             <div>
@@ -97,7 +99,8 @@ class Buchung extends Component {
                         </Table>
                     </TableContainer>
                 </Box>
-           { <BuchungDialog show={showBuchung} onClose={this.closeBuchungDialog}/> }
+           { <BuchungDialog show={showBuchung} projekt={projekt} onClose={this.closeBuchungDialog}/> }
+
             </div>
         );
     }
