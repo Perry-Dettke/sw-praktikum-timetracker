@@ -7,6 +7,7 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuItem } from '@mui/material';
+import AktivitaetBO from '../../api/AktivitaetBO';
 
 
 class AktivitaetDialog extends Component {
@@ -71,6 +72,9 @@ class AktivitaetDialog extends Component {
                                     <MenuItem value={3}>Aktivität 3</MenuItem>
                                     </Select>
                                 </FormControl>
+                            </div>
+                            <div>
+                            <TextField type='text' id='aktivitaet' label='Soll-Stunden:' />
                             </div>
                         </DialogContent>
                         <DialogActions>
