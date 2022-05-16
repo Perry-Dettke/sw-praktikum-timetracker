@@ -23,4 +23,14 @@ export default class BusinessObject {
     getLetzte_aenderung() {
       return this.letzte_aenderung
     }
+  
+
+  toString() {
+    let result = "";
+    for (var prop in this) {
+      result += prop + ": " + this[prop] + " ";
+    }
+
+    return result;
   }
+}

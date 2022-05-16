@@ -17,20 +17,30 @@ class BuchungDialog extends Component {
     constructor(props) {
         super(props);
 
-
-        let bezeichnung=''
-        if (props.projekt) {
-            bezeichnung = props.projekt.getBezeichnung();
-        }
+        // let projektliste='', bezeichnung=""
+        // if (this.props.projekt) {
+        //     projektliste = this.props.projekt
+        //     bezeichnung = this.props.projekt.getBezeichnung();
+        // }
 
 
         this.state = {
-            bezeichnung: bezeichnung,
+            bezeichnung: "",
+            projekt: "",
+            projektliste: [],
+            testliste: ["1","2","3"],
         }
 
     }
 
-       
+    ProjektList() {
+        var api = TimetrackerAPI.getAPI();
+        api.getProjekt().then((projektBOs) => {
+          this.setState({
+            projektliste: projektBOs,
+          });
+        });
+      }
 
     textFieldValueChange = (event) => {
         const value = event.target.value;
@@ -64,9 +74,20 @@ class BuchungDialog extends Component {
         this.props.onClose();
     }
 
+
+    componentDidMount() {
+        this.ProjektList();
+      }
+
     render() {
-        const { show, projekt } = this.props
-        const { bezeichnung } = this.state
+        const { show, projekt } = this.props;
+        const { bezeichnung, projektliste, testliste } = this.state;
+        console.log("Projektliste", projektliste)
+        console.log(typeof projektliste)
+        console.log("Testloste", typeof testliste)
+        console.log(testliste)
+        // console.log("Bezeichnung test", projekt.getBezeichnung)
+
         return (
             show ?
                 <div>
@@ -78,28 +99,33 @@ class BuchungDialog extends Component {
                         </DialogTitle>
                         <DialogContent>
                             <div>
-                                {/* Projekt auswählen */}
+                                {/* Projekt auswählen */}                               
                                 <FormControl sx={{ m: 0, minWidth: 500 }}>
                                     <InputLabel id="projekt">Projekt</InputLabel>
                                     <Select
-                                    labelId="projekt"
+                                    labelId="Projekt"
                                     name="projekt"
-                                    value={bezeichnung}
+                                    value={this.state.projekt}
                                     size="medium"
-                                    label="projekt"
+                                    label="Projekt"
                                     autoWidth
-                                    onChange={this.handleChange}
+                                    // onChange={this.handleChange}
                                     >
+                    {Object.values(projektliste).map((projekt) => {
+                    return (
+                      <MenuItem 
+                      key={projekt.id.toString()}
+                      value={this.props.projekt.getID()}>
+                        {this.props.projekt.getBezeichnung()}
+                      </MenuItem>
+                    );
+                  })//.bind(this)
+                }
                                     </Select>
-                                    
-
-
-
                                 </FormControl>
 
                             </div>
                             <div>
-                                {/* Aktivität auswählen */}
                                 <FormControl sx={{ m: 0, minWidth: 500 }}>
                                     <InputLabel id="aktivitaet">Aktivität</InputLabel>
                                     <Select
