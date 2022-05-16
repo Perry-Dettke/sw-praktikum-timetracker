@@ -7,13 +7,56 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuItem } from '@mui/material';
+import { TableCell } from '@material-ui/core';
+import TimetrackerAPI from "../../api/TimetrackerAPI";
+import ProjektBO from '../../api/ProjektBO'
 
 
 class BuchungDialog extends Component {
 
     constructor(props) {
         super(props);
+
+
+        let bezeichnung=''
+        if (props.projekt) {
+            bezeichnung = props.projekt.getBezeichnung();
+        }
+
+
+        this.state = {
+            bezeichnung: bezeichnung,
+        }
+
     }
+
+       
+
+    textFieldValueChange = (event) => {
+        const value = event.target.value;
+        let error = false;
+        if (value.trim().length === 0) {
+              error = true;
+            }
+        
+            this.setState({
+              [event.target.id]: event.target.value,
+            });
+          }
+
+
+        
+    handleBezeichnungChange = (event) => {
+        this.setState({ bezeichnung: event.target.value });
+    }
+          
+
+    
+
+    handletest = () => {
+        console.log(this.state.bezeichnung)
+    }
+
 
     // Dialog schließen
     handleClose = () => {
@@ -22,8 +65,8 @@ class BuchungDialog extends Component {
     }
 
     render() {
-        const { show } = this.props
-
+        const { show, projekt } = this.props
+        const { bezeichnung } = this.state
         return (
             show ?
                 <div>
@@ -41,17 +84,19 @@ class BuchungDialog extends Component {
                                     <Select
                                     labelId="projekt"
                                     name="projekt"
-                                    // value={this.state.projekt}
+                                    value={bezeichnung}
                                     size="medium"
                                     label="projekt"
                                     autoWidth
                                     onChange={this.handleChange}
                                     >
-                                    <MenuItem value={1}>Projekt 1</MenuItem>
-                                    <MenuItem value={2}>Projekt 2</MenuItem>
-                                    <MenuItem value={3}>Projekt 3</MenuItem>
                                     </Select>
+                                    
+
+
+
                                 </FormControl>
+
                             </div>
                             <div>
                                 {/* Aktivität auswählen */}
