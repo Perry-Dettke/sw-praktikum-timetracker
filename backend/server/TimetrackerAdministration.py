@@ -182,7 +182,7 @@ class TimetrackerAdministration (object):
     """
     Person-spezifische Methoden
     """
-    def create_person(self, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id):
+    def create_person(self, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id):
         """Einen Benutzer anlegen"""
         person = Person()
         person.set_letzte_aenderung(letzte_aenderung)
@@ -190,9 +190,9 @@ class TimetrackerAdministration (object):
         person.set_nach_name(nach_name)
         person.set_email(email)
         person.set_benutzer_name(benutzer_name)
-        person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-        person.set_projekt_id(projekt_id)
         person.set_google_user_id(google_user_id)
+        person.set_projektleiter(projektleiter)
+        person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
         person.set_id(1)
 
         with PersonMapper() as mapper:
