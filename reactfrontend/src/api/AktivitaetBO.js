@@ -3,11 +3,12 @@ import BusinessObject from './BusinessObject';
 
 export default class AktivitaetBO extends BusinessObject {
 
-    constructor(letzte_aenderung, bezeichnung, kapazitaet){
+    constructor(letzte_aenderung, bezeichnung, kapazitaet, projekt_id){
         super();
-        this.letzte_aenderung = letzte_aenderung;
+        this.letzte_aenderung = letzte_aenderung;           //muss des nicht raus, da es von dem BO letzte_aenderung erbt?
         this.bezeichnung = bezeichnung;
         this.kapazitaet = kapazitaet;
+        this.projekt_id = projekt_id;
     }
     // Letzte Aenderung erstellen 
     setLetzte_aenderung(letzte_aenderung) {
@@ -32,6 +33,15 @@ export default class AktivitaetBO extends BusinessObject {
     // Kapazitaet auslesen 
     getKapazitaet() {
     return this.kapazitaet;
+    }
+
+    // Projekt ID setzen
+    setProjektID(projekt_id) {
+    this.projekt_id = projekt_id;
+    }
+    // Projekt ID auslesen 
+    getProjektID() {
+    return this.projekt_id;
     }
 
     static fromJSON(aktivitaet) {

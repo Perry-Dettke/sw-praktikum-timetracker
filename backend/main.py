@@ -50,6 +50,8 @@ aktivitaet = api.inherit('Aktivitaet', bo, {
                                 description='Bezeichnung einer Aktivitaet'),
     'kapazitaet': fields.Integer(attribute='_kapazitaet',                               # Hier eventuell float?
                                 description='Kapazitaet einer Aktivitaet in Stunden'),
+    'projekt_id': fields.Integer(attribute='_projekt_id',                               
+                                description='Zugehörige Projekt ID der Aktivitaet'),                               
 })
 
 arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {

@@ -61,11 +61,11 @@ class ArbeitszeitkontoMapper (Mapper):
 
         return result
 
-    def find_by_key(self, key):
+    def find_by_id(self, id):
         """Suchen eines Benutzers mit vorgegebener Arbeitszeitkonto ID. Da diese eindeutig ist,
         wird genau ein Objekt zurückgegeben.
 
-        :param key Primärschlüsselattribut (->DB)
+        :param id Primärschlüsselattribut (->DB)
         :return Personen-Objekt, das dem übergebenen Schlüssel entspricht, None bei
             nicht vorhandenem DB-Tupel.
         """
@@ -73,7 +73,7 @@ class ArbeitszeitkontoMapper (Mapper):
         result = []
 
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, arbeitsleistung,  buchung_id FROM arbeitszeitkonto WHERE id={}".format(key)
+        command = "SELECT id, letzte_aenderung, arbeitsleistung,  buchung_id FROM arbeitszeitkonto WHERE id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
