@@ -68,12 +68,11 @@ class TimetrackerAdministration (object):
     """
     Arbeitszeitkonto-spezifische Methoden
     """
-    def create_arbeitszeitkonto(self, letzte_aenderung, arbeitsleistung, buchung_id):
+    def create_arbeitszeitkonto(self, letzte_aenderung, arbeitsleistung):
         """Ein Arbeitszeitkonto anlegen"""
         arbeitszeitkonto = Arbeitszeitkonto()
         arbeitszeitkonto.set_letzte_aenderung(letzte_aenderung)
         arbeitszeitkonto.set_arbeitsleistung(arbeitsleistung)
-        arbeitszeitkonto.set_buchung_id(buchung_id)
         arbeitszeitkonto.set_id(1)
 
         with ArbeitszeitkontoMapper() as mapper:
@@ -83,11 +82,6 @@ class TimetrackerAdministration (object):
         """Das Arbeitszeitkonto mit der gegebenen ID auslesen."""
         with ArbeitszeitkontoMapper() as mapper:
             return mapper.find_by_id(id)
-
-    def get_arbeitszeitkonto_by_buchung_id(self, buchung_id):
-        """Das Arbeitszeitkonto mit der gegebenen Buchungs ID auslesen."""
-        with ArbeitszeitkontoMapper() as mapper:
-            return mapper.find_by_buchung_id(buchung_id)
 
     def get_all_arbeitszeitkonto(self):
         """Alle Arbeitszeitkonto auslesen."""

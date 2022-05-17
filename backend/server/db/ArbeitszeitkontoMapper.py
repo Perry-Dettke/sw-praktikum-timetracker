@@ -19,15 +19,14 @@ class ArbeitszeitkontoMapper (Mapper):
         result = []
         cursor = self._cnx.cursor()
 
-        cursor.execute("SELECT id, letzte_aenderung, arbeitsleistung, buchung_id from arbeitszeitkonto")
+        cursor.execute("SELECT id, letzte_aenderung, arbeitsleistung from arbeitszeitkonto")
         tuples = cursor.fetchall()
 
-        for (id, letzte_aenderung, arbeitsleistung, buchung_id) in tuples:
+        for (id, letzte_aenderung, arbeitsleistung) in tuples:
             arbeitszeitkonto = Arbeitszeitkonto()
             arbeitszeitkonto.set_id(id)
             arbeitszeitkonto.set_letzte_aenderung(letzte_aenderung)
             arbeitszeitkonto.set_arbeitsleistung(arbeitsleistung)
-            arbeitszeitkonto.set_buchung_id(buchung_id)
             result.append(arbeitszeitkonto)
 
         self._cnx.commit()
@@ -35,31 +34,7 @@ class ArbeitszeitkontoMapper (Mapper):
 
         return result
 
-    def find_by_buchung_id(self, buchung_id):
-        """Auslesen aller Buchungen eines durch Fremdschlüssel
 
-        :param buchung_id Schlüssel der zugehörigen buchung.
-        :return Eine Sammlung mit Buchung-Objekten.
-        """
-
-        result = []
-        cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, arbeitsleistung FROM arbeitszeitkonto WHERE buchung_id={}".format(buchung_id)
-        cursor.execute(command)
-        tuples = cursor.fetchall()
-
-        for (id, letzte_aenderung, arbeitsleistung, buchung_id ) in tuples:
-            arbeitszeitkonto = Arbeitszeitkonto()
-            arbeitszeitkonto.set_id(id)
-            arbeitszeitkonto.set_letzte_aenderung(letzte_aenderung)
-            arbeitszeitkonto.set_arbeitsleistung(arbeitsleistung)
-            arbeitszeitkonto.set_buchung_id(buchung_id)
-            result.append(arbeitszeitkonto)
-
-        self._cnx.commit()
-        cursor.close()
-
-        return result
 
     def find_by_id(self, id):
         """Suchen eines Benutzers mit vorgegebener Arbeitszeitkonto ID. Da diese eindeutig ist,
@@ -73,17 +48,16 @@ class ArbeitszeitkontoMapper (Mapper):
         result = []
 
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, arbeitsleistung,  buchung_id FROM arbeitszeitkonto WHERE id={}".format(id)
+        command = "SELECT id, letzte_aenderung, arbeitsleistung FROM arbeitszeitkonto WHERE id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, arbeitsleistung, buchung_id) = tuples[0]
+            (id, letzte_aenderung, arbeitsleistung) = tuples[0]
             arbeitszeitkonto = Arbeitszeitkonto()
             arbeitszeitkonto.set_id(id)
             arbeitszeitkonto.set_letzte_aenderung(letzte_aenderung)
             arbeitszeitkonto.set_arbeitsleistung(arbeitsleistung)
-            arbeitszeitkonto.set_buchung_id(buchung_id)
             result.append(arbeitszeitkonto)
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
@@ -112,11 +86,10 @@ class ArbeitszeitkontoMapper (Mapper):
         for (maxid) in tuples:
             arbeitszeitkonto.set_id(maxid[0] + 1)
 
-        command = "INSERT INTO arbeitszeitkonto (id, letzte_aenderung, arbeitsleistung, buchung_id) VALUES (%s,%s,%s,%s)"
+        command = "INSERT INTO arbeitszeitkonto (id, letzte_aenderung, arbeitsleistung) VALUES (%s,%s,%s)"
         data = (arbeitszeitkonto.get_id(),
                 arbeitszeitkonto.get_letzte_aenderung(),
                 arbeitszeitkonto.get_arbeitsleistung(),
-                arbeitszeitkonto.get_buchung_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -131,10 +104,9 @@ class ArbeitszeitkontoMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE arbeitszeitkonto " + "SET letzte_aenderung=%s, arbeitsleistung=%s, buchung_id=%s WHERE id=%s"
+        command = "UPDATE arbeitszeitkonto " + "SET letzte_aenderung=%s, arbeitsleistung=%s WHERE id=%s"
         data = (arbeitszeitkonto.get_letzte_aenderung(),
                 arbeitszeitkonto.get_arbeitsleistung(),
-                arbeitszeitkonto.get_buchung_id(),
                 arbeitszeitkonto.get_id())
         cursor.execute(command, data)
 
