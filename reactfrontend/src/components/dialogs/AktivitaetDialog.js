@@ -37,7 +37,7 @@ class AktivitaetDialog extends Component {
                         <DialogContent>
                             <div>
                                 {/* Projekt auswählen */}
-                                <FormControl sx={{ m: 0, minWidth: 500 }}>
+                                <FormControl fullWidth>
                                     <InputLabel id="projekt">Projekt</InputLabel>
                                     <Select
                                     labelId="projekt"
@@ -56,7 +56,7 @@ class AktivitaetDialog extends Component {
                             </div>
                             <div>
                                 {/* Aktivität auswählen */}
-                                <FormControl sx={{ m: 0, minWidth: 500 }}>
+                                <FormControl fullWidth>
                                     <InputLabel id="aktivitaet">Aktivität</InputLabel>
                                     <Select
                                     labelId="aktivitaet"
