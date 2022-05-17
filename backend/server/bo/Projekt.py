@@ -28,7 +28,7 @@ class Projekt(bo.BusinessObjekt):
 
     def get_aktivitaet_id(self):
         """ Ausgeben der Aktivitaets ID. """
-        return self._aktivitaet_id
+        return self._bezeichnung
     
     def set_aktivitaet_id(self, aktivitaet_id):
         """ Setzen der Aktivitaets ID. """
