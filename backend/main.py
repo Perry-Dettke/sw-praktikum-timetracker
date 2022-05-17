@@ -60,8 +60,8 @@ arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {
 })
 
 buchung = api.inherit('Buchung', bo, {
-    'person_id': fields.Integer(attribute='_person_id',
-                                description='ID der Person die die Buchung durchgeführt hat'),
+    'erstellt_von': fields.Integer(attribute='_erstellt_von',
+                                description='Person die die Buchung durchgeführt hat'),
     'arbeitskonto_id': fields.Integer(attribute='_arbeitskonto_id',
                                 description='ID des Arbeitskonto auf dem die Buchung durchgeführt wird'),
 })

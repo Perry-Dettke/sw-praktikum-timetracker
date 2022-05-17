@@ -134,7 +134,7 @@ class AktivitaetMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE aktivitaet " + "SET letzte_aenderung=%s, bezeichnung=%s, kapazitaet=%s, kapazitaet=%s WHERE id=%s"
+        command = "UPDATE aktivitaet " + "SET letzte_aenderung=%s, bezeichnung=%s, kapazitaet=%s WHERE id=%s"
         data = (aktivitaet.get_letzte_aenderung(),
                 aktivitaet.get_bezeichnug(),
                 aktivitaet.get_kapazitaet(),
