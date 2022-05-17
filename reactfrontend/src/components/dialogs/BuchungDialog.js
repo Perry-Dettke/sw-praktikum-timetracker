@@ -28,6 +28,7 @@ class BuchungDialog extends Component {
             bezeichnung: "",
             projekt: "",
             projektliste: [],
+            akitvitaetliste: [],
             testliste: ["1","2","3"],
         }
 
@@ -39,6 +40,18 @@ class BuchungDialog extends Component {
           this.setState({
             projektliste: projektBOs,
           });
+        });
+      }
+
+
+      
+      AktivitaetList() {
+        var api = TimetrackerAPI.getAPI();
+        api.getAktivitaet().then((aktivitaetBOs) => {
+          this.setState({
+            akitvitaetliste: aktivitaetBOs,
+          });
+          
         });
       }
 
@@ -54,11 +67,13 @@ class BuchungDialog extends Component {
             });
           }
 
-
-        
-    handleBezeichnungChange = (event) => {
-        this.setState({ bezeichnung: event.target.value });
+    handleChange(e) {
+        this.AktivitaetList();
     }
+        
+    // handleBezeichnungChange = (event) => {
+    //     this.setState({ projektliste: event.target.value });
+    // }
           
 
     
@@ -82,10 +97,10 @@ class BuchungDialog extends Component {
     render() {
         const { show, projekt } = this.props;
         const { bezeichnung, projektliste, testliste } = this.state;
-        console.log("Projektliste", projektliste)
-        console.log(typeof projektliste)
-        console.log("Testloste", typeof testliste)
-        console.log(testliste)
+        // console.log("Projektliste", projektliste)
+        // console.log(typeof projektliste)
+        // console.log("Testloste", typeof testliste)
+        // console.log(testliste)
         // console.log("Bezeichnung test", projekt.getBezeichnung)
 
         return (
@@ -105,22 +120,21 @@ class BuchungDialog extends Component {
                                     <Select
                                     labelId="Projekt"
                                     name="projekt"
-                                    value={this.state.projekt}
+                                    // value={projekt}
                                     size="medium"
                                     label="Projekt"
                                     autoWidth
-                                    // onChange={this.handleChange}
+                                    // onChange={this.handleChange()}
                                     >
-                    {Object.values(projektliste).map((projekt) => {
-                    return (
-                      <MenuItem 
-                      key={projekt.id.toString()}
-                      value={this.props.projekt.getID()}>
-                        {this.props.projekt.getBezeichnung()}
-                      </MenuItem>
-                    );
-                  })//.bind(this)
-                }
+                                    {Object.values(projektliste).map((projekt) => {
+                                    return (
+                                    <MenuItem 
+                                    value={Object.values(projekt)[3]}>
+                                        {Object.values(projekt)[0]}
+                                    </MenuItem>
+                                    );
+                                })
+                                }
                                     </Select>
                                 </FormControl>
 

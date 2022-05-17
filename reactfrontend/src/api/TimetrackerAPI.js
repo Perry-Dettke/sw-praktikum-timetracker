@@ -37,7 +37,8 @@ export default class TimetrackerAPI {
     // linkPersonProjektURL = () => `${this.#ServerBaseURL}/link`;
 
     #addAktivitaetURL = () => `${this.#ServerBaseURL}/aktivitaet`;
-    #getAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
+    #getAktivitaetURL = () => `${this.#ServerBaseURL}/aktivitaet`;
+    #getAktivitaetbyIDURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
     #updateAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
     #deleteAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
 
@@ -261,9 +262,19 @@ export default class TimetrackerAPI {
 
 
 
-    getAktivitaet(aktivitaetID) {
+    getAktivitaetbyID(aktivitaetID) {
         // Aktivitaet abfragen
-        return this.#fetchAdvanced(this.#getAktivitaetURL(aktivitaetID)).then((responseJSON) => {
+        return this.#fetchAdvanced(this.#getAktivitaetbyIDURL(aktivitaetID)).then((responseJSON) => {
+          let aktivitaet = AktivitaetBO.fromJSON(responseJSON);
+          return new Promise(function (resolve) {
+            resolve(aktivitaet)
+          })
+        })
+      }
+
+      getAktivitaet() {
+        // Aktivitaet abfragen
+        return this.#fetchAdvanced(this.#getAktivitaetURL()).then((responseJSON) => {
           let aktivitaet = AktivitaetBO.fromJSON(responseJSON);
           return new Promise(function (resolve) {
             resolve(aktivitaet)
