@@ -39,9 +39,7 @@ timetracker = api.namespace('timetracker', description="Funktionen der App")
 
 bo = api.model('BusinessObject', {
     'id': fields.Integer(attribute='_id',
-                         description='Der Unique Identifier eines Business Object'),
-
-    'last_change': fields.DateTime(attribute='_person',                                          #hier eventuell DateTime
+                         description='Der Unique Identifier eines Business Object'),                         
     'letzte_aenderung': fields.DateTime(attribute='_letzte_aenderung',                                          #hier eventuell DateTime
                                 description='Die Person die am BO die letzte Änderung durchgeführt hat'),
     

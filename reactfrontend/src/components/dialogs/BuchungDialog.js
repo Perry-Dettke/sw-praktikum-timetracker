@@ -51,7 +51,7 @@ class BuchungDialog extends Component {
           this.setState({
             akitvitaetliste: aktivitaetBOs,
           });
-          
+
         });
       }
 
@@ -120,7 +120,7 @@ class BuchungDialog extends Component {
                                     <Select
                                     labelId="Projekt"
                                     name="projekt"
-                                    // value={projekt}
+                                    value={Object.values(projekt)[3]}
                                     size="medium"
                                     label="Projekt"
                                     autoWidth
