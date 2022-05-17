@@ -24,7 +24,7 @@ class PersonMapper (Mapper):
         cursor.execute("SELECT * from person")
         tuples = cursor.fetchall()
 
-        for (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id) in tuples:
+        for (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id ) in tuples:
             person = Person()
             person.set_id(id)
             person.set_letzte_aenderung(letzte_aenderung)
@@ -32,9 +32,9 @@ class PersonMapper (Mapper):
             person.set_nach_name(nach_name)
             person.set_email(email)
             person.set_benutzer_name(benutzer_name)
-            person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-            person.set_projekt_id(projekt_id)
             person.set_google_user_id(google_user_id)
+            person.set_projektleiter(projektleiter)
+            person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
             result.append(person)
 
         self._cnx.commit()
@@ -51,12 +51,12 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id FROM person WHERE vor_name LIKE '{}' ORDER BY vor_name".format(vor_name)
+        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id FROM person WHERE vor_name LIKE '{}' ORDER BY vor_name".format(vor_name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id) = tuples[0]
+            (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id ) = tuples[0]
             person = Person()
             person.set_id(id)
             person.set_letzte_aenderung(letzte_aenderung)
@@ -64,9 +64,11 @@ class PersonMapper (Mapper):
             person.set_nach_name(nach_name)
             person.set_email(email)
             person.set_benutzer_name(benutzer_name)
-            person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-            person.set_projekt_id(projekt_id)
             person.set_google_user_id(google_user_id)
+            person.set_projektleiter(projektleiter)
+            person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
+
+
             result.append(person)
 
         except IndexError:
@@ -79,11 +81,11 @@ class PersonMapper (Mapper):
 
         return result
 
-    def find_by_key(self, key):
+    def find_by_id(self, id):
         """Suchen eines Benutzers mit vorgegebener Person ID. Da diese eindeutig ist,
         wird genau ein Objekt zurückgegeben.
 
-        :param key Primärschlüsselattribut (->DB)
+        :param id Primärschlüsselattribut (->DB)
         :return Personen-Objekt, das dem übergebenen Schlüssel entspricht, None bei
             nicht vorhandenem DB-Tupel.
         """
@@ -91,12 +93,12 @@ class PersonMapper (Mapper):
         result = []
 
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id FROM person WHERE id={}".format(key)
+        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id FROM person WHERE id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id) = tuples[0]
+            (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id) = tuples[0]
             person = Person()
             person.set_id(id)
             person.set_letzte_aenderung(letzte_aenderung)
@@ -104,9 +106,9 @@ class PersonMapper (Mapper):
             person.set_nach_name(nach_name)
             person.set_email(email)
             person.set_benutzer_name(benutzer_name)
-            person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-            person.set_projekt_id(projekt_id)
             person.set_google_user_id(google_user_id)
+            person.set_projektleiter(projektleiter)
+            person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
             result.append(person)
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
@@ -128,12 +130,12 @@ class PersonMapper (Mapper):
         result = []
 
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id FROM person WHERE email={}".format(email)
+        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id FROM person WHERE email={}".format(email)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id) = tuples[0]
+            (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id ) = tuples[0]
             person = Person()
             person.set_id(id)
             person.set_letzte_aenderung(letzte_aenderung)
@@ -141,9 +143,9 @@ class PersonMapper (Mapper):
             person.set_nach_name(nach_name)
             person.set_email(email)
             person.set_benutzer_name(benutzer_name)
-            person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-            person.set_projekt_id(projekt_id)
             person.set_google_user_id(google_user_id)
+            person.set_projektleiter(projektleiter)
+            person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
             result.append(person)
 
         except IndexError:
@@ -167,12 +169,12 @@ class PersonMapper (Mapper):
         result = []
 
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id FROM person WHERE google_user_id='{}'".format(google_user_id)
+        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id  FROM person WHERE google_user_id='{}'".format(google_user_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id) = tuples[0]
+            (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id) = tuples[0]
             person = Person()
             person.set_id(id)
             person.set_letzte_aenderung(letzte_aenderung)
@@ -180,9 +182,9 @@ class PersonMapper (Mapper):
             person.set_nach_name(nach_name)
             person.set_email(email)
             person.set_benutzer_name(benutzer_name)
-            person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-            person.set_projekt_id(projekt_id)
             person.set_google_user_id(google_user_id)
+            person.set_projektleiter(projektleiter)
+            person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
             result.append(person)
 
         except IndexError:
@@ -218,7 +220,7 @@ class PersonMapper (Mapper):
                 davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
                 person.set_id(1)
 
-        command = "INSERT INTO person (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        command = "INSERT INTO person (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         data = (
             person.get_id(),
             person.get_letzte_aenderung,
@@ -226,9 +228,9 @@ class PersonMapper (Mapper):
             person.get_nach_name(),
             person.get_email(),
             person.get_benutzer_name(),
-            person.get_arbeitszeitkonto_id(),
-            person.get_projekt_id(),
-            person.get_google_user_id())
+            person.get_google_user_id(),
+            person.get_projektleiter(),
+            person.get_arbeitszeitkonto_id()),
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -243,14 +245,14 @@ class PersonMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE person " + "SET vor_name=%s, nach_name=%s, email=%s, benutzer_name=%s, arbeitszeitkonot_id=%s, projekt_id=%s WHERE id=%s"
+        command = "UPDATE person " + "SET vor_name=%s, nach_name=%s, email=%s, benutzer_name=%s, projektleiter=%s, arbeitszeitkonot_id=%s WHERE id=%s"
         data = (
             person.get_vor_name(),
             person.get_nach_name(),
             person.get_email(),
             person.get_benutzer_name(),
             person.get_arbeitszeitkonto_id(),
-            person.get_projekt_id(),
+            person.get_projektleiter(),
             person.get_id())
         cursor.execute(command, data)
 

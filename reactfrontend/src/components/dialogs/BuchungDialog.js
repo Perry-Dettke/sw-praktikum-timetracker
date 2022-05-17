@@ -7,13 +7,81 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuItem } from '@mui/material';
+import { TableCell } from '@material-ui/core';
+import TimetrackerAPI from "../../api/TimetrackerAPI";
+import ProjektBO from '../../api/ProjektBO'
 
 
 class BuchungDialog extends Component {
 
     constructor(props) {
         super(props);
+
+        // let projektliste='', bezeichnung=""
+        // if (this.props.projekt) {
+        //     projektliste = this.props.projekt
+        //     bezeichnung = this.props.projekt.getBezeichnung();
+        // }
+
+
+        this.state = {
+            bezeichnung: "",
+            projekt: "",
+            projektliste: [],
+            akitvitaetliste: [],
+            testliste: ["1","2","3"],
+        }
+
     }
+
+    ProjektList() {
+        var api = TimetrackerAPI.getAPI();
+        api.getProjekt().then((projektBOs) => {
+          this.setState({
+            projektliste: projektBOs,
+          });
+        });
+      }
+
+
+      
+      AktivitaetList() {
+        var api = TimetrackerAPI.getAPI();
+        api.getAktivitaet().then((aktivitaetBOs) => {
+          this.setState({
+            akitvitaetliste: aktivitaetBOs,
+          });
+
+        });
+      }
+
+    textFieldValueChange = (event) => {
+        const value = event.target.value;
+        let error = false;
+        if (value.trim().length === 0) {
+              error = true;
+            }
+        
+            this.setState({
+              [event.target.id]: event.target.value,
+            });
+          }
+
+    handleChange(e) {
+        this.AktivitaetList();
+    }
+        
+    // handleBezeichnungChange = (event) => {
+    //     this.setState({ projektliste: event.target.value });
+    // }
+          
+
+    
+
+    handletest = () => {
+        console.log(this.state.bezeichnung)
+    }
+
 
     // Dialog schließen
     handleClose = () => {
@@ -21,8 +89,19 @@ class BuchungDialog extends Component {
         this.props.onClose();
     }
 
+
+    componentDidMount() {
+        this.ProjektList();
+      }
+
     render() {
-        const { show } = this.props
+        const { show, projekt } = this.props;
+        const { bezeichnung, projektliste, testliste } = this.state;
+        // console.log("Projektliste", projektliste)
+        // console.log(typeof projektliste)
+        // console.log("Testloste", typeof testliste)
+        // console.log(testliste)
+        // console.log("Bezeichnung test", projekt.getBezeichnung)
 
         return (
             show ?
@@ -35,26 +114,32 @@ class BuchungDialog extends Component {
                         </DialogTitle>
                         <DialogContent>
                             <div>
-                                {/* Projekt auswählen */}
+                                {/* Projekt auswählen */}                               
                                 <FormControl sx={{ m: 0, minWidth: 500 }}>
                                     <InputLabel id="projekt">Projekt</InputLabel>
                                     <Select
-                                    labelId="projekt"
+                                    labelId="Projekt"
                                     name="projekt"
-                                    // value={this.state.projekt}
+                                    value={Object.values(projekt)[3]}
                                     size="medium"
-                                    label="projekt"
+                                    label="Projekt"
                                     autoWidth
-                                    onChange={this.handleChange}
+                                    // onChange={this.handleChange()}
                                     >
-                                    <MenuItem value={1}>Projekt 1</MenuItem>
-                                    <MenuItem value={2}>Projekt 2</MenuItem>
-                                    <MenuItem value={3}>Projekt 3</MenuItem>
+                                    {Object.values(projektliste).map((projekt) => {
+                                    return (
+                                    <MenuItem 
+                                    value={Object.values(projekt)[3]}>
+                                        {Object.values(projekt)[0]}
+                                    </MenuItem>
+                                    );
+                                })
+                                }
                                     </Select>
                                 </FormControl>
+
                             </div>
                             <div>
-                                {/* Aktivität auswählen */}
                                 <FormControl sx={{ m: 0, minWidth: 500 }}>
                                     <InputLabel id="aktivitaet">Aktivität</InputLabel>
                                     <Select

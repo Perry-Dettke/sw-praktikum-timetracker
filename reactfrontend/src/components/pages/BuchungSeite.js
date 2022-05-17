@@ -7,10 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {Button} from '@mui/material';
+import {Button, Box} from '@mui/material';
 
 import BuchungDialog from '../dialogs/BuchungDialog';
 import TimetrackerAPI from "../../api/TimetrackerAPI";
+import ProjektBO from '../../api/ProjektBO'
+
 
 class Buchung extends Component {
     
@@ -18,19 +20,18 @@ class Buchung extends Component {
         super(props);
 
     this.state = {
-        showBuchung: false
+        showBuchung: false,
+        projekt: null
     };
     }
 
 
     componentDidMount() {
-        console.log("Test")
         this.getProjekt();
       }
 
 
       getProjekt = () => {
-        console.log("Hallo")
       TimetrackerAPI.getAPI()
         .getProjekt().then((projekt) =>
           this.setState({
@@ -51,7 +52,7 @@ class Buchung extends Component {
     //BuchungDialog anzeigen
     showBuchungDialog = () => {
         this.setState({ showBuchung: true}, () => {
-            console.log(this.state.showBuchung);
+            // console.log(this.state.projekt)
         });
     };
 
@@ -62,13 +63,26 @@ class Buchung extends Component {
     
 
     render() {
-        const {showBuchung} = this.state;
+        const {showBuchung, projekt } = this.state;
+        console.log("BuchungSeite Render Test", this.state, this.props)
 
         return (
             <div>
                 <Button variant="contained" sx={{width:250}}
                     onClick={this.showBuchungDialog}>
                 Neue Buchung erstellen</Button>
+                <Box
+                sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                '& > :not(style)': {
+                    m: 2,
+                    width: 'max',
+                    height: 800,
+                    alignItems: 'center',
+                    },
+                }}
+                >
                     <TableContainer component={Paper}  sx={{ maxWidth: 1000 , margin:"auto" }}>
                         <Table sx={{ minWidth: 600 }} aria-label="simple table">
                             <TableHead>
@@ -85,7 +99,9 @@ class Buchung extends Component {
                             </TableBody>
                         </Table>
                     </TableContainer>
-           { <BuchungDialog show={showBuchung} onClose={this.closeBuchungDialog}/> }
+                </Box>
+           {<BuchungDialog show={showBuchung} projekt={projekt} onClose={this.closeBuchungDialog}/> }
+
             </div>
         );
     }

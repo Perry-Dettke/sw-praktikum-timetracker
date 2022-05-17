@@ -19,21 +19,21 @@ class BuchungMapper(Mapper):
 
         cursor = self._cnx.cursor()
 
-        command = "SELECT id, letzte_aenderung, person_id, arbeitszeitkonto_id FROM buchung"
+        command = "SELECT id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id FROM buchung"
 
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, letzte_aenderung, person_id, arbeitszeitkonto_id) in tuples:
+        for (id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id) in tuples:
             buchung = Buchung()
             buchung.set_id(id)
             buchung.set_letzte_aenderung(letzte_aenderung)
-            buchung.set_person_id(person_id)
+            buchung.set_erstellt_von(erstellt_von)
             buchung.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
 
             result.append(buchung)
 
-        self._cnx.commit()
+        self.connection.commit()
         cursor.close()
 
         return result
@@ -48,16 +48,16 @@ class BuchungMapper(Mapper):
 
         result = None
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, person_id, arbeitszeitkonto_id FROM buchung WHERE id ='{}'".format(id)
+        command = "SELECT id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id FROM buchung WHERE id ='{}'".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, person_id, arbeitszeitkonto_id) = tuples[0]
+            (id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id) = tuples[0]
             buchung = Buchung()
             buchung.set_id(id)
             buchung.set_letzte_aenderung(letzte_aenderung)
-            buchung.set_person_id(person_id)
+            buchung.set_erstellt_von(erstellt_von)
             buchung.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
 
             result = buchung
@@ -68,40 +68,9 @@ class BuchungMapper(Mapper):
             """
             result = None
 
-        self._cnx.commit()
+        self._connection.commit()
         cursor.close()
         return result
-
-    def find_by_person_id(self, person_id):
-        """
-        suchen einer Person nach der Personen ID
-        :param Person_id
-        """
-
-        result = None
-
-        cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, person_id, arbeitszeitkonto_id FROM buchung WHERE person_id='{}'".format(person_id)
-        cursor.execute(command)
-        tuples = cursor.fetchall()
-
-        try:
-            (id, letzte_aenderung, person_id, arbeitszeitkonto_id)  = tuples[0]
-            buchung = Buchung()
-            buchung.set_id(id)
-            buchung.set_letzte_aenderung(letzte_aenderung)
-            buchung.set_person_id(person_id)
-            buchung.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-            result = Buchung
-
-        except IndexError:
-            """
-            Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
-            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt.
-            """
-            result = None
-
-        result = result
 
 
     def find_by_arbeitszeitkonto_id(self, arbeitszeitkonto_id):
@@ -116,16 +85,16 @@ class BuchungMapper(Mapper):
 
         result = None
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, person_id, arbeitszeitkonto_id FROM buchung WHERE arbeitszeitkonto_id='{}'".format(arbeitszeitkonto_id)
+        command = "SELECT id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id FROM buchung WHERE arbeitszeitkonto_id='{}'".format(arbeitszeitkonto_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, person_id, arbeitszeitkonto_id) = tuples[0]
+            (id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id) = tuples[0]
             buchung = Buchung()
             buchung.set_id(id)
             buchung.set_letzte_aenderung(letzte_aenderung)
-            buchung.set_person_id(person_id)
+            buchung.set_erstellt_von(erstellt_von)
             buchung.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
             result = Buchung
 
@@ -134,7 +103,7 @@ class BuchungMapper(Mapper):
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
             result = None
 
-        self._cnx.commit()
+        self._connection.commit()
         cursor.close()
         return result
 
@@ -144,7 +113,7 @@ class BuchungMapper(Mapper):
 
         """
 
-        cursor = self._cnx.cursor()
+        cursor = self._connection.cursor()
         cursor.execute("SELECT MAX(id) AS maxid FROM buchung")
         tuples = cursor.fetchall()
 
@@ -156,11 +125,11 @@ class BuchungMapper(Mapper):
             else:
                 Buchung.set_id(1)
 
-        command = "INSERT INTO buchung (id, letzte_aenderung, person_id, arbeitszeitkonto_id) VALUES (%s,%s,%s,%s)"
-        data = (Buchung.get_id(), Buchung.get_person_id(), Buchung.get_arbeitszeitkonto_id(), Buchung.get_letzte_aenderung())
+        command = "INSERT INTO buchung (id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id) VALUES (%s,%s,%s,%s)"
+        data = (Buchung.get_id(), Buchung.get_erstellt_von(), Buchung.get_arbeitszeitkonto_id(), Buchung.get_letzte_aenderung())
         cursor.execute(command,data)
 
-        self._cnx.commit()
+        self._connection.commit()
         cursor.close()
 
         return Buchung
@@ -178,7 +147,7 @@ class BuchungMapper(Mapper):
 
         cursor.execute(command, data)
 
-        self._cnx.commit()
+        self._connection.commit()
         cursor.close()
 
     def update_by_id(self, Buchung):
@@ -187,14 +156,14 @@ class BuchungMapper(Mapper):
         :param Buchung -> Buchung-Objekt
         :return aktualisiertes Buchung-Objekt
         """
-        cursor = self._cnx.cursor()
+        cursor = self._connection.cursor()
 
         command = "UPDATE buchung " + "SET letzte_aenderung=%s WHERE id=%s"
         data = (Buchung.get_letzte_aenderung())
 
         cursor.execute(command, data)
 
-        self._cnx.commit()
+        self._connection.commit()
         cursor.close()
 
     def delete(self, Buchung):
@@ -202,12 +171,12 @@ class BuchungMapper(Mapper):
 
         :param Buchung -> Buchung-Objekt
         """
-        cursor = self._cnx.cursor()
+        cursor = self._connection.cursor()
 
         command = "DELETE FROM buchung WHERE id={}".format(Buchung.get_id())
         cursor.execute(command)
 
-        self._cnx.commit()
+        self._connection.commit()
         cursor.close()
 
 '''Only for testing purpose'''

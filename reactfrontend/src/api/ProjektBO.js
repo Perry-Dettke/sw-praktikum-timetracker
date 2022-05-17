@@ -3,11 +3,10 @@ import BusinessObject from './BusinessObject';
 
 export default class ProjektBO extends BusinessObject {
 
-    constructor(bezeichnung, auftraggeber, aktivitaet_id){
+    constructor(bezeichnung, auftraggeber){
         super();
         this.bezeichnung = bezeichnung;
         this.auftraggeber = auftraggeber;
-        this.aktivitaet_id = aktivitaet_id;
     }
     // Bezeichnung setzen
     setBezeichnung(bezeichnung){
@@ -24,15 +23,6 @@ export default class ProjektBO extends BusinessObject {
     // Auftraggeber auslesen
     getAuftraggeber(){
         return this.auftraggeber;
-    }
-
-    // Aktivitäts ID setzen
-    setAktivitaetID(aktivitaet_id){
-        this.aktivitaet_id = aktivitaet_id;
-    }
-    // Aktivitäts ID auslesen
-    getAktivitaetID(){
-        return this.aktivitaet_id;
     }
 
     static fromJSON(projekt) {

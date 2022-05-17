@@ -1,4 +1,3 @@
-#from re import A
 from .bo.Aktivitaet import Aktivitaet
 from .bo.Arbeitszeitkonto import Arbeitszeitkonto
 from .bo.Buchung import Buchung
@@ -35,15 +34,20 @@ class TimetrackerAdministration (object):
         with AktivitaetMapper() as mapper:
             return mapper.insert(aktivitaet)
 
-    def get_aktivitaet_by_id(self, key):
+    def get_aktivitaet_by_id(self, id):
         """Die Aktivitaet mit der gegebenen ID auslesen."""
         with AktivitaetMapper() as mapper:
-            return mapper.find_by_key(key)
+            return mapper.find_by_id(id)
+
+    def get_aktivitaet_by_projekt_id(self, projekt_id):
+        """Die Aktivitaet mit der gegebenen Projekt ID auslesen."""
+        with AktivitaetMapper() as mapper:
+            return mapper.find_by_projekt_id(projekt_id)
 
     def get_aktivitaet_by_kapazitaet(self, kapazitaet):
         """Die Aktivitaet mit der gegebenen kapazitaet auslesen."""
         with AktivitaetMapper() as mapper:
-            return mapper.find_by_kapazitaet(kapazitaet)            # muss noch im Mapper geschrieben werden
+            return mapper.find_by_kapazitaet(kapazitaet)            # muss noch im Mapper geschrieben werden falls benötigt wird
 
     def get_all_aktivitaet(self):
         """Alle Aktivitaeten auslesen."""
@@ -64,26 +68,20 @@ class TimetrackerAdministration (object):
     """
     Arbeitszeitkonto-spezifische Methoden
     """
-    def create_arbeitszeitkonto(self, letzte_aenderung, arbeitsleistung, buchung_id):
+    def create_arbeitszeitkonto(self, letzte_aenderung, arbeitsleistung):
         """Ein Arbeitszeitkonto anlegen"""
         arbeitszeitkonto = Arbeitszeitkonto()
         arbeitszeitkonto.set_letzte_aenderung(letzte_aenderung)
         arbeitszeitkonto.set_arbeitsleistung(arbeitsleistung)
-        arbeitszeitkonto.set_buchung_id(buchung_id)
         arbeitszeitkonto.set_id(1)
 
         with ArbeitszeitkontoMapper() as mapper:
             return mapper.insert(arbeitsleistung)
 
-    def get_arbeitszeitkonto_by_id(self, key):
+    def get_arbeitszeitkonto_by_id(self, id):
         """Das Arbeitszeitkonto mit der gegebenen ID auslesen."""
         with ArbeitszeitkontoMapper() as mapper:
-            return mapper.find_by_key(key)
-
-    def get_arbeitszeitkonto_by_buchung_id(self, buchung_id):
-        """Das Arbeitszeitkonto mit der gegebenen Buchungs ID auslesen."""
-        with ArbeitszeitkontoMapper() as mapper:
-            return mapper.find_by_buchung_id(buchung_id)
+            return mapper.find_by_id(id)
 
     def get_all_arbeitszeitkonto(self):
         """Alle Arbeitszeitkonto auslesen."""
@@ -115,10 +113,10 @@ class TimetrackerAdministration (object):
         with BuchungMapper() as mapper:
             return mapper.insert(buchung)
 
-    def get_buchung_by_id(self, key):
+    def get_buchung_by_id(self, id):
         """Die Buchung mit der gegebenen ID auslesen."""
         with BuchungMapper() as mapper:
-            return mapper.find_by_key(key)
+            return mapper.find_by_id(id)
 
     def get_buchung_by_erstellt_von(self, erstellt_von):       
         """Die Buchung mit der gegebenen Person, die die Buchung erstellt hat auslesen."""
@@ -184,7 +182,7 @@ class TimetrackerAdministration (object):
     """
     Person-spezifische Methoden
     """
-    def create_person(self, letzte_aenderung, vor_name, nach_name, email, benutzer_name, arbeitszeitkonto_id, projekt_id, google_user_id):
+    def create_person(self, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id):
         """Einen Benutzer anlegen"""
         person = Person()
         person.set_letzte_aenderung(letzte_aenderung)
@@ -192,9 +190,9 @@ class TimetrackerAdministration (object):
         person.set_nach_name(nach_name)
         person.set_email(email)
         person.set_benutzer_name(benutzer_name)
+        person.set_google_user_id(google_user_id)
+        person.set_projektleiter(projektleiter)
         person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-        person.set_projekt_id(projekt_id)
-        person.set_user_id(google_user_id)
         person.set_id(1)
 
         with PersonMapper() as mapper:
@@ -205,10 +203,10 @@ class TimetrackerAdministration (object):
         with PersonMapper() as mapper:
             return mapper.find_by_vor_name(vor_name)
 
-    def get_person_by_id(self, key):
+    def get_person_by_id(self, id):
         """Den Personen mit der gegebenen ID auslesen."""
         with PersonMapper() as mapper:
-            return mapper.find_by_key(key)
+            return mapper.find_by_id(id)
 
     def get_person_by_email(self, email):
         """Alle Personen mit gegebener E-Mail-Adresse auslesen."""
@@ -234,28 +232,28 @@ class TimetrackerAdministration (object):
         """Die gegebenene Person aus unserem System löschen."""
         with PersonMapper() as mapper:
             mapper.delete(person)
+
     def add_person_google_user_id(self,google_user_id):
         with PersonMapper() as mapper:
-            mapper.insert_firebase(google_user_id)
+            mapper.insert_firebase(google_user_id)      #fehlt noch im Mapper
     """
     Projekt-spezifische Methoden
     """
-    def create_projekt(self, letzte_aenderung, bezeichnung, auftraggeber, aktivitaet_id):
+    def create_projekt(self, letzte_aenderung, bezeichnung, auftraggeber):
         """Ein Projekt anlegen"""
         projekt = Projekt()
         projekt.set_letzte_aenderung(letzte_aenderung)
         projekt.set_bezeichnung(bezeichnung)
         projekt.set_auftraggeber(auftraggeber)
-        projekt.set_aktivitaet_id(aktivitaet_id)
         projekt.set_id(1)
 
         with ProjektMapper() as mapper:
             return mapper.insert(projekt)
 
-    def get_projekt_by_id(self, key):
+    def get_projekt_by_id(self, id):
         """Das Projekt mit der gegebenen ID auslesen."""
         with ProjektMapper() as mapper:
-            return mapper.find_by_key(key)
+            return mapper.find_by_id(id)            #fehlt noch im Mapper
 
     def get_projekt_by_auftraggeber(self, auftraggeber):       
         """Das Projekt mit dem gegebenen Auftraggeber auslesen."""
@@ -291,10 +289,10 @@ class TimetrackerAdministration (object):
         with ZeitintervallMapper() as mapper:
             return mapper.insert(zeitintervall)
 
-    def get_zeitintervall_by_id(self, key):
+    def get_zeitintervall_by_id(self, id):
         """Das Zeitintervall mit der gegebenen ID auslesen."""
         with ZeitintervallMapper() as mapper:
-            return mapper.find_by_key(key)
+            return mapper.find_by_id(id)
    
     def get_all_zeitintervall(self):
         """Alle Zeitintervalle auslesen."""

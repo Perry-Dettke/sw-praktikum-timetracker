@@ -37,7 +37,9 @@ export default class TimetrackerAPI {
     // linkPersonProjektURL = () => `${this.#ServerBaseURL}/link`;
 
     #addAktivitaetURL = () => `${this.#ServerBaseURL}/aktivitaet`;
-    #getAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
+    #getAktivitaetURL = () => `${this.#ServerBaseURL}/aktivitaet`;
+    #getAktivitaetbyIDURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
+    #getAktivitaetbyProjektIDURL = (projekt_id) => `${this.#ServerBaseURL}/aktivitaet/${projekt_id}`;
     #updateAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
     #deleteAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
 
@@ -168,10 +170,21 @@ export default class TimetrackerAPI {
 
 
 
-    getProjekt() {
+    // getProjektbyID(projektID) {
+    //     // Projekt abfragen
+    //     return this.#fetchAdvanced(this.#getProjektURL()).then((responseJSON) => {
+    //       let projekt = ProjektBO.fromJSON(responseJSON);
+    //       return new Promise(function (resolve) {
+    //         resolve(projekt)
+    //       })
+    //     })
+    //   }
+
+      getProjekt() {
         // Projekt abfragen
         return this.#fetchAdvanced(this.#getProjektURL()).then((responseJSON) => {
           let projekt = ProjektBO.fromJSON(responseJSON);
+          console.log(responseJSON)
           return new Promise(function (resolve) {
             resolve(projekt)
           })
@@ -250,9 +263,30 @@ export default class TimetrackerAPI {
 
 
 
-    getAktivitaet(aktivitaetID) {
+    getAktivitaetbyID(aktivitaetID) {
         // Aktivitaet abfragen
-        return this.#fetchAdvanced(this.#getAktivitaetURL(aktivitaetID)).then((responseJSON) => {
+        return this.#fetchAdvanced(this.#getAktivitaetbyIDURL(aktivitaetID)).then((responseJSON) => {
+          let aktivitaet = AktivitaetBO.fromJSON(responseJSON);
+          return new Promise(function (resolve) {
+            resolve(aktivitaet)
+          })
+        })
+      }
+
+
+      getAktivitaetbyProjektID(projekt_id) {
+        // Aktivitaet abfragen
+        return this.#fetchAdvanced(this.#getAktivitaetbyProjektIDURL(projekt_id)).then((responseJSON) => {
+          let aktivitaet = AktivitaetBO.fromJSON(responseJSON);
+          return new Promise(function (resolve) {
+            resolve(aktivitaet)
+          })
+        })
+      }
+
+      getAktivitaet() {
+        // Aktivitaet abfragen
+        return this.#fetchAdvanced(this.#getAktivitaetURL()).then((responseJSON) => {
           let aktivitaet = AktivitaetBO.fromJSON(responseJSON);
           return new Promise(function (resolve) {
             resolve(aktivitaet)
