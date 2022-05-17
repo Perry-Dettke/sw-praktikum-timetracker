@@ -240,13 +240,12 @@ class TimetrackerAdministration (object):
     """
     Projekt-spezifische Methoden
     """
-    def create_projekt(self, letzte_aenderung, bezeichnung, auftraggeber, aktivitaet_id):
+    def create_projekt(self, letzte_aenderung, bezeichnung, auftraggeber):
         """Ein Projekt anlegen"""
         projekt = Projekt()
         projekt.set_letzte_aenderung(letzte_aenderung)
         projekt.set_bezeichnung(bezeichnung)
         projekt.set_auftraggeber(auftraggeber)
-        projekt.set_aktivitaet_id(aktivitaet_id)
         projekt.set_id(1)
 
         with ProjektMapper() as mapper:
