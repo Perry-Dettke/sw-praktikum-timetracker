@@ -89,7 +89,7 @@ class ArbeitszeitkontoMapper (Mapper):
         command = "INSERT INTO arbeitszeitkonto (id, letzte_aenderung, arbeitsleistung) VALUES (%s,%s,%s)"
         data = (arbeitszeitkonto.get_id(),
                 arbeitszeitkonto.get_letzte_aenderung(),
-                arbeitszeitkonto.get_arbeitsleistung(),
+                arbeitszeitkonto.get_arbeitsleistung())
         cursor.execute(command, data)
 
         self._cnx.commit()
