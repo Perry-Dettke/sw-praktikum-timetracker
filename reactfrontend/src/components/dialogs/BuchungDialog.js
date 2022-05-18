@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuItem } from '@mui/material';
 import { TableCell } from '@material-ui/core';
-import {TimetrackerAPI} from "../../api/TimetrackerAPI";
+import TimetrackerAPI from "../../api/TimetrackerAPI";
 import ProjektBO from '../../api/ProjektBO'
 
 
