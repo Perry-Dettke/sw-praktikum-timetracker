@@ -40,8 +40,7 @@ timetracker = api.namespace('timetracker', description="Funktionen der App")
 bo = api.model('BusinessObject', {
     'id': fields.Integer(attribute='_id',
                          description='Der Unique Identifier eines Business Object'),
-
-    'last_change': fields.DateTime(attribute='_person',                                          #hier eventuell DateTime
+    'letzte_aenderung': fields.DateTime(attribute='_letzte_aenderung',                                          #hier eventuell DateTime
                                 description='Die Person die am BO die letzte Änderung durchgeführt hat'),
     
 })
@@ -576,7 +575,7 @@ class ProjektOperations(Resource):
         """Auslesen aller Projekt-Objekte
         """
         adm = TimetrackerAdministration()
-        pro = adm.get_all_projekt()
+        pro = adm.get_all_projekt()[0]
         return pro
 
     @timetracker.marshal_list_with(projekt, code=200)
