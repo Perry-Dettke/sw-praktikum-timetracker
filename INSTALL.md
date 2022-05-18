@@ -1,5 +1,5 @@
 # Installationshinweise
-Die Installationshinweise betreffen nur die lokale Entwicklungsumgebung. In der Cloud kann die App [hier](https://teachingbee-179c2.ew.r.appspot.com/) genutzt werden. Das Frontend befindet sich [hier](https://teachingbee-179c2.ew.r.appspot.com/static/reactclient/index.html).
+Die Installationshinweise betreffen nur die lokale Entwicklungsumgebung. In der Cloud kann die App [hier]() genutzt werden. Das Frontend befindet sich [hier]().
 
 ## Dependencies
 Folgende Packages werden benötigt:
