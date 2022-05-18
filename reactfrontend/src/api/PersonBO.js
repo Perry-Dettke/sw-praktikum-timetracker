@@ -23,11 +23,11 @@ export default class PersonBO extends BusinessObject {
     }
     // Nachname setzen
     setNach_name(nach_name) {
-    this.Nnach_name = nach_name;
+    this.nach_name = nach_name;
     }  
     // Nachname auslesen
     getNach_name() {
-    return this.Nnach_name;
+    return this.nach_name;
     }
     // Email setzen
     setEmail(email) {
