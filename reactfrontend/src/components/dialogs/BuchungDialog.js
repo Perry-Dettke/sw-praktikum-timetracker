@@ -30,6 +30,7 @@ class BuchungDialog extends Component {
             projektliste: [],
             akitvitaetliste: [],
             testliste: ["1","2","3"],
+            selectedProjekt: null,
         }
 
     }
@@ -54,6 +55,15 @@ class BuchungDialog extends Component {
 
         });
       }
+
+       projektSelectionChange = (event) => {
+        let projekt = event.target.value;
+
+        this.setState({
+      selectedProjekt: projekt
+    });
+       }
+
 
     textFieldValueChange = (event) => {
         const value = event.target.value;
@@ -96,7 +106,7 @@ class BuchungDialog extends Component {
 
     render() {
         const { show, projekt } = this.props;
-        const { bezeichnung, projektliste, testliste } = this.state;
+        const { bezeichnung, projektliste, testliste, selectedProjekt } = this.state;
         // console.log("Projektliste", projektliste)
         // console.log(typeof projektliste)
         // console.log("Testloste", typeof testliste)
@@ -120,17 +130,18 @@ class BuchungDialog extends Component {
                                     <Select
                                     labelId="Projekt"
                                     name="projekt"
-                                    value={Object.values(projekt)[3]}
+                                   // value={projekt}
                                     size="medium"
                                     label="Projekt"
                                     autoWidth
-                                    // onChange={this.handleChange()}
+                                    // onChange={this.projektSelectionChange()}
                                     >
                                     {Object.values(projektliste).map((projekt) => {
                                     return (
                                     <MenuItem 
-                                    value={Object.values(projekt)[3]}>
-                                        {Object.values(projekt)[0]}
+                                    key={Object.values(projekt)[3]}
+                                    value={projekt}>
+                                    {Object.values(projekt)[0]}
                                     </MenuItem>
                                     );
                                 })
