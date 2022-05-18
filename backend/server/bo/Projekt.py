@@ -8,7 +8,7 @@ class Projekt(bo.BusinessObjekt):
         super().__init__()
         self._bezeichnung = ""
         self._auftraggeber = ""
-        self._aktivitaet_id = 0
+
         
     def get_bezeichnung(self):
         """ Ausgeben der Bezeichnung. """
@@ -26,17 +26,11 @@ class Projekt(bo.BusinessObjekt):
         """ Setzen des Auftragebers. """
         self._auftraggeber = auftraggeber
 
-    def get_aktivitaet_id(self):
-        """ Ausgeben der Aktivitaets ID. """
-        return self._aktivitaet_id
-    
-    def set_aktivitaet_id(self, aktivitaet_id):
-        """ Setzen der Aktivitaets ID. """
-        self._aktivitaet_id = aktivitaet_id
+
 
     def __str__(self):
         """ Erzeugen einer einfachen textuellen Darstellung der jeweiligen Instanz. """
-        return f'Projekt: {self.get_bezeichnung()}, {self.get_auftraggeber()}, {self.get_aktivitaet_id()}'
+        return f'Projekt: {self.get_bezeichnung()}, {self.get_auftraggeber()}'
     
     @staticmethod
     def from_dict(dictionary=dict()):
@@ -44,7 +38,6 @@ class Projekt(bo.BusinessObjekt):
         obj = Projekt()
         obj.set_bezeichnung(dictionary["bezeichnung"])
         obj.set_auftraggeber(dictionary["auftraggeber"])
-        obj.set_aktivitaet_id(dictionary["aktivitaet_id"])
         return obj
 
 # erstellt von Rosalie Kripp

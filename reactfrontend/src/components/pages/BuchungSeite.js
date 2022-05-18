@@ -53,7 +53,7 @@ class Buchung extends Component {
     //BuchungDialog anzeigen
     showBuchungDialog = () => {
         this.setState({ showBuchung: true}, () => {
-            console.log(this.state.projekt)
+            // console.log(this.state.projekt)
         });
     };
 
@@ -65,6 +65,7 @@ class Buchung extends Component {
 
     render() {
         const {showBuchung, projekt } = this.state;
+        console.log("BuchungSeite Render Test", this.state, this.props)
 
         return (
             <div>
@@ -100,7 +101,7 @@ class Buchung extends Component {
                         </Table>
                     </TableContainer>
                 </Box>
-           { <BuchungDialog show={showBuchung} projekt={projekt} onClose={this.closeBuchungDialog}/> }
+           {<BuchungDialog show={showBuchung} projekt={projekt} onClose={this.closeBuchungDialog}/> }
 
             </div>
         );

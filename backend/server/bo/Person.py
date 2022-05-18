@@ -10,9 +10,10 @@ class Person(bo.BusinessObjekt):
         self._nach_name = ""
         self._email = ""
         self._benutzer_name = ""
-        self._arbeitszeitkonto_id = 0
-        self._projekt_id = 0
         self._google_user_id = 0
+        self._projektleiter = 0
+        self._arbeitszeitkonto_id = 0
+
 
     def get_vor_name(self):
         """ Ausgeben des Vornamens. """
@@ -46,6 +47,22 @@ class Person(bo.BusinessObjekt):
         """ Setzen des Benutzernamens. """
         self._benutzer_name = benutzer_name
 
+    def get_google_user_id(self):
+        """ Ausgeben der Google User ID. """
+        return self._google_user_id
+    
+    def set_google_user_id(self, google_user_id):
+        """ Setzen der Google User ID. """
+        self._google_user_id = google_user_id
+
+    def get_projektleiter(self):
+        """ Ausgeben des Projektleiter. """
+        return self._projektleiter
+    
+    def set_projektleiter(self, projektleiter):
+        """ Setzen des Projektleiter. """
+        self._projektleiter = projektleiter
+
     def get_arbeitszeitkonto_id(self):
         """ Ausgeben der Arbeitszeitkonto ID. """
         return self._arbeitszeitkonto_id
@@ -54,25 +71,13 @@ class Person(bo.BusinessObjekt):
         """ Setzen der Arbeitszeitkonto ID. """
         self._arbeitszeitkonto_id = arbeitszeitkonto_id
 
-    def get_projekt_id(self):
-        """ Ausgeben der Projekt ID. """
-        return self._projekt_id
-    
-    def set_projekt_id(self, projekt_id):
-        """ Setzen der Projekt ID. """
-        self._projekt_id = projekt_id
 
-    def get_google_user_id(self):
-        """ Ausgeben der Google User ID. """
-        return self._google_user_id
-    
-    def set_google_user_id(self, google_user_id):
-        """ Setzen der Google User ID. """
-        self._google_user_id = google_user_id
+
+
     
     def __str__(self):
         """ Erzeugen einer einfachen textuellen Darstellung der jeweiligen Instanz. """
-        return f'Person: {self.get_vor_name()}, {self.get_nach_name()}, {self.get_email()}, {self.get_benutzer_name()}, {self.get_arbeitszeitkonto_id()}, {self.get_projekt_id()}, {self.get_google_user_id()}'
+        return f'Person: {self.get_vor_name()}, {self.get_nach_name()}, {self.get_email()}, {self.get_benutzer_name()}, {self.get_google_user_id()}, {self.get_projektleiter()}, {self.get_arbeitszeitkonto_id()} '
     
     @staticmethod
     def from_dict(dictionary=dict()):
@@ -82,9 +87,10 @@ class Person(bo.BusinessObjekt):
         obj.set_nach_name(dictionary["nach_name"])
         obj.set_email(dictionary["email"])
         obj.set_benutzer_name(dictionary["benutzer_name"])
-        obj.set_arbeitszeitkonto_id(dictionary["arbeitszeitkonto_id"])
-        obj.set_projekt_id(dictionary["projekt_id"])
         obj.set_google_user_id(dictionary["google_user_id"])
+        obj.set_projektleiter(dictionary["projektleiter"])
+        obj.set_arbeitszeitkonto_id(dictionary["arbeitszeitkonto_id"])
+
         return obj
 
 # erstellt von Rosalie Kripp

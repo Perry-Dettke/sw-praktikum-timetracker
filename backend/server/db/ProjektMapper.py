@@ -23,13 +23,12 @@ class ProjektMapper (Mapper):
         cursor.execute("SELECT * from projekt")
         tuples = cursor.fetchall()
 
-        for (id, letzte_aenderung, bezeichnung, auftraggeber, aktivitaet_id) in tuples:
+        for (id, letzte_aenderung, bezeichnung, auftraggeber) in tuples:
             projekt = Projekt()
             projekt.set_id(id)
             projekt.set_letzte_aenderung(letzte_aenderung)
             projekt.set_bezeichnung(bezeichnung)
             projekt.set_auftraggeber(auftraggeber)
-            projekt.set_aktivitaet_id(aktivitaet_id)
             result.append(projekt)
 
         self._cnx.commit()
@@ -45,16 +44,15 @@ class ProjektMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, aktivitaets_id FROM projekt WHERE auftraggeber LIKE '{}' ORDER BY auftraggeber".format(auftraggeber)
+        command = "SELECT id, letzte_aenderung FROM projekt WHERE auftraggeber LIKE '{}' ORDER BY auftraggeber".format(auftraggeber)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, auftraggeber, aktivitaets_id) = tuples[0]
+            (id, letzte_aenderung, auftraggeber) = tuples[0]
             projekt = Projekt()
             projekt.set_id(id)
             projekt.set_letzte_aenderung(letzte_aenderung)
-            projekt.set_aktivitaets_id(aktivitaets_id)
 
             result.append(projekt)
 
@@ -91,12 +89,11 @@ class ProjektMapper (Mapper):
                 davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
                 projekt.set_id(1)
 
-        command = "INSERT INTO projekt (id, letzte_aenderung, auftraggeber, aktivitaets_id) VALUES (%s,%s,%s,%s,)"
+        command = "INSERT INTO projekt (id, letzte_aenderung, auftraggeber) VALUES (%s,%s,%s,)"
         data = (
             projekt.get_id(),
             projekt.get_letzte_aenderung,
-            projekt.get_auftraggeber,
-            projekt.get_aktivitaets_id())
+            projekt.get_auftraggeber,)
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -111,10 +108,9 @@ class ProjektMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE projekt " + "SET auftraggeber=%s, aktivitaets_id=%s WHERE id=%s"
+        command = "UPDATE projekt " + "SET auftraggeber=%s WHERE id=%s"
         data = (
             projekt.get_auftraggeber(),
-            projekt.get_aktivitaets_id(),
             projekt.get_id())
         cursor.execute(command, data)
 

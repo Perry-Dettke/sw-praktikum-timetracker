@@ -39,7 +39,7 @@ timetracker = api.namespace('timetracker', description="Funktionen der App")
 
 bo = api.model('BusinessObject', {
     'id': fields.Integer(attribute='_id',
-                         description='Der Unique Identifier eines Business Object'),
+                         description='Der Unique Identifier eines Business Object'),                         
     'letzte_aenderung': fields.DateTime(attribute='_letzte_aenderung',                                          #hier eventuell DateTime
                                 description='Die Person die am BO die letzte Änderung durchgeführt hat'),
     
@@ -50,18 +50,18 @@ aktivitaet = api.inherit('Aktivitaet', bo, {
                                 description='Bezeichnung einer Aktivitaet'),
     'kapazitaet': fields.Integer(attribute='_kapazitaet',                               # Hier eventuell float?
                                 description='Kapazitaet einer Aktivitaet in Stunden'),
+    'projekt_id': fields.Integer(attribute='_projekt_id',                               
+                                description='Zugehörige Projekt ID der Aktivitaet'),                               
 })
 
 arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {
     'arbeitsleistung': fields.String(attribute='_arbeitsleistung',
                                 description='Arbeitsleistung im Arbeitszeitkonto'),
-    'buchung_id': fields.Integer(attribute='_buchung_id',
-                                description='ID einer Buchung einem Arbeitskonto zugeteilt'),
 })
 
 buchung = api.inherit('Buchung', bo, {
-    'person_id': fields.Integer(attribute='_person_id',
-                                description='ID der Person die die Buchung durchgeführt hat'),
+    'erstellt_von': fields.Integer(attribute='_erstellt_von',
+                                description='Person die die Buchung durchgeführt hat'),
     'arbeitskonto_id': fields.Integer(attribute='_arbeitskonto_id',
                                 description='ID des Arbeitskonto auf dem die Buchung durchgeführt wird'),
 })
@@ -75,12 +75,13 @@ person = api.inherit('Person', bo, {
                                 description='Email einer Person'),
     'benutzername': fields.String(attribute='_benutzer_name',
                                 description='Benutzername einer Person'),
-    'arbeitszeitkonto_id': fields.Integer(attribute='_arbeitszeitkonto_id',
-                                description='ID des Arbeitszeitkonto einer Person'),
-    'projekt_id': fields.Integer(attribute='_projekt_id',
-                                description='ID eines Projekts an dem die Person arbeitet'),
     'google_user_id': fields.String(attribute='_google_user_id',
                                 description='Gegebene ID von Google'),
+    'projektleiter': fields.Integer(attribute='_projektleiter',
+                                description='Gibt an ob die Person ein Projektleiter is oder nicht'),
+    'arbeitszeitkonto_id': fields.Integer(attribute='_arbeitszeitkonto_id',
+                                description='ID des Arbeitszeitkonto einer Person'),
+
 })
 
 projekt = api.inherit('Projekt', bo, {
@@ -88,8 +89,6 @@ projekt = api.inherit('Projekt', bo, {
                                 description='Bezeichnung eines Projekts'),
     'auftraggeber': fields.String(attribute='_auftraggeber',
                                 description='Auftraggeber des Projekts'),
-    'aktivitaet_id': fields.String(attribute='_aktivitaet_id',
-                                description='IDs der Aktivitaeten im Projekt'),
 })
 
 zeitintervall = api.inherit('Zeitintervall', bo, {
@@ -575,7 +574,7 @@ class ProjektOperations(Resource):
         """Auslesen aller Projekt-Objekte
         """
         adm = TimetrackerAdministration()
-        pro = adm.get_all_projekt()[0]
+        pro = adm.get_all_projekt()
         return pro
 
     @timetracker.marshal_list_with(projekt, code=200)

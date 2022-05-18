@@ -21,15 +21,16 @@ class AktivitaetMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT id, letzte_aenderung, bezeichnung, kapazitaet FROM aktivitaet")
+        cursor.execute("SELECT id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id FROM aktivitaet")
         tuples = cursor.fetchall()
 
-        for (id, letzte_aenderung, bezeichnung, kapazitaet) in tuples:
+        for (id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id) in tuples:
             aktivitaet = Aktivitaet()
             aktivitaet.set_id(id)
             aktivitaet.set_letzte_aenderung(letzte_aenderung)
             aktivitaet.set_bezeichnung(bezeichnung)
             aktivitaet.set_kapazitaet(kapazitaet)
+            aktivitaet.set_projekt_id(projekt_id)
 
         self._cnx.commit()
         cursor.close()
@@ -37,25 +38,22 @@ class AktivitaetMapper (Mapper):
         return result
 
     def find_by_id(self, id):
-        """Auslesen aller Aktivitäten anhand der ID.
-
-        :param id Primärschlüsselattribut aus der DB.
-        :return Eine Sammlung mit Aktivität-Objekten, die sämtliche Aktivitäten
-            mit der gewünschten ID enthält.
-        """
+        """Auslesen aller Aktivitäten anhand der ID."""
+        
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, bezeichnung, kapazitaet FROM aktivitaet WHERE id={}".format(id)
+        command = "SELECT id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id FROM aktivitaet WHERE id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, bezeichnung, kapazitaet) = tuples[0]
+            (id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id) = tuples[0]
             aktivitaet = Aktivitaet()
             aktivitaet.set_id(id)
             aktivitaet.set_letzte_aenderung(letzte_aenderung)
             aktivitaet.set_bezeichnung(bezeichnung)
             aktivitaet.set_kapazitaet(kapazitaet)
+            aktivitaet.set_projekt_id(projekt_id)
             result.append(aktivitaet)
 
         except IndexError:
@@ -68,6 +66,36 @@ class AktivitaetMapper (Mapper):
 
         return result
 
+    def find_by_projekt_id(self, projekt_id):
+        """Auslesen aller Aktivitäten anhand der Projekt ID."""
+
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id FROM aktivitaet WHERE projekt_id={}".format(projekt_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            (id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id) = tuples[0]
+            aktivitaet = Aktivitaet()
+            aktivitaet.set_id(id)
+            aktivitaet.set_letzte_aenderung(letzte_aenderung)
+            aktivitaet.set_bezeichnung(bezeichnung)
+            aktivitaet.set_kapazitaet(kapazitaet)
+            aktivitaet.set_projekt_id(projekt_id)
+            result.append(aktivitaet)
+
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            result = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
+        
     def insert(self, aktivitaet):
 
         """Einfügen eines Aktivitaet-Objekts in die Datenbank.
@@ -86,11 +114,12 @@ class AktivitaetMapper (Mapper):
         for (maxid) in tuples:
             aktivitaet.set_id(maxid[0] + 1)
 
-        command = "INSERT INTO aktivitaet (id, letzte_aenderung, bezeichnung, kapazitaet) VALUES (%s,%s,%s,%s)"
+        command = "INSERT INTO aktivitaet (id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id) VALUES (%s,%s,%s,%s,%s)"
         data = (aktivitaet.get_id(),
                 aktivitaet.get_letzte_aenderung(),
                 aktivitaet.get_bezeichnug(),
-                aktivitaet.get_kapazitaet())
+                aktivitaet.get_kapazitaet(),
+                aktivitaet.get_projekt_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -109,7 +138,8 @@ class AktivitaetMapper (Mapper):
         data = (aktivitaet.get_letzte_aenderung(),
                 aktivitaet.get_bezeichnug(),
                 aktivitaet.get_kapazitaet(),
-                aktivitaet.get_id())
+                aktivitaet.get_id(),
+                aktivitaet.get_projekt_id)
         cursor.execute(command, data)
         self._cnx.commit()
         cursor.close()

@@ -8,6 +8,7 @@ class Aktivitaet(bo.BusinessObjekt):
         super().__init__()
         self._bezeichnung = ''
         self._kapazitaet = 0.0
+        self._projekt_id = 0
         
     def get_bezeichnung(self):
         # Ausgeben der Bezeichnung
@@ -24,10 +25,18 @@ class Aktivitaet(bo.BusinessObjekt):
     def set_kapazitaet(self, kapazitaet):
         # Setzen der Kapazitaet
         self._kapazitaet = kapazitaet
+
+    def get_projekt_id(self):
+        # Ausgeben der Projekt ID
+        return self._projekt_id
+    
+    def set_projekt_id(self, projekt_id):
+        # Setzen der Projekt ID
+        self._projekt_id = projekt_id
     
     def __str__(self):
         #Erzeugen einer einfachen textuellen Darstellung der jeweiligen Instanz
-        return f'Aktivitaet: {self.get_bezeichnung()}, {self.get_kapazitaet()}'
+        return f'Aktivitaet: {self.get_bezeichnung()}, {self.get_kapazitaet(), self.get_kapazitaet()}'
     
     @staticmethod
     def from_dict(dictionary=dict()):
@@ -35,4 +44,5 @@ class Aktivitaet(bo.BusinessObjekt):
         obj = Aktivitaet()
         obj.set_bezeichnung(dictionary["bezeichnung"])
         obj.set_kapazitaet(dictionary["kapazitaet"])
+        obj.set_projekt_id(dictionary["projekt_id"])
         return obj
