@@ -6,6 +6,8 @@ import Buchung from './components/pages/BuchungSeite';
 import Projekt from './components/pages/ProjektSeite';
 import Person from './components/pages/PersonSeite';
 import { BrowserRouter as Router, Route, Navigate, Routes, useLocation } from 'react-router-dom';
+import Aktivitaet from './components/pages/AktivitaetSeite';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import TimetrackerAPI from './api/TimetrackerAPI';
 import SignIn from './components/pages/SignIn';
 import firebaseConfig from './firebaseconfig';
@@ -105,9 +107,27 @@ class App extends React.Component {
 
 
   /** Renders the whole app */
+<<<<<<< HEAD
 	render() {
 		const { currentUser, appError, authError, authLoading } = this.state;
 		// console.log(currentUser)
+=======
+  render(){
+    return (
+      <Router>
+        <div className="App">
+          <Header />
+          <div className="content">
+            <Routes>
+                <Route path={'/*'} element={<Home/>}/>
+                <Route path={'/home'} element={<Home/>} />
+                <Route path={'/projekt'} element={<Projekt/>} />
+                <Route path={'/person'} element={<Person/>} />
+                <Route path={'/aktivitaet'} element={<Aktivitaet/>} />
+                <Route path={'/buchung'} element={<Buchung/>} />
+                {/*<Route path={'/projekt_uebersicht'} element={<Projektuebersicht/>} />*/}
+                {/*<Route path={'/personen_uebersicht'} element={<Personenuebersicht/>} />*/}
+>>>>>>> main
 
 		return (
 			<ThemeProvider theme={Theme}>

@@ -1,11 +1,12 @@
-// import 'date-fns';
 import React, { Component } from 'react';
-//import PropTypes from 'prop-types';
-import { withStyles, Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-//import DateFnsUtils from '@date-io/date-fns';
-//import { format } from 'date-fns';
-//import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
+import TextField from '@material-ui/core/TextField';
+import InputLabel from "@mui/material/InputLabel";
+
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { MenuItem } from '@mui/material';
 
 
 
@@ -27,16 +28,26 @@ class PersonDialog extends Component {
         return (
             show ?
                 <div>
-                    <Dialog open={show} onClose={this.handleClose} maxWidth='xs'>
+                    <Dialog open={show} onClose={this.handleClose} maxWidth='xl'>
                         <DialogTitle id='form-dialog-title'>Neue Person anlegen
                             <IconButton onClick={this.handleClose}>
                                 <CloseIcon />
                             </IconButton>
                         </DialogTitle>
                         <DialogContent>
-                            <DialogContentText>
-                                Person erstellen
-                            </DialogContentText>
+                            <DialogContent>
+                            <div>
+                            <TextField 
+                                label='Soll-Stunden:'
+                                variant="outlined"
+                                size="medium"
+                                 // value={this.state.name}
+                                onChange={this.handleChange}
+                                autocomplete='off'              
+                                        
+                                ></TextField>
+                                </div>
+                            </DialogContent>
                         </DialogContent>
                         <DialogActions>
                             <Button color='secondary' onClick={this.handleClose}>
