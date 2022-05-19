@@ -13,7 +13,7 @@ import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged } f
 import { initializeApp } from 'firebase/app';
 import ContextErrorMessage from './components/dialogs/ContextErrorMessage';
 import { Container, ThemeProvider, CssBaseline } from '@mui/material';
-import Theme from './Theme';
+import Theme from './components/layout/Theme';
 import LoadingProgress from './components/dialogs/LoadingProgress';
 
 
