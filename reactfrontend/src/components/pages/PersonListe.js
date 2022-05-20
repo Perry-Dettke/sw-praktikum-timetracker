@@ -76,7 +76,7 @@ class PersonListe extends Component {
                 <Paper>
                     <List >
                         {
-                            filteredPerson.map(person =>
+                            person.map(person =>
                                 <PersonListenEintrag key={person.getID()} person={person} show={this.props.show}
                                     getPerson={this.getPerson} />)
                         }
