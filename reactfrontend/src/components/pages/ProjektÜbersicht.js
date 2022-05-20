@@ -37,10 +37,22 @@ class Projektuebersicht extends Component {
         );
     };
 
+    getAktivitaetbyProjektID = () => {
+        TimetrackerAPI.getAPI().getAktivitaetbyProjektID().then((aktivitaetbyprojektid) =>
+            this.setState({
+                aktivitaetbyprojektid: aktivitaetbyprojektid,
+            })
+        ).catch((e) =>
+            this.setState({
+                aktivitaetbyprojektid: null,
+            })
+        );
+    };
+
 
 
     render() {
-        const {projekt} = this.state;
+        const {projekt, aktivitaetbyprojektid} = this.state;
 
         return (
             <div>
@@ -54,17 +66,22 @@ class Projektuebersicht extends Component {
                             <TableCell align="left"><b>Ist Stunden</b></TableCell>
                         </TableRow>
                     </TableHead>
+                    {projekt ?
                     <TableBody>
-                        {projekt ?
                         <TableRow>
                             <TableCell component="th" scope="row">{projekt.getBezeichnung()}</TableCell>
                         </TableRow>
-                        :
+                        {/* <TableRow>
+                            <TableCell component="th" scope="row">{aktivitaetbyprojektid.getAktivitaetbyProjektID()}</TableCell>
+                        </TableRow> */}
+                    </TableBody>
+                    : 
+                    <TableBody>
                         <TableRow>
                             <TableCell component="th" scope="row">Keine Daten vorhanden</TableCell>
                         </TableRow>
-                         }
                     </TableBody>
+                    }
                 </Table>
             </TableContainer>
             </div>
