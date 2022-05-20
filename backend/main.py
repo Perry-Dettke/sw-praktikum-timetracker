@@ -574,7 +574,7 @@ class ProjektOperations(Resource):
         """Auslesen aller Projekt-Objekte
         """
         adm = TimetrackerAdministration()
-        pro = adm.get_all_projekt()
+        pro = adm.get_all_projekt()[0]
         return pro
 
     @timetracker.marshal_list_with(projekt, code=200)
