@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import TimetrackerAPI from '../../api/TimetrackerAPI';
 
 
 class Projektuebersicht extends Component {
@@ -15,12 +16,31 @@ class Projektuebersicht extends Component {
         super(props);
 
     this.state = {
-        showProjektuebersicht: false
+        projekt:  null
     };
     }
 
+    componentDidMount() {
+        this.getProjekt();
+    }
+
+    getProjekt = () => {
+        TimetrackerAPI.getAPI().getProjekt().then((projekt) =>
+         //   console.log(projekt))
+        this.setState({
+                projekt: projekt,
+            })
+        ).catch((e) =>
+            this.setState({
+                projekt: null,
+            })
+        );
+    };
+
+
+
     render() {
-        const {showProjektuebersicht} = this.state;
+        const {projekt} = this.state;
 
         return (
             <div>
@@ -35,15 +55,15 @@ class Projektuebersicht extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
+                        {projekt ?
                         <TableRow>
-                            <TableCell component="th" scope="row">Projekt 1</TableCell>
+                            <TableCell component="th" scope="row">{projekt.getBezeichnung()}</TableCell>
                         </TableRow>
+                        :
                         <TableRow>
-                            <TableCell component="th" scope="row">Projekt 2</TableCell>
+                            <TableCell component="th" scope="row">Keine Daten vorhanden</TableCell>
                         </TableRow>
-                        <TableRow>
-                            <TableCell component="th" scope="row">Projekt 3</TableCell>
-                        </TableRow>
+                         }
                     </TableBody>
                 </Table>
             </TableContainer>
