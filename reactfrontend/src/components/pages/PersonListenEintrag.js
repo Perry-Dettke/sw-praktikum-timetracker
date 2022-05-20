@@ -57,7 +57,7 @@ class PersonListenEintrag extends Component {
 
         return (
             <div>
-                <ListItem className={classes.root}>
+                <ListItem>
                     <Grid container alignItems="center" spacing={2}>
                         <Grid item xs={2}>
                             <Typography>{person.vor_name}</Typography>
@@ -75,7 +75,7 @@ class PersonListenEintrag extends Component {
                         <Grid item>
                         </Grid>
                         <Tooltip title='Bearbeiten' placement="bottom">
-                            <IconButton className={classes.bearbeitenButton} variant='contained'
+                            <IconButton variant='contained'
                                         onClick={this.bearbeitenButtonClicked}>
                               
                             </IconButton>
