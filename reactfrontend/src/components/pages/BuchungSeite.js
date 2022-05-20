@@ -84,7 +84,7 @@ class Buchung extends Component {
                     },
                 }}
                 >
-                    <TableContainer component={Paper}  sx={{ maxWidth: 50000, margin:"auto"}}>
+                    <TableContainer component={Paper}  sx={{ maxWidth: 1000 , margin:"auto" }}>
                         <Table sx={{ minWidth: 600 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>

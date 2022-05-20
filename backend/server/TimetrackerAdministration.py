@@ -23,13 +23,12 @@ class TimetrackerAdministration (object):
     """
     Aktivitaet-spezifische Methoden
     """
-    def create_aktivitaet(self, letzte_aenderung, bezeichnung, kapazitaet, projekt_id):
+    def create_aktivitaet(self, letzte_aenderung, bezeichnung, kapazitaet):
         """Eine Aktivitaet anlegen"""
         aktivitaet = Aktivitaet()
         aktivitaet.set_letzte_aenderung(letzte_aenderung)
         aktivitaet.set_bezeichnung(bezeichnung)
         aktivitaet.set_bezeichnung(kapazitaet)
-        aktivitaet.set_projekt_id(projekt_id)
         aktivitaet.set_id(1)
 
         with AktivitaetMapper() as mapper:
