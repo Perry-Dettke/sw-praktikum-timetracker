@@ -71,18 +71,6 @@ class Buchung extends Component {
                 <Button variant="contained" sx={{width:250}}
                     onClick={this.showBuchungDialog}>
                 Neue Buchung erstellen</Button>
-                <Box
-                sx={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                '& > :not(style)': {
-                    m: 2,
-                    width: 'max',
-                    height: 800,
-                    alignItems: 'center',
-                    },
-                }}
-                >
                     <TableContainer component={Paper}  sx={{ maxWidth: 50000, margin:"auto"}}>
                         <Table sx={{ minWidth: 600 }} aria-label="simple table">
                             <TableHead>
@@ -99,7 +87,6 @@ class Buchung extends Component {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </Box>
            {<BuchungDialog show={showBuchung} projekt={projekt} onClose={this.closeBuchungDialog}/> }
 
             </div>
