@@ -17,7 +17,7 @@ export default class TimetrackerAPI {
 
     #addPersonURL = () => `${this.#ServerBaseURL}/person`;
     #getPersonbyIDURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
-    #getPersonURL = () => `${this.#ServerBaseURL}/person/`;
+    #getPersonURL = () => `${this.#ServerBaseURL}/person`;
     #updatePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
     #deletePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
     #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
@@ -197,7 +197,6 @@ export default class TimetrackerAPI {
         // Projekt abfragen
         return this.#fetchAdvanced(this.#getProjektURL()).then((responseJSON) => {
           let projekt = ProjektBO.fromJSON(responseJSON);
-          console.log(responseJSON)
           return new Promise(function (resolve) {
             resolve(projekt)
           })

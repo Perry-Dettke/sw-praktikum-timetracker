@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import ContextErrorMessage from './dialogs/ContextErrorMessage';
-import LoadingProgress from './dialogs/LoadingProgress';
 
 import ListItem from '@material-ui/core/ListItem';
 import {Typography, IconButton, Grid, Tooltip} from '@material-ui/core';
 
-import EditIcon from '@material-ui/icons/Edit';
 import Divider from '@material-ui/core/Divider';
 
 
@@ -23,8 +20,6 @@ class PersonListenEintrag extends Component {
         //gebe einen leeren status
         this.state = {
             showPerson: false,
-            error: null,
-            loadingInProgress: false
         };
     }
 
@@ -62,7 +57,7 @@ class PersonListenEintrag extends Component {
 
         return (
             <div>
-                <ListItem className={classes.root}>
+                <ListItem>
                     <Grid container alignItems="center" spacing={2}>
                         <Grid item xs={2}>
                             <Typography>{person.vor_name}</Typography>
@@ -80,9 +75,9 @@ class PersonListenEintrag extends Component {
                         <Grid item>
                         </Grid>
                         <Tooltip title='Bearbeiten' placement="bottom">
-                            <IconButton className={classes.bearbeitenButton} variant='contained'
+                            <IconButton variant='contained'
                                         onClick={this.bearbeitenButtonClicked}>
-                                <EditIcon/>
+                              
                             </IconButton>
                         </Tooltip>
                     </Grid>
@@ -92,6 +87,7 @@ class PersonListenEintrag extends Component {
                     <ContextErrorMessage error={error} contextErrorMsg={'Der Person konnte nicht geladen werden'}
                                          onReload={this.getPerson}/> */}
                 </ListItem>
+
                 <Divider/>
                 <PersonDialog show={showPerson} person={person} onClose={this.personFormClosed} getModule={this.getPerson}/>
             </div>
