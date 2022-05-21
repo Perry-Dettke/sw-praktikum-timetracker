@@ -10,6 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 import PersonLöschenDialog from '../dialogs/PersonLöschenDialog';
+import PersonForm from '../dialogs/PersonForm';
 
 
 
@@ -20,7 +21,7 @@ class PersonListenEintrag extends Component {
 
         //gebe einen leeren status
         this.state = {
-            showPerson: false,
+            showPersonForm: false,
             showPresonDelete: false,
         };
     }
@@ -30,27 +31,27 @@ class PersonListenEintrag extends Component {
         this.props.getPerson();
     }
 
-    // //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
-    // bearbeitenButtonClicked = event => {
-    //     event.stopPropagation();
-    //     this.setState({
-    //         showPerson: true
-    //     });
-    // }
+    //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
+    bearbeitenButtonClicked = event => {
+        event.stopPropagation();
+        this.setState({
+            showPersonForm: true
+        });
+    }
 
-    // //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
-    // personFormClosed = (person) => {
-    //     if (person) {
-    //         this.setState({
-    //             person: person,
-    //             showPerson: false
-    //         });
-    //     } else {
-    //         this.setState({
-    //             showPerson: false
-    //         });
-    //     }
-    // }
+    //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
+    personFormClosed = (person) => {
+        if (person) {
+            this.setState({
+                person: person,
+                showPersonForm: false
+            });
+        } else {
+            this.setState({
+                showPersonForm: false
+            });
+        }
+    }
 
      //Öffnet das Dialog-Fenster PersonDeleteDialog, wenn der Button geklickt wurde
      personDeleteButtonClicked =  event => {
@@ -73,7 +74,7 @@ class PersonListenEintrag extends Component {
     //Renders the component
     render() {
         const {classes, person} = this.props;
-        const {showPerson, error, loadingInProgress, showPersonDelete} = this.state;
+        const {showPersonForm, error, loadingInProgress, showPersonDelete} = this.state;
 
         return (
             <div>
@@ -95,7 +96,7 @@ class PersonListenEintrag extends Component {
 
                         <Grid item>
                     <Tooltip title='Bearbeiten' placement="bottom">
-                      <IconButton  >
+                      <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}>
                           <EditIcon />
                       </IconButton>
                     </Tooltip>
@@ -114,7 +115,7 @@ class PersonListenEintrag extends Component {
                 </ListItem>
 
                 <Divider/>
-                {/* <PersonDialog show={showPerson} person={person} onClose={this.personFormClosed} getModule={this.get.person}/> */}
+                <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} getPerson= {this.getPerson}/>
                 <PersonLöschenDialog show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersont= {this.getPerson}/>       
             </div>
         );
