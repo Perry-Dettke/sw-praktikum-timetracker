@@ -6,6 +6,8 @@ import List from '@mui/material/List';
 
 import PersonListenEintrag from './PersonListenEintrag'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
+import PersonDialog from '../dialogs/PersonDialog';
+
 
 class PersonListe extends Component {
 
@@ -49,7 +51,7 @@ class PersonListe extends Component {
     //PersonDialog anzeigen
     showPersonDialog = () => {
         this.setState({ showPerson: true}, () => {
-            console.log(this.state.showPerson);
+            // console.log(this.state.showPerson);
         });
     };
 
@@ -68,14 +70,14 @@ class PersonListe extends Component {
     /** Renders the component */
     render() {
 
-        const { person, filteredPerson, personenliste } = this.state;
+        const { person, filteredPerson, personenliste, showPerson } = this.state;
         // console.log(personenliste)
 
 
         return (
             <div>
+                <Button variant="contained" sx={{width:250}} onClick={this.showPersonDialog}> Neue Person Erstellen</Button>
                 <Grid container spacing={2} alignItems="center">
-                 <Button variant="contained" sx={{width:250}} onClick={this.showPersonDialoag()}> Neue Person Erstellen</Button>
                 </Grid>
                 
                 <Paper>
@@ -86,15 +88,10 @@ class PersonListe extends Component {
                                     getPerson={this.getPerson} />)
 
 
-
-
-
-
-
                         }
                     </List>
                 </Paper>
-
+                <PersonDialog show={showPerson} onClose={this.closePersonDialog}/>
             </div>
         );
     }

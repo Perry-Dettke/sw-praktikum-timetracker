@@ -6,9 +6,10 @@ import ListItem from '@material-ui/core/ListItem';
 import {Typography, IconButton, Grid, Tooltip} from '@material-ui/core';
 
 import Divider from '@material-ui/core/Divider';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
-
-import PersonDialog from '../dialogs/PersonDialog';
+import PersonLöschenDialog from '../dialogs/PersonLöschenDialog';
 
 
 
@@ -20,6 +21,7 @@ class PersonListenEintrag extends Component {
         //gebe einen leeren status
         this.state = {
             showPerson: false,
+            showPresonDelete: false,
         };
     }
 
@@ -28,32 +30,50 @@ class PersonListenEintrag extends Component {
         this.props.getPerson();
     }
 
-    //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
-    bearbeitenButtonClicked = event => {
+    // //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
+    // bearbeitenButtonClicked = event => {
+    //     event.stopPropagation();
+    //     this.setState({
+    //         showPerson: true
+    //     });
+    // }
+
+    // //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
+    // personFormClosed = (person) => {
+    //     if (person) {
+    //         this.setState({
+    //             person: person,
+    //             showPerson: false
+    //         });
+    //     } else {
+    //         this.setState({
+    //             showPerson: false
+    //         });
+    //     }
+    // }
+
+     //Öffnet das Dialog-Fenster PersonDeleteDialog, wenn der Button geklickt wurde
+     personDeleteButtonClicked =  event => {
+        console.log("Delete Button")
         event.stopPropagation();
         this.setState({
-            showPerson: true
+          showPersonDelete: true
         });
-    }
+      }
+    
+      //Wird aufgerufen, wenn das Dialog-Fenster PersonDeleteDialog geschlossen wird
+      personDeleteClosed = () => {
+          this.setState({
+            showPersonDelete: false
+          });
+          this.getPerson();
+      }
 
-    //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
-    personFormClosed = (person) => {
-        if (person) {
-            this.setState({
-                person: person,
-                showPerson: false
-            });
-        } else {
-            this.setState({
-                showPerson: false
-            });
-        }
-    }
 
     //Renders the component
     render() {
         const {classes, person} = this.props;
-        const {showPerson, error, loadingInProgress} = this.state;
+        const {showPerson, error, loadingInProgress, showPersonDelete} = this.state;
 
         return (
             <div>
@@ -72,14 +92,19 @@ class PersonListenEintrag extends Component {
                             <Typography>{person.email}</Typography>
                         </Grid>
                         <Grid item xs/>
+
                         <Grid item>
-                        </Grid>
-                        <Tooltip title='Bearbeiten' placement="bottom">
-                            <IconButton variant='contained'
-                                        onClick={this.bearbeitenButtonClicked}>
-                              
-                            </IconButton>
-                        </Tooltip>
+                    <Tooltip title='Bearbeiten' placement="bottom">
+                      <IconButton  >
+                          <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    </Grid>
+                    <Grid item>
+                      <Tooltip title='Löschen' placement="bottom">
+                      <IconButton variant="contained"  onClick={this.personDeleteButtonClicked}><DeleteIcon /></IconButton>
+                      </Tooltip>
+                    </Grid>
                     </Grid>
                 </ListItem>
                 <ListItem>
@@ -90,6 +115,7 @@ class PersonListenEintrag extends Component {
 
                 <Divider/>
                 {/* <PersonDialog show={showPerson} person={person} onClose={this.personFormClosed} getModule={this.get.person}/> */}
+                <PersonLöschenDialog show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersont= {this.getPerson}/>       
             </div>
         );
     }
