@@ -168,15 +168,11 @@ export default class TimetrackerAPI {
         })
       }
     
-    deletePerson(personBO) {
+    deletePerson(id) {
         // Person löschen
-        return this.#fetchAdvanced(this.#deletePersonURL(personBO.getID()), {
+        return this.#fetchAdvanced(this.#deletePersonURL(id), {
           method: 'DELETE',
-          headers: {
-            'Accept': 'application/json, text/plain',
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(personBO)
+
         })
       }
 
