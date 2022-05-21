@@ -237,7 +237,7 @@ class PersonMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE person " + "SET vor_name=%s, nach_name=%s, email=%s, benutzer_name=%s, projektleiter=%s, arbeitszeitkonot_id=%s WHERE id=%s"
+        command = "UPDATE person " + "SET vor_name=%s, nach_name=%s, email=%s, benutzer_name=%s, projektleiter=%s, arbeitszeitkonto_id=%s WHERE id=%s"
         data = (
             person.get_vor_name(),
             person.get_nach_name(),

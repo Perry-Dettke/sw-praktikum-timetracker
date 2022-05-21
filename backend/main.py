@@ -60,7 +60,7 @@ arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {
 })
 
 buchung = api.inherit('Buchung', bo, {
-    'erstellt_von': fields.Integer(attribute='_erstellt_von',
+    'erstellt_von': fields.String(attribute='_erstellt_von',
                                 description='Person die die Buchung durchgeführt hat'),
     'arbeitskonto_id': fields.Integer(attribute='_arbeitskonto_id',
                                 description='ID des Arbeitskonto auf dem die Buchung durchgeführt wird'),
@@ -73,7 +73,7 @@ person = api.inherit('Person', bo, {
                                 description='Nachname einer Person'),
     'email': fields.String(attribute='_email',
                                 description='Email einer Person'),
-    'benutzername': fields.String(attribute='_benutzer_name',
+    'benutzer_name': fields.String(attribute='_benutzer_name',
                                 description='Benutzername einer Person'),
     'google_user_id': fields.String(attribute='_google_user_id',
                                 description='Gegebene ID von Google'),
@@ -183,7 +183,7 @@ class AktivitaetIDOperations(Resource):
         Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        akt = adm.get_aktivitaet_by_key(id)
+        akt = adm.get_aktivitaet_by_id(id)
 
         if akt is not None:
             return akt
@@ -271,7 +271,7 @@ class ArbeitszeitkontoIDOperations(Resource):
         Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        azt = adm.get_arbeitszeitkonto_by_key(id)
+        azt = adm.get_arbeitszeitkonto_by_id(id)
 
         if azt is not None:
             return azt
@@ -360,7 +360,7 @@ class BuchungIDOperations(Resource):
         Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        bu = adm.get_buchung_by_key(id)
+        bu = adm.get_buchung_by_id(id)
 
         if bu is not None:
             return bu
@@ -448,7 +448,7 @@ class EreignisIDOperations(Resource):
         Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        er = adm.get_ereignis_by_key(id)
+        er = adm.get_ereignis_by_id(id)
 
         if er is not None:
             return er
@@ -534,7 +534,7 @@ class PersonIDOperations(Resource):
         Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        pe = adm.get_person_by_key(id)
+        pe = adm.get_person_by_id(id)
 
         if pe is not None:
             return pe
@@ -643,7 +643,7 @@ class ProjektIDOperations(Resource):
         Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        pro = adm.get_projekt_by_key(id)
+        pro = adm.get_projekt_by_id(id)
 
         if pro is not None:
             return pro
@@ -730,7 +730,7 @@ class ZeitintervallIDOperations(Resource):
         Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        zi = adm.get_zeitintervall_by_key(id)
+        zi = adm.get_zeitintervall_by_id(id)
 
         if zi is not None:
             return zi

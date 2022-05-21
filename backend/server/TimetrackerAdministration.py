@@ -253,7 +253,7 @@ class TimetrackerAdministration (object):
     def get_projekt_by_id(self, id):
         """Das Projekt mit der gegebenen ID auslesen."""
         with ProjektMapper() as mapper:
-            return mapper.find_by_id(id)            #fehlt noch im Mapper
+            return mapper.find_by_id(id)          
 
     def get_projekt_by_auftraggeber(self, auftraggeber):       
         """Das Projekt mit dem gegebenen Auftraggeber auslesen."""
