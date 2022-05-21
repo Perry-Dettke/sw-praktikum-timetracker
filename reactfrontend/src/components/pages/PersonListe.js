@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import ContextErrorMessage from './dialogs/ContextErrorMessage';
-import { withStyles, IconButton, InputAdornment, TextField, Paper, Grid } from '@material-ui/core';
-import LoadingProgress from './dialogs/LoadingProgress';
-import List from '@material-ui/core/List';
-import ClearIcon from '@material-ui/icons/Clear';
-
-
 import { Button, TextField, InputAdornment, IconButton, Grid, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
 
 import PersonListenEintrag from './PersonListenEintrag'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-
-import TimetrackerAPI from "../../api/TimetrackerAPI";
-import PersonListenEintrag from './PersonListenEintrag';
 
 class PersonListe extends Component {
 
@@ -27,35 +16,43 @@ class PersonListe extends Component {
     this.state = {
       person: [],
       filteredPerson: [],
-      showPerson: false
+      showPerson: false,
+      personenliste: [],
     };
   }
 
-  /** Fetches all PersonBOs from the backend */
-  getPerson = () => {
-    TimetrackerAPI.getAPI().getPerson()
-      .then(personBOs =>
-       this.setState({       
-          person: personBOs,
-          filteredPerson: [...personBOs], //Kopie von person
-        })).catch(e =>
-          this.setState({              
-            person: [],
-          })
-        );}
+//   /** Fetches all PersonBOs from the backend */
+//   getPerson = () => {
+//     TimetrackerAPI.getAPI().getPerson()
+//       .then(personBOs =>
+//        this.setState({       
+//           person: personBOs,
+//           filteredPerson: [...personBOs], //Kopie von person
+//         })).catch(e =>
+//           this.setState({              
+//             person: [],
+//           })
+//         );}
 
-    // set loading to true
+//     // set loading to true
     
   
 
-
+    PersonenListe() {
+        var api = TimetrackerAPI.getAPI();
+        api.getPerson().then((projektBOs) => {
+          this.setState({
+            personenliste: projektBOs,
+          });
+        });
+      }
 
 
 
     //PersonDialog anzeigen
     showPersonDialog = () => {
         this.setState({ showPerson: true}, () => {
-            console.log(this.state.showPerson);
+            // console.log(this.state.showPerson);
         });
     };
 
@@ -64,35 +61,33 @@ class PersonListe extends Component {
         this.setState({ showPerson: false});
     };
 
-    showtest = () => {
-      console.log(this.state.person)
-    }
+
 
     componentDidMount() {
-        this.getPerson();
+        this.PersonenListe();
+        console.log(this.state.personenliste);
       }
 
     /** Renders the component */
     render() {
-        const { classes } = this.props;
-        const { loadingInProgress, error, person, filteredPerson } = this.state;
+
+        const { person, filteredPerson, personenliste } = this.state;
+        // console.log(personenliste)
 
         return (
             <div>
                 <Grid container spacing={2} alignItems="center">
-                <Button variant="contained" sx={{width:250}} onClick={this.showtest}> Neue Person Erstellen</Button>
+                <Button variant="contained" sx={{width:250}} onClick={this.showPersonDialog()}> Neue Person Erstellen</Button>
                 </Grid>
                 
                 <Paper>
                     <List >
                         {
-                            person.map(person =>
-                                <PersonListeEintrag key={person.getID()} person={person} show={this.props.show}
-                                    getPerson={this.getPerson} />)
+                            Object.values(personenliste).map(person =>
+                                <PersonListenEintrag key={Object.values(person)[4]} personenliste={personenliste} show={this.props.show}
+                                    getPersonenListe={this.getPersonenListe} />)
                         }
                     </List>
-                    {/* <LoadingProgress show={loadingInProgress} />
-                    <ContextErrorMessage error={error} contextErrorMsg={`Personenliste konnte nicht geladen werden.`} onReload={this.getPerson} /> */}
                 </Paper>
 
             </div>

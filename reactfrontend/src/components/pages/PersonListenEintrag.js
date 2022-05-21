@@ -24,8 +24,8 @@ class PersonListenEintrag extends Component {
     }
 
     //Gibt den aktuellen Person zurück
-    getPerson = () => {
-        this.props.getPerson();
+    getPersonenListe = () => {
+        this.props.getPersonenListe();
     }
 
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
@@ -37,10 +37,10 @@ class PersonListenEintrag extends Component {
     }
 
     //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
-    personFormClosed = (person) => {
-        if (person) {
+    personFormClosed = (personenliste) => {
+        if (personenliste) {
             this.setState({
-                person: person,
+                personenliste: personenliste,
                 showPerson: false
             });
         } else {
@@ -52,7 +52,7 @@ class PersonListenEintrag extends Component {
 
     //Renders the component
     render() {
-        const {classes, person} = this.props;
+        const {classes, personenliste} = this.props;
         const {showPerson, error, loadingInProgress} = this.state;
 
         return (
@@ -60,16 +60,16 @@ class PersonListenEintrag extends Component {
                 <ListItem>
                     <Grid container alignItems="center" spacing={2}>
                         <Grid item xs={2}>
-                            <Typography>{person.vor_name}</Typography>
+                            <Typography>{personenliste.vor_name}</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography>{person.nach_name}</Typography>
+                            <Typography>{personenliste.nach_name}</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography>{person.benutzer_name}</Typography>
+                            <Typography>{personenliste.benutzer_name}</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography>{person.email}</Typography>
+                            <Typography>{personenliste.email}</Typography>
                         </Grid>
                         <Grid item xs/>
                         <Grid item>
@@ -89,7 +89,7 @@ class PersonListenEintrag extends Component {
                 </ListItem>
 
                 <Divider/>
-                <PersonDialog show={showPerson} person={person} onClose={this.personFormClosed} getModule={this.getPerson}/>
+                <PersonDialog show={showPerson} personenliste={personenliste} onClose={this.personFormClosed} getModule={this.get.Personenliste}/>
             </div>
         );
     }
