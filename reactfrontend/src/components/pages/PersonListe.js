@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, TextField, InputAdornment, IconButton, Grid, Typography } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import ClearIcon from '@mui/icons-material/Clear'
+import { withRouter } from 'react-router-dom';
 import ContextErrorMessage from './dialogs/ContextErrorMessage';
+import { withStyles, IconButton, InputAdornment, TextField, Paper, Grid } from '@material-ui/core';
 import LoadingProgress from './dialogs/LoadingProgress';
+import List from '@material-ui/core/List';
+import ClearIcon from '@material-ui/icons/Clear';
+
+
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-
+import PersonListenEintrag from './PersonListenEintrag';
 
 class PersonListe extends Component {
 
@@ -86,12 +89,12 @@ class PersonListe extends Component {
                     <List className={classes.root} dense>
                         {
                             person.map(person =>
-                                <UserListeEintrag key={person.getID()} person={person} show={this.props.show}
+                                <PersonListeEintrag key={person.getID()} person={person} show={this.props.show}
                                     getPerson={this.getPerson} />)
                         }
                     </List>
-                    <LoadingProgress show={loadingInProgress} />
-                    <ContextErrorMessage error={error} contextErrorMsg={`Userliste konnte nicht geladen werden.`} onReload={this.getUser} />
+                    {/* <LoadingProgress show={loadingInProgress} />
+                    <ContextErrorMessage error={error} contextErrorMsg={`Personenliste konnte nicht geladen werden.`} onReload={this.getPerson} /> */}
                 </Paper>
 
             </div>

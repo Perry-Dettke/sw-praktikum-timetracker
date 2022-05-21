@@ -28,7 +28,7 @@ class PersonListenEintrag extends Component {
         };
     }
 
-    //Gibt den aktuellen User zurück
+    //Gibt den aktuellen Person zurück
     getPerson = () => {
         this.props.getPerson();
     }
@@ -88,9 +88,9 @@ class PersonListenEintrag extends Component {
                     </Grid>
                 </ListItem>
                 <ListItem>
-                    <LoadingProgress show={loadingInProgress}/>
-                    <ContextErrorMessage error={error} contextErrorMsg={'Der User konnte nicht geladen werden'}
-                                         onReload={this.getUser}/>
+                    {/* <LoadingProgress show={loadingInProgress}/>
+                    <ContextErrorMessage error={error} contextErrorMsg={'Der Person konnte nicht geladen werden'}
+                                         onReload={this.getPerson}/> */}
                 </ListItem>
                 <Divider/>
                 <PersonDialog show={showPerson} person={person} onClose={this.personFormClosed} getModule={this.getPerson}/>

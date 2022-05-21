@@ -4,8 +4,8 @@ import Header from './components/layout/Header';
 import Home from './components/HomeSeite';
 import Buchung from './components/pages/BuchungSeite';
 import Projekt from './components/pages/ProjektSeite';
-import Person from './components/pages/PersonSeite';
-import PersonListe from './components/pages/PersonSeite';
+// import Person from './components/pages/PersonSeite';
+import PersonListe from './components/pages/PersonListe';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import TimetrackerAPI from './api/TimetrackerAPI';
 
