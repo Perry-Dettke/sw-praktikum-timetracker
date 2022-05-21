@@ -35,19 +35,9 @@ class PersonDialog extends Component {
                             </IconButton>
                         </DialogTitle>
                         <DialogContent>
-                            <DialogContent>
-                            <div>
-                            <TextField 
-                                label='Soll-Stunden:'
-                                variant="outlined"
-                                size="medium"
-                                 // value={this.state.name}
-                                onChange={this.handleChange}
-                                autocomplete='off'              
-                                        
-                                ></TextField>
-                                </div>
-                            </DialogContent>
+                            <DialogContentText>
+                                Person erstellen
+                            </DialogContentText>
                         </DialogContent>
                         <DialogActions>
                             <Button color='secondary' onClick={this.handleClose}>

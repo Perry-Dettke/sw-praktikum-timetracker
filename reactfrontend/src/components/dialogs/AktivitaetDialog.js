@@ -74,16 +74,8 @@ class AktivitaetDialog extends Component {
                                 </FormControl>
                             </div>
                             <div>
-                            <TextField 
-                                label='Soll-Stunden:'
-                                variant="outlined"
-                                size="small"
-                                 // value={this.state.name}
-                                onChange={this.handleChange}
-                                autocomplete='off'              
-                                        
-                                ></TextField>
-                                </div>
+                            <TextField type='text' id='aktivitaet' label='Soll-Stunden:' />
+                            </div>
                         </DialogContent>
                         <DialogActions>
                             <Button color='secondary' onClick={this.handleClose}>
