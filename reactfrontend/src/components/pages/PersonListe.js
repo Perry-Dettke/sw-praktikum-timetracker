@@ -21,24 +21,24 @@ class PersonListe extends Component {
     };
   }
 
-//   /** Fetches all PersonBOs from the backend */
-//   getPerson = () => {
-//     TimetrackerAPI.getAPI().getPerson()
-//       .then(personBOs =>
-//        this.setState({       
-//           person: personBOs,
-//           filteredPerson: [...personBOs], //Kopie von person
-//         })).catch(e =>
-//           this.setState({              
-//             person: [],
-//           })
-//         );}
+  /** Fetches all PersonBOs from the backend */
+  getPerson = () => {
+    TimetrackerAPI.getAPI().getPerson()
+      .then(personBOs =>
+       this.setState({       
+          person: personBOs,
+          filteredPerson: [...personBOs], //Kopie von person
+        })).catch(e =>
+          this.setState({              
+            person: [],
+          })
+        );}
 
-//     // set loading to true
+    // set loading to true
     
   
 
-    PersonenListe() {
+    PersonenList() {
         var api = TimetrackerAPI.getAPI();
         api.getPerson().then((projektBOs) => {
           this.setState({
@@ -52,7 +52,7 @@ class PersonListe extends Component {
     //PersonDialog anzeigen
     showPersonDialog = () => {
         this.setState({ showPerson: true}, () => {
-            // console.log(this.state.showPerson);
+            console.log(this.state.showPerson);
         });
     };
 
@@ -64,7 +64,8 @@ class PersonListe extends Component {
 
 
     componentDidMount() {
-        this.PersonenListe();
+        this.getPerson();
+        this.PersonenList();
         console.log(this.state.personenliste);
       }
 
@@ -72,20 +73,20 @@ class PersonListe extends Component {
     render() {
 
         const { person, filteredPerson, personenliste } = this.state;
-        // console.log(personenliste)
+        console.log(personenliste)
 
         return (
             <div>
                 <Grid container spacing={2} alignItems="center">
-                <Button variant="contained" sx={{width:250}} onClick={this.showPersonDialog()}> Neue Person Erstellen</Button>
+                {/* <Button variant="contained" sx={{width:250}} onClick={this.showPersonDialoag()}> Neue Person Erstellen</Button> */}
                 </Grid>
                 
                 <Paper>
                     <List >
                         {
                             Object.values(personenliste).map(person =>
-                                <PersonListenEintrag key={Object.values(person)[4]} personenliste={personenliste} show={this.props.show}
-                                    getPersonenListe={this.getPersonenListe} />)
+                                <PersonListenEintrag key={Object.values(person)[4]} person={person} show={this.props.show}
+                                    getPerson={this.getPerson} />)
                         }
                     </List>
                 </Paper>
