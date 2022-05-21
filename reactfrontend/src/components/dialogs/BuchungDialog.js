@@ -120,7 +120,7 @@ class BuchungDialog extends Component {
                                     <Select
                                     labelId="Projekt"
                                     name="projekt"
-                                    value={Object.values(projekt)[3]}
+                                    value={Object.values(projekt)[projekt.id]}
                                     size="medium"
                                     label="Projekt"
                                     autoWidth
@@ -129,7 +129,7 @@ class BuchungDialog extends Component {
                                     {Object.values(projektliste).map((projekt) => {
                                     return (
                                     <MenuItem 
-                                    value={Object.values(projekt)[3]}>
+                                    value={Object.keys(projekt)[projekt.id]}>
                                         {Object.values(projekt)[0]}
                                     </MenuItem>
                                     );
