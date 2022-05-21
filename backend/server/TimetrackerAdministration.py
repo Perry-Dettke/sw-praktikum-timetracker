@@ -59,7 +59,7 @@ class TimetrackerAdministration (object):
         with AktivitaetMapper() as mapper:
             mapper.update(aktivitaet)
 
-    def delete_aktvitaet(self, aktivitaet):
+    def delete_aktivitaet(self, aktivitaet):
         """Die gegebenene Aktivitaet aus unserem System löschen."""
         with AktivitaetMapper() as mapper:
             mapper.delete(aktivitaet)
@@ -85,7 +85,7 @@ class TimetrackerAdministration (object):
 
     def get_all_arbeitszeitkonto(self):
         """Alle Arbeitszeitkonto auslesen."""
-        with Arbeitszeitkonto() as mapper:
+        with ArbeitszeitkontoMapper() as mapper:
             return mapper.find_all()
 
     def save_arbeitszeitkonto(self, arbeitszeitkonto):
@@ -95,7 +95,7 @@ class TimetrackerAdministration (object):
 
     def delete_arbeitszeitkonto(self, arbeitszeitkonto):
         """Das gegebenene Arbeitszeitkonto aus unserem System löschen."""
-        with Arbeitszeitkonto() as mapper:
+        with ArbeitszeitkontoMapper() as mapper:
             mapper.delete(arbeitszeitkonto)
 
 
@@ -228,10 +228,10 @@ class TimetrackerAdministration (object):
         with PersonMapper() as mapper:
             mapper.update(person)
 
-    def delete_person(self, person):
+    def delete_person(self, id):
         """Die gegebenene Person aus unserem System löschen."""
         with PersonMapper() as mapper:
-            mapper.delete(person)
+            mapper.delete(id)
 
     def add_person_google_user_id(self,google_user_id):
         with PersonMapper() as mapper:

@@ -1,11 +1,3 @@
-
-#from Mapper import Mapper       # so werden keine Import Fehler angezeigt - ist aber noch nicht getestet, da BO noch fehlt
-                                #
-#import sys                      #   
-#sys.path.append("..")           #
-                                #
-#from bo import *                #
-
 from server.bo.Person import Person
 from server.db.Mapper import Mapper
 
@@ -259,14 +251,14 @@ class PersonMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
-    def delete(self, person):
-        """Löschen der Daten eines Personen-Objekts aus der Datenbank.
-
-        :param person das aus der DB zu löschende "Objekt"
+    def delete(self, id):
+        """Löschen der Daten eines Personen-Objekts aus der Datenbank 
+    
+        :param id
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM person WHERE id={}".format(person.get_id())
+        command = "DELETE FROM person WHERE id={}".format(id)
         cursor.execute(command)
 
         self._cnx.commit()
