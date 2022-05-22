@@ -84,7 +84,7 @@ class BuchungListenEintrag extends Component {
                             <Typography>{buchung.letzte_aenderung}</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography>{buchung.ersteltt_von}</Typography>
+                            <Typography>{buchung.erstellt_von}</Typography>
                         </Grid>
                         {/* <Grid item xs={3}>
                             <Typography>{buchung.Zeit oder sowas}</Typography>

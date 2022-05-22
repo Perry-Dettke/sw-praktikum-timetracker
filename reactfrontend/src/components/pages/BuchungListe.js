@@ -27,7 +27,7 @@ class BuchungListe extends Component {
     };
   }
 
-  /** Fetches all PersonBOs from the backend */
+  /** Fetches all BuchungBOs from the backend */
   getBuchung = () => {
     var api = TimetrackerAPI.getAPI();
         api.getBuchung().then((buchungBOs) => {
@@ -39,7 +39,7 @@ class BuchungListe extends Component {
 
     // set loading to true
 
-  // Add Button - Oeffnet den Person hinzufuegen Dialog
+  // Add Button - Oeffnet den Buchung hinzufuegen Dialog
   addBuchungButtonClicked = event => {
     event.stopPropagation();
     this.setState({
@@ -76,14 +76,14 @@ buchungFormClosed = buchung => {
 
 
 
-    //PersonDialog anzeigen
+    //BuchungDialog anzeigen
     showBuchungDialog = () => {
         this.setState({ showBuchung: true}, () => {
-            // console.log(this.state.showPerson);
+            // console.log(this.state.showBuchung);
         });
     };
 
-    //PersonDialog schließen
+    //BuchungDialog schließen
     closeBuchungDialog = () => {
         this.setState({ showBuchung: false});
     };
@@ -103,7 +103,7 @@ buchungFormClosed = buchung => {
 
         return (
             <div>
-                {/* <Button variant="contained" sx={{width:250}} onClick={this.showPersonDialog}> Neue Person Erstellen</Button> */}
+                {/* <Button variant="contained" sx={{width:250}} onClick={this.showBuchungDialog}> Neue Buchung Erstellen</Button> */}
                 <Grid container spacing={2} alignItems="center">
                 </Grid>
                 <Grid item>
