@@ -115,9 +115,8 @@ class EreignisMapper(Mapper):
         data = (
             ereignis.get_id(),
             ereignis.get_erstellungs_zeitpunkt(),
-            ereignis.get_letzte_aenderung(),
-
-        )
+            ereignis.get_letzte_aenderung())
+            
         cursor.execute(command, data)
         self._cnx.commit()
         cursor.close()

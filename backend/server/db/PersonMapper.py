@@ -214,9 +214,10 @@ class PersonMapper (Mapper):
 
         command = "INSERT INTO person (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         data = (
+
             person.get_id(),
-            person.get_letzte_aenderung,
-            person.get_vor_name,
+            person.get_letzte_aenderung(),
+            person.get_vor_name(),
             person.get_nach_name(),
             person.get_email(),
             person.get_benutzer_name(),
