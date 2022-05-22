@@ -9,6 +9,8 @@ Die folgenden Node-Packages können mit dem Befehl `npm install` im Verzeichnis 
 
 - @material-ui/core
 - @mui/icons-material"s
+- @material-ui/lab
+- @material-ui/icons
 - @material-ui/pickers
 - @mui/material"
 - @date-io/date-fns@1.x date-fns
