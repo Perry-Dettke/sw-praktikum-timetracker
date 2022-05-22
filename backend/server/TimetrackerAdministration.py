@@ -23,13 +23,12 @@ class TimetrackerAdministration (object):
     """
     Aktivitaet-spezifische Methoden
     """
-    def create_aktivitaet(self, letzte_aenderung, bezeichnung, kapazitaet, projekt_id):
+    def create_aktivitaet(self, letzte_aenderung, bezeichnung, kapazitaet):
         """Eine Aktivitaet anlegen"""
         aktivitaet = Aktivitaet()
         aktivitaet.set_letzte_aenderung(letzte_aenderung)
         aktivitaet.set_bezeichnung(bezeichnung)
         aktivitaet.set_bezeichnung(kapazitaet)
-        aktivitaet.set_projekt_id(projekt_id)
         aktivitaet.set_id(1)
 
         with AktivitaetMapper() as mapper:
@@ -60,7 +59,7 @@ class TimetrackerAdministration (object):
         with AktivitaetMapper() as mapper:
             mapper.update(aktivitaet)
 
-    def delete_aktvitaet(self, aktivitaet):
+    def delete_aktivitaet(self, aktivitaet):
         """Die gegebenene Aktivitaet aus unserem System löschen."""
         with AktivitaetMapper() as mapper:
             mapper.delete(aktivitaet)
@@ -86,7 +85,7 @@ class TimetrackerAdministration (object):
 
     def get_all_arbeitszeitkonto(self):
         """Alle Arbeitszeitkonto auslesen."""
-        with Arbeitszeitkonto() as mapper:
+        with ArbeitszeitkontoMapper() as mapper:
             return mapper.find_all()
 
     def save_arbeitszeitkonto(self, arbeitszeitkonto):
@@ -96,7 +95,7 @@ class TimetrackerAdministration (object):
 
     def delete_arbeitszeitkonto(self, arbeitszeitkonto):
         """Das gegebenene Arbeitszeitkonto aus unserem System löschen."""
-        with Arbeitszeitkonto() as mapper:
+        with ArbeitszeitkontoMapper() as mapper:
             mapper.delete(arbeitszeitkonto)
 
 
@@ -229,10 +228,10 @@ class TimetrackerAdministration (object):
         with PersonMapper() as mapper:
             mapper.update(person)
 
-    def delete_person(self, person):
+    def delete_person(self, id):
         """Die gegebenene Person aus unserem System löschen."""
         with PersonMapper() as mapper:
-            mapper.delete(person)
+            mapper.delete(id)
 
     def add_person_google_user_id(self,google_user_id):
         with PersonMapper() as mapper:
@@ -254,7 +253,7 @@ class TimetrackerAdministration (object):
     def get_projekt_by_id(self, id):
         """Das Projekt mit der gegebenen ID auslesen."""
         with ProjektMapper() as mapper:
-            return mapper.find_by_id(id)            #fehlt noch im Mapper
+            return mapper.find_by_id(id)          
 
     def get_projekt_by_auftraggeber(self, auftraggeber):       
         """Das Projekt mit dem gegebenen Auftraggeber auslesen."""

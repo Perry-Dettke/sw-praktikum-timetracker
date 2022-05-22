@@ -44,8 +44,8 @@ class EreignisMapper(Mapper):
                 None wenn kein Eintrag gefunden wurde
         """
         result = None
-        cursor = self._connection.cursor()
-        command = "SELECT id, letzte_aenderung,erstellungs_zeitpunk FROM ereignis WHERE id='{}'".format(id)
+        cursor = self._cnx.cursor()
+        command = "SELECT id, letzte_aenderung,erstellungs_zeitpunkt FROM ereignis WHERE id='{}'".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -63,7 +63,7 @@ class EreignisMapper(Mapper):
 			keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
             result = None
 
-        self._connection.commit()
+        self._cnx.commit()
         cursor.close()
         return result
 
@@ -75,7 +75,7 @@ class EreignisMapper(Mapper):
         """
         result = None
 
-        cursor = self._connection.cursor()
+        cursor = self._cnx.cursor()
         command = "SELECT id, erstellungs_zeitpunkt, letzte_aenderung FROM ereignis WHERE id='{}'".format(
             letzte_aenderung)
         cursor.execute(command)
@@ -101,7 +101,7 @@ class EreignisMapper(Mapper):
         Einfugen eines EreignisBO's in die DB
         '''
 
-        cursor = self._connection.cursor()
+        cursor = self._cnx.cursor()
         cursor.execute("SELECT MAX(id) AS maxid FROM ereignis")
         tuples = cursor.fetchall()
 
@@ -119,23 +119,23 @@ class EreignisMapper(Mapper):
 
         )
         cursor.execute(command, data)
-        self._connection.commit()
+        self._cnx.commit()
         cursor.close()
 
         return ereignis
 
     def delete(self, id):
-        cursor = self._connection.cursor()
+        cursor = self._cnx.cursor()
 
         command = "DELETE FROM ereignis WHERE id={}".format(id)
         cursor.execute(command)
 
-        self._connection.commit()
+        self._cnx.commit()
         cursor.close()
 
     def update(self, ereignis):
 
-        cursor = self._connection.cursor()
+        cursor = self._cnx.cursor()
 
         command = "UPDATE ereignis SET letzte_aenderung=%s, erstellungs_zeitpunkt=%s,  WHERE id=%s"
         data = (ereignis.get_letzte_aenderung(), ereignis.get_erstellungs_zeitpunkt(), ereignis.get_id())
@@ -145,7 +145,7 @@ class EreignisMapper(Mapper):
 
 
 
-        self._connection.commit()
+        self._cnx.commit()
         cursor.close()
 
         return result

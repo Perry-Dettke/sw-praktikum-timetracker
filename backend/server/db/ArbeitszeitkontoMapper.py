@@ -113,23 +113,14 @@ class ArbeitszeitkontoMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
-    def delete(self, arbeitszeitkonto):
-        """Löschen der Daten eines Transaction-Objekts aus der Datenbank.
-
-        :param arbeitszeitkonto das aus der DB zu löschende "Objekt"
-        """
+    def delete(self, id):
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM arbeitszeitkonto WHERE id={}".format(arbeitszeitkonto.get_id())
+        command = "DELETE FROM arbeitszeitkonto WHERE id={}".format(id)
         cursor.execute(command)
 
         self._cnx.commit()
         cursor.close()
-
-        """Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
-        um die grundsätzliche Funktion zu überprüfen.
-    
-        Anmerkung: Nicht professionell aber hilfreich..."""
 
 
 with ArbeitszeitkontoMapper() as mapper:

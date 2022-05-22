@@ -83,6 +83,9 @@ class AktivitaetDialog extends Component {
                                     </Select>
                                 </FormControl>
                             </div>
+                            <div>
+                            <TextField type='text' id='aktivitaet' label='Soll-Stunden:' />
+                            </div>
                         </DialogContent>
                         <DialogActions>
                             <Button color='secondary' onClick={this.handleClose}>

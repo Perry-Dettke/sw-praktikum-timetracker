@@ -28,6 +28,7 @@ class Buchung extends Component {
 
     componentDidMount() {
         this.getProjekt();
+        console.log(this.state.projekt)
       }
 
 
@@ -39,7 +40,7 @@ class Buchung extends Component {
           })
         ).catch((e) =>
           this.setState({
-            projekt: null,
+            projekt: []
           })
         );
     };
