@@ -35,41 +35,51 @@ class AktivitaetDialog extends Component {
                             </IconButton>
                         </DialogTitle>
                         <DialogContent>
-                            <div>
-                                {/* Projekt auswählen */}
-                                <FormControl fullWidth>
-                                    <InputLabel id="projekt">Projekt</InputLabel>
-                                    <Select
-                                    labelId="projekt"
-                                    name="projekt"
-                                    // value={this.state.projekt}
-                                    size="medium"
-                                    label="projekt"
-                                    autoWidth
-                                    onChange={this.handleChange}
-                                    >
-                                    <MenuItem value={1}>Projekt 1</MenuItem>
-                                    <MenuItem value={2}>Projekt 2</MenuItem>
-                                    <MenuItem value={3}>Projekt 3</MenuItem>
-                                    </Select>
-                                </FormControl>
+                        <div>
+                            <TextField 
+                                label='Projekt:'
+                                variant="outlined"
+                                size="small"
+                                 // value={this.state.name}
+                                onChange={this.handleChange}
+                                autocomplete='off'              
+                                        
+                                ></TextField>
                             </div>
                             <div>
-                                {/* Aktivität auswählen */}
+                            <TextField 
+                                label='Aktivität:'
+                                variant="outlined"
+                                size="small"
+                                 // value={this.state.name}
+                                onChange={this.handleChange}
+                                autocomplete='off'              
+                                        
+                                ></TextField>
+                            </div>
+                            <div>
+                                {/* Kapazität auswählen */}
                                 <FormControl fullWidth>
-                                    <InputLabel id="aktivitaet">Aktivität</InputLabel>
+                                    <InputLabel id="kapazitaet">Kapazität</InputLabel>
                                     <Select
-                                    labelId="aktivitaet"
-                                    name="aktivitaet"
-                                    // value={this.stateaktivitaet}
+                                    labelId="kapazitaet"
+                                    name="kapazitaet"
+                                    // value={this.state.projekt}
                                     size="medium"
-                                    label="aktivitaet"
+                                    label="kapazitaet"
                                     autoWidth
                                     onChange={this.handleChange}
                                     >
-                                    <MenuItem value={1}>Aktivität 1</MenuItem>
-                                    <MenuItem value={2}>Aktivität 2</MenuItem>
-                                    <MenuItem value={3}>Aktivität 3</MenuItem>
+                                    <MenuItem value={1}>0,5 Stunden</MenuItem>
+                                    <MenuItem value={2}>1,0 Stunde</MenuItem>
+                                    <MenuItem value={3}>1,5 Stunden</MenuItem>
+                                    <MenuItem value={1}>2,0 Stunden</MenuItem>
+                                    <MenuItem value={2}>2,5 Stunde</MenuItem>
+                                    <MenuItem value={3}>3,0 Stunden</MenuItem>
+                                    <MenuItem value={3}>3,5 Stunden</MenuItem>
+                                    <MenuItem value={1}>4,0 Stunden</MenuItem>
+                                    <MenuItem value={2}>4,5 Stunde</MenuItem>
+                                    <MenuItem value={3}>5,0 Stunden</MenuItem>
                                     </Select>
                                 </FormControl>
                             </div>

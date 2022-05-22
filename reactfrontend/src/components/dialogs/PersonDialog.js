@@ -35,9 +35,52 @@ class PersonDialog extends Component {
                             </IconButton>
                         </DialogTitle>
                         <DialogContent>
-                            <DialogContentText>
-                                Person erstellen
-                            </DialogContentText>
+                            <DialogContent>
+                            <div>
+                            <TextField 
+                                label='Vorname:'
+                                variant="outlined"
+                                size="medium"
+                                 // value={this.state.name}
+                                onChange={this.handleChange}
+                                autocomplete='off'              
+                                        
+                                ></TextField>
+                                </div>
+                                <div>
+                            <TextField 
+                                label='Nachname:'
+                                variant="outlined"
+                                size="medium"
+                                 // value={this.state.name}
+                                onChange={this.handleChange}
+                                autocomplete='off'              
+                                        
+                                ></TextField>
+                                </div>
+                                <div>
+                            <TextField 
+                                label='E-Mail:'
+                                variant="outlined"
+                                size="medium"
+                                 // value={this.state.name}
+                                onChange={this.handleChange}
+                                autocomplete='off'              
+                                        
+                                ></TextField>
+                                </div>
+                                <div>
+                            <TextField 
+                                label='Benutzername:'
+                                variant="outlined"
+                                size="medium"
+                                 // value={this.state.name}
+                                onChange={this.handleChange}
+                                autocomplete='off'              
+                                        
+                                ></TextField>
+                                </div>
+                            </DialogContent>
                         </DialogContent>
                         <DialogActions>
                             <Button color='secondary' onClick={this.handleClose}>
