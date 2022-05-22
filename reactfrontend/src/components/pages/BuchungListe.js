@@ -23,7 +23,6 @@ class BuchungListe extends Component {
       buchung: [],
       filteredBuchung: [],
       showBuchungForm: false,
-      showAktivitaetForm: false,
       showBuchungDelete: false,
     };
   }
@@ -48,12 +47,6 @@ class BuchungListe extends Component {
     });
   }
 
-  addAktivitaetButtonClicked = event => {
-    event.stopPropagation();
-    this.setState({
-      showAktivitätForm: true
-    });
-  }
 
 
 
@@ -104,7 +97,7 @@ buchungFormClosed = buchung => {
     /** Renders the component */
     render() {
 
-        const { buchung, showBuchungForm, showAktivitaetForm } = this.state;
+        const { buchung, showBuchungForm, showBuchungDelete } = this.state;
 
 
 
@@ -114,13 +107,8 @@ buchungFormClosed = buchung => {
                 <Grid container spacing={2} alignItems="center">
                 </Grid>
                 <Grid item>
-                <Tooltip title='Buchungart anlegen' placement="left">
+                <Tooltip title='Buchung anlegen' placement="left">
                     <Fab size="medium"  color="primary" aria-label="add" onClick={this.addBuchungButtonClicked}>
-                        <AddIcon />
-                    </Fab>
-                </Tooltip>
-                <Tooltip title='Aktivität anlegen' placement="left">
-                    <Fab size="medium"  color="primary" aria-label="add" onClick={this.addAktivitaetButtonClicked}>
                         <AddIcon />
                     </Fab>
                 </Tooltip>
@@ -136,8 +124,7 @@ buchungFormClosed = buchung => {
                         }
                     </List>
                 </Paper>
-                {/* <BuchungForm show={showBuchungForm} onClose={this.buchungFormClosed} getAtivitaet = {this.getBuchung}/>
-                <AktivitaetForm show={showAktivitaetForm} onClose={this.aktivitaetFormClosed} getAktivitaet = {this.getAktivitaet}/> */}
+                {/* {<BuchungForm show={showBuchungForm} onClose={this.buchungFormClosed} getAtivitaet = {this.getBuchung}/>} */}
 
             </div>
         );

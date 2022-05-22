@@ -104,7 +104,7 @@ projektFormClosed = projekt => {
     /** Renders the component */
     render() {
 
-        const { projekt, showProjektForm, showAktivitaetForm } = this.state;
+        const { projekt, showProjektForm, showAktivitaetForm, showProjektDelete } = this.state;
 
 
 
@@ -114,7 +114,7 @@ projektFormClosed = projekt => {
                 <Grid container spacing={2} alignItems="center">
                 </Grid>
                 <Grid item>
-                <Tooltip title='Projektart anlegen' placement="left">
+                <Tooltip title='Projekt anlegen' placement="left">
                     <Fab size="medium"  color="primary" aria-label="add" onClick={this.addProjektButtonClicked}>
                         <AddIcon />
                     </Fab>

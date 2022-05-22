@@ -9,52 +9,52 @@ import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
-// import ProjektLöschenDialog from '../dialogs/ProjektLöschenDialog';
-// import ProjektForm from '../dialogs/ProjektForm';
+// import BuchungLöschenDialog from '../dialogs/BuchungLöschenDialog';
+// import BuchungForm from '../dialogs/BuchungForm';
 
 
 
-class ProjektListenEintrag extends Component {
+class BuchungListenEintrag extends Component {
 
     constructor(props) {
         super(props);
 
         //gebe einen leeren status
         this.state = {
-            showProjektForm: false,
-            showProjektDelete: false,
+            showBuchungForm: false,
+            showBuchungDelete: false,
         };
     }
 
-    //Gibt den aktuellen Projekt zurück
-    getProjekt = () => {
-        this.props.getProjekt();
+    //Gibt den aktuellen Buchung zurück
+    getBuchung = () => {
+        this.props.getBuchung();
     }
 
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
         event.stopPropagation();
         this.setState({
-            showProjektForm: true
+            showBuchungForm: true
         });
     }
 
     //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
-    projektFormClosed = (projekt) => {
-        if (projekt) {
+    buchungFormClosed = (buchung) => {
+        if (buchung) {
             this.setState({
-                projekt: projekt,
-                showProjektForm: false
+                buchung: buchung,
+                showBuchungForm: false
             });
         } else {
             this.setState({
-                showProjektForm: false
+                showBuchungForm: false
             });
         }
     }
 
-     //Öffnet das Dialog-Fenster ProjektDeleteDialog, wenn der Button geklickt wurde
-     projektDeleteButtonClicked =  event => {
+     //Öffnet das Dialog-Fenster BuchungDeleteDialog, wenn der Button geklickt wurde
+     buchungDeleteButtonClicked =  event => {
         console.log("Delete Button")
         event.stopPropagation();
         this.setState({
@@ -63,31 +63,31 @@ class ProjektListenEintrag extends Component {
       }
     
       //Wird aufgerufen, wenn das Dialog-Fenster PorjektDeleteDialog geschlossen wird
-      projektDeleteClosed = () => {
+      buchungDeleteClosed = () => {
           this.setState({
-            showProjektDelete: false
+            showBuchungDelete: false
           });
-          this.getProjekt();
+          this.getBuchung();
       }
 
 
     //Renders the component
     render() {
-        const {classes, projekt} = this.props;
-        const {showProjektForm, error, loadingInProgress, showProjektDelete} = this.state;
+        const {classes, buchung} = this.props;
+        const {showBuchungForm, error, loadingInProgress, showBuchungDelete} = this.state;
 
         return (
             <div>
                 <ListItem>
                     <Grid container alignItems="center" spacing={2}>
                         <Grid item xs={2}>
-                            <Typography>{projekt.bezeichnung}</Typography>
+                            <Typography>{buchung.letzte_aenderung}</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography>{projekt.auftraggeber}</Typography>
+                            <Typography>{buchung.ersteltt_von}</Typography>
                         </Grid>
                         {/* <Grid item xs={3}>
-                            <Typography>{projekt.projektleiter}</Typography>
+                            <Typography>{buchung.Zeit oder sowas}</Typography>
                         </Grid> */}
 
 
@@ -100,20 +100,20 @@ class ProjektListenEintrag extends Component {
                     </Grid>
                     <Grid item>
                       <Tooltip title='Löschen' placement="bottom">
-                      <IconButton variant="contained"  onClick={this.projektDeleteButtonClicked}><DeleteIcon /></IconButton>
+                      <IconButton variant="contained"  onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
                       </Tooltip>
                     </Grid>
                     </Grid>
                 </ListItem>
                 <ListItem>
                     {/* <LoadingProgress show={loadingInProgress}/>
-                    <ContextErrorMessage error={error} contextErrorMsg={'Das Projekt konnte nicht geladen werden'}
-                                         onReload={this.getProjekt}/> */}
+                    <ContextErrorMessage error={error} contextErrorMsg={'Die Buchung konnte nicht geladen werden'}
+                                         onReload={this.getBuchung}/> */}
                 </ListItem>
 
                 <Divider/>
-                {/* <ProjektForm show={showProjektForm} projekt={projekt} onClose={this.projektFormClosed} getProjekt= {this.getProjekt}/>
-                <ProjektLöschenDialog show={showProjektDelete} projekt={projekt} onClose={this.projektDeleteClosed} getProjekt= {this.getPerson}/>        */}
+                {/* <BuchungForm show={showBuchungForm} buchung={buchung} onClose={this.buchungFormClosed} getBuchung= {this.getBuchung}/>
+                <BuchungLöschenDialog show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchung= {this.getPerson}/>        */}
             </div>
         );
     }
@@ -121,6 +121,6 @@ class ProjektListenEintrag extends Component {
 
 
 
-export default ProjektListenEintrag;
+export default BuchungListenEintrag;
 
 

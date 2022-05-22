@@ -110,7 +110,7 @@ class PersonListenEintrag extends Component {
                 </ListItem>
                 <ListItem>
                     {/* <LoadingProgress show={loadingInProgress}/>
-                    <ContextErrorMessage error={error} contextErrorMsg={'Der Person konnte nicht geladen werden'}
+                    <ContextErrorMessage error={error} contextErrorMsg={'Die Person konnte nicht geladen werden'}
                                          onReload={this.getPerson}/> */}
                 </ListItem>
 

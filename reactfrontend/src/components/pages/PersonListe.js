@@ -108,7 +108,7 @@ personFormClosed = person => {
                 <Grid container spacing={2} alignItems="center">
                 </Grid>
                 <Grid item>
-                <Tooltip title='Projektart anlegen' placement="left">
+                <Tooltip title='Person anlegen' placement="left">
                     <Fab size="medium"  color="primary" aria-label="add" onClick={this.addButtonClicked}>
                         <AddIcon />
                     </Fab>
