@@ -7,7 +7,7 @@ import ProjektListe from './components/pages/ProjektListe';
 import BuchungListe from './components/pages/BuchungListe';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import TimetrackerAPI from './api/TimetrackerAPI';
-
+import Personen_uebersicht from './components/pages/PersonenÜbersicht';
 
 class App extends React.Component {
   constructor(props) {
@@ -37,11 +37,14 @@ class App extends React.Component {
                 <Route path={'/home'} element={<Home/>} />
                 <Route path={'/projekt'} element={<ProjektListe/>} />
                 <Route path={'/person'} element={<PersonListe/>} />
+                <Route path={'/personen_uebersicht'} element={<Personen_uebersicht/>} />
                 {/*<Route path={'/aktivitaet'} element={<Aktivitaet/>} />*/}
                 <Route path={'/buchung'} element={<BuchungListe/>} />
                 {/*<Route path={'/projekt_uebersicht'} element={<Projektuebersicht/>} />*/}
                 {/*<Route path={'/personen_uebersicht'} element={<Personenuebersicht/>} />*/}
 
+                <Route path={'/buchung'} element={<Buchung/>} />
+                {/*<Route path={'/projekt_uebersicht'} element={<Projektuebersicht/>} />*/}         
             </Routes> 
           </div>
         </div>
