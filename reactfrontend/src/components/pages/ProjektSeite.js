@@ -10,6 +10,7 @@ import {Button} from '@mui/material';
 import { Component } from 'react';
 //mport Stack from '@mui/material/Stack';
 import ProjektDialog from '../dialogs/ProjektDialog';
+import AktivitaetDialog from '../dialogs/AktivitaetDialog';
 
 class Projekt extends Component {
     
@@ -19,6 +20,11 @@ class Projekt extends Component {
     this.state = {
         showProjekt: false
     };
+
+    this.state = {
+        showAktivitaet: false
+    };
+
     }
 
     //ProjektDialog anzeigen = neues Projekt anlegen
@@ -33,15 +39,29 @@ class Projekt extends Component {
         this.setState({ showProjekt: false});
     };
     
+    //AktivitaetDialog anzeigen
+    showAktivitaetDialog = () => {
+        this.setState({ showAktivitaet: true}, () => {
+            console.log(this.state.showAktivitaet);
+        });
+    };
+
+    //AktivitaetDialog schließen
+    closeAktivitaetDialog = () => {
+        this.setState({ showAktivitaet: false});
+    };
 
     render() {
         const {showProjekt} = this.state;
+        const {showAktivitaet} = this.state;
 
         return (
             <div>
             <Button variant="contained" onClick={this.showProjektDialog}>Neues Projekt erstellen</Button>
+            <Button variant="contained" onClick={this.showAktivitaetDialog}>Neue Aktivität anlegen</Button>
             <TableContainer component={Paper}  sx={{ maxWidth: 1000, margin:"auto"}}>
                 <Table sx={{ minWidth: 600 }} aria-label="simple table">
+                    
                     <TableHead>
                         <TableRow>
                             <TableCell align="left"><b>Projekte</b></TableCell>
@@ -67,6 +87,9 @@ class Projekt extends Component {
                 </Table>
             </TableContainer>
             { <ProjektDialog show={showProjekt} onClose={this.closeProjektDialog}/> }
+            { <AktivitaetDialog show={showAktivitaet} onClose={this.closeAktivitaetDialog}/> }
+         
+            
             </div>
         );
     }
