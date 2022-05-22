@@ -3,9 +3,8 @@ import BusinessObject from './BusinessObject';
 
 export default class BuchungBO extends BusinessObject {
 
-    constructor(letzte_aenderung, erstellt_von, arbeitszeitkonto_id){
+    constructor(erstellt_von, arbeitszeitkonto_id){
         super();
-        this.letzte_aenderung = letzte_aenderung;
         this.erstellt_von = erstellt_von;
         this.arbeitszeitkonto_id = arbeitszeitkonto_id;
     }

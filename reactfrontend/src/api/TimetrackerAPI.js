@@ -45,7 +45,8 @@ export default class TimetrackerAPI {
     #deleteAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
 
     #addBuchungURL = () => `${this.#ServerBaseURL}/buchung`;
-    #getBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
+    #getBuchungURL = () => `${this.#ServerBaseURL}/buchung`;
+    #getBuchungbyIDURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
     
     //#updateBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
     #deleteBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
@@ -353,15 +354,27 @@ export default class TimetrackerAPI {
         })
       }
 
-    getBuchung(buchungID) {
-      // Buchung abfragen
-      return this.#fetchAdvanced(this.#getBuchungURL(buchungID)).then((responseJSON) => {
-        let buchung = BuchungBO.fromJSON(responseJSON);
-        return new Promise(function (resolve) {
-          resolve(buchung)
+      getBuchung() {
+        // Projekt abfragen
+        console.log("Test")
+        return this.#fetchAdvanced(this.#getBuchungURL()).then((responseJSON) => {
+          let buchung = BuchungBO.fromJSON(responseJSON);
+          return new Promise(function (resolve) {
+            resolve(buchung)
+            console.log("Test 2", buchung)
+          })
         })
-      })
-    }
+      }
+
+    // getBuchungbyID(buchungID) {
+    //   // Buchung abfragen
+    //   return this.#fetchAdvanced(this.#getBuchungbyIDURL(buchungID)).then((responseJSON) => {
+    //     let buchung = BuchungBO.fromJSON(responseJSON);
+    //     return new Promise(function (resolve) {
+    //       resolve(buchung)
+    //     })
+    //   })
+    // }
     
     addBuchung(buchungBO) {
       // Buchung neu anlegen
