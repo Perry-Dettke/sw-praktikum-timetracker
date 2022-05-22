@@ -30,10 +30,13 @@ class Header extends Component {
   render() {
     return (
       <Paper variant='outlined' >
-        <Typography variant='h3' component='h1' align='center'>
-          TIMETRACKER
+        <Typography variant='h3' component='h1' align='center' color='#323748' fontFamily='Verdana'>
+          TIME
         </Typography>
-        <Typography variant='h4' component='h2' align='center'>
+        <Typography variant='h3' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+          TRACKER
+        </Typography>
+        <Typography variant='h4' component='h2' align='center' >
           Zeiterfassungssystem
         </Typography>
           <Tabs indicatorColor='primary' textColor='primary' centered value={this.state.tabindex} onChange={this.handleTabChange} >
