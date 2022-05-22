@@ -7,10 +7,10 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import ProjektListenEintrag from './ProjektListenEintrag'
+import ProjektListenEintrag from './ProjektListenEintrag.js'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import ProjektDialog from '../dialogs/ProjektDialog';
-import ProjektForm from '../dialogs/ProjektForm';
+// import ProjektForm from '../dialogs/ProjektForm';
 
 
 class ProjektListe extends Component {
@@ -21,6 +21,7 @@ class ProjektListe extends Component {
     // Init an empty state
     this.state = {
       projekt: [],
+      filteredProjekt: [],
       showProjektForm: false,
       showAktivitaetForm: false,
       showProjektDelete: false,
@@ -61,40 +62,24 @@ class ProjektListe extends Component {
 
 
 //wird aufgerufen, wenn Dialog Fenster geschloßen wird
-personFormClosed = person => {
-  this.getPerson();
-  if (person) {
-    const newPersonList = [...this.state.person, person];
+projektFormClosed = projekt => {
+  this.getProjekt();
+  if (projekt) {
+    const newProjektList = [...this.state.projekt, projekt];
     this.setState({
-      person: newPersonList,
-      filteredPerson: [...newPersonList],
-      showPersonForm: false
+      projekt: newProjektList,
+      filteredProjekt: [...newProjektList],
+      showProjektForm: false
     });
   } else {
     this.setState({
-      showPersonForm: false
+      showProjektForm: false
     });
   }
 }
 
 
 
-
-
-
-
-
-
-
-
-    // PersonenList() {
-    //     var api = TimetrackerAPI.getAPI();
-    //     api.getPerson().then((personBOs) => {
-    //       this.setState({
-    //         personenliste: personBOs,
-    //       });
-    //     });
-    //   }
 
 
 
@@ -114,14 +99,13 @@ personFormClosed = person => {
 
     componentDidMount() {
         this.getProjekt();
-        // this.PersonenList();
     }
 
     /** Renders the component */
     render() {
 
-        const { projekt, filteredPerson, personenliste, showProjektForm, showAktivitaetForm } = this.state;
-        // console.log(personenliste)
+        const { projekt, showProjektForm, showAktivitaetForm } = this.state;
+
 
 
         return (
@@ -135,7 +119,7 @@ personFormClosed = person => {
                         <AddIcon />
                     </Fab>
                 </Tooltip>
-                <Tooltip title='Projektart anlegen' placement="left">
+                <Tooltip title='Aktivität anlegen' placement="left">
                     <Fab size="medium"  color="primary" aria-label="add" onClick={this.addAktivitaetButtonClicked}>
                         <AddIcon />
                     </Fab>
@@ -152,8 +136,8 @@ personFormClosed = person => {
                         }
                     </List>
                 </Paper>
-                <ProjektForm show={showProjektForm} onClose={this.projektFormClosed} getAtivitaet = {this.getProjekt}/>
-                <AktivitaetForm show={showAktivitaetForm} onClose={this.aktivitaetFormClosed} getAktivitaet = {this.getAktivitaet}/>
+                {/* <ProjektForm show={showProjektForm} onClose={this.projektFormClosed} getAtivitaet = {this.getProjekt}/>
+                <AktivitaetForm show={showAktivitaetForm} onClose={this.aktivitaetFormClosed} getAktivitaet = {this.getAktivitaet}/> */}
 
             </div>
         );
@@ -163,7 +147,7 @@ personFormClosed = person => {
 
 
 
-export default PersonListe;
+export default ProjektListe;
 
 
   

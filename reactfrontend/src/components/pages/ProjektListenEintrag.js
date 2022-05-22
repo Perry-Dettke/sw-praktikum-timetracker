@@ -9,90 +9,87 @@ import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
-import PersonLöschenDialog from '../dialogs/PersonLöschenDialog';
-import PersonForm from '../dialogs/PersonForm';
+// import ProjektLöschenDialog from '../dialogs/ProjektLöschenDialog';
+// import ProjektForm from '../dialogs/ProjektForm';
 
 
 
-class PersonListenEintrag extends Component {
+class ProjektListenEintrag extends Component {
 
     constructor(props) {
         super(props);
 
         //gebe einen leeren status
         this.state = {
-            showPersonForm: false,
-            showPresonDelete: false,
+            showProjektForm: false,
+            showProjektDelete: false,
         };
     }
 
-    //Gibt den aktuellen Person zurück
-    getPerson = () => {
-        this.props.getPerson();
+    //Gibt den aktuellen Projekt zurück
+    getProjekt = () => {
+        this.props.getProjekt();
     }
 
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
         event.stopPropagation();
         this.setState({
-            showPersonForm: true
+            showProjektForm: true
         });
     }
 
     //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
-    personFormClosed = (person) => {
-        if (person) {
+    projektFormClosed = (projekt) => {
+        if (projekt) {
             this.setState({
-                person: person,
-                showPersonForm: false
+                projekt: projekt,
+                showProjektForm: false
             });
         } else {
             this.setState({
-                showPersonForm: false
+                showProjektForm: false
             });
         }
     }
 
-     //Öffnet das Dialog-Fenster PersonDeleteDialog, wenn der Button geklickt wurde
-     personDeleteButtonClicked =  event => {
+     //Öffnet das Dialog-Fenster ProjektDeleteDialog, wenn der Button geklickt wurde
+     projektDeleteButtonClicked =  event => {
         console.log("Delete Button")
         event.stopPropagation();
         this.setState({
-          showPersonDelete: true
+          showProejktDelete: true
         });
       }
     
-      //Wird aufgerufen, wenn das Dialog-Fenster PersonDeleteDialog geschlossen wird
-      personDeleteClosed = () => {
+      //Wird aufgerufen, wenn das Dialog-Fenster PorjektDeleteDialog geschlossen wird
+      projektDeleteClosed = () => {
           this.setState({
-            showPersonDelete: false
+            showProjektDelete: false
           });
-          this.getPerson();
+          this.getProjekt();
       }
 
 
     //Renders the component
     render() {
-        const {classes, person} = this.props;
-        const {showPersonForm, error, loadingInProgress, showPersonDelete} = this.state;
+        const {classes, projekt} = this.props;
+        const {showPProjektForm, error, loadingInProgress, showProjektDelete} = this.state;
 
         return (
             <div>
                 <ListItem>
                     <Grid container alignItems="center" spacing={2}>
                         <Grid item xs={2}>
-                            <Typography>{person.vor_name}</Typography>
+                            <Typography>{projekt.bezeichnung}</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography>{person.nach_name}</Typography>
+                            <Typography>{projekt.auftraggeber}</Typography>
                         </Grid>
-                        <Grid item xs={3}>
-                            <Typography>{person.benutzer_name}</Typography>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Typography>{person.email}</Typography>
-                        </Grid>
-                        <Grid item xs/>
+                        {/* <Grid item xs={3}>
+                            <Typography>{projekt.projektleiter}</Typography>
+                        </Grid> */}
+
 
                         <Grid item>
                     <Tooltip title='Bearbeiten' placement="bottom">
@@ -103,20 +100,20 @@ class PersonListenEintrag extends Component {
                     </Grid>
                     <Grid item>
                       <Tooltip title='Löschen' placement="bottom">
-                      <IconButton variant="contained"  onClick={this.personDeleteButtonClicked}><DeleteIcon /></IconButton>
+                      <IconButton variant="contained"  onClick={this.projektDeleteButtonClicked}><DeleteIcon /></IconButton>
                       </Tooltip>
                     </Grid>
                     </Grid>
                 </ListItem>
                 <ListItem>
                     {/* <LoadingProgress show={loadingInProgress}/>
-                    <ContextErrorMessage error={error} contextErrorMsg={'Der Person konnte nicht geladen werden'}
-                                         onReload={this.getPerson}/> */}
+                    <ContextErrorMessage error={error} contextErrorMsg={'Der Projekt konnte nicht geladen werden'}
+                                         onReload={this.getProjekt}/> */}
                 </ListItem>
 
                 <Divider/>
-                <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} getPerson= {this.getPerson}/>
-                <PersonLöschenDialog show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPerson= {this.getPerson}/>       
+                {/* <ProjektForm show={showProjektForm} projekt={projekt} onClose={this.projektFormClosed} getProjekt= {this.getProjekt}/>
+                <ProjektLöschenDialog show={showProjektDelete} projekt={projekt} onClose={this.projektDeleteClosed} getProjekt= {this.getPerson}/>        */}
             </div>
         );
     }
@@ -124,6 +121,6 @@ class PersonListenEintrag extends Component {
 
 
 
-export default PersonListenEintrag;
+export default ProjektListenEintrag;
 
 
