@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
 
 import ListItem from '@material-ui/core/ListItem';
 import {Typography, IconButton, Grid, Tooltip} from '@material-ui/core';
