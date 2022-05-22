@@ -38,7 +38,7 @@ class PersonDialog extends Component {
                             <DialogContent>
                             <div>
                             <TextField 
-                                label='Soll-Stunden:'
+                                label='Vorname:'
                                 variant="outlined"
                                 size="medium"
                                  // value={this.state.name}
