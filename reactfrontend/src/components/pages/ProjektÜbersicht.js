@@ -7,10 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import List from '@mui/material/List';
+
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 
 
-class Projektuebersicht extends Component {
+class Projekt_uebersicht extends Component {
     
     constructor(props) {
         super(props);
@@ -56,38 +58,38 @@ class Projektuebersicht extends Component {
 
         return (
             <div>
-            <TableContainer component={Paper}  sx={{ maxWidth: 50000, margin:"auto"}}>
-                <Table sx={{ minWidth: 600 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="left"><b>Projekte</b></TableCell>
-                            <TableCell align="left"><b>Aktivität</b></TableCell>
-                            <TableCell align="left"><b>Soll Stunden</b></TableCell>
-                            <TableCell align="left"><b>Ist Stunden</b></TableCell>
-                        </TableRow>
-                    </TableHead>
-                    {projekt ?
-                    <TableBody>
-                        <TableRow>
-                            <TableCell component="th" scope="row">{projekt.getBezeichnung()}</TableCell>
-                        </TableRow>
-                        {/* <TableRow>
-                            <TableCell component="th" scope="row">{aktivitaetbyprojektid.getAktivitaetbyProjektID()}</TableCell>
-                        </TableRow> */}
-                    </TableBody>
-                    : 
-                    <TableBody>
-                        <TableRow>
-                            <TableCell component="th" scope="row">Keine Daten vorhanden</TableCell>
-                        </TableRow>
-                    </TableBody>
-                    }
-                </Table>
-            </TableContainer>
+                <TableContainer component={Paper}  sx={{ maxWidth: 50000, margin:"auto"}}>
+                    <Table sx={{ minWidth: 600 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="left"><b>Projekte</b></TableCell>
+                                <TableCell align="left"><b>Aktivität</b></TableCell>
+                                <TableCell align="left"><b>Soll Stunden</b></TableCell>
+                                <TableCell align="left"><b>Ist Stunden</b></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        {projekt ?
+                        <TableBody>
+                            <TableRow>
+                                <TableCell component="th" scope="row">{projekt.getBezeichnung()}</TableCell>
+                            </TableRow>
+                            {/* <TableRow>
+                                <TableCell component="th" scope="row">{aktivitaetbyprojektid.getAktivitaetbyProjektID()}</TableCell>
+                            </TableRow> */}
+                        </TableBody>
+                        : 
+                        <TableBody>
+                            <TableRow>
+                                <TableCell component="th" scope="row">Keine Daten vorhanden</TableCell>
+                            </TableRow>
+                        </TableBody>
+                        }
+                    </Table>
+                </TableContainer>
             </div>
         );
     }
 }
 
 
-export default Projektuebersicht;
+export default Projekt_uebersicht;
