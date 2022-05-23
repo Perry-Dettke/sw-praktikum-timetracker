@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, Button } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import AlertTitle from '@material-ui/lab/AlertTitle';
-import AutorenewIcon from '@material-ui/icons/Autorenew';
+import {Button, Alert, AlertTitle } from '@mui/material';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import { withStyles } from '@mui/styles';
 
 /**
  * Sobald im System ein Error entsteht, wird der ContextErrorMessage ausgegeben.
