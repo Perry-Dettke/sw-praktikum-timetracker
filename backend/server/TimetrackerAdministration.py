@@ -133,10 +133,10 @@ class TimetrackerAdministration (object):
         with BuchungMapper() as mapper:
             mapper.update(buchung)
 
-    def delete_buchung(self, buchung):
+    def delete_buchung(self, id):
         """Die gegebenene Buchung aus unserem System löschen."""
         with BuchungMapper() as mapper:
-            mapper.delete(buchung)
+            mapper.delete(id)
 
 
     """
