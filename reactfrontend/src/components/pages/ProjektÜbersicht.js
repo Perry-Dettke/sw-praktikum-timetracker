@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import List from '@mui/material/List';
+//import List from '@mui/material/List';
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 
@@ -18,7 +18,7 @@ class Projekt_uebersicht extends Component {
         super(props);
 
     this.state = {
-        projekt:  null
+        projekt: null
     };
     }
 
@@ -27,10 +27,10 @@ class Projekt_uebersicht extends Component {
     }
 
     getProjekt = () => {
-        TimetrackerAPI.getAPI().getProjekt().then((projekt) =>
+        TimetrackerAPI.getAPI().getProjekt().then((projektBOs) =>
          //   console.log(projekt))
         this.setState({
-                projekt: projekt,
+                projekt: projektBOs,
             })
         ).catch((e) =>
             this.setState({
@@ -39,6 +39,7 @@ class Projekt_uebersicht extends Component {
         );
     };
 
+    /*
     getAktivitaetbyProjektID = () => {
         TimetrackerAPI.getAPI().getAktivitaetbyProjektID().then((aktivitaetbyprojektid) =>
             this.setState({
@@ -50,8 +51,7 @@ class Projekt_uebersicht extends Component {
             })
         );
     };
-
-
+    */
 
     render() {
         const {projekt, aktivitaetbyprojektid} = this.state;
