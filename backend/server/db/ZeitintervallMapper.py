@@ -37,6 +37,44 @@ class ZeitintervallMapper (Mapper):
         return result
 
 
+
+    def find_by_id(self, id):
+        """Suchen eines Benutzers mit vorgegebener Zeitintervall ID. Da diese eindeutig ist,
+        wird genau ein Objekt zurückgegeben.
+
+        :param id Primärschlüsselattribut (->DB)
+        :return Zeitintervall-Objekt, das dem übergebenen Schlüssel entspricht, None bei
+            nicht vorhandenem DB-Tupel.
+        """
+
+        result = []
+
+        cursor = self._cnx.cursor()
+        command = "SELECT id, letzte_aenderung, start, ende FROM zeitintervall WHERE id={}".format(id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            (id, letzte_aenderung, start, ende) = tuples[0]
+            zeitintervall = Zeitintervall()
+            zeitintervall.set_id(id)
+            zeitintervall.set_letzte_aenderung(letzte_aenderung)
+            zeitintervall.set_start(start)
+            zeitintervall.set_ende(ende)
+
+            result.append(zeitintervall)
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            result = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
+
+
     def insert(self, zeitintervall):
         """Einfügen eines Zeitintervall-Objekts in die Datenbank.
 
@@ -90,14 +128,14 @@ class ZeitintervallMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
-    def delete(self, zeitintervall):
+    def delete(self, id):
         """Löschen der Daten eines Zeitintervall-Objekts aus der Datenbank.
 
         :param zeitintervall das aus der DB zu löschende "Objekt"
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM zeitintervall WHERE id={}".format(zeitintervall.get_id())
+        command = "DELETE FROM zeitintervall WHERE id={}".format(id)
         cursor.execute(command)
 
         self._cnx.commit()
