@@ -1,11 +1,3 @@
-
-#from Mapper import Mapper       # so werden keine Import Fehler angezeigt - ist aber noch nicht getestet, da BO noch fehlt
-                                #
-#import sys                      #   
-#sys.path.append("..")           #
-                                #
-#from bo import *                #
-
 from server.bo.Person import Person
 from server.db.Mapper import Mapper
 
@@ -222,9 +214,10 @@ class PersonMapper (Mapper):
 
         command = "INSERT INTO person (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         data = (
+
             person.get_id(),
-            person.get_letzte_aenderung,
-            person.get_vor_name,
+            person.get_letzte_aenderung(),
+            person.get_vor_name(),
             person.get_nach_name(),
             person.get_email(),
             person.get_benutzer_name(),
@@ -245,7 +238,7 @@ class PersonMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE person " + "SET vor_name=%s, nach_name=%s, email=%s, benutzer_name=%s, projektleiter=%s, arbeitszeitkonot_id=%s WHERE id=%s"
+        command = "UPDATE person " + "SET vor_name=%s, nach_name=%s, email=%s, benutzer_name=%s, projektleiter=%s, arbeitszeitkonto_id=%s WHERE id=%s"
         data = (
             person.get_vor_name(),
             person.get_nach_name(),
@@ -259,14 +252,14 @@ class PersonMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
-    def delete(self, person):
-        """Löschen der Daten eines Personen-Objekts aus der Datenbank.
-
-        :param person das aus der DB zu löschende "Objekt"
+    def delete(self, id):
+        """Löschen der Daten eines Personen-Objekts aus der Datenbank 
+    
+        :param id
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM person WHERE id={}".format(person.get_id())
+        command = "DELETE FROM person WHERE id={}".format(id)
         cursor.execute(command)
 
         self._cnx.commit()

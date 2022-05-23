@@ -30,18 +30,20 @@ class Header extends Component {
   render() {
     return (
       <Paper variant='outlined' >
-        <Typography variant='h3' component='h1' align='center'>
-          TIMETRACKER
+        <Typography variant='h3' component='h1' align='center' color='#323748' fontFamily='Verdana'>
+          TIME
         </Typography>
-        <Typography variant='h4' component='h2' align='center'>
+        <Typography variant='h3' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+          TRACKER
+        </Typography>
+        <Typography variant='h4' component='h2' align='center' >
           Zeiterfassungssystem
         </Typography>
           <Tabs indicatorColor='primary' textColor='primary' centered value={this.state.tabindex} onChange={this.handleTabChange} >
             <Tab label='Home' component={RouterLink} to={`/home`} />
-            <Tab label='Projekt' component={RouterLink} to={`/projekt`} />
-            <Tab label='Person' component={RouterLink} to={`/person`} />
-            <Tab label='Aktivität' component={RouterLink} to={`/aktivitaet`} />
+            <Tab label='Projekt' component={RouterLink} to={`/projekt`} />          
             <Tab label='Buchung' component={RouterLink} to={`/buchung`} />
+            <Tab label='Person' component={RouterLink} to={`/person`} />
             <Tab label='Projekt Übersicht' component={RouterLink} to={`/projekt_uebersicht`} />
             <Tab label='Personen Übersicht' component={RouterLink} to={`/personen_uebersicht`} />
           </Tabs>

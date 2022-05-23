@@ -11,7 +11,7 @@ import {Button, Box} from '@mui/material';
 
 import BuchungDialog from '../dialogs/BuchungDialog';
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-import ProjektBO from '../../api/ProjektBO'
+//import ProjektBO from '../../api/ProjektBO'
 
 
 class Buchung extends Component {
@@ -28,6 +28,7 @@ class Buchung extends Component {
 
     componentDidMount() {
         this.getProjekt();
+        console.log(this.state.projekt)
       }
 
 
@@ -39,7 +40,7 @@ class Buchung extends Component {
           })
         ).catch((e) =>
           this.setState({
-            projekt: null,
+            projekt: []
           })
         );
     };
@@ -68,25 +69,25 @@ class Buchung extends Component {
 
         return (
             <div>
-                <Button variant="contained" sx={{width:250}}
-                    onClick={this.showBuchungDialog}>
-                Neue Buchung erstellen</Button>
-                    <TableContainer component={Paper}  sx={{ maxWidth: 50000, margin:"auto"}}>
-                        <Table sx={{ minWidth: 600 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="left"><b>Buchung</b></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell align="left" component="th" scope="row">Buchung 1</TableCell>
-                                    <TableCell align="right"><Button variant="outlined">Löschen</Button></TableCell>
-                                    <TableCell align=""><Button variant="outlined">Bearbeiten</Button></TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                <Button variant="contained" sx={{width:250}} onClick={this.showBuchungDialog}>
+                    Neue Buchung erstellen
+                </Button>
+                <TableContainer component={Paper}  sx={{ maxWidth: 50000, margin:"auto"}}>
+                    <Table sx={{ minWidth: 600 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="left"><b>Buchung</b></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell align="left" component="th" scope="row">Buchung 1</TableCell>
+                                <TableCell align="right"><Button variant="outlined">Löschen</Button></TableCell>
+                                <TableCell align=""><Button variant="outlined">Bearbeiten</Button></TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
            {<BuchungDialog show={showBuchung} projekt={projekt} onClose={this.closeBuchungDialog}/> }
 
             </div>

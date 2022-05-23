@@ -8,7 +8,7 @@ class Buchung(bo.BusinessObjekt):
         # Definieren der Attribute, der Klasse Buchung
         super().__init__()
         self._erstellt_von = ''
-        self._arbeitszeitkonto_id
+        self._arbeitszeitkonto_id = 0
         
     def get_erstellt_von(self):
         # Ausgeben von erstellt_von

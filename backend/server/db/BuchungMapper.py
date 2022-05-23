@@ -33,7 +33,7 @@ class BuchungMapper(Mapper):
 
             result.append(buchung)
 
-        self.connection.commit()
+        self._cnx.commit()
         cursor.close()
 
         return result
@@ -68,7 +68,7 @@ class BuchungMapper(Mapper):
             """
             result = None
 
-        self._connection.commit()
+        self._cnx.commit()
         cursor.close()
         return result
 
@@ -103,7 +103,7 @@ class BuchungMapper(Mapper):
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
             result = None
 
-        self._connection.commit()
+        self._cnx.commit()
         cursor.close()
         return result
 
@@ -113,7 +113,7 @@ class BuchungMapper(Mapper):
 
         """
 
-        cursor = self._connection.cursor()
+        cursor = self._cnx.cursor()
         cursor.execute("SELECT MAX(id) AS maxid FROM buchung")
         tuples = cursor.fetchall()
 
@@ -129,7 +129,7 @@ class BuchungMapper(Mapper):
         data = (Buchung.get_id(), Buchung.get_erstellt_von(), Buchung.get_arbeitszeitkonto_id(), Buchung.get_letzte_aenderung())
         cursor.execute(command,data)
 
-        self._connection.commit()
+        self._cnx.commit()
         cursor.close()
 
         return Buchung
@@ -147,7 +147,7 @@ class BuchungMapper(Mapper):
 
         cursor.execute(command, data)
 
-        self._connection.commit()
+        self._cnx.commit()
         cursor.close()
 
     def update_by_id(self, Buchung):
@@ -156,14 +156,14 @@ class BuchungMapper(Mapper):
         :param Buchung -> Buchung-Objekt
         :return aktualisiertes Buchung-Objekt
         """
-        cursor = self._connection.cursor()
+        cursor = self._cnx.cursor()
 
         command = "UPDATE buchung " + "SET letzte_aenderung=%s WHERE id=%s"
         data = (Buchung.get_letzte_aenderung())
 
         cursor.execute(command, data)
 
-        self._connection.commit()
+        self._cnx.commit()
         cursor.close()
 
     def delete(self, Buchung):
@@ -171,12 +171,12 @@ class BuchungMapper(Mapper):
 
         :param Buchung -> Buchung-Objekt
         """
-        cursor = self._connection.cursor()
+        cursor = self._cnx.cursor()
 
         command = "DELETE FROM buchung WHERE id={}".format(Buchung.get_id())
         cursor.execute(command)
 
-        self._connection.commit()
+        self._cnx.commit()
         cursor.close()
 
 '''Only for testing purpose'''
