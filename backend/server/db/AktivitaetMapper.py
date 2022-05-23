@@ -21,7 +21,7 @@ class AktivitaetMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id FROM aktivitaet")
+        cursor.execute("SELECT * FROM aktivitaet")
         tuples = cursor.fetchall()
 
         for (id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id) in tuples:
@@ -31,6 +31,7 @@ class AktivitaetMapper (Mapper):
             aktivitaet.set_bezeichnung(bezeichnung)
             aktivitaet.set_kapazitaet(kapazitaet)
             aktivitaet.set_projekt_id(projekt_id)
+            result.append(aktivitaet)
 
         self._cnx.commit()
         cursor.close()
