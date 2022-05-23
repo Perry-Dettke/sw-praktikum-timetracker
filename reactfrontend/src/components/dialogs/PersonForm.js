@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-    withStyles, Button, IconButton, Dialog, DialogContent, DialogContentText,
-    DialogTitle, DialogActions, TextField
-} from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import {Button, IconButton, Dialog, DialogContent, DialogContentText,DialogTitle, DialogActions, TextField} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import ContextErrorMessage from './ContextErrorMessage';
 import LoadingProgress from './LoadingProgress';
+import { withStyles } from '@mui/styles';
+
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import PersonBO from "../../api/PersonBO";
