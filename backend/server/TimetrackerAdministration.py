@@ -103,11 +103,12 @@ class TimetrackerAdministration (object):
     """
     Buchung-spezifische Methoden
     """
-    def create_buchung(self, letzte_aenderung, erstellt_von):
+    def create_buchung(self, letzte_aenderung, erstellt_von, arbeitszeitkonto_id):
         """Eine Buchung anlegen"""
         buchung = Buchung()
         buchung.set_letzte_aenderung(letzte_aenderung)
         buchung.set_erstellt_von(erstellt_von)
+        buchung.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
         buchung.set_id(1)
 
         with BuchungMapper() as mapper:
@@ -142,13 +143,8 @@ class TimetrackerAdministration (object):
     """
     Ereignis-spezifische Methoden
     """
-    def create_ereignis(self, letzte_aenderung, erstellungs_zeitpunkt):
-        """Ein Ereignis anlegen"""
-        ereignis = Ereignis()
-        ereignis.set_letzte_aenderung(letzte_aenderung)
-        ereignis.set_erstellungs_zeitpunkt(erstellungs_zeitpunkt)
-        ereignis.set_id(1)
-
+    def create_ereignis(self, ereignis): 
+        """Ereignis anlegen"""
         with EreignisMapper() as mapper:
             return mapper.insert(ereignis)
 
@@ -182,19 +178,8 @@ class TimetrackerAdministration (object):
     """
     Person-spezifische Methoden
     """
-    def create_person(self, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id):
-        """Einen Benutzer anlegen"""
-        person = Person()
-        person.set_letzte_aenderung(letzte_aenderung)
-        person.set_vor_name(vor_name)
-        person.set_nach_name(nach_name)
-        person.set_email(email)
-        person.set_benutzer_name(benutzer_name)
-        person.set_google_user_id(google_user_id)
-        person.set_projektleiter(projektleiter)
-        person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-        person.set_id(1)
-
+    def create_person(self, person): 
+        """Person anlegen"""
         with PersonMapper() as mapper:
             return mapper.insert(person)
 

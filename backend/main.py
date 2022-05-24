@@ -39,9 +39,7 @@ timetracker = api.namespace('timetracker', description="Funktionen der App")
 
 bo = api.model('BusinessObject', {
     'id': fields.Integer(attribute='_id',
-                         description='Der Unique Identifier eines Business Object'),                         
-    'letzte_aenderung': fields.DateTime(attribute='_letzte_aenderung',                                          #hier eventuell DateTime
-                                description='Die Person die am BO die letzte Änderung durchgeführt hat'),
+                         description='Der Unique Identifier eines Business Object')                         
     
 })
 
@@ -99,7 +97,7 @@ zeitintervall = api.inherit('Zeitintervall', bo, {
 })
 
 ereignis = api.inherit('Ereignis', bo, {
-    'erstellungs_zeitpunkt': fields.DateTime(attribute='_erstellungs_zeitpunkt',       #DateTime richtig?
+    'erstellungs_zeitpunkt': fields.String(attribute='_erstellungs_zeitpunkt',       #DateTime richtig?
                             description='Erstellungszeitpunkt eines Ereignis'),
 })
 

@@ -223,9 +223,10 @@ class PersonMapper (Mapper):
             person.get_benutzer_name(),
             person.get_google_user_id(),
             person.get_projektleiter(),
-            person.get_arbeitszeitkonto_id()),
-        cursor.execute(command, data)
+            person.get_arbeitszeitkonto_id(),
+        )
 
+        cursor.execute(command, data)
         self._cnx.commit()
         cursor.close()
 
