@@ -24,8 +24,8 @@ class PersonListenEintrag extends Component {
     }
 
     //Gibt den aktuellen Person zurück
-    getPerson = () => {
-        this.props.getPerson();
+    getPersonbyID = () => {
+        this.props.getPersonbyID();
     }
 
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
@@ -74,20 +74,21 @@ class PersonListenEintrag extends Component {
         const {showPersonForm, error, loadingInProgress, showPersonDelete} = this.state;
 
         return (
+            person ?
             <div>
                 <ListItem>
                     <Grid container alignItems="center" spacing={2}>
                         <Grid item xs={2}>
-                            <Typography>{person.vor_name}</Typography>
+                            <Typography>{person.getVor_name()}</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography>{person.nach_name}</Typography>
+                            <Typography>{person.getNach_name()}</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography>{person.benutzer_name}</Typography>
+                            <Typography>{person.getBenutzer_name()}</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography>{person.email}</Typography>
+                            <Typography>{person.getEmail()}</Typography>
                         </Grid>
                         <Grid item xs/>
 
@@ -112,9 +113,10 @@ class PersonListenEintrag extends Component {
                 </ListItem>
 
                 <Divider/>
-                <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} getPerson= {this.getPerson}/>
+                <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
                 <PersonLöschenDialog show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPerson= {this.getPerson}/>       
             </div>
+            : null
         );
     }
 }

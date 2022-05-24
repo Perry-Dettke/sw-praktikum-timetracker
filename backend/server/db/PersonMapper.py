@@ -82,7 +82,7 @@ class PersonMapper (Mapper):
             nicht vorhandenem DB-Tupel.
         """
 
-        result = []
+
 
         cursor = self._cnx.cursor()
         command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id FROM person WHERE id={}".format(id)
@@ -101,16 +101,16 @@ class PersonMapper (Mapper):
             person.set_google_user_id(google_user_id)
             person.set_projektleiter(projektleiter)
             person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-            result.append(person)
+
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None
+            person = None
 
         self._cnx.commit()
         cursor.close()
 
-        return result
+        return person
 
     def find_by_email(self, email):
         """Auslesen aller Benutzer anhand der zugeordneten E-Mail-Adresse.
