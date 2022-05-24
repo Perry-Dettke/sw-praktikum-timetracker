@@ -23,14 +23,8 @@ class TimetrackerAdministration (object):
     """
     Aktivitaet-spezifische Methoden
     """
-    def create_aktivitaet(self, letzte_aenderung, bezeichnung, kapazitaet):
-        """Eine Aktivitaet anlegen"""
-        aktivitaet = Aktivitaet()
-        aktivitaet.set_letzte_aenderung(letzte_aenderung)
-        aktivitaet.set_bezeichnung(bezeichnung)
-        aktivitaet.set_bezeichnung(kapazitaet)
-        aktivitaet.set_id(1)
-
+    def create_aktivitaet(self, aktivitaet): 
+        """Aktivitaet anlegen"""
         with AktivitaetMapper() as mapper:
             return mapper.insert(aktivitaet)
 
@@ -68,15 +62,10 @@ class TimetrackerAdministration (object):
     """
     Arbeitszeitkonto-spezifische Methoden
     """
-    def create_arbeitszeitkonto(self, letzte_aenderung, arbeitsleistung):
-        """Ein Arbeitszeitkonto anlegen"""
-        arbeitszeitkonto = Arbeitszeitkonto()
-        arbeitszeitkonto.set_letzte_aenderung(letzte_aenderung)
-        arbeitszeitkonto.set_arbeitsleistung(arbeitsleistung)
-        arbeitszeitkonto.set_id(1)
-
+    def create_arbeitszeitkonto(self, arbeitszeitkonto): 
+        """Arbeitszeitkonto anlegen"""
         with ArbeitszeitkontoMapper() as mapper:
-            return mapper.insert(arbeitsleistung)
+            return mapper.insert(arbeitszeitkonto)
 
     def get_arbeitszeitkonto_by_id(self, id):
         """Das Arbeitszeitkonto mit der gegebenen ID auslesen."""
@@ -103,14 +92,8 @@ class TimetrackerAdministration (object):
     """
     Buchung-spezifische Methoden
     """
-    def create_buchung(self, letzte_aenderung, erstellt_von, arbeitszeitkonto_id):
-        """Eine Buchung anlegen"""
-        buchung = Buchung()
-        buchung.set_letzte_aenderung(letzte_aenderung)
-        buchung.set_erstellt_von(erstellt_von)
-        buchung.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-        buchung.set_id(1)
-
+    def create_buchung(self, buchung): 
+        """Buchung anlegen"""
         with BuchungMapper() as mapper:
             return mapper.insert(buchung)
 
@@ -224,14 +207,8 @@ class TimetrackerAdministration (object):
     """
     Projekt-spezifische Methoden
     """
-    def create_projekt(self, letzte_aenderung, bezeichnung, auftraggeber):
-        """Ein Projekt anlegen"""
-        projekt = Projekt()
-        projekt.set_letzte_aenderung(letzte_aenderung)
-        projekt.set_bezeichnung(bezeichnung)
-        projekt.set_auftraggeber(auftraggeber)
-        projekt.set_id(1)
-
+    def create_projekt(self, projekt): 
+        """Projekt anlegen"""
         with ProjektMapper() as mapper:
             return mapper.insert(projekt)
 
@@ -263,14 +240,8 @@ class TimetrackerAdministration (object):
     """
     Zeitintervall-spezifische Methoden
     """
-    def create_zeitintervall(self, letzte_aenderung, start, ende):
-        """Ein Zeintervall anlegen"""
-        zeitintervall = Zeitintervall()
-        zeitintervall.set_letzte_aenderung(letzte_aenderung)
-        zeitintervall.set_start(start)
-        zeitintervall.set_ende(ende)
-        zeitintervall.set_id(1)
-
+    def create_zeitintervall(self, zeitintervall): 
+        """Zeitintervall anlegen"""
         with ZeitintervallMapper() as mapper:
             return mapper.insert(zeitintervall)
 
