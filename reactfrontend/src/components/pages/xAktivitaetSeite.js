@@ -42,7 +42,7 @@ class Aktivitaet extends Component {
                 <Button variant="contained" sx={{width:250}}
                     onClick={this.showAktivitaetDialog}>
                 Neue Aktivität anlegen</Button>
-                    <TableContainer component={Paper}  sx={{ maxWidth: 1000 , margin:"auto" }}>
+                    <TableContainer component={Paper}  sx={{ maxWidth: 50000 , margin:"auto" }}>
                         <Table sx={{ minWidth: 600 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>

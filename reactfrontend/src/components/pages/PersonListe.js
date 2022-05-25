@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { Button, TextField, InputAdornment, IconButton, Grid, Typography } from '@mui/material';
-import Paper from '@mui/material/Paper';
-import List from '@mui/material/List';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import Tooltip from '@material-ui/core/Tooltip';
+import { Button, TextField, InputAdornment, IconButton, Grid, Typography, Paper, List, Fab, Tooltip } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';

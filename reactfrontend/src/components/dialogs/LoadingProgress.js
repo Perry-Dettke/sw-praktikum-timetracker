@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, LinearProgress } from '@material-ui/core';
+import {LinearProgress } from '@mui/material';
+import { withStyles } from '@mui/styles';
+
 
 /**
  * Zeigt den LadeBalken im Programm .

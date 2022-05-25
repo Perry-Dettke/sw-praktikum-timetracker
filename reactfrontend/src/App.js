@@ -6,9 +6,11 @@ import PersonListe from './components/pages/PersonListe';
 import ProjektListe from './components/pages/ProjektListe';
 import BuchungListe from './components/pages/BuchungListe';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+
 import TimetrackerAPI from './api/TimetrackerAPI';
 import Personen_uebersicht from './components/pages/PersonenÜbersicht';
 import Buchung from './components/pages/xBuchungSeite';
+import Projekt_uebersicht from './components/pages/ProjektÜbersicht';
 
 
 class App extends React.Component {
@@ -41,7 +43,7 @@ class App extends React.Component {
                 <Route path={'/person'} element={<PersonListe/>} />
                 <Route path={'/buchung'} element={<Buchung/>} />
                 <Route path={'/personen_uebersicht'} element={<Personen_uebersicht/>} />
-                {/*<Route path={'/projekt_uebersicht'} element={<Projektuebersicht/>} />*/}    
+                <Route path={'/projekt_uebersicht'} element={<Projekt_uebersicht/>} />  
             </Routes> 
           </div>
         </div>
