@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {ListItem, Typography, IconButton, Grid, Tooltip, Divider, Accordion, AccordionSummary, AccordionDetails} from '@mui/material';
+import {ListItem, Typography, IconButton, Grid, Tooltip, Divider, Accordion, AccordionSummary, AccordionDetails, Table, TableHead, TableBody, TableRow, TableCell} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -45,13 +45,37 @@ class ProjektUebersichtEintrag extends Component {
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls="panel1a-content"
-                                id="panel1a-header"
+                                id="panel1a-header" sx={{
+                                    backgroundColor: "#dedede",
+                                }}
                                 >
                                 <Typography>{projekt.bezeichnung}</Typography>
                             </AccordionSummary>
-                            <AccordionDetails>
-                                <Typography>Auftraggeber: {projekt.auftraggeber}</Typography>
-                                <Typography>Aktivitäten: {/*aktivitaet.bezeichnung*/}</Typography>
+                            <AccordionDetails sx={{
+                                    backgroundColor: "#eeeeee",
+                                }}>
+                                <Typography align='left'><u> Auftraggeber:</u> {projekt.auftraggeber} <br/><br/></Typography>
+
+                                <Table>
+                                    <TableHead sx={{
+                                        backgroundColor: '#dedede'
+                                    }}>
+                                        <TableRow>
+                                            <TableCell>Aktivität ID</TableCell>
+                                            <TableCell>Aktivität</TableCell>
+                                            <TableCell>Kapazität</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell><Typography> GET ID {/*aktivitaet.id*/}</Typography></TableCell>
+                                            <TableCell><Typography> GET Bezeichnung {/*aktivitaet.bezeichnung*/}</Typography></TableCell>
+                                            <TableCell><Typography> GET Kapazität {/*aktivitaet.kapazitaet*/}</Typography></TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                                
+                                
                             </AccordionDetails>
                         </Accordion>
                     </Grid>

@@ -68,7 +68,7 @@ class Projekt_uebersicht extends Component {
                     <Grid item xs={12}>
                         <Button 
                             sx={{
-                                m: 4,
+                                m: 1,
                                 width: 300,
                                 height: 50,
                                 alignItems: 'center',
@@ -84,11 +84,6 @@ class Projekt_uebersicht extends Component {
                                     <ProjektUebersichtEintrag key={Object.keys(projekt)[projekt.id]} projekt={projekt} aktivitaet={aktivitaet} show={this.props.show}
                                         getProjekt={this.getProjekt} getAktivitaetbyProjektID={this.getAktivitaetbyProjektID} />)
                             }
-
-                        
-                            
-                            Projekte Übersicht Eintrag hier anzeigen
-                         
                         </List>
                     </Grid>
                 </Grid>
