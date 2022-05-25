@@ -15,7 +15,8 @@ import AddIcon from '@mui/icons-material/Add';
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import ProjektUebersichtEintrag from './ProjektUebersichtEintrag';
-import ProjektListenEintrag from './ProjektListenEintrag';
+import ProjektDialog from '../dialogs/ProjektDialog';
+
 
 class Projekt_uebersicht extends Component {
     
@@ -26,6 +27,7 @@ class Projekt_uebersicht extends Component {
         this.state = {
             projekt: [],
             aktivitaet: [],
+            showProjektDialog: false,
     };
     }
 
@@ -48,6 +50,48 @@ class Projekt_uebersicht extends Component {
             });
     }
 
+    //PersonDialog anzeigen
+    showProjektDialog = () => {
+        this.setState({ showProjektDialog: true});
+    };
+
+
+    // Add Button - Oeffnet den Person hinzufuegen Dialog
+    addProjektButtonClicked = event => {
+    event.stopPropagation();
+    this.setState({
+      showProjektDialog: true,
+    });
+  }
+
+  /*
+    //wird aufgerufen, wenn Dialog Fenster geschloßen wird
+    projektFormClosed = projekt => {
+        this.getProjekt();
+        if (projekt) {
+        const newProjektList = [...this.state.projekt, projekt];
+        this.setState({
+            projekt: newProjektList,
+            filteredProjekt: [...newProjektList],
+            showProjektForm: false
+        });
+        } else {
+        this.setState({
+            showProjektForm: false
+        });
+        }
+    }
+*/
+
+    
+
+    //ProjektDialog schließen
+    closeProjektDialog = () => {
+        this.setState({ 
+            showProjektDialog: false});
+    };
+
+
 
     componentDidMount() {
         this.getProjekt();
@@ -59,7 +103,7 @@ class Projekt_uebersicht extends Component {
     render() {
         const { expandedState } = this.props;
         
-        const{projekt, aktivitaet} = this.state;
+        const{projekt, aktivitaet, showProjektDialog} = this.state;
         console.log(projekt)
 
         return (
@@ -87,6 +131,7 @@ class Projekt_uebersicht extends Component {
                         </List>
                     </Grid>
                 </Grid>
+                <ProjektDialog show={showProjektDialog} onclose={this.closeProjektDialog} />
             </div>
         );
     }

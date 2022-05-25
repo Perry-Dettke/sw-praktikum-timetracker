@@ -55,7 +55,7 @@ class ProjektUebersichtEintrag extends Component {
                                     backgroundColor: "#eeeeee",
                                 }}>
                                 <Typography align='left'><u> Auftraggeber:</u> {projekt.auftraggeber} <br/><br/></Typography>
-
+                                <Typography align='left'><u> Projektleiter:</u> {/*projekt.projektleiter*/} <br/><br/></Typography>
                                 <Table>
                                     <TableHead sx={{
                                         backgroundColor: '#dedede'
