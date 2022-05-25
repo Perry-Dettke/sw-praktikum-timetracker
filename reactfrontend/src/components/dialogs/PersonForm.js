@@ -127,8 +127,8 @@ class PersonForm extends Component {
             show ?
 
                 <Dialog open={show}  onClose={this.handleClose} maxWidth='xs' fullWidth>
-                    <DialogTitle className={classes.dialogtitle}>{title}
-                        <IconButton className={classes.closeButton} onClick={this.handleClose}>
+                    <DialogTitle >{title}
+                        <IconButton  onClick={this.handleClose}>
                             <CloseIcon />
                         </IconButton>
                     </DialogTitle>
@@ -137,7 +137,7 @@ class PersonForm extends Component {
                             {header}
                         </DialogContentText>
 
-                        <form className={classes.root} noValidate autoComplete='off'>
+                        <form  noValidate autoComplete='off'>
 
                         <TextField autoFocus type='text' required fullWidth margin='normal' id='vor_name' label='Vorname:' value={vor_name} onChange={this.textFieldValueChange} />
 
@@ -165,36 +165,5 @@ class PersonForm extends Component {
     }
 }
 
-/** Component specific styles */
-const styles = theme => ({
-    root: {
-        width: '100%',
-    },
-    closeButton: {
-        position: 'absolute',
-        right: theme.spacing(1),
-        top: theme.spacing(1),
-        color: theme.palette.grey[500],
-    },
-    textfield: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1)
-    }
-});
 
-/** PropTypes */
-PersonForm.propTypes = {
-    /** @ignore */
-    classes: PropTypes.object.isRequired,
-    /** If true, the form is rendered */
-    show: PropTypes.bool.isRequired,
-    /**  
-     * Handler function which is called, when the dialog is closed.
-     * Sends the edited or created projektBO's as parameter or null, if cancel was pressed.
-     *  
-     * Signature: onClose(ProjektBO's projekt);
-     */
-    onClose: PropTypes.func.isRequired,
-}
-
-export default withStyles(styles)(PersonForm);
+export default PersonForm;
