@@ -21,26 +21,25 @@ class Buchung extends Component {
 
     this.state = {
         showBuchung: false,
-        projekt: null
+        projektliste: null
     };
     }
 
 
     componentDidMount() {
         this.getProjekt();
-        console.log(this.state.projekt)
       }
 
 
       getProjekt = () => {
       TimetrackerAPI.getAPI()
-        .getProjekt().then((projekt) =>
+        .getProjekt().then((projektliste) =>
           this.setState({
-            projekt: projekt,
+            projektliste: projektliste,
           })
         ).catch((e) =>
           this.setState({
-            projekt: []
+            projektliste: null
           })
         );
     };
@@ -64,10 +63,11 @@ class Buchung extends Component {
     
 
     render() {
-        const {showBuchung, projekt } = this.state;
+        const {showBuchung, projektliste } = this.state;
         console.log("BuchungSeite Render Test", this.state, this.props)
 
         return (
+            projektliste ?
             <div>
                 <Button variant="contained" sx={{width:250}}
                     onClick={this.showBuchungDialog}>
@@ -101,9 +101,10 @@ class Buchung extends Component {
                         </Table>
                     </TableContainer>
                 </Box>
-           {<BuchungDialog show={showBuchung} projekt={projekt} onClose={this.closeBuchungDialog}/> }
+           {<BuchungDialog show={showBuchung} projektliste={projektliste} onClose={this.closeBuchungDialog}/> }
 
             </div>
+            : null
         );
     }
 }

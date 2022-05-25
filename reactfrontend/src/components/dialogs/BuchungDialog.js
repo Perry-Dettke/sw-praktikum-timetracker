@@ -26,22 +26,13 @@ class BuchungDialog extends Component {
 
         this.state = {
             bezeichnung: "",
-            projekt: "",
-            projektliste: [],
-            akitvitaetliste: [],
+            projekt: null,
             testliste: ["1","2","3"],
         }
 
     }
 
-    ProjektList() {
-        var api = TimetrackerAPI.getAPI();
-        api.getProjekt().then((projektBOs) => {
-          this.setState({
-            projektliste: projektBOs,
-          });
-        });
-      }
+ 
 
 
       
@@ -55,32 +46,10 @@ class BuchungDialog extends Component {
         });
       }
 
-    textFieldValueChange = (event) => {
-        const value = event.target.value;
-        let error = false;
-        if (value.trim().length === 0) {
-              error = true;
-            }
         
-            this.setState({
-              [event.target.id]: event.target.value,
-            });
-          }
-
-    handleChange(e) {
-        this.AktivitaetList();
-    }
-        
-    // handleBezeichnungChange = (event) => {
-    //     this.setState({ projektliste: event.target.value });
-    // }
-          
-
-    
-
-    handletest = () => {
-        console.log(this.state.bezeichnung)
-    }
+      handleChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+      }
 
 
     // Dialog schließen
@@ -91,20 +60,18 @@ class BuchungDialog extends Component {
 
 
     componentDidMount() {
-        this.ProjektList();
       }
 
     render() {
-        const { show, projekt } = this.props;
-        const { bezeichnung, projektliste, testliste } = this.state;
+        const { show, projektliste } = this.props;
+        const { bezeichnung, projekt, testliste } = this.state;
         // console.log("Projektliste", projektliste)
         // console.log(typeof projektliste)
         // console.log("Testloste", typeof testliste)
-        // console.log(testliste)
         // console.log("Bezeichnung test", projekt.getBezeichnung)
 
         return (
-            show ?
+            show && projektliste ?
                 <div>
                     <Dialog open={show} onClose={this.handleClose} maxWidth='xl'>
                         <DialogTitle id='form-dialog-title'>Neue Buchung
@@ -120,17 +87,18 @@ class BuchungDialog extends Component {
                                     <Select
                                     labelId="Projekt"
                                     name="projekt"
-                                    value={Object.values(projekt)[projekt.id]}
+                                    value={"hi"}
                                     size="medium"
                                     label="Projekt"
                                     autoWidth
-                                    // onChange={this.handleChange()}
+                                    onChange={this.handleChange()}
                                     >
-                                    {Object.values(projektliste).map((projekt) => {
+                                    {projektliste.map((projekt) => {
                                     return (
-                                    <MenuItem 
-                                    value={Object.keys(projekt)[projekt.id]}>
-                                        {Object.values(projekt)[0]}
+                                    <MenuItem
+                                    
+                                    value={"hallo"}>
+                                        {projekt.getBezeichnung()}
                                     </MenuItem>
                                     );
                                 })
