@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Button, TextField, InputAdornment, IconButton, Grid, Typography, Paper, List, Fab, Tooltip } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 import PersonLöschenDialog from '../dialogs/PersonLöschenDialog';
 
