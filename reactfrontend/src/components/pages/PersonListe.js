@@ -6,6 +6,14 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+
+import PersonLöschenDialog from '../dialogs/PersonLöschenDialog';
+
+
 import PersonListenEintrag from './PersonListenEintrag'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import PersonDialog from '../dialogs/PersonDialog';
@@ -19,20 +27,20 @@ class PersonListe extends Component {
 
     // Init an empty state
     this.state = {
-      person: [],
+      person: null,
       filteredPerson: [],
       showPersonForm: false,
       showPersonDelete: false,
-      // personenliste: [],
+      // person: [],
     };
   }
 
   /** Fetches all PersonBOs from the backend */
-  getPerson = () => {
+  getPersonbyID = () => {
     var api = TimetrackerAPI.getAPI();
-        api.getPerson().then((personBOs) => {
+        api.getPersonbyID(2).then((personBO) => {
           this.setState({
-            person: personBOs,
+            person: personBO,
           });
         });
       }
@@ -68,7 +76,7 @@ personFormClosed = person => {
     //     var api = TimetrackerAPI.getAPI();
     //     api.getPerson().then((personBOs) => {
     //       this.setState({
-    //         personenliste: personBOs,
+    //         person: personBOs,
     //       });
     //     });
     //   }
@@ -87,22 +95,65 @@ personFormClosed = person => {
         this.setState({ showPerson: false});
     };
 
+    //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
+    bearbeitenButtonClicked = event => {
+      event.stopPropagation();
+      this.setState({
+          showPersonForm: true
+      });
+  }
+
+
+    //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
+    personFormClosed = (person) => {
+      if (person) {
+          this.setState({
+              person: person,
+              showPersonForm: false
+          });
+      } else {
+          this.setState({
+              showPersonForm: false
+          });
+      }
+  }
+
+   //Öffnet das Dialog-Fenster PersonDeleteDialog, wenn der Button geklickt wurde
+   personDeleteButtonClicked =  event => {
+      console.log("Delete Button")
+      event.stopPropagation();
+      this.setState({
+        showPersonDelete: true
+      });
+    }
+  
+    //Wird aufgerufen, wenn das Dialog-Fenster PersonDeleteDialog geschlossen wird
+    personDeleteClosed = () => {
+        this.setState({
+          showPersonDelete: false
+        });
+        this.getPerson();
+    }
 
 
     componentDidMount() {
-        this.getPerson();
+        this.getPersonbyID();
         // this.PersonenList();
     }
 
     /** Renders the component */
     render() {
 
-        const { person, filteredPerson, personenliste, showPersonForm } = this.state;
-        // console.log(personenliste)
+        const { person, filteredPerson, showPersonForm, showPersonDelete } = this.state;
+        console.log("Personen Liste", person)
+        if (person) {
+          console.log(person.getVor_name())
+        } 
 
 
         return (
-            <div>
+          person ?
+            <div> 
                 {/* <Button variant="contained" sx={{width:250}} onClick={this.showPersonDialog}> Neue Person Erstellen</Button> */}
                 <Grid container spacing={2} alignItems="center">
                 </Grid>
@@ -115,17 +166,44 @@ personFormClosed = person => {
             </Grid>
                 <Paper>
                     <List >
-                        {
-                            Object.values(person).map(person =>
-                                <PersonListenEintrag key={Object.keys(person)[person.id]} person={person} show={this.props.show}
-                                    getPerson={this.getPerson} />)
+                    <ListItem>
+                    <Grid container alignItems="center" spacing={2}>
+                        <Grid item xs={2}>
+                            <Typography>{person.getVor_name()}</Typography>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Typography>{person.getNach_name()}</Typography>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Typography>{person.getBenutzer_name()}</Typography>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Typography>{person.getEmail()}</Typography>
+                        </Grid>
+                        <Grid item xs/>
 
-
-                        }
+                        <Grid item>
+                    <Tooltip title='Bearbeiten' placement="bottom">
+                      <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}>
+                          <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    </Grid>
+                    <Grid item>
+                      <Tooltip title='Löschen' placement="bottom">
+                      <IconButton variant="contained"  onClick={this.personDeleteButtonClicked}><DeleteIcon /></IconButton>
+                      </Tooltip>
+                    </Grid>
+                    </Grid>
+                </ListItem>
                     </List>
                 </Paper>
-                <PersonForm show={showPersonForm} onClose={this.personFormClosed} getPerson = {this.getPerson}/>
+
+                <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
+                <PersonLöschenDialog show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPerson= {this.getPerson}/>    
+
             </div>
+            : null
         );
     }
 }

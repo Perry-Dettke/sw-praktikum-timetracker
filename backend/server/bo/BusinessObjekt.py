@@ -1,11 +1,12 @@
 #from abc import ABC
 from abc import ABC, abstractmethod
+import datetime
 
 class BusinessObjekt(ABC):
     # Die abstrakte Klasse ABC dient als Basiskalsse für alle Objekte in der Klasse BusinessObjekt
     def __init__(self):
         self._id = 0
-        self._letzte_aenderung = 0
+        self._letzte_aenderung = datetime.datetime.now()
         
     def get_id(self):
         #Auslesen der ID

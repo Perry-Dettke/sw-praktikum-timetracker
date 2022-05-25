@@ -1,12 +1,13 @@
 #import BusinessObjekt as bo
 import server.bo.BusinessObjekt as bo
+import datetime
 
 class Ereignis(bo.BusinessObjekt):
     """ Die Klasse BusinessObjekt dient als Basisklasse für alle Objekte in der Klasse Ereignis. """
     def __init__(self):
         """ Definieren der Attribute, der Klasse Ereignis. """
         super().__init__()
-        self._erstellungs_zeitpunkt = 0
+        self._erstellungs_zeitpunkt = datetime.datetime.now()
         
     def get_erstellungs_zeitpunkt(self):
         """ Ausgeben des Erstellungszeitpunkts. """

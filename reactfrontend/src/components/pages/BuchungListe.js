@@ -19,7 +19,7 @@ class BuchungListe extends Component {
 
     // Init an empty state
     this.state = {
-      buchung: [],
+      buchung: null,
       filteredBuchung: [],
       showBuchungForm: false,
       showBuchungDelete: false,

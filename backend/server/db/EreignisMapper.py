@@ -98,25 +98,30 @@ class EreignisMapper(Mapper):
 
     def insert(self, ereignis):
         '''
-        Einfugen eines EreignisBO's in die DB
+        Einfugen eines Semester BO's in die DB
+
+
+        :param semester
+        :return das bereits übergebene Semester Objekt mit aktualisierten Daten
         '''
 
         cursor = self._cnx.cursor()
         cursor.execute("SELECT MAX(id) AS maxid FROM ereignis")
         tuples = cursor.fetchall()
 
+
         for (maxid) in tuples:
             if maxid[0] is None:
                 ereignis.set_id(1)
             else:
-                ereignis.set_id(maxid[0] + 1)
+                ereignis.set_id(maxid[0]+1)
 
-        command = "INSERT INTO ereignis (id, erstellungs_zeitpunkt, letzte_aenderung) VALUES (%s,%s,%s)"
+        command = "INSERT INTO ereignis (id, letzte_aenderung, erstellungs_zeitpunkt) VALUES (%s,%s,%s)"
         data = (
             ereignis.get_id(),
+            ereignis.get_letzte_aenderung(),
             ereignis.get_erstellungs_zeitpunkt(),
-            ereignis.get_letzte_aenderung())
-            
+            )
         cursor.execute(command, data)
         self._cnx.commit()
         cursor.close()

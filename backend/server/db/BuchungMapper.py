@@ -166,14 +166,14 @@ class BuchungMapper(Mapper):
         self._cnx.commit()
         cursor.close()
 
-    def delete(self, Buchung):
+    def delete(self, id):
         """Löschen der Daten einer Buchung aus der Datenbank
 
         :param Buchung -> Buchung-Objekt
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM buchung WHERE id={}".format(Buchung.get_id())
+        command = "DELETE FROM buchung WHERE id={}".format(id)
         cursor.execute(command)
 
         self._cnx.commit()
