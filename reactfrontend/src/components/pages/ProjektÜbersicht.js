@@ -68,22 +68,22 @@ class Projekt_uebersicht extends Component {
                                 <TableCell align="left"><b>Ist Stunden</b></TableCell>
                             </TableRow>
                         </TableHead>
-                        {projekt ?
+                     
                         <TableBody>
                             <TableRow>
-                                <TableCell component="th" scope="row">{projekt.getBezeichnung()}</TableCell>
+                                <TableCell component="th" scope="row">Test</TableCell>
                             </TableRow>
                             {/* <TableRow>
                                 <TableCell component="th" scope="row">{aktivitaetbyprojektid.getAktivitaetbyProjektID()}</TableCell>
                             </TableRow> */}
                         </TableBody>
-                        : 
+                        {/*
                         <TableBody>
                             <TableRow>
                                 <TableCell component="th" scope="row">Keine Daten vorhanden</TableCell>
                             </TableRow>
                         </TableBody>
-                        }
+                        */}
                     </Table>
                 </TableContainer>
             </div>
