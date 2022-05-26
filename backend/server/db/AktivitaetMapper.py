@@ -41,7 +41,7 @@ class AktivitaetMapper (Mapper):
     def find_by_id(self, id):
         """Auslesen aller Aktivitäten anhand der ID."""
         
-        result = []
+
         cursor = self._cnx.cursor()
         command = "SELECT id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id FROM aktivitaet WHERE id={}".format(id)
         cursor.execute(command)
@@ -55,22 +55,22 @@ class AktivitaetMapper (Mapper):
             aktivitaet.set_bezeichnung(bezeichnung)
             aktivitaet.set_kapazitaet(kapazitaet)
             aktivitaet.set_projekt_id(projekt_id)
-            result.append(aktivitaet)
+
 
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None
+            aktivitaet = None
 
         self._cnx.commit()
         cursor.close()
 
-        return result
+        return aktivitaet
 
     def find_by_projekt_id(self, projekt_id):
         """Auslesen aller Aktivitäten anhand der Projekt ID."""
 
-        result = []
+
         cursor = self._cnx.cursor()
         command = "SELECT id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id FROM aktivitaet WHERE projekt_id={}".format(projekt_id)
         cursor.execute(command)
@@ -84,17 +84,17 @@ class AktivitaetMapper (Mapper):
             aktivitaet.set_bezeichnung(bezeichnung)
             aktivitaet.set_kapazitaet(kapazitaet)
             aktivitaet.set_projekt_id(projekt_id)
-            result.append(aktivitaet)
+
 
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None
+            aktivitaet = None
 
         self._cnx.commit()
         cursor.close()
 
-        return result
+        return aktivitaet
 
         
     def insert(self, aktivitaet):

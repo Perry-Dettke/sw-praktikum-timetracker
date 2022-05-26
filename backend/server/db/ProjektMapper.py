@@ -76,7 +76,7 @@ class ProjektMapper (Mapper):
         :param auftraggeber Auftraggeber des Projekts.
         :return Eine Sammlung mit Projekt-Objekten.
         """
-        result = []
+
         cursor = self._cnx.cursor()
         command = "SELECT id, letzte_aenderung FROM projekt WHERE auftraggeber LIKE '{}' ORDER BY auftraggeber".format(auftraggeber)
         cursor.execute(command)
@@ -88,17 +88,16 @@ class ProjektMapper (Mapper):
             projekt.set_id(id)
             projekt.set_letzte_aenderung(letzte_aenderung)
 
-            result.append(projekt)
 
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None 
+            projekt = None 
 
         self._cnx.commit()
         cursor.close()
 
-        return result
+        return projekt
 
     def insert(self, projekt):
         """Einfügen eines Projekt-Objekts in die Datenbank.

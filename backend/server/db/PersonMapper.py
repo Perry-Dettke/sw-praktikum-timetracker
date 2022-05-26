@@ -34,44 +34,7 @@ class PersonMapper (Mapper):
 
         return result
 
-    def find_by_vor_name(self, vor_name):
-        """Auslesen aller Benutzer anhand des Vornamens.
 
-        :param vor_name Vorname der zugehörigen Benutzer.
-        :return Eine Sammlung mit Personen-Objekten, die sämtliche Benutzer
-            mit dem gewünschten Vornamen enthält.
-        """
-        result = []
-        cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id FROM person WHERE vor_name LIKE '{}' ORDER BY vor_name".format(vor_name)
-        cursor.execute(command)
-        tuples = cursor.fetchall()
-
-        try:
-            (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id ) = tuples[0]
-            person = Person()
-            person.set_id(id)
-            person.set_letzte_aenderung(letzte_aenderung)
-            person.set_vor_name(vor_name)
-            person.set_nach_name(nach_name)
-            person.set_email(email)
-            person.set_benutzer_name(benutzer_name)
-            person.set_google_user_id(google_user_id)
-            person.set_projektleiter(projektleiter)
-            person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-
-
-            result.append(person)
-
-        except IndexError:
-            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
-            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None 
-
-        self._cnx.commit()
-        cursor.close()
-
-        return result
 
     def find_by_id(self, id):
         """Suchen eines Benutzers mit vorgegebener Person ID. Da diese eindeutig ist,
@@ -119,7 +82,7 @@ class PersonMapper (Mapper):
         :return Eine Sammlung mit Personen-Objekten, die sämtliche Benutzer
             mit der gewünschten E-Mail-Adresse enthält.
         """
-        result = []
+
 
         cursor = self._cnx.cursor()
         command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id FROM person WHERE email={}".format(email)
@@ -138,17 +101,17 @@ class PersonMapper (Mapper):
             person.set_google_user_id(google_user_id)
             person.set_projektleiter(projektleiter)
             person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-            result.append(person)
+
 
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None
+            person = None
 
         self._cnx.commit()
         cursor.close()
 
-        return result
+        return person
 
     def find_by_google_user_id(self, google_user_id):
         """Suchen eines Benutzers mit vorgegebener Google ID. Da diese eindeutig ist,
@@ -158,7 +121,7 @@ class PersonMapper (Mapper):
         :return User-Objekt, das die übergebene Google ID besitzt,
             None bei nicht vorhandenem DB-Tupel.
         """
-        result = []
+
 
         cursor = self._cnx.cursor()
         command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, projektleiter, arbeitszeitkonto_id  FROM person WHERE google_user_id='{}'".format(google_user_id)
@@ -177,17 +140,17 @@ class PersonMapper (Mapper):
             person.set_google_user_id(google_user_id)
             person.set_projektleiter(projektleiter)
             person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-            result.append(person)
+
 
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None
+            person = None
 
         self._cnx.commit()
         cursor.close()
 
-        return result
+        return person
 
     def insert(self, person):
         """Einfügen eines Personen-Objekts in die Datenbank.

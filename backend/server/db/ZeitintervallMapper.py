@@ -47,7 +47,7 @@ class ZeitintervallMapper (Mapper):
             nicht vorhandenem DB-Tupel.
         """
 
-        result = []
+
 
         cursor = self._cnx.cursor()
         command = "SELECT id, letzte_aenderung, start, ende FROM zeitintervall WHERE id={}".format(id)
@@ -62,16 +62,16 @@ class ZeitintervallMapper (Mapper):
             zeitintervall.set_start(start)
             zeitintervall.set_ende(ende)
 
-            result.append(zeitintervall)
+
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None
+            zeitintervall = None
 
         self._cnx.commit()
         cursor.close()
 
-        return result
+        return zeitintervall
 
 
 
