@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 
-import {ListItem, Typography, IconButton, Grid, Tooltip, Divider, Accordion, AccordionSummary, AccordionDetails, Table, TableHead, TableBody, TableRow, TableCell} from '@mui/material';
+import {ListItem, Typography, IconButton, Grid, Tooltip, Divider, Accordion, AccordionSummary, AccordionDetails, Table, TableHead, TableBody, TableRow, TableCell, Button} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AddIcon from '@mui/icons-material/Add';
 
 // import ProjektLöschenDialog from '../dialogs/ProjektLöschenDialog';
 // import ProjektForm from '../dialogs/ProjektForm';
@@ -33,6 +34,25 @@ class ProjektUebersichtEintrag extends Component {
     }
 
 
+    /*
+    //Wird aufgerufen, wenn der Bearbeiten Button geklickt wird
+    bearbeitenButtonClicked = event => {
+        event.stopPropagation();
+        this.setState({
+            showProjektForm: true
+        });
+    }
+
+    //Wird aufgerufen, wenn der Delete Button geklickt wird
+    deleteButtonClicked =  event => {
+        event.stopPropagation();
+        this.setState({
+          showProjektDelete: true
+        });
+      }
+    */
+
+
     //Renders the component
     render() {
         const {projekt, aktivitaet} = this.props;
@@ -49,13 +69,32 @@ class ProjektUebersichtEintrag extends Component {
                                     backgroundColor: "#dedede",
                                 }}
                                 >
-                                <Typography>{projekt.bezeichnung}</Typography>
+                                <Typography><b>{projekt.bezeichnung}</b></Typography>
                             </AccordionSummary>
                             <AccordionDetails sx={{
                                     backgroundColor: "#eeeeee",
                                 }}>
-                                <Typography align='left'><u> Auftraggeber:</u> {projekt.auftraggeber} <br/><br/></Typography>
-                                <Typography align='left'><u> Projektleiter:</u> {/*projekt.projektleiter*/} <br/><br/></Typography>
+                                <Grid container spacing={2}>
+                                   <Grid item xs={3}>
+                                        <Button variant='outlined' startIcon={<EditIcon/>} onClick={this.bearbeitenButtonClicked}>
+                                            <Typography>Projekt bearbeiten</Typography>
+                                        </Button>
+                                    </Grid>
+                                    <br/>
+                                    <Grid item xs={3}>
+                                        <Button variant='outlined' startIcon={<DeleteIcon/>} onClick={this.bearbeitenButtonClicked}>
+                                            <Typography>Projekt löschen</Typography>
+                                        </Button>
+                                    </Grid>
+                                </Grid> 
+                                <br/>
+                                <Typography align='left'><u>Auftraggeber:</u> {projekt.auftraggeber} <br/></Typography>
+                                <Typography align='left'><u>Ersteller:</u> {/*projekt.ersteller*/} <br/><br/></Typography>
+                                <Typography align='left'>???? Personen die im Projekt mitarbeiten HIER anzeigen lassen ???? <br/><br/></Typography>
+                                <Grid item xs={3}>
+                                    <Button variant="contained" startIcon={<AddIcon/>}>Aktivität hinzufügen</Button>
+                                </Grid>
+                                <br/>
                                 <Table>
                                     <TableHead sx={{
                                         backgroundColor: '#dedede'

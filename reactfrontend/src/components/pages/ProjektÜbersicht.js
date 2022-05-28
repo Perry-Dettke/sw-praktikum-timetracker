@@ -15,7 +15,8 @@ import AddIcon from '@mui/icons-material/Add';
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import ProjektUebersichtEintrag from './ProjektUebersichtEintrag';
-import ProjektDialog from '../dialogs/ProjektDialog';
+//import ProjektDialog from '../dialogs/ProjektDialog';
+import ProjektAnlegen from '../dialogs/ProjektAnlegen';
 
 
 class Projekt_uebersicht extends Component {
@@ -27,7 +28,7 @@ class Projekt_uebersicht extends Component {
         this.state = {
             projekt: [],
             aktivitaet: [],
-            showProjektDialog: false,
+            showProjektAnlegen: false,
     };
     }
 
@@ -50,48 +51,18 @@ class Projekt_uebersicht extends Component {
             });
     }
 
-    //PersonDialog anzeigen
-    showProjektDialog = () => {
-        this.setState({ showProjektDialog: true});
-    };
-
-
-    // Add Button - Oeffnet den Person hinzufuegen Dialog
-    addProjektButtonClicked = event => {
-    event.stopPropagation();
-    this.setState({
-      showProjektDialog: true,
-    });
-  }
-
-  /*
-    //wird aufgerufen, wenn Dialog Fenster geschloßen wird
-    projektFormClosed = projekt => {
-        this.getProjekt();
-        if (projekt) {
-        const newProjektList = [...this.state.projekt, projekt];
+    // Projekt Anlegen Button geklickt - Oeffnet den Person hinzufuegen Dialog
+    projektAnlegenButtonClicked = event => {
+        event.stopPropagation();
         this.setState({
-            projekt: newProjektList,
-            filteredProjekt: [...newProjektList],
-            showProjektForm: false
+        showProjektAnlegen: true,
         });
-        } else {
-        this.setState({
-            showProjektForm: false
-        });
-        }
     }
-*/
 
-    
-
-    //ProjektDialog schließen
-    closeProjektDialog = () => {
-        this.setState({ 
-            showProjektDialog: false});
+    //PersonDialog schließen
+    closeProjektAnlegen = () => {
+        this.setState({ showProjektAnlegen: false});
     };
-
-
 
     componentDidMount() {
         this.getProjekt();
@@ -103,7 +74,7 @@ class Projekt_uebersicht extends Component {
     render() {
         const { expandedState } = this.props;
         
-        const{projekt, aktivitaet, showProjektDialog} = this.state;
+        const{projekt, aktivitaet, showProjektAnlegen, closeProjektAnlegen} = this.state;
         console.log(projekt)
 
         return (
@@ -116,7 +87,7 @@ class Projekt_uebersicht extends Component {
                                 width: 300,
                                 height: 50,
                                 alignItems: 'center',
-                                }}   variant="contained" color="primary" aria-label="add" onClick={this.addProjektButtonClicked}>
+                                }}   variant="contained" color="primary" aria-label="add" onClick={this.projektAnlegenButtonClicked}>
                                 <AddIcon />   
                                 neues Projekt anlegen
                         </Button>
@@ -131,7 +102,7 @@ class Projekt_uebersicht extends Component {
                         </List>
                     </Grid>
                 </Grid>
-                <ProjektDialog show={showProjektDialog} onclose={this.closeProjektDialog} />
+                <ProjektAnlegen show={showProjektAnlegen} onclose={this.closeProjektAnlegen} />
             </div>
         );
     }
