@@ -60,22 +60,23 @@ class Projekt_uebersicht extends Component {
     }
 
     //ProjektDialog schließen
-    closeProjektAnlegen = () => {
-        this.setState({ showProjektAnlegen: false});
-    };
+    projektAnlegenClosed = projekt => {
+        this.getProjekt();
 
-    projektAnlegenClosed = (projekt) => {
         if (projekt) {
-            this.setState({
-                projekt: projekt,
-                showProjektAnlegen: false
-            });
+          const newProjektList = [...this.state.projekt, projekt];
+          this.setState({
+            projekt: newProjektList,
+            aktivitaet: [...newProjektList],
+            showProjektAnlegen: false
+          });
         } else {
-            this.setState({
-                showProjektAnlegen: false
-            });
+          this.setState({
+            showProjektAnlegen: false
+          });
         }
-    }
+      }
+     
 
     componentDidMount() {
         this.getProjekt();
@@ -87,8 +88,9 @@ class Projekt_uebersicht extends Component {
     render() {
         const { expandedState } = this.props;
         
-        const{projekt, aktivitaet, showProjektAnlegen, closeProjektAnlegen} = this.state;
-        console.log(projekt)
+        const{projekt, aktivitaet, showProjektAnlegen} = this.state;
+        console.log(projekt);
+        console.log(this.projektAnlegenClosed);
 
         return (
             <div>
@@ -115,7 +117,7 @@ class Projekt_uebersicht extends Component {
                         </List>
                     </Grid>
                 </Grid>
-                <ProjektAnlegen show={showProjektAnlegen} onclose={this.projektAnlegenClosed} />
+                <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} />
             </div>
         );
     }

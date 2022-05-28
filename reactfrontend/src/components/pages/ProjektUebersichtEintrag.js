@@ -134,7 +134,7 @@ class ProjektUebersichtEintrag extends Component {
                         </Accordion>
                     </Grid>
                 </Grid>
-                <ProjektAnlegen show={showProjektAnlegen} onclose={this.projektAnlegenClosed} />
+                <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} />
             </div>
             : null
         );
