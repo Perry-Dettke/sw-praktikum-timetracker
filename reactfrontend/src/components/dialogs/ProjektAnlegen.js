@@ -37,6 +37,7 @@ class ProjektAnlegen extends Component {
     render() {
         const { show, projekt } = this.props
 
+        console.log(this.handleClose);
         let title = 'Neues Projekt';
 
         return (
