@@ -33,7 +33,7 @@ CREATE TABLE `aktivitaet` (
   `letzte_aenderung` datetime NOT NULL,
   `bezeichnung` varchar(100) NOT NULL,
   `kapazitaet` float NOT NULL,
-  `projekt_id` int NOT NULL,
+  `projekt_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `projekt_id` (`projekt_id`),
   CONSTRAINT `aktivitaet_fk_1` FOREIGN KEY (`projekt_id`) REFERENCES `projekt` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -60,9 +60,9 @@ DROP TABLE IF EXISTS `arbeitszeitkonto`;
 CREATE TABLE `arbeitszeitkonto` (
   `id` int NOT NULL AUTO_INCREMENT,
   `letzte_aenderung` datetime NOT NULL,
-  `arbeitsleistung` decimal(4,2) NOT NULL,
+  `arbeitsleistung` decimal(4,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,7 @@ CREATE TABLE `arbeitszeitkonto` (
 
 LOCK TABLES `arbeitszeitkonto` WRITE;
 /*!40000 ALTER TABLE `arbeitszeitkonto` DISABLE KEYS */;
-INSERT INTO `arbeitszeitkonto` VALUES (1,'2022-05-17 20:00:00',10.00),(2,'2022-05-17 20:00:00',20.00),(3,'2022-05-17 20:00:00',30.00),(4,'2022-05-17 20:00:00',40.00),(5,'2022-05-17 20:00:00',50.00);
+INSERT INTO `arbeitszeitkonto` VALUES (1,'2022-05-17 20:00:00',10.00),(2,'2022-05-17 20:00:00',20.00),(3,'2022-05-17 20:00:00',30.00),(4,'2022-05-17 20:00:00',40.00),(5,'2022-05-17 20:00:00',50.00),(6,'2022-05-24 14:38:51',0.00);
 /*!40000 ALTER TABLE `arbeitszeitkonto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,10 +86,8 @@ CREATE TABLE `buchung` (
   `id` int NOT NULL AUTO_INCREMENT,
   `letzte_aenderung` datetime NOT NULL,
   `erstellt_von` varchar(100) NOT NULL,
-  `arbeitszeitkonto_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `arbeitszeitkonto_id` (`arbeitszeitkonto_id`),
-  CONSTRAINT `buchung_fk_1` FOREIGN KEY (`arbeitszeitkonto_id`) REFERENCES `arbeitszeitkonto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  `arbeitszeitkonto_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -99,7 +97,7 @@ CREATE TABLE `buchung` (
 
 LOCK TABLES `buchung` WRITE;
 /*!40000 ALTER TABLE `buchung` DISABLE KEYS */;
-INSERT INTO `buchung` VALUES (1,'2022-05-17 20:00:00','Lisa Müller',1),(2,'2022-05-17 20:00:00','Max Mustermann',3),(3,'2022-05-17 20:00:00','Ralf Roller',5),(4,'2022-05-17 20:00:00','Sven Bayer',2),(5,'2022-05-17 20:00:00','Sarah Singer',4);
+INSERT INTO `buchung` VALUES (2,'2022-05-17 20:00:00','Max Mustermann',3),(3,'2022-05-17 20:00:00','Ralf Roller',5),(4,'2022-05-17 20:00:00','Sven Bayer',2),(5,'2022-05-17 20:00:00','Sarah Singer',4);
 /*!40000 ALTER TABLE `buchung` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -112,10 +110,10 @@ DROP TABLE IF EXISTS `ereignis`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ereignis` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `letzte_aenderung` datetime NOT NULL,
-  `erstellungs_zeitpunkt` datetime NOT NULL,
+  `letzte_aenderung` varchar(100) NOT NULL,
+  `erstellungs_zeitpunkt` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +122,7 @@ CREATE TABLE `ereignis` (
 
 LOCK TABLES `ereignis` WRITE;
 /*!40000 ALTER TABLE `ereignis` DISABLE KEYS */;
-INSERT INTO `ereignis` VALUES (1,'2022-05-11 11:33:33','9999-12-31 23:33:33'),(2,'2022-05-17 20:00:00','9999-12-31 23:33:33'),(3,'2022-05-17 20:00:00','9999-12-31 23:33:33'),(4,'2022-05-17 20:00:00','9999-12-31 23:33:33'),(5,'2022-05-17 20:00:00','9999-12-31 23:33:33');
+INSERT INTO `ereignis` VALUES (1,'2022-05-11 11:33:33','9999-12-31 23:33:33'),(2,'2022-05-17 20:00:00','9999-12-31 23:33:33'),(3,'2022-05-17 20:00:00','9999-12-31 23:33:33'),(4,'2022-05-17 20:00:00','9999-12-31 23:33:33'),(5,'2022-05-17 20:00:00','9999-12-31 23:33:33'),(6,'0','string'),(7,'0','string'),(8,'0','string'),(9,'0','string');
 /*!40000 ALTER TABLE `ereignis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,13 +140,10 @@ CREATE TABLE `person` (
   `nach_name` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `benutzer_name` varchar(45) NOT NULL,
-  `google_user_id` varchar(45) NOT NULL,
-  `projektleiter` int NOT NULL,
-  `arbeitszeitkonto_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `arbeitszeitkonto_id` (`arbeitszeitkonto_id`),
-  CONSTRAINT `person_fk_1` FOREIGN KEY (`arbeitszeitkonto_id`) REFERENCES `Arbeitszeitkonto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `google_user_id` varchar(45) DEFAULT NULL,
+  `arbeitszeitkonto_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +152,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (1,'2022-05-17 20:00:00','Lisa','Müller','lisa.müller@web.de','LisaMüller99','0',1,5),(2,'2022-05-17 20:00:00','Max','Mustermann','max.mustermann@web.de','Maxi','0',0,1),(3,'2022-05-17 20:00:00','Sven','Bayer','sven.bayer@web.de','Sven1893','0',1,4),(4,'2022-05-17 20:00:00','Lisa','Singer','lisa.singer@web.de','Lischen','0',0,2),(5,'2022-05-17 20:00:00','Ralf','Roller','ralf.roller@web.de','ralle44','ß',0,3);
+INSERT INTO `person` VALUES (2,'2022-05-17 20:00:00','Maxxx','Mustermann','max.mustermann@web.de','Maxi','0',1),(3,'2022-05-17 20:00:00','Sven','Bayer','sven.bayer@web.de','Sven1893','0',4),(4,'2022-05-17 20:00:00','Lisa','Singer','lisa.singer@web.de','Lischen','0',2),(5,'2022-05-17 20:00:00','Ralf','Roller','ralf.roller@web.de','ralle44','ß',3),(6,'2022-05-24 14:23:55','string','string','string','string','string',0);
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,6 +168,7 @@ CREATE TABLE `projekt` (
   `letzte_aenderung` datetime NOT NULL,
   `bezeichnung` varchar(45) NOT NULL,
   `auftraggeber` varchar(45) NOT NULL,
+  `projektersteller_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -183,7 +179,7 @@ CREATE TABLE `projekt` (
 
 LOCK TABLES `projekt` WRITE;
 /*!40000 ALTER TABLE `projekt` DISABLE KEYS */;
-INSERT INTO `projekt` VALUES (1,'2022-05-11 11:33:33','Software-Praktikum','Thies'),(2,'2022-05-11 12:33:33','Data Scince','Meth'),(3,'2022-05-17 20:00:00','Pneumatik','Mildenberger'),(4,'2022-05-17 20:00:00','Web-Technologien','Kunz'),(5,'2022-05-17 20:00:00','Datenbanken','Lehmamn');
+INSERT INTO `projekt` VALUES (1,'2022-05-11 11:33:33','Software-Praktikum','Thies',1),(2,'2022-05-11 12:33:33','Data Scince','Meth',1),(3,'2022-05-17 20:00:00','Pneumatik','Mildenberger',1),(4,'2022-05-17 20:00:00','Web-Technologien','Kunz',2),(5,'2022-05-17 20:00:00','Datenbanken','Lehmamn',2);
 /*!40000 ALTER TABLE `projekt` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,12 +194,7 @@ CREATE TABLE `projekt_person` (
   `id` int NOT NULL AUTO_INCREMENT,
   `person_id` int NOT NULL,
   `projekt_id` int NOT NULL,
-  `soll_stunden` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `person_id` (`person_id`),
-  KEY `projekt_id` (`projekt_id`),
-  CONSTRAINT `projekt_person_fk_1` FOREIGN KEY (`person_id`) REFERENCES `Person` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `projekt_person_fk_2` FOREIGN KEY (`projekt_id`) REFERENCES `Projekt` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -213,7 +204,7 @@ CREATE TABLE `projekt_person` (
 
 LOCK TABLES `projekt_person` WRITE;
 /*!40000 ALTER TABLE `projekt_person` DISABLE KEYS */;
-INSERT INTO `projekt_person` VALUES (1,1,2,100),(2,2,1,50),(3,3,4,20),(4,4,3,200),(5,5,5,80);
+INSERT INTO `projekt_person` VALUES (2,2,1),(3,3,4),(4,4,3),(5,5,5);
 /*!40000 ALTER TABLE `projekt_person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,4 +243,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-17 21:12:25
+-- Dump completed on 2022-05-28 14:57:23
