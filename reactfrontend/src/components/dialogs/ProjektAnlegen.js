@@ -14,6 +14,17 @@ class ProjektAnlegen extends Component {
     constructor(props) {
         super(props);
 
+        let pn = "", ag = "";
+        if (props.projekt) {
+            console.log(props.projekt)
+            pn = props.projekt.projektname;
+            ag = props.projekt.auftraggeber;
+        }
+        this.state = {
+            projektname : pn,
+            auftraggeber : ag,
+        };
+
         this.baseState = this.state;
     }
 
@@ -24,13 +35,19 @@ class ProjektAnlegen extends Component {
     }
 
     render() {
-        const { show } = this.props
+        const { show, projekt } = this.props
+
+        let title = 'Neues Projekt';
 
         return (
             show ?
                 <div>
-                    <Dialog open={show} onClose={this.handleClose} maxWidth='xl'>
-                        <DialogTitle id='form-dialog-title'>Neues Projekt</DialogTitle>
+                    <Dialog open={show}  onClose={this.handleClose} maxWidth='xs' fullWidth>
+                    <DialogTitle>{title}
+                        <IconButton  onClick={this.handleClose}>
+                            <CloseIcon />
+                        </IconButton>
+                    </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
                                 <TextField

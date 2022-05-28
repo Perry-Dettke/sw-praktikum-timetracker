@@ -64,6 +64,19 @@ class Projekt_uebersicht extends Component {
         this.setState({ showProjektAnlegen: false});
     };
 
+    projektAnlegenClosed = (projekt) => {
+        if (projekt) {
+            this.setState({
+                projekt: projekt,
+                showProjektAnlegen: false
+            });
+        } else {
+            this.setState({
+                showProjektAnlegen: false
+            });
+        }
+    }
+
     componentDidMount() {
         this.getProjekt();
         this.getAktivitaetbyProjektID();
@@ -102,7 +115,7 @@ class Projekt_uebersicht extends Component {
                         </List>
                     </Grid>
                 </Grid>
-                <ProjektAnlegen show={showProjektAnlegen} onclose={this.closeProjektAnlegen} />
+                <ProjektAnlegen show={showProjektAnlegen} onclose={this.projektAnlegenClosed} />
             </div>
         );
     }

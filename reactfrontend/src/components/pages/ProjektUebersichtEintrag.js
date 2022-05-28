@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
+import ProjektAnlegen from '../dialogs/ProjektAnlegen';
 
 // import ProjektLöschenDialog from '../dialogs/ProjektLöschenDialog';
 // import ProjektForm from '../dialogs/ProjektForm';
@@ -18,8 +19,7 @@ class ProjektUebersichtEintrag extends Component {
 
         //gebe einen leeren status
         this.state = {
-            projekt: props.projekt,
-            aktivitaet: props.aktivitaet,
+            showProjektAnlegen: false,
         };
     }
 
@@ -52,12 +52,27 @@ class ProjektUebersichtEintrag extends Component {
       }
     */
 
+      projektAnlegenClosed = (projekt) => {
+        if (projekt) {
+            this.setState({
+                projekt: projekt,
+                showProjektAnlegen: false
+            });
+        } else {
+            this.setState({
+                showProjektAnlegen: false
+            });
+        }
+    }
+
 
     //Renders the component
     render() {
         const {projekt, aktivitaet} = this.props;
+        const {showProjektAnlegen} = this.state;
 
         return (
+            projekt ?
             <div>
                 <Grid container spacing={4}  alignItems="center">
                     <Grid item xs={12} textAlign="center">
@@ -119,7 +134,9 @@ class ProjektUebersichtEintrag extends Component {
                         </Accordion>
                     </Grid>
                 </Grid>
+                <ProjektAnlegen show={showProjektAnlegen} onclose={this.projektAnlegenClosed} />
             </div>
+            : null
         );
     }
 }
