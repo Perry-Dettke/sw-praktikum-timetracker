@@ -1,7 +1,7 @@
 /**
  * Hier wird die komplette API als geschlossenes Modul exportiert
  */
- export {default as TimetrackerAPI} from './TimertrackerAPI';
+ export {default as TimetrackerAPI} from './TimetrackerAPI';
  export {default as AktivitaetBO} from './AktivitaetBO';
  export {default as ArbeitszeitkontoBO} from './ArbeitszeitkontoBO';
  export {default as BuchungBO} from './BuchungBO';
