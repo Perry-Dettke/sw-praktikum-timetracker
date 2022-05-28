@@ -75,8 +75,6 @@ person = api.inherit('Person', bo, {
                                 description='Benutzername einer Person'),
     'google_user_id': fields.String(attribute='_google_user_id',
                                 description='Gegebene ID von Google'),
-    'projektleiter': fields.Integer(attribute='_projektleiter',
-                                description='Gibt an ob die Person ein Projektleiter is oder nicht'),
     'arbeitszeitkonto_id': fields.Integer(attribute='_arbeitszeitkonto_id',
                                 description='ID des Arbeitszeitkonto einer Person'),
 
