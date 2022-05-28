@@ -32,7 +32,7 @@ class Projekt_uebersicht extends Component {
     };
     }
 
-    /** Fetches all PersonBOs from the backend */
+    /** Fetches all ProjektBOs from the backend */
     getProjekt = () => {
         var pro = TimetrackerAPI.getAPI();
             pro.getProjekt().then((projektBOs) => {
@@ -51,7 +51,7 @@ class Projekt_uebersicht extends Component {
             });
     }
 
-    // Projekt Anlegen Button geklickt - Oeffnet den Person hinzufuegen Dialog
+    // Projekt Anlegen Button geklickt - Oeffnet den Projekt anlegen Dialog
     projektAnlegenButtonClicked = event => {
         event.stopPropagation();
         this.setState({
@@ -59,7 +59,7 @@ class Projekt_uebersicht extends Component {
         });
     }
 
-    //PersonDialog schließen
+    //ProjektDialog schließen
     closeProjektAnlegen = () => {
         this.setState({ showProjektAnlegen: false});
     };
@@ -108,7 +108,7 @@ class Projekt_uebersicht extends Component {
                     <Grid item xs={12}>
                         <List >
                             {
-                                Object.values(projekt).map(projekt =>
+                                Object.values(projekt, aktivitaet).map(projekt =>
                                     <ProjektUebersichtEintrag key={Object.keys(projekt)[projekt.id]} projekt={projekt} aktivitaet={aktivitaet} show={this.props.show}
                                         getProjekt={this.getProjekt} getAktivitaetbyProjektID={this.getAktivitaetbyProjektID} />)
                             }
