@@ -13,38 +13,34 @@ class AktivitaetDialog extends Component {
 
     constructor(props) {
         super(props);
+
+        this.baseState = this.state;
     }
 
     // Dialog schließen
     handleClose = () => {
-        this.setState(this.initialState);
-        this.props.onClose();
+        this.setState(this.baseState);
+        this.props.onClose(null);
     }
 
     render() {
-        const { show } = this.props
+        const { show, projekt } = this.props
+
+        let title = 'Neue Aktivität';
 
         return (
             show ?
                 <div>
                     <Dialog open={show} onClose={this.handleClose} maxWidth='xl'>
-                        <DialogTitle id='form-dialog-title'>Neue Aktivität
+                        <DialogTitle id='form-dialog-title'>{title}
                             <IconButton onClick={this.handleClose}>
                                 <CloseIcon />
                             </IconButton>
                         </DialogTitle>
                         <DialogContent>
-                        <div>
-                            <TextField 
-                                label='Projekt:'
-                                variant="outlined"
-                                size="small"
-                                 // value={this.state.name}
-                                onChange={this.handleChange}
-                                autocomplete='off'              
-                                        
-                                ></TextField>
-                            </div>
+                        <DialogContentText>
+                            <b>{/*projekt.bezeichnung - wie geht das?*/}</b>
+                        </DialogContentText>
                             <div>
                             <TextField 
                                 label='Aktivität:'
@@ -58,32 +54,15 @@ class AktivitaetDialog extends Component {
                             </div>
                             <div>
                                 {/* Kapazität auswählen */}
-                                <FormControl fullWidth>
-                                    <InputLabel id="kapazitaet">Kapazität</InputLabel>
-                                    <Select
-                                    labelId="kapazitaet"
-                                    name="kapazitaet"
-                                    // value={this.state.projekt}
-                                    size="medium"
-                                    label="kapazitaet"
-                                    autoWidth
-                                    onChange={this.handleChange}
-                                    >
-                                    <MenuItem value={1}>0,5 Stunden</MenuItem>
-                                    <MenuItem value={2}>1,0 Stunde</MenuItem>
-                                    <MenuItem value={3}>1,5 Stunden</MenuItem>
-                                    <MenuItem value={1}>2,0 Stunden</MenuItem>
-                                    <MenuItem value={2}>2,5 Stunde</MenuItem>
-                                    <MenuItem value={3}>3,0 Stunden</MenuItem>
-                                    <MenuItem value={3}>3,5 Stunden</MenuItem>
-                                    <MenuItem value={1}>4,0 Stunden</MenuItem>
-                                    <MenuItem value={2}>4,5 Stunde</MenuItem>
-                                    <MenuItem value={3}>5,0 Stunden</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </div>
-                            <div>
-                            <TextField type='text' id='aktivitaet' label='Soll-Stunden:' />
+                                <TextField 
+                                label='Kapazität in Stunden:'
+                                variant="outlined"
+                                size="small"
+                                 // value={this.state.name}
+                                onChange={this.handleChange}
+                                autocomplete='off'              
+                                        
+                                ></TextField>
                             </div>
                         </DialogContent>
                         <DialogActions>

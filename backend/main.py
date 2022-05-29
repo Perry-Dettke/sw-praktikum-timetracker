@@ -181,7 +181,7 @@ class AktivitaetIDOperations(Resource):
         Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        akt = adm.get_aktivitaet_by_id(id)
+        akt = adm.get_aktivitaet_by_projekt_id(id)
 
         if akt is not None:
             return akt
