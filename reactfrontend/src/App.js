@@ -11,6 +11,7 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 import Personen_uebersicht from './components/pages/PersonenÜbersicht';
 import Buchung from './components/pages/xBuchungSeite';
 import Projekt_uebersicht from './components/pages/ProjektÜbersicht';
+import Auswertung from './components/pages/AuswertungSeite';
 
 
 class App extends React.Component {
@@ -44,6 +45,7 @@ class App extends React.Component {
                 <Route path={'/buchung'} element={<Buchung/>} />
                 <Route path={'/personen_uebersicht'} element={<Personen_uebersicht/>} />
                 <Route path={'/projekt_uebersicht'} element={<Projekt_uebersicht/>} />  
+                <Route path={'/auswertung'} element={<Auswertung/>} />
             </Routes> 
           </div>
         </div>

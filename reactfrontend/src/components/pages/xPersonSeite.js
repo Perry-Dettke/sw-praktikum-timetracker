@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {Button} from '@mui/material';
+import Button from '@mui/material/Button';
 //import Stack from '@mui/material/Stack';
 import PersonDialog from '../dialogs/PersonDialog';
 
@@ -38,7 +38,7 @@ class Person extends Component {
 
         return (
             <div>
-            <Button variant="contained" sx={{width:250}} onClick={this.showPersonDialog}> Neue Person Erstellen</Button>
+            <Button variant="contained" sx={{width:250}} onClick={this.showPersonDialog}>Neue Person Erstellen</Button>
             <TableContainer component={Paper}  sx={{ maxWidth: 1000 , margin:"auto", }}>
                 <Table sx={{ minWidth: 600 }} aria-label="simple table">
                     <TableHead>
