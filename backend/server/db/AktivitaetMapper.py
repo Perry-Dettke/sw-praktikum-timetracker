@@ -146,7 +146,7 @@ class AktivitaetMapper (Mapper):
         cursor.close()
 
     def delete(self, id):
-        """Löschen der Daten eines Aktivitaets-Objekts aus der Datenbank 
+        """Löschen der Daten eines Aktivitaet-Objekts aus der Datenbank 
     
         :param id
         """

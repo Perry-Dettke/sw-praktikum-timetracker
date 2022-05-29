@@ -9,6 +9,7 @@ class Buchung(bo.BusinessObjekt):
         super().__init__()
         self._erstellt_von = ''
         self._arbeitszeitkonto_id = 0
+        self._aktivitaet_id = 0
         
     def get_erstellt_von(self):
         # Ausgeben von erstellt_von
@@ -26,9 +27,17 @@ class Buchung(bo.BusinessObjekt):
         # Setzen der Arbeitszeitkonto ID
         self._arbeitszeitkonto_id = arbeitszeitkonto_id
 
+    def get_aktivitaet_id(self):
+        # Ausgeben der Aktivitaet ID
+        return self._aktivitaet_id
+    
+    def set_aktivitaet_id(self, aktivitaet_id):
+        # Setzen der Arbeitszeitkonto ID
+        self._aktivitaet_id = aktivitaet_id
+
     def __str__(self):
         #Erzeugen einer einfachen textuellen Darstellung der jeweiligen Instanz
-        return f'Buchung: {self.get_erstellt_von()},{self.get_arbeitszeitkonto_id()}'
+        return f'Buchung: {self.get_erstellt_von()},{self.get_arbeitszeitkonto_id(),},{self.get_aktivitaet_id(),}'
     
     @staticmethod
     def from_dict(dictionary=dict()):
@@ -36,4 +45,5 @@ class Buchung(bo.BusinessObjekt):
         obj = Buchung()
         obj.set_erstellt_von(dictionary["erstellt_von"])
         obj.set_arbeitszeitkonto_id(dictionary["arbeitszeitkonto_id"])
+        obj.set_aktivitaet_id(dictionary["aktivitaet_id"])
         return obj

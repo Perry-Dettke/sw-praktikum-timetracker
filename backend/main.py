@@ -62,6 +62,8 @@ buchung = api.inherit('Buchung', bo, {
                                 description='Person die die Buchung durchgeführt hat'),
     'arbeitskonto_id': fields.Integer(attribute='_arbeitskonto_id',
                                 description='ID des Arbeitskonto auf dem die Buchung durchgeführt wird'),
+    'aktivitaet_id': fields.Integer(attribute='_aktivitaet_id',
+                                description='ID der Aktivitaet auf dem die Buchung durchgeführt wird'),
 })
 
 person = api.inherit('Person', bo, {
