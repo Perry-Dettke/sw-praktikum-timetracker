@@ -41,7 +41,7 @@ class AktivitaetMapper (Mapper):
     def find_by_id(self, id):
         """Auslesen aller Aktivitäten anhand der ID."""
         
-        result = []
+
         cursor = self._cnx.cursor()
         command = "SELECT id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id FROM aktivitaet WHERE id={}".format(id)
         cursor.execute(command)
@@ -55,22 +55,22 @@ class AktivitaetMapper (Mapper):
             aktivitaet.set_bezeichnung(bezeichnung)
             aktivitaet.set_kapazitaet(kapazitaet)
             aktivitaet.set_projekt_id(projekt_id)
-            result.append(aktivitaet)
+
 
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None
+            aktivitaet = None
 
         self._cnx.commit()
         cursor.close()
 
-        return result
+        return aktivitaet
 
     def find_by_projekt_id(self, projekt_id):
         """Auslesen aller Aktivitäten anhand der Projekt ID."""
 
-        result = []
+
         cursor = self._cnx.cursor()
         command = "SELECT id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id FROM aktivitaet WHERE projekt_id={}".format(projekt_id)
         cursor.execute(command)
@@ -84,17 +84,17 @@ class AktivitaetMapper (Mapper):
             aktivitaet.set_bezeichnung(bezeichnung)
             aktivitaet.set_kapazitaet(kapazitaet)
             aktivitaet.set_projekt_id(projekt_id)
-            result.append(aktivitaet)
+
 
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None
+            aktivitaet = None
 
         self._cnx.commit()
         cursor.close()
 
-        return result
+        return aktivitaet
 
         
     def insert(self, aktivitaet):
@@ -118,7 +118,7 @@ class AktivitaetMapper (Mapper):
         command = "INSERT INTO aktivitaet (id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id) VALUES (%s,%s,%s,%s,%s)"
         data = (aktivitaet.get_id(),
                 aktivitaet.get_letzte_aenderung(),
-                aktivitaet.get_bezeichnug(),
+                aktivitaet.get_bezeichnung(),
                 aktivitaet.get_kapazitaet(),
                 aktivitaet.get_projekt_id())
         cursor.execute(command, data)
@@ -137,16 +137,17 @@ class AktivitaetMapper (Mapper):
 
         command = "UPDATE aktivitaet " + "SET letzte_aenderung=%s, bezeichnung=%s, kapazitaet=%s WHERE id=%s"
         data = (aktivitaet.get_letzte_aenderung(),
-                aktivitaet.get_bezeichnug(),
+                aktivitaet.get_bezeichnung(),
                 aktivitaet.get_kapazitaet(),
-                aktivitaet.get_id(),
-                aktivitaet.get_projekt_id)
+                aktivitaet.get_projekt_id(),
+                aktivitaet.get_id())
+
         cursor.execute(command, data)
         self._cnx.commit()
         cursor.close()
 
     def delete(self, id):
-        """Löschen der Daten eines Aktivitaets-Objekts aus der Datenbank 
+        """Löschen der Daten eines Aktivitaet-Objekts aus der Datenbank 
     
         :param id
         """

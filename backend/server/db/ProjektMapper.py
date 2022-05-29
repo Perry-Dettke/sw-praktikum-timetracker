@@ -23,12 +23,13 @@ class ProjektMapper (Mapper):
         cursor.execute("SELECT * from projekt")
         tuples = cursor.fetchall()
 
-        for (id, letzte_aenderung, bezeichnung, auftraggeber) in tuples:
+        for (id, letzte_aenderung, bezeichnung, auftraggeber, projektersteller_id) in tuples:
             projekt = Projekt()
             projekt.set_id(id)
             projekt.set_letzte_aenderung(letzte_aenderung)
             projekt.set_bezeichnung(bezeichnung)
             projekt.set_auftraggeber(auftraggeber)
+            projekt.set_projektersteller_id(projektersteller_id)
             result.append(projekt)
 
         self._cnx.commit()
@@ -46,17 +47,18 @@ class ProjektMapper (Mapper):
 
         result = None
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, bezeichnung, auftraggeber FROM projekt WHERE id ='{}'".format(id)
+        command = "SELECT id, letzte_aenderung, bezeichnung, auftraggeber, projektersteller_id FROM projekt WHERE id ='{}'".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, bezeichnung, auftraggeber) = tuples[0]
+            (id, letzte_aenderung, bezeichnung, auftraggeber, projektersteller_id) = tuples[0]
             projekt = Projekt()
             projekt.set_id(id)
             projekt.set_letzte_aenderung(letzte_aenderung)
             projekt.set_bezeichnung(bezeichnung)
             projekt.set_auftraggeber(auftraggeber)
+            projekt.set_projektersteller_id(projektersteller_id)
 
             result = projekt
         except IndexError:
@@ -70,35 +72,8 @@ class ProjektMapper (Mapper):
         cursor.close()
         return result
 
-    def find_by_auftraggeber(self, auftraggeber):
-        """Auslesen aller Projekte anhand des Auftraggebers.
 
-        :param auftraggeber Auftraggeber des Projekts.
-        :return Eine Sammlung mit Projekt-Objekten.
-        """
-        result = []
-        cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung FROM projekt WHERE auftraggeber LIKE '{}' ORDER BY auftraggeber".format(auftraggeber)
-        cursor.execute(command)
-        tuples = cursor.fetchall()
 
-        try:
-            (id, letzte_aenderung, auftraggeber) = tuples[0]
-            projekt = Projekt()
-            projekt.set_id(id)
-            projekt.set_letzte_aenderung(letzte_aenderung)
-
-            result.append(projekt)
-
-        except IndexError:
-            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
-            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None 
-
-        self._cnx.commit()
-        cursor.close()
-
-        return result
 
     def insert(self, projekt):
         """Einfügen eines Projekt-Objekts in die Datenbank.
@@ -110,7 +85,7 @@ class ProjektMapper (Mapper):
         :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
         """
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT MAX(id) AS maxid FROM Projekt ")
+        cursor.execute("SELECT MAX(id) AS maxid FROM projekt ")
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
@@ -123,13 +98,17 @@ class ProjektMapper (Mapper):
                 davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
                 projekt.set_id(1)
 
-        command = "INSERT INTO projekt (id, letzte_aenderung, auftraggeber) VALUES (%s,%s,%s,)"
+        command = "INSERT INTO projekt (id, letzte_aenderung, bezeichnung, auftraggeber, projektersteller_id ) VALUES (%s,%s,%s,%s,%s)"
         data = (
-            projekt.get_id(),
-            projekt.get_letzte_aenderung,
-            projekt.get_auftraggeber,)
-        cursor.execute(command, data)
 
+            projekt.get_id(),
+            projekt.get_letzte_aenderung(),
+            projekt.get_bezeichnung(),
+            projekt.get_auftraggeber(),
+            projekt.get_projektersteller_id(),
+        )
+
+        cursor.execute(command, data)
         self._cnx.commit()
         cursor.close()
 
@@ -142,9 +121,10 @@ class ProjektMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE projekt " + "SET auftraggeber=%s WHERE id=%s"
+        command = "UPDATE projekt " + "SET auftraggeber=%s, projektersteller_id=%s WHERE id=%s"
         data = (
             projekt.get_auftraggeber(),
+            projekt.get_projektersteller_id(),
             projekt.get_id())
         cursor.execute(command, data)
 
@@ -163,6 +143,9 @@ class ProjektMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
+
+
+
 
 
 """Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
