@@ -118,7 +118,7 @@ class AktivitaetMapper (Mapper):
         command = "INSERT INTO aktivitaet (id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id) VALUES (%s,%s,%s,%s,%s)"
         data = (aktivitaet.get_id(),
                 aktivitaet.get_letzte_aenderung(),
-                aktivitaet.get_bezeichnug(),
+                aktivitaet.get_bezeichnung(),
                 aktivitaet.get_kapazitaet(),
                 aktivitaet.get_projekt_id())
         cursor.execute(command, data)

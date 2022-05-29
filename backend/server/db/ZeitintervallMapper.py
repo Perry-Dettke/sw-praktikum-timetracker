@@ -89,14 +89,10 @@ class ZeitintervallMapper (Mapper):
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
-            if maxid[0] is not None:
-                """Wenn wir eine maximale ID festellen konnten, zählen wir diese
-                um 1 hoch und weisen diesen Wert als ID dem Zeitintervall-Objekt zu."""
-                zeitintervall.set_id(maxid[0] + 1)
-            else:
-                """Wenn wir KEINE maximale ID feststellen konnten, dann gehen wir
-                davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
+            if maxid[0] is None:
                 zeitintervall.set_id(1)
+            else:
+                zeitintervall.set_id(maxid[0]+1)
 
         command = "INSERT INTO zeitintervall (id, letzte_aenderung, start, ende) VALUES (%s,%s,%s,%s,)"
         data = (
