@@ -137,10 +137,11 @@ class AktivitaetMapper (Mapper):
 
         command = "UPDATE aktivitaet " + "SET letzte_aenderung=%s, bezeichnung=%s, kapazitaet=%s WHERE id=%s"
         data = (aktivitaet.get_letzte_aenderung(),
-                aktivitaet.get_bezeichnug(),
+                aktivitaet.get_bezeichnung(),
                 aktivitaet.get_kapazitaet(),
-                aktivitaet.get_id(),
-                aktivitaet.get_projekt_id)
+                aktivitaet.get_projekt_id(),
+                aktivitaet.get_id())
+
         cursor.execute(command, data)
         self._cnx.commit()
         cursor.close()
