@@ -92,9 +92,9 @@ projekt = api.inherit('Projekt', bo, {
 })
 
 zeitintervall = api.inherit('Zeitintervall', bo, {
-    'start': fields.String(attribute='_start',                              #String richtig?
+    'start': fields.Float(attribute='_start',                             
                             description='Start eines Zeitintervall'),
-    'ende': fields.String(attribute='_ende',                                #String richtig?
+    'ende': fields.Float(attribute='_ende',                                
                             description='Ende eines Zeitintervall'),
 })
 
