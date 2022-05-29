@@ -72,19 +72,19 @@ class AktivitaetMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id FROM aktivitaet WHERE projekt_id={}".format(projekt_id)
+        command = "SELECT * FROM aktivitaet WHERE projekt_id={}".format(projekt_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id) = tuples[0]
-            aktivitaet = Aktivitaet()
-            aktivitaet.set_id(id)
-            aktivitaet.set_letzte_aenderung(letzte_aenderung)
-            aktivitaet.set_bezeichnung(bezeichnung)
-            aktivitaet.set_kapazitaet(kapazitaet)
-            aktivitaet.set_projekt_id(projekt_id)
-            result.append(aktivitaet)
+            for (id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id) in tuples:
+                aktivitaet = Aktivitaet()
+                aktivitaet.set_id(id)
+                aktivitaet.set_letzte_aenderung(letzte_aenderung)
+                aktivitaet.set_bezeichnung(bezeichnung)
+                aktivitaet.set_kapazitaet(kapazitaet)
+                aktivitaet.set_projekt_id(projekt_id)
+                result.append(aktivitaet)
 
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
