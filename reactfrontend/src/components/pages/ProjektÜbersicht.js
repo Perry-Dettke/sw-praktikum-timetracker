@@ -27,31 +27,21 @@ class Projekt_uebersicht extends Component {
         //init empty state
         this.state = {
             projekt: [],
-            aktivitaet: [],
             showProjektAnlegen: false,
     };
     }
 
-    /** Fetches all PersonBOs from the backend */
+    /** Fetches all ProjektBOs from the backend */
     getProjekt = () => {
-        var pro = TimetrackerAPI.getAPI();
-            pro.getProjekt().then((projektBOs) => {
+        TimetrackerAPI.getAPI().getProjekt().then((projektBOs) => {
               this.setState({
                 projekt: projektBOs,
               });
             });
     }
-    
-    getAktivitaetbyProjektID = () => {
-        var akt = TimetrackerAPI.getAPI();
-            akt.getAktivitaetbyProjektID().then((aktivitaetBOs) => {
-                this.setState({
-                    aktivitaet: aktivitaetBOs,
-                });
-            });
-    }
+     
 
-    // Projekt Anlegen Button geklickt - Oeffnet den Person hinzufuegen Dialog
+    // Projekt Anlegen Button geklickt - Oeffnet den Projekt hinzufuegen Dialog
     projektAnlegenButtonClicked = event => {
         event.stopPropagation();
         this.setState({
@@ -66,7 +56,6 @@ class Projekt_uebersicht extends Component {
           const newProjektList = [...this.state.projekt, projekt];
           this.setState({
             projekt: newProjektList,
-            aktivitaet: [...newProjektList],
             showProjektAnlegen: false
           });
         } else {
@@ -79,7 +68,6 @@ class Projekt_uebersicht extends Component {
 
     componentDidMount() {
         this.getProjekt();
-        this.getAktivitaetbyProjektID();
     }
     
 
@@ -87,9 +75,7 @@ class Projekt_uebersicht extends Component {
     render() {
         const { expandedState } = this.props;
         
-        const{projekt, aktivitaet, showProjektAnlegen} = this.state;
-        console.log(projekt);
-        console.log(this.projektAnlegenClosed);
+        const{projekt, showProjektAnlegen} = this.state;
 
         return (
             <div>
@@ -110,8 +96,7 @@ class Projekt_uebersicht extends Component {
                         <List >
                             {
                                 Object.values(projekt).map(projekt =>
-                                    <ProjektUebersichtEintrag key={Object.keys(projekt)[projekt.id]} projekt={projekt} aktivitaet={aktivitaet} show={this.props.show}
-                                        getProjekt={this.getProjekt} getAktivitaetbyProjektID={this.getAktivitaetbyProjektID} />)
+                                    <ProjektUebersichtEintrag key={Object.keys(projekt)[projekt.id]} projekt={projekt} show={this.props.show} />)
                             }
                         </List>
                     </Grid>

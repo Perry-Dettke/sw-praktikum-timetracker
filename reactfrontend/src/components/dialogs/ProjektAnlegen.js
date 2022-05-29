@@ -14,17 +14,6 @@ class ProjektAnlegen extends Component {
     constructor(props) {
         super(props);
 
-        let pn = "", ag = "";
-        if (props.projekt) {
-            console.log(props.projekt)
-            pn = props.projekt.projektname;
-            ag = props.projekt.auftraggeber;
-        }
-        this.state = {
-            projektname : pn,
-            auftraggeber : ag,
-        };
-
         this.baseState = this.state;
     }
 
@@ -37,7 +26,6 @@ class ProjektAnlegen extends Component {
     render() {
         const { show, projekt } = this.props
 
-        console.log(this.handleClose);
         let title = 'Neues Projekt';
 
         return (
@@ -98,7 +86,7 @@ class ProjektAnlegen extends Component {
                                 autocomplete='off'
                             />
                             <TextField
-                                label="Kapazitaet in Stunden"
+                                label="Kapazität in Stunden"
                                 variant="outlined"
                                 name="name"
                                 size="small"
