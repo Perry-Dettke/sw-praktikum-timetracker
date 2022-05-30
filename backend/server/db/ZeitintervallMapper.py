@@ -47,7 +47,7 @@ class ZeitintervallMapper (Mapper):
             nicht vorhandenem DB-Tupel.
         """
 
-        result = []
+
 
         cursor = self._cnx.cursor()
         command = "SELECT id, letzte_aenderung, start, ende FROM zeitintervall WHERE id={}".format(id)
@@ -62,28 +62,22 @@ class ZeitintervallMapper (Mapper):
             zeitintervall.set_start(start)
             zeitintervall.set_ende(ende)
 
-            result.append(zeitintervall)
+
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None
+            zeitintervall = None
 
         self._cnx.commit()
         cursor.close()
 
-        return result
+        return zeitintervall
 
 
 
     def insert(self, zeitintervall):
-        """Einfügen eines Zeitintervall-Objekts in die Datenbank.
+        """Einfügen eines Zeitintervall-Objekts in die Datenbank."""
 
-        Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
-        berichtigt.
-
-        :param zeitintervall das zu speichernde Objekt
-        :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
-        """
         cursor = self._cnx.cursor()
         cursor.execute("SELECT MAX(id) AS maxid FROM zeitintervall ")
         tuples = cursor.fetchall()
@@ -91,21 +85,23 @@ class ZeitintervallMapper (Mapper):
         for (maxid) in tuples:
             if maxid[0] is not None:
                 """Wenn wir eine maximale ID festellen konnten, zählen wir diese
-                um 1 hoch und weisen diesen Wert als ID dem Zeitintervall-Objekt zu."""
+                um 1 hoch und weisen diesen Wert als ID dem zeitintervall-Objekt zu."""
                 zeitintervall.set_id(maxid[0] + 1)
             else:
                 """Wenn wir KEINE maximale ID feststellen konnten, dann gehen wir
                 davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
                 zeitintervall.set_id(1)
 
-        command = "INSERT INTO zeitintervall (id, letzte_aenderung, start, ende) VALUES (%s,%s,%s,%s,)"
+        command = "INSERT INTO zeitintervall (id, letzte_aenderung, start, ende ) VALUES (%s,%s,%s,%s)"
         data = (
-            zeitintervall.get_id(),
-            zeitintervall.get_letzte_aenderung,
-            zeitintervall.get_start,
-            zeitintervall.get_ende())
-        cursor.execute(command, data)
 
+            zeitintervall.get_id(),
+            zeitintervall.get_letzte_aenderung(),
+            zeitintervall.get_start(),
+            zeitintervall.get_ende(),
+        )
+
+        cursor.execute(command, data)
         self._cnx.commit()
         cursor.close()
 
