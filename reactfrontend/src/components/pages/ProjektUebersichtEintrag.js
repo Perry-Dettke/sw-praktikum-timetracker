@@ -72,10 +72,9 @@ class ProjektUebersichtEintrag extends Component {
    */
 
     //Wird aufgerufen, wenn der Delete Projekt Button geklickt wird
-    deleteProjektButtonClicked =  event => {
-        event.stopPropagation();
+    deleteProjektButtonClicked =  () => { 
         this.setState({
-          showProjektLöschenDialog: true
+          showProjektLöschenDialog: !this.state.showProjektLöschenDialog
         });
       }
  
@@ -185,6 +184,7 @@ class ProjektUebersichtEintrag extends Component {
                     </Grid>
                     <AktivitaetDialog show={showAktivitaetAnlegen} onClose={this.aktivitaetDialogClosed} />
                     <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} />
+                    <ProjektLöschenDialog show={showProjektLöschenDialog} onClose={this.deleteProjektButtonClicked} />
                 </div>
                 : null
         );

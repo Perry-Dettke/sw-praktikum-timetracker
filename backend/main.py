@@ -611,9 +611,8 @@ class ProjektIDOperations(Resource):
         Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        pro = adm.get_projekt_by_id(id)
-        if pro is not None:
-            adm.delete_projekt(pro)
+        if id is not None:
+            adm.delete_projekt(id)
             return '', 200
         else:
             '''Wenn unter id kein Projekt existiert.'''

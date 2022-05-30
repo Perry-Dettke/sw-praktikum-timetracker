@@ -47,10 +47,10 @@ class ProjektLöschenDialog extends Component {
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Abbrechen
-                  </Button>
-            <Button onClick={this.deleteProjekt} color="primary" autoFocus>
+            </Button>
+            <Button onClick={this.deleteProjekt} variant="contained" color="primary" autoFocus>
               Ja
-                  </Button>
+            </Button>
           </DialogActions>
         </Dialog>
       </div>

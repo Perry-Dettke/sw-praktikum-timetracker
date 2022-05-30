@@ -217,10 +217,10 @@ class TimetrackerAdministration (object):
         with ProjektMapper() as mapper:
             mapper.update(projekt)
 
-    def delete_projekt(self, projekt):
+    def delete_projekt(self, id):
         """Das gegebenene Projekt aus unserem System löschen."""
         with ProjektMapper() as mapper:
-            mapper.delete(projekt)
+            mapper.delete(id)
 
     """
     Zeitintervall-spezifische Methoden

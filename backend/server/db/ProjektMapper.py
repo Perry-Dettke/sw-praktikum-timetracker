@@ -151,14 +151,14 @@ class ProjektMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
-    def delete(self, projekt):
+    def delete(self, id):
         """Löschen der Daten eines Projekt-Objekts aus der Datenbank.
 
         :param projekt das aus der DB zu löschende "Objekt"
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM projekt WHERE id={}".format(projekt.get_id())
+        command = "DELETE FROM projekt WHERE id={}".format(id)
         cursor.execute(command)
 
         self._cnx.commit()
