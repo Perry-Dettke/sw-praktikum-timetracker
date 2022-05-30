@@ -162,7 +162,7 @@ class ProjektUebersichtEintrag extends Component {
                                     </Grid>
                                     <br />
                                     <Typography align='left'><u>Auftraggeber:</u> {projekt.auftraggeber} <br /></Typography>
-                                    <Typography align='left'><u>Ersteller:</u> {/*projekt.ersteller*/} <br /><br /></Typography>
+                                    <Typography align='left'><u>Ersteller:</u> {projekt.projektersteller_id} <br /><br /></Typography>
                                     <Typography align='left'>???? Personen die im Projekt mitarbeiten HIER anzeigen lassen ???? <br /><br /></Typography>
                                     <Grid item xs={3}>
                                         <Button variant="contained" color="primary" aria-label="add" onClick={this.aktivitaetDialogButtonClicked} startIcon={<AddIcon />}>
