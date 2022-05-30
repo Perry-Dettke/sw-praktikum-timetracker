@@ -62,6 +62,8 @@ buchung = api.inherit('Buchung', bo, {
                                 description='Person die die Buchung durchgeführt hat'),
     'arbeitskonto_id': fields.Integer(attribute='_arbeitskonto_id',
                                 description='ID des Arbeitskonto auf dem die Buchung durchgeführt wird'),
+    'aktivitaet_id': fields.Integer(attribute='_aktivitaet_id',
+                                description='ID der Aktivitaet auf dem die Buchung durchgeführt wird'),
 })
 
 person = api.inherit('Person', bo, {
@@ -75,8 +77,6 @@ person = api.inherit('Person', bo, {
                                 description='Benutzername einer Person'),
     'google_user_id': fields.String(attribute='_google_user_id',
                                 description='Gegebene ID von Google'),
-    'projektleiter': fields.Integer(attribute='_projektleiter',
-                                description='Gibt an ob die Person ein Projektleiter is oder nicht'),
     'arbeitszeitkonto_id': fields.Integer(attribute='_arbeitszeitkonto_id',
                                 description='ID des Arbeitszeitkonto einer Person'),
 
@@ -87,12 +87,14 @@ projekt = api.inherit('Projekt', bo, {
                                 description='Bezeichnung eines Projekts'),
     'auftraggeber': fields.String(attribute='_auftraggeber',
                                 description='Auftraggeber des Projekts'),
+    'projektersteller_id': fields.Integer(attribute='_projektersteller_id',
+                                description='Projektersteller ID des Projekts'),
 })
 
 zeitintervall = api.inherit('Zeitintervall', bo, {
-    'start': fields.String(attribute='_start',                              #String richtig?
+    'start': fields.Float(attribute='_start',                             
                             description='Start eines Zeitintervall'),
-    'ende': fields.String(attribute='_ende',                                #String richtig?
+    'ende': fields.Float(attribute='_ende',                                
                             description='Ende eines Zeitintervall'),
 })
 
