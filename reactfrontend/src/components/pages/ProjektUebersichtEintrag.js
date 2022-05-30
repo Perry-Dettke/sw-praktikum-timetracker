@@ -5,11 +5,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
+
 import ProjektAnlegen from '../dialogs/ProjektAnlegen';
 import AktivitaetDialog from '../dialogs/AktivitaetDialog';
 import TimetrackerAPI from '../../api/TimetrackerAPI';
-
-// import ProjektLöschenDialog from '../dialogs/ProjektLöschenDialog';
+import ProjektLöschenDialog from '../dialogs/ProjektLöschenDialog';
 // import ProjektForm from '../dialogs/ProjektForm';
 
 
@@ -24,6 +24,7 @@ class ProjektUebersichtEintrag extends Component {
             aktivitaetliste: null,
             showAktivitaetAnlegen: false,
             showProjektAnlegen: false,
+            showProjektLöschenDialog: false,
         };
     }
 
@@ -68,15 +69,16 @@ class ProjektUebersichtEintrag extends Component {
             showProjektForm: true
         });
     }
+   */
 
-    //Wird aufgerufen, wenn der Delete Button geklickt wird
-    deleteButtonClicked =  event => {
+    //Wird aufgerufen, wenn der Delete Projekt Button geklickt wird
+    deleteProjektButtonClicked =  event => {
         event.stopPropagation();
         this.setState({
-          showProjektDelete: true
+          showProjektLöschenDialog: true
         });
       }
-    */
+ 
 
     projektAnlegenClosed = (projekt) => {
         if (projekt) {
@@ -99,7 +101,7 @@ class ProjektUebersichtEintrag extends Component {
     //Renders the component
     render() {
         const { projekt } = this.props;
-        const { showAktivitaetAnlegen, showProjektAnlegen, aktivitaetliste } = this.state;
+        const { showAktivitaetAnlegen, showProjektAnlegen, aktivitaetliste, showProjektLöschenDialog} = this.state;
         console.log(aktivitaetliste);
 
         return (
@@ -111,7 +113,8 @@ class ProjektUebersichtEintrag extends Component {
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                     aria-controls="panel1a-content"
-                                    id="panel1a-header" sx={{
+                                    id="panel1a-header" 
+                                    sx={{
                                         backgroundColor: "#dedede",
                                     }}
                                 >
@@ -128,7 +131,7 @@ class ProjektUebersichtEintrag extends Component {
                                         </Grid>
                                         <br />
                                         <Grid item xs={3}>
-                                            <Button variant='outlined' startIcon={<DeleteIcon />} onClick={this.deleteButtonClicked}>
+                                            <Button variant='outlined' startIcon={<DeleteIcon />} onClick={this.deleteProjektButtonClicked}>
                                                 <Typography>Projekt löschen</Typography>
                                             </Button>
                                         </Grid>
