@@ -70,7 +70,7 @@ class AktivitaetMapper (Mapper):
     def find_by_projekt_id(self, projekt_id):
         """Auslesen aller Aktivitäten anhand der Projekt ID."""
 
-
+        result = []
         cursor = self._cnx.cursor()
         command = "SELECT * FROM aktivitaet WHERE projekt_id={}".format(projekt_id)
         cursor.execute(command)
@@ -94,7 +94,7 @@ class AktivitaetMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
-        return aktivitaet
+        return result
 
         
     def insert(self, aktivitaet):

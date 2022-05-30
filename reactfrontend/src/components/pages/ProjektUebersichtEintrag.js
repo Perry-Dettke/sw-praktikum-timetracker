@@ -8,6 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 import ProjektAnlegen from '../dialogs/ProjektAnlegen';
 import AktivitaetDialog from '../dialogs/AktivitaetDialog';
+import AktivitaetBearbeiten from '../dialogs/AktivitaetBearbeiten';
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import ProjektLöschenDialog from '../dialogs/ProjektLöschenDialog';
 // import ProjektForm from '../dialogs/ProjektForm';
@@ -22,9 +23,11 @@ class ProjektUebersichtEintrag extends Component {
         //gebe einen leeren status
         this.state = {
             aktivitaetliste: null,
-            showAktivitaetAnlegen: false,
+            showAktivitaetDialog: false,
+            showAktivitaetBearbeiten: false,
             showProjektAnlegen: false,
             showProjektLöschenDialog: false,
+            currentAktivitaet: null,
         };
     }
 
@@ -41,43 +44,65 @@ class ProjektUebersichtEintrag extends Component {
     aktivitaetDialogButtonClicked = event => {
         event.stopPropagation();
         this.setState({
-            showAktivitaetAnlegen: true,
+            showAktivitaetDialog: true,
         });
     }
 
     //AktivitaetDialog schließen
-    aktivitaetDialogClosed = (aktivitaetliste) => {
-        this.getAktivitaetbyProjektID();
-        if (aktivitaetliste) {
-          const newAktivitaetList = [...this.state.aktivitaetliste, aktivitaetliste];
-          this.setState({
-            aktivitaetliste: newAktivitaetList,
-            showAktivitaetAnlegen: false
-          });
+    aktivitaetDialogClosed = (aktivitaet) => {
+        if (aktivitaet) {
+            const newAktivitaetList = [...this.state.aktivitaetliste, aktivitaet];
+            this.setState({
+                aktivitaetliste: newAktivitaetList,
+                showAktivitaetDialog: false
+            });
         } else {
-          this.setState({
-            showAktivitaetAnlegen: false
-          });
+            this.setState({
+                showAktivitaetDialog: false
+            });
         }
-      }
+    }
 
-    /*
-    //Wird aufgerufen, wenn der Bearbeiten Button geklickt wird
-    bearbeitenButtonClicked = event => {
-        event.stopPropagation();
+
+    //Wird aufgerufen, wenn der Aktivität Bearbeiten Button geklickt wird
+    aktivitaetBearbeitenClicked = (aktivitaet) => {
+        console.log(aktivitaet);
         this.setState({
-            showProjektForm: true
+            currentAktivitaet: aktivitaet,
+        },
+        this.toggleAktivitaetBearbeiten
+        );
+    }
+
+    //
+    toggleAktivitaetBearbeiten = () => {
+        this.setState({
+            showAktivitaetBearbeiten: true,
         });
     }
-   */
+
+    //Aktivität Bearbeiten Dialog schließen
+    aktivitaetBearbeitenClosed = (aktivitaet) => {
+        if (aktivitaet) {
+            this.getAktivitaetbyProjektID();
+            this.setState({
+                showAktivitaetBearbeiten: false
+            });
+        } else {
+            this.setState({
+                showAktivitaetBearbeiten: false
+            });
+        }
+    }
+
 
     //Wird aufgerufen, wenn der Delete Projekt Button geklickt wird
-    deleteProjektButtonClicked =  () => { 
+    deleteProjektButtonClicked = () => {
         this.setState({
-          showProjektLöschenDialog: !this.state.showProjektLöschenDialog
+            showProjektLöschenDialog: !this.state.showProjektLöschenDialog
         });
-      }
- 
+    }
+
 
     projektAnlegenClosed = (projekt) => {
         if (projekt) {
@@ -100,8 +125,8 @@ class ProjektUebersichtEintrag extends Component {
     //Renders the component
     render() {
         const { projekt } = this.props;
-        const { showAktivitaetAnlegen, showProjektAnlegen, aktivitaetliste, showProjektLöschenDialog} = this.state;
-        console.log(aktivitaetliste);
+        const { showAktivitaetDialog, showAktivitaetBearbeiten, showProjektAnlegen, aktivitaetliste, showProjektLöschenDialog, currentAktivitaet } = this.state;
+        console.log(currentAktivitaet);
 
         return (
             aktivitaetliste ?
@@ -112,7 +137,7 @@ class ProjektUebersichtEintrag extends Component {
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                     aria-controls="panel1a-content"
-                                    id="panel1a-header" 
+                                    id="panel1a-header"
                                     sx={{
                                         backgroundColor: "#dedede",
                                     }}
@@ -151,28 +176,31 @@ class ProjektUebersichtEintrag extends Component {
                                             <TableRow>
                                                 <TableCell>Aktivität</TableCell>
                                                 <TableCell>Kapazität</TableCell>
+                                                <TableCell></TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
                                             {
                                                 aktivitaetliste.map(aktivitaet =>
-
-                                                    <TableRow>
-                                                        <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
-                                                        <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
-                                                        <TableCell>
-                                                            <Grid item>
-                                                                <Tooltip title='Bearbeiten' placement="bottom">
-                                                                    <IconButton variant='contained' onClick={this.bearbeitenButtonClicked}>
-                                                                        <EditIcon />
-                                                                    </IconButton>
-                                                                </Tooltip>
-                                                                <Tooltip title='Löschen' placement="bottom">
-                                                                    <IconButton variant="contained" onClick={this.deleteButtonClicked}><DeleteIcon /></IconButton>
-                                                                </Tooltip>
-                                                            </Grid>
-                                                        </TableCell>
-                                                    </TableRow>
+                                                    <div key={aktivitaet.getID()}>
+                                                        <TableRow>
+                                                            <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
+                                                            <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
+                                                            <TableCell>
+                                                                <Grid item>
+                                                                    <Tooltip title='Bearbeiten' placement="bottom">
+                                                                        <IconButton variant='contained' onClick={()=> this.aktivitaetBearbeitenClicked(aktivitaet)}>
+                                                                            <EditIcon />
+                                                                        </IconButton>
+                                                                    </Tooltip>
+                                                                    <Tooltip title='Löschen' placement="bottom">
+                                                                        <IconButton variant="contained" onClick={this.deleteButtonClicked}><DeleteIcon /></IconButton>
+                                                                    </Tooltip>
+                                                                </Grid>
+                                                            </TableCell>
+                                                            
+                                                        </TableRow>
+                                                    </div>
                                                 )}
                                         </TableBody>
                                     </Table>
@@ -182,9 +210,12 @@ class ProjektUebersichtEintrag extends Component {
                             </Accordion>
                         </Grid>
                     </Grid>
-                    <AktivitaetDialog show={showAktivitaetAnlegen} onClose={this.aktivitaetDialogClosed} />
+                    <AktivitaetDialog show={showAktivitaetDialog} projekt={projekt} onClose={this.aktivitaetDialogClosed} />
                     <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} />
                     <ProjektLöschenDialog show={showProjektLöschenDialog} onClose={this.deleteProjektButtonClicked} />
+                    {currentAktivitaet ?
+                    <AktivitaetBearbeiten show={showAktivitaetBearbeiten} projekt={projekt} aktivitaet={currentAktivitaet} onClose={this.aktivitaetBearbeitenClosed} />
+                    : null}
                 </div>
                 : null
         );
