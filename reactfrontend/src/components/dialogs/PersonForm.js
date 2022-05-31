@@ -35,6 +35,7 @@ class PersonForm extends Component {
 
     addPerson = () => {
         let newPerson = new PersonBO()
+        newPerson.setID(0)
         newPerson.setVor_name(this.state.vor_name)
         newPerson.setNach_name(this.state.nach_name)
         newPerson.setEmail(this.state.email)

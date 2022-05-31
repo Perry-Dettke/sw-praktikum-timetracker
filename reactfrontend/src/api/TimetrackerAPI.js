@@ -150,7 +150,9 @@ export default class TimetrackerAPI {
           })
         })
       }
-    
+
+
+
 
     addPerson(personBO) {
         // Person neu anlegen

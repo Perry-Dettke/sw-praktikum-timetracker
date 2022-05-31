@@ -27,6 +27,7 @@ class PersonListe extends Component {
       filteredPerson: [],
       showPersonForm: false,
       showPersonDelete: false,
+      // showPersonDialog: false,
       // person: [],
     };
   }
@@ -68,7 +69,27 @@ personFormClosed = person => {
   }
 }
 
+  //   // Person Dialog Button geklickt - Oeffnet den Person hinzufuegen Dialog
+  //   personDialogButtonClicked = event => {
+  //     event.stopPropagation();
+  //     this.setState({
+  //         showPersonDialog: true,
+  //     });
+  // }
 
+  //   //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
+  //   personDialogClosed = (person) => {
+  //     if (person) {
+  //         this.setState({
+  //             person: person,
+  //             showDialogForm: false
+  //         });
+  //     } else {
+  //         this.setState({
+  //             showDialogForm: false
+  //         });
+  //     }
+  // }
 
 
 
@@ -121,7 +142,7 @@ personFormClosed = person => {
     /** Renders the component */
     render() {
 
-        const { person, filteredPerson, showPersonForm, showPersonDelete } = this.state;
+        const { person, showPersonDialog, showPersonForm, showPersonDelete } = this.state;
         console.log("Personen Liste", person)
         if (person) {
           console.log(person.getVor_name())
@@ -177,6 +198,7 @@ personFormClosed = person => {
                 </Paper>
 
                 <PersonForm show={showPersonForm}  onClose={this.personFormClosed} />
+                {/* <PersonDialog show={showPersonDialog}  onClose={this.personDialogClosed} /> */}
                 <PersonLöschenDialog show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPerson= {this.getPerson}/>    
 
             </div>
