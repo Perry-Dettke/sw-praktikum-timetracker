@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { Component } from 'react';
-import {Paper, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Grid, IconButton} from '@mui/material';
+import {Paper, Box, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Grid, IconButton} from '@mui/material';
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import EditIcon from '@mui/icons-material/Edit';
 import PersonForm from '../dialogs/PersonForm';
+
+
 
  class Home extends Component {
 
@@ -68,7 +70,7 @@ componentDidMount() {
                 flexWrap: 'wrap',
                 '& > :not(style)': {
                     m: 2,
-                    width: 600,
+                    width: 1200,
                     height: 300,
                     alignItems: 'center',
                     },
@@ -96,36 +98,15 @@ componentDidMount() {
                         <strong>Benutzername:</strong> {person.getBenutzer_name()}
                         </p>
 
+                        <br/>
+                        <p> 
+                            <Button variant="contained">Logout</Button>
+                            <Button variant="contained">Profil löschen</Button>
+                        </p>
                     </div>
                 </Paper>
-                <Paper elevation={3} >
-                    <div>
-                        <h1>
-                            Meine Projekte
-                        </h1>
-                        <TableContainer component={Paper}  sx={{ maxWidth: 800 , margin:"auto"}}>
-                            <Table sx={{ minWidth: 180 }} aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Projektbezeichnung</TableCell>
-                                        <TableCell align="left">Projektleiter</TableCell>
-                                        <TableCell align="left">Auftraggeber</TableCell>
-                                        <TableCell align="left">Soll</TableCell>
-                                        <TableCell align="left">Ist</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell align="left">Test</TableCell>
-                                        <TableCell align="left">Daten</TableCell>
-                                        <TableCell align="left">Daten</TableCell>
-                                        <TableCell align="left">Daten</TableCell>
-                                        <TableCell align="left">Daten</TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </div>
+                <Paper>
+
                 </Paper>
                 </Box>
 

@@ -28,25 +28,10 @@ class TimetrackerAdministration (object):
         with AktivitaetMapper() as mapper:
             return mapper.insert(aktivitaet)
 
-    def get_aktivitaet_by_id(self, id):
-        """Die Aktivitaet mit der gegebenen ID auslesen."""
-        with AktivitaetMapper() as mapper:
-            return mapper.find_by_id(id)
-
     def get_aktivitaet_by_projekt_id(self, projekt_id):
         """Die Aktivitaet mit der gegebenen Projekt ID auslesen."""
         with AktivitaetMapper() as mapper:
             return mapper.find_by_projekt_id(projekt_id)
-
-    def get_aktivitaet_by_kapazitaet(self, kapazitaet):
-        """Die Aktivitaet mit der gegebenen kapazitaet auslesen."""
-        with AktivitaetMapper() as mapper:
-            return mapper.find_by_kapazitaet(kapazitaet)            # muss noch im Mapper geschrieben werden falls benötigt wird
-
-    def get_all_aktivitaet(self):
-        """Alle Aktivitaeten auslesen."""
-        with AktivitaetMapper() as mapper:
-            return mapper.find_all()
 
     def save_aktivitaet(self, aktivitaet):
         """Die gegebenen Aktivitaet speichern."""
@@ -232,10 +217,10 @@ class TimetrackerAdministration (object):
         with ProjektMapper() as mapper:
             mapper.update(projekt)
 
-    def delete_projekt(self, projekt):
+    def delete_projekt(self, id):
         """Das gegebenene Projekt aus unserem System löschen."""
         with ProjektMapper() as mapper:
-            mapper.delete(projekt)
+            mapper.delete(id)
 
     """
     Zeitintervall-spezifische Methoden
