@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Header from './components/layout/Header';
-import Home from './components/HomeSeite';
+import Home from './components/pages/HomeSeite';
 import PersonListe from './components/pages/PersonListe';
 import ProjektListe from './components/pages/ProjektListe';
 import BuchungListe from './components/pages/BuchungListe';

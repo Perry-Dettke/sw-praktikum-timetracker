@@ -1,54 +1,66 @@
 import * as React from 'react';
 import { Component } from 'react';
-import {Paper, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
-import TimetrackerAPI from "../api/TimetrackerAPI";
-
+import {Paper, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Grid, IconButton} from '@mui/material';
+import TimetrackerAPI from "../../api/TimetrackerAPI";
+import EditIcon from '@mui/icons-material/Edit';
+import PersonForm from '../dialogs/PersonForm';
 
  class Home extends Component {
 
-  /*  constructor(props) {
+    constructor(props) {
         super(props);
     
         this.state = {
-          person: null
-        
-        };
-    }
-    componentDidMount() {
-        this.getPerson();
+          person: null,
+          showPersonForm: false
+        }
     }
 
+    getPersonbyID = () => {
+        var api = TimetrackerAPI.getAPI();
+            api.getPersonbyID(2).then((personBO) => {
+                this.setState({
+                person: personBO,
+              });
+            });
+          }
 
-    getPerson = () => {
-        TimetrackerAPI.getAPI().getPerson(this.state.getPerson()).then((person) =>
-            this.setState({
+//Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
+    bearbeitenButtonClicked = event => {
+        event.stopPropagation();
+        this.setState({
+            showPersonForm: true
+        });
+    }
+
+    //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
+    personFormClosed = (person) => {
+      if (person) {
+          this.setState({
               person: person,
-            })
-          ).catch((e) =>
-            this.setState({
-              person: null,
-            })
-          );
-      };
+              showPersonForm: false
+          });
+      } else {
+          this.setState({
+              showPersonForm: false
+          });
+      }
+  }
 
-*/
 
 
 componentDidMount() {
-  this.getEreignis(); //name frei wählbar (sollte Sinn ergeben)
+  this.getPersonbyID(); //name frei wählbar (sollte Sinn ergeben)
 }
 
-
-
-
-
-getEreignis =  () => {     // gleicher name wie in componentdidmount
-    TimetrackerAPI.getAPI().getEreignis().then((response) => 
-    console.log(response))
-}
 
     render(){
+
+        const { person, showPersonForm } = this.state;
+
+          
         return(
+            person ?
             <div>
                 <Box
                 sx={{
@@ -64,19 +76,26 @@ getEreignis =  () => {     // gleicher name wie in componentdidmount
                 >
                 <Paper elevation={3}>
                     <div>
-                        <h1>
-                            Mein Profil
-                        </h1>
+
+                        <h2>
+                           Mein Profil                
+                        </h2>
+                        <Tooltip title='Bearbeiten' placement="right">
+                      <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}>
+                          <EditIcon />
+                      </IconButton>
+                      </Tooltip>
                         <p>
-                            Name:
+                            <strong>Name:</strong> {person.getVor_name()} {person.getNach_name()}
                         </p>
                       
                         <p>
-                            Email:
+                        <strong>Email:</strong> {person.getEmail()}
                         </p>
                         <p>
-                            Rolle:
+                        <strong>Benutzername:</strong> {person.getBenutzer_name()}
                         </p>
+
                     </div>
                 </Paper>
                 <Paper elevation={3} >
@@ -109,7 +128,10 @@ getEreignis =  () => {     // gleicher name wie in componentdidmount
                     </div>
                 </Paper>
                 </Box>
+
+                <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
             </div> 
+            : null
         );
     }
 }

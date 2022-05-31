@@ -68,28 +68,9 @@ personFormClosed = person => {
   }
 }
 
-    // PersonenList() {
-    //     var api = TimetrackerAPI.getAPI();
-    //     api.getPerson().then((personBOs) => {
-    //       this.setState({
-    //         person: personBOs,
-    //       });
-    //     });
-    //   }
 
 
 
-    //PersonDialog anzeigen
-    showPersonDialog = () => {
-        this.setState({ showPerson: true}, () => {
-            // console.log(this.state.showPerson);
-        });
-    };
-
-    //PersonDialog schließen
-    closePersonDialog = () => {
-        this.setState({ showPerson: false});
-    };
 
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
@@ -195,7 +176,7 @@ personFormClosed = person => {
                     </List>
                 </Paper>
 
-                <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
+                <PersonForm show={showPersonForm}  onClose={this.personFormClosed} />
                 <PersonLöschenDialog show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPerson= {this.getPerson}/>    
 
             </div>
