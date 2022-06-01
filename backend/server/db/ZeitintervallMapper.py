@@ -114,8 +114,9 @@ class ZeitintervallMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE zeitintervall " + "SET start=%s, ende=%s WHERE id=%s"
+        command = "UPDATE zeitintervall " + "SET letzte_aenderung=%s, start=%s, ende=%s WHERE id=%s"
         data = (
+            zeitintervall.get_letzte_aenderung(),
             zeitintervall.get_start(),
             zeitintervall.get_ende(),
             zeitintervall.get_id())

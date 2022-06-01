@@ -39,7 +39,7 @@ export default class TimetrackerAPI {
 
   #addAktivitaetURL = () => `${this.#ServerBaseURL}/aktivitaet`;
   #getAktivitaetURL = () => `${this.#ServerBaseURL}/aktivitaet`;
-  #getAktivitaetbyProjektIDURL = (projekt_id) => `${this.#ServerBaseURL}/aktivitaet/${projekt_id}`;
+  #getAktivitaetbyProjektIDURL = (projekt_id) => `${this.#ServerBaseURL}/akitvitaetbyprojektid/${projekt_id}`;
   #updateAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
   #deleteAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
 
