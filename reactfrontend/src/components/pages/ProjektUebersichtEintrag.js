@@ -68,7 +68,7 @@ class ProjektUebersichtEintrag extends Component {
                                     </TableHead>
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell><Typography> GET ID {/*aktivitaet.id*/}</Typography></TableCell>
+                                            <TableCell><Typography> GET ID {aktivitaet.id}</Typography></TableCell>
                                             <TableCell><Typography> GET Bezeichnung {/*aktivitaet.bezeichnung*/}</Typography></TableCell>
                                             <TableCell><Typography> GET Kapazität {/*aktivitaet.kapazitaet*/}</Typography></TableCell>
                                         </TableRow>
