@@ -52,11 +52,11 @@ export default class PersonBO extends BusinessObject {
     getGoogle_user_id() {
     return this.google_user_id;
     }
-    // Arbeitskonto_id setzen
+    // Arbeitszeitkonto_id setzen
     setArbeitszeitkonto_id(arbeitszeitkonto_id) {
     this.arbeitszeitkonto_id = arbeitszeitkonto_id;
     }
-    // Arbeitskonto_id auslesen
+    // Arbeitszeitkonto_id auslesen
     getArbeitszeitkonto_id() {
     return this.arbeitszeitkonto_id;
     }
