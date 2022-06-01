@@ -15,11 +15,11 @@ import AddIcon from '@mui/icons-material/Add';
 
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
-import ProjektUebersichtEintrag from './ProjektUebersichtEintrag';
+import AuswertungSeiteEintrag from './AuswertungSeiteEintrag';
 import ProjektDialog from '../dialogs/ProjektDialog';
 
 
-class Auswertung extends Component {
+class AuswertungSeite extends Component {
     
     constructor(props) {
         super(props);
@@ -117,7 +117,7 @@ class Auswertung extends Component {
                         <List >
                             {
                                 Object.values(projekt).map(projekt =>
-                                    <ProjektUebersichtEintrag key={Object.keys(projekt)[projekt.id]} projekt={projekt} aktivitaet={aktivitaet} show={this.props.show}
+                                    <AuswertungSeiteEintrag key={Object.keys(projekt)[projekt.id]} projekt={projekt} aktivitaet={aktivitaet} show={this.props.show}
                                         getProjekt={this.getProjekt} getAktivitaetbyProjektID={this.getAktivitaetbyProjektID} />)
                             }
                         </List>
@@ -131,4 +131,4 @@ class Auswertung extends Component {
 
 
 
-export default Auswertung;
+export default AuswertungSeite;
