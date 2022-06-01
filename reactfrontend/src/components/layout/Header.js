@@ -41,12 +41,14 @@ class Header extends Component {
         </Typography>
           <Tabs indicatorColor='primary' textColor='primary' centered value={this.state.tabindex} onChange={this.handleTabChange} >
             <Tab label='Home' component={RouterLink} to={`/home`} />
-            <Tab label='Projekt' component={RouterLink} to={`/projekt`} />          
+            <Tab label='Projekt Übersicht' component={RouterLink} to={`/projekt_uebersicht`} />     
             <Tab label='Buchung' component={RouterLink} to={`/buchung`} />
-            <Tab label='Person' component={RouterLink} to={`/person`} />
-            <Tab label='Projekt Übersicht' component={RouterLink} to={`/projekt_uebersicht`} />
-            <Tab label='Personen Übersicht' component={RouterLink} to={`/personen_uebersicht`} />
             <Tab label='Auswertung' component={RouterLink} to={`/auswertung`} />
+            {/*
+            <Tab label='Person' component={RouterLink} to={`/person`} />
+            <Tab label='Projekt' component={RouterLink} to={`/projekt`} />   
+            <Tab label='Personen Übersicht' component={RouterLink} to={`/personen_uebersicht`} />
+            */}  
           </Tabs>
       </Paper>
     )

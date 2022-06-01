@@ -15,7 +15,8 @@ import AddIcon from '@mui/icons-material/Add';
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import ProjektUebersichtEintrag from './ProjektUebersichtEintrag';
-import ProjektDialog from '../dialogs/ProjektDialog';
+//import ProjektDialog from '../dialogs/ProjektDialog';
+import ProjektAnlegen from '../dialogs/ProjektAnlegen';
 
 
 class Projekt_uebersicht extends Component {
@@ -26,76 +27,49 @@ class Projekt_uebersicht extends Component {
         //init empty state
         this.state = {
             projekt: [],
-            aktivitaet: [],
-            showProjektDialog: false,
+            showProjektAnlegen: false,
     };
     }
 
-    /** Fetches all PersonBOs from the backend */
+    /** Fetches all ProjektBOs from the backend */
     getProjekt = () => {
-        var pro = TimetrackerAPI.getAPI();
-            pro.getProjekt().then((projektBOs) => {
+        TimetrackerAPI.getAPI().getProjekt().then((projektBOs) => {
               this.setState({
                 projekt: projektBOs,
               });
             });
     }
-    
-    getAktivitaetbyProjektID = () => {
-        var akt = TimetrackerAPI.getAPI();
-            akt.getAktivitaetbyProjektID().then((aktivitaetBOs) => {
-                this.setState({
-                    aktivitaet: aktivitaetBOs,
-                });
-            });
-    }
+     
 
-    //PersonDialog anzeigen
-    showProjektDialog = () => {
-        this.setState({ showProjektDialog: true});
-    };
+    // Projekt Anlegen Button geklickt - Oeffnet den Projekt anlegen Dialog
 
-
-    // Add Button - Oeffnet den Person hinzufuegen Dialog
-    addProjektButtonClicked = event => {
-    event.stopPropagation();
-    this.setState({
-      showProjektDialog: true,
-    });
-  }
-
-  /*
-    //wird aufgerufen, wenn Dialog Fenster geschloßen wird
-    projektFormClosed = projekt => {
-        this.getProjekt();
-        if (projekt) {
-        const newProjektList = [...this.state.projekt, projekt];
+    projektAnlegenButtonClicked = event => {
+        event.stopPropagation();
         this.setState({
-            projekt: newProjektList,
-            filteredProjekt: [...newProjektList],
-            showProjektForm: false
+        showProjektAnlegen: true,
         });
-        } else {
-        this.setState({
-            showProjektForm: false
-        });
-        }
     }
-*/
-
-    
 
     //ProjektDialog schließen
-    closeProjektDialog = () => {
-        this.setState({ 
-            showProjektDialog: false});
-    };
+    projektAnlegenClosed = projekt => {
+        this.getProjekt();
 
-
+        if (projekt) {
+          const newProjektList = [...this.state.projekt, projekt];
+          this.setState({
+            projekt: newProjektList,
+            showProjektAnlegen: false
+          });
+        } else {
+          this.setState({
+            showProjektAnlegen: false
+          });
+        }
+      }
+     
 
     componentDidMount() {
         this.getProjekt();
-        this.getAktivitaetbyProjektID();
     }
     
 
@@ -103,8 +77,7 @@ class Projekt_uebersicht extends Component {
     render() {
         const { expandedState } = this.props;
         
-        const{projekt, aktivitaet, showProjektDialog} = this.state;
-        console.log(projekt)
+        const{projekt, showProjektAnlegen} = this.state;
 
         return (
             <div>
@@ -116,7 +89,7 @@ class Projekt_uebersicht extends Component {
                                 width: 300,
                                 height: 50,
                                 alignItems: 'center',
-                                }}   variant="contained" color="primary" aria-label="add" onClick={this.addProjektButtonClicked}>
+                                }}   variant="contained" color="primary" aria-label="add" onClick={this.projektAnlegenButtonClicked}>
                                 <AddIcon />   
                                 neues Projekt anlegen
                         </Button>
@@ -125,13 +98,12 @@ class Projekt_uebersicht extends Component {
                         <List >
                             {
                                 Object.values(projekt).map(projekt =>
-                                    <ProjektUebersichtEintrag key={Object.keys(projekt)[projekt.id]} projekt={projekt} aktivitaet={aktivitaet} show={this.props.show}
-                                        getProjekt={this.getProjekt} getAktivitaetbyProjektID={this.getAktivitaetbyProjektID} />)
+                                    <ProjektUebersichtEintrag key={Object.keys(projekt)[projekt.id]} projekt={projekt} show={this.props.show} />)
                             }
                         </List>
                     </Grid>
                 </Grid>
-                <ProjektDialog show={showProjektDialog} onclose={this.closeProjektDialog} />
+                <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} />
             </div>
         );
     }

@@ -1,11 +1,16 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import {ListItem, Typography, IconButton, Grid, Tooltip, Divider, Accordion, AccordionSummary, AccordionDetails, Table, TableHead, TableBody, TableRow, TableCell} from '@mui/material';
+import { ListItem, Typography, IconButton, Grid, Tooltip, Divider, Accordion, AccordionSummary, AccordionDetails, Table, TableHead, TableBody, TableRow, TableCell, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AddIcon from '@mui/icons-material/Add';
 
-// import ProjektLöschenDialog from '../dialogs/ProjektLöschenDialog';
+import ProjektAnlegen from '../dialogs/ProjektAnlegen';
+import AktivitaetDialog from '../dialogs/AktivitaetDialog';
+import AktivitaetBearbeiten from '../dialogs/AktivitaetBearbeiten';
+import TimetrackerAPI from '../../api/TimetrackerAPI';
+import ProjektLöschenDialog from '../dialogs/ProjektLöschenDialog';
 // import ProjektForm from '../dialogs/ProjektForm';
 
 
@@ -17,70 +22,202 @@ class ProjektUebersichtEintrag extends Component {
 
         //gebe einen leeren status
         this.state = {
-            projekt: props.projekt,
-            aktivitaet: props.aktivitaet,
+            aktivitaetliste: null,
+            showAktivitaetDialog: false,
+            showAktivitaetBearbeiten: false,
+            showProjektAnlegen: false,
+            showProjektLöschenDialog: false,
+            currentAktivitaet: null,
         };
     }
 
-    //Gibt Projekt zurück
-    getProjekt = () => {
-        this.props.getProjekt();
-    }
-    
     //Gibt Aktivitaet pro Projekt zurück
     getAktivitaetbyProjektID = () => {
-        this.props.getAktivitaetbyProjektID();
+        TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.props.projekt.getID()).then((aktivitaetBOs) => {
+            this.setState({
+                aktivitaetliste: aktivitaetBOs,
+            });
+        });
+    }
+
+    // Aktivitaet Dialog Button geklickt - Oeffnet den Aktivitaet hinzufuegen Dialog
+    aktivitaetDialogButtonClicked = event => {
+        event.stopPropagation();
+        this.setState({
+            showAktivitaetDialog: true,
+        });
+    }
+
+    //AktivitaetDialog schließen
+    aktivitaetDialogClosed = (aktivitaet) => {
+        if (aktivitaet) {
+            const newAktivitaetList = [...this.state.aktivitaetliste, aktivitaet];
+            this.setState({
+                aktivitaetliste: newAktivitaetList,
+                showAktivitaetDialog: false
+            });
+        } else {
+            this.setState({
+                showAktivitaetDialog: false
+            });
+        }
+    }
+
+
+    //Wird aufgerufen, wenn der Aktivität Bearbeiten Button geklickt wird
+    aktivitaetBearbeitenClicked = (aktivitaet) => {
+        console.log(aktivitaet);
+        this.setState({
+            currentAktivitaet: aktivitaet,
+        },
+        this.toggleAktivitaetBearbeiten
+        );
+    }
+
+    //
+    toggleAktivitaetBearbeiten = () => {
+        this.setState({
+            showAktivitaetBearbeiten: true,
+        });
+    }
+
+    //Aktivität Bearbeiten Dialog schließen
+    aktivitaetBearbeitenClosed = (aktivitaet) => {
+        if (aktivitaet) {
+            this.getAktivitaetbyProjektID();
+            this.setState({
+                showAktivitaetBearbeiten: false
+            });
+        } else {
+            this.setState({
+                showAktivitaetBearbeiten: false
+            });
+        }
+    }
+
+
+    //Wird aufgerufen, wenn der Delete Projekt Button geklickt wird
+    deleteProjektButtonClicked = () => {
+        this.setState({
+            showProjektLöschenDialog: !this.state.showProjektLöschenDialog
+        });
+    }
+
+
+    projektAnlegenClosed = (projekt) => {
+        if (projekt) {
+            this.setState({
+                projekt: projekt,
+                showProjektAnlegen: false
+            });
+        } else {
+            this.setState({
+                showProjektAnlegen: false
+            });
+        }
+    }
+
+    componentDidMount() {
+        this.getAktivitaetbyProjektID();
     }
 
 
     //Renders the component
     render() {
-        const {projekt, aktivitaet} = this.props;
+        const { projekt } = this.props;
+        const { showAktivitaetDialog, showAktivitaetBearbeiten, showProjektAnlegen, aktivitaetliste, showProjektLöschenDialog, currentAktivitaet } = this.state;
+        console.log(currentAktivitaet);
 
         return (
-            <div>
-                <Grid container spacing={4}  alignItems="center">
-                    <Grid item xs={12} textAlign="center">
-                        <Accordion>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header" sx={{
-                                    backgroundColor: "#dedede",
-                                }}
+            aktivitaetliste ?
+                <div>
+                    <Grid container spacing={4} alignItems="center">
+                        <Grid item xs={12} textAlign="center">
+                            <Accordion>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                    aria-controls="panel1a-content"
+                                    id="panel1a-header"
+                                    sx={{
+                                        backgroundColor: "#dedede",
+                                    }}
                                 >
-                                <Typography>{projekt.bezeichnung}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails sx={{
+                                    <Typography><b>{projekt.bezeichnung}</b></Typography>
+                                </AccordionSummary>
+                                <AccordionDetails sx={{
                                     backgroundColor: "#eeeeee",
                                 }}>
-                                <Typography align='left'><u> Auftraggeber:</u> {projekt.auftraggeber} <br/><br/></Typography>
-                                <Typography align='left'><u> Projektleiter:</u> {/*projekt.projektleiter*/} <br/><br/></Typography>
-                                <Table>
-                                    <TableHead sx={{
-                                        backgroundColor: '#dedede'
-                                    }}>
-                                        <TableRow>
-                                            <TableCell>Aktivität ID</TableCell>
-                                            <TableCell>Aktivität</TableCell>
-                                            <TableCell>Kapazität</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell><Typography> GET ID {aktivitaet.id}</Typography></TableCell>
-                                            <TableCell><Typography> GET Bezeichnung {/*aktivitaet.bezeichnung*/}</Typography></TableCell>
-                                            <TableCell><Typography> GET Kapazität {/*aktivitaet.kapazitaet*/}</Typography></TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
-                                
-                                
-                            </AccordionDetails>
-                        </Accordion>
+                                    <Grid container spacing={2}>
+                                        <Grid item xs={3}>
+                                            <Button variant='outlined' startIcon={<EditIcon />} onClick={this.bearbeitenButtonClicked}>
+                                                <Typography>Projekt bearbeiten</Typography>
+                                            </Button>
+                                        </Grid>
+                                        <br />
+                                        <Grid item xs={3}>
+                                            <Button variant='outlined' startIcon={<DeleteIcon />} onClick={this.deleteProjektButtonClicked}>
+                                                <Typography>Projekt löschen</Typography>
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                    <br />
+                                    <Typography align='left'><u>Auftraggeber:</u> {projekt.auftraggeber} <br /></Typography>
+                                    <Typography align='left'><u>Ersteller:</u> {projekt.projektersteller_id} <br /><br /></Typography>
+                                    <Typography align='left'>???? Personen die im Projekt mitarbeiten HIER anzeigen lassen ???? <br /><br /></Typography>
+                                    <Grid item xs={3}>
+                                        <Button variant="contained" color="primary" aria-label="add" onClick={this.aktivitaetDialogButtonClicked} startIcon={<AddIcon />}>
+                                            Aktivität hinzufügen</Button>
+                                    </Grid>
+                                    <br />
+                                    <Table>
+                                        <TableHead sx={{
+                                            backgroundColor: '#dedede'
+                                        }}>
+                                            <TableRow>
+                                                <TableCell>Aktivität</TableCell>
+                                                <TableCell>Kapazität</TableCell>
+                                                <TableCell></TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {
+                                                aktivitaetliste.map(aktivitaet =>
+                                                    <div key={aktivitaet.getID()}>
+                                                        <TableRow>
+                                                            <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
+                                                            <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
+                                                            <TableCell>
+                                                                <Grid item>
+                                                                    <Tooltip title='Bearbeiten' placement="bottom">
+                                                                        <IconButton variant='contained' onClick={()=> this.aktivitaetBearbeitenClicked(aktivitaet)}>
+                                                                            <EditIcon />
+                                                                        </IconButton>
+                                                                    </Tooltip>
+                                                                    <Tooltip title='Löschen' placement="bottom">
+                                                                        <IconButton variant="contained" onClick={this.deleteButtonClicked}><DeleteIcon /></IconButton>
+                                                                    </Tooltip>
+                                                                </Grid>
+                                                            </TableCell>
+                                                            
+                                                        </TableRow>
+                                                    </div>
+                                                )}
+                                        </TableBody>
+                                    </Table>
+
+
+                                </AccordionDetails>
+                            </Accordion>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </div>
+                    <AktivitaetDialog show={showAktivitaetDialog} projekt={projekt} onClose={this.aktivitaetDialogClosed} />
+                    <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} />
+                    <ProjektLöschenDialog show={showProjektLöschenDialog} onClose={this.deleteProjektButtonClicked} />
+                    {currentAktivitaet ?
+                    <AktivitaetBearbeiten show={showAktivitaetBearbeiten} projekt={projekt} aktivitaet={currentAktivitaet} onClose={this.aktivitaetBearbeitenClosed} />
+                    : null}
+                </div>
+                : null
         );
     }
 }

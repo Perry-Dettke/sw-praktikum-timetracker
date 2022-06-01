@@ -10,27 +10,32 @@ import AktivitaetBO from '../../api/AktivitaetBO';
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 
 
-class AktivitaetDialog extends Component {
+class AktivitaetBearbeiten extends Component {
 
     constructor(props) {
         super(props);
         
-        //gebe einen leeren status
+        let bz = "", kap = "";
+        if (props.aktivitaet) {
+            console.log(props.aktivitaet)
+            bz = props.aktivitaet.getBezeichnung();
+            kap = props.aktivitaet.getKapazitaet();
+        }
         this.state = {
-        bezeichnung: null,
-        kapazitaet: null,
+            bezeichnung : bz,
+            kapazitaet : kap,
         };
+
+        this.baseState = this.state;
     }
 
-    //Aktivität hinzufügen
-    addAktivitaet = () => {
-        let newAktivitaet = new AktivitaetBO()
-        newAktivitaet.setID(0)
-        newAktivitaet.setBezeichnung(this.state.bezeichnung)
-        newAktivitaet.setKapazitaet(this.state.kapazitaet)
-        newAktivitaet.setProjektID(this.props.projekt.getID())
-        TimetrackerAPI.getAPI().addAktivitaet(newAktivitaet).then(aktivitaet => {
-            this.props.onClose(aktivitaet); 
+    //Aktivität bearbeiten
+    updateAktivitaet = () => {
+        let aktivitaet = this.props.aktivitaet;
+        aktivitaet.setBezeichnung(this.state.bezeichnung)
+        aktivitaet.setKapazitaet(this.state.kapazitaet)
+        TimetrackerAPI.getAPI().updateAktivitaet(aktivitaet).then(aktivitaet => {
+            this.props.onClose(aktivitaet);
         })
     }
 
@@ -59,7 +64,7 @@ class AktivitaetDialog extends Component {
         const { show, projekt } = this.props
         const {bezeichnung, kapazitaet} = this.state
 
-        let title = 'Neue Aktivität';
+        let title = 'Aktivität bearbeiten';
 
         return (
             show ?
@@ -115,4 +120,4 @@ class AktivitaetDialog extends Component {
 }
 
 
-export default AktivitaetDialog;
+export default AktivitaetBearbeiten;
