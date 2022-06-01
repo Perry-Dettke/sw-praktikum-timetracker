@@ -7,9 +7,10 @@ import { Component } from 'react';
 //import TableHead from '@mui/material/TableHead';
 //import TableRow from '@mui/material/TableRow';
 //import Paper from '@mui/material/Paper';
-//import List from '@mui/material/List';
+import List from '@mui/material/List';
+import { Grid } from '@mui/material';
 
-import { Button, TextField, InputAdornment, IconButton, Grid, Typography, Paper, List, Fab, Tooltip, Divider } from '@mui/material';
+//import { Button, TextField, InputAdornment, IconButton, Grid, Typography, Paper, List, Fab, Tooltip, Divider } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 
@@ -25,6 +26,7 @@ class Auswertung extends Component {
 
         //init empty state
         this.state = {
+            currentUser: props.currentUser,
             projekt: [],
             aktivitaet: [],
             showProjektDialog: false,
