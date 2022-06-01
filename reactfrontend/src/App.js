@@ -43,9 +43,9 @@ class App extends React.Component {
                 <Route path={'/projekt_uebersicht'} element={<Projekt_uebersicht/>} />
                 <Route path={'/buchung'} element={<Buchung/>} />  
                 <Route path={'/auswertung'} element={<Auswertung/>} />
-                {/*<Route path={'/projekt'} element={<ProjektListe/>} />
+                {/* <Route path={'/projekt'} element={<ProjektListe/>} /> */}
                 <Route path={'/person'} element={<PersonListe/>} /> 
-                <Route path={'/personen_uebersicht'} element={<Personen_uebersicht/>} /> */}            
+                {/* <Route path={'/personen_uebersicht'} element={<Personen_uebersicht/>} />            */}
             </Routes> 
           </div>
         </div>

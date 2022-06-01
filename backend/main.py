@@ -53,15 +53,15 @@ aktivitaet = api.inherit('Aktivitaet', bo, {
 })
 
 arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {
-    'arbeitsleistung': fields.String(attribute='_arbeitsleistung',
+    'arbeitsleistung': fields.Float(attribute='_arbeitsleistung',
                                 description='Arbeitsleistung im Arbeitszeitkonto'),
 })
 
 buchung = api.inherit('Buchung', bo, {
     'erstellt_von': fields.String(attribute='_erstellt_von',
                                 description='Person die die Buchung durchgeführt hat'),
-    'arbeitskonto_id': fields.Integer(attribute='_arbeitskonto_id',
-                                description='ID des Arbeitskonto auf dem die Buchung durchgeführt wird'),
+    'arbeitszeitkonto_id': fields.Integer(attribute='_arbeitszeitkonto_id',
+                                description='ID des Arbeitszeitkonto auf dem die Buchung durchgeführt wird'),
     'aktivitaet_id': fields.Integer(attribute='_aktivitaet_id',
                                 description='ID der Aktivitaet auf dem die Buchung durchgeführt wird'),
 })
@@ -577,11 +577,11 @@ class ProjektOperations(Resource):
         pro = adm.get_all_projekt()
         return pro
 
-    @timetracker.marshal_list_with(projekt, code=200)
-    @timetracker.expect(projekt)
+    @timetracker.marshal_list_with(person, code=200)
+    @timetracker.expect(person)
     #@secured
     def post(self):
-        """Anlegen eines neuen Projekt-Objekts.
+        """Anlegen eines neuen Person-Objekts.
         **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
         So ist zum Beispiel die Vergabe der ID nicht Aufgabe des Clients.
         Selbst wenn der Client eine ID in dem Proposal vergeben sollte, so
@@ -589,18 +589,19 @@ class ProjektOperations(Resource):
         zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
         """
         adm = TimetrackerAdministration()
-        proposal = Projekt.from_dict(api.payload)
+        proposal = Person.from_dict(api.payload)
 
         """RATSCHLAG: Prüfen Sie stets die Referenzen auf valide Werte, bevor Sie diese verwenden!"""
         if proposal is not None:
             """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
             wird auch dem Client zurückgegeben. 
             """
-            pro = adm.create_projekt(proposal)
-            return pro, 200
+            a = adm.create_person(proposal)
+            return a, 200
         else:
             '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
             return '', 500
+
 
 
 @timetracker.route('/projekt/<int:id>')
