@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react'
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Paper, Typography, Tabs, Tab } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ class Header extends Component {
 
   /** Handles onChange events of the Tabs component */
   handleTabChange = (e, newIndex) => {
-    // console.log(newValue)
+
     this.setState({
       tabindex: newIndex
     })
@@ -28,8 +28,11 @@ class Header extends Component {
 
   /** Renders the component */
   render() {
+    const{ user } = this.props;
+
     return (
       <Paper variant='outlined' >
+        <ProfileDropdown user = {user} />
         <Typography variant='h3' component='h1' align='center' color='#323748' fontFamily='Verdana'>
           TIME
         </Typography>
@@ -39,26 +42,31 @@ class Header extends Component {
         <Typography variant='h4' component='h2' align='center' >
           Zeiterfassungssystem
         </Typography>
+        {
+          user ?
           <Tabs indicatorColor='primary' textColor='primary' centered value={this.state.tabindex} onChange={this.handleTabChange} >
             <Tab label='Home' component={RouterLink} to={`/home`} />
             <Tab label='Projekt Übersicht' component={RouterLink} to={`/projekt_uebersicht`} />     
             <Tab label='Buchung' component={RouterLink} to={`/buchung`} />
             <Tab label='Auswertung' component={RouterLink} to={`/auswertung`} />
-            
+
+            {/*
             <Tab label='Person' component={RouterLink} to={`/person`} />
-            {/* <Tab label='Projekt' component={RouterLink} to={`/projekt`} />   
-            <Tab label='Personen Übersicht' component={RouterLink} to={`/personen_uebersicht`} /> */}
-            
+            <Tab label='Projekt' component={RouterLink} to={`/projekt`} />   
+            <Tab label='Personen Übersicht' component={RouterLink} to={`/personen_uebersicht`} />
+            */}  
           </Tabs>
+          : null
+        }
       </Paper>
     )
   }
 }
 
-/** PropTypes 
+/** PropTypes */
 Header.propTypes = {
-  The logged in firesbase user
+  /**The logged in firesbase user*/
   user: PropTypes.object,
 }
-*/
+
 export default Header;
