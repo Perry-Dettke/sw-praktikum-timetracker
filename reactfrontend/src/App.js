@@ -11,7 +11,7 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 //import Personen_uebersicht from './components/pages/PersonenÜbersicht';
 import Buchung from './components/pages/xBuchungSeite';
 import Projekt_uebersicht from './components/pages/ProjektÜbersicht';
-import Auswertung from './components/pages/AuswertungSeite';
+import Auswertung from './components/pages/AuswertungListe';
 
 
 class App extends React.Component {

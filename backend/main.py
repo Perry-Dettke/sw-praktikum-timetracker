@@ -155,9 +155,8 @@ class AktivitaetIDOperations(Resource):
         Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        akt = adm.get_aktivitaet_by_id(id)
-        if akt is not None:
-            adm.delete_aktivitaet(akt)
+        if id is not None:
+            adm.delete_aktivitaet(id)
             return '', 200
         else:
             '''Wenn unter id keine Aktivitaet existiert.'''
@@ -247,9 +246,8 @@ class ArbeitszeitkontoIDOperations(Resource):
         Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        azt = adm.get_arbeitszeitkonto_by_id(id)
-        if azt is not None:
-            adm.delete_arbeitszeitkonto(azt)
+        if id is not None:
+            adm.delete_arbeitszeitkonto(id)
             return '', 200
         else:
             '''Wenn unter id kein Arbeitszeitkonto existiert.'''
@@ -335,9 +333,8 @@ class BuchungIDOperations(Resource):
         Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        bu = adm.get_buchung_by_id(id)
-        if bu is not None:
-            adm.delete_buchung(bu)
+        if id is not None:
+            adm.delete_buchung(id)
             return '', 200
         else:
             '''Wenn unter id kein Buchung existiert.'''
@@ -423,9 +420,8 @@ class EreignisIDOperations(Resource):
         Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        er = adm.get_ereignis_by_id(id)
-        if er is not None:
-            adm.delete_ereignis(er)
+        if id is not None:
+            adm.delete_ereignis(id)
             return '', 200
         else:
             '''Wenn unter id kein Ereignis existiert.'''
@@ -510,9 +506,8 @@ class PersonIDOperations(Resource):
         Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        per = adm.get_person_by_id(id)
-        if per is not None:
-            adm.delete_person(per)
+        if id is not None:
+            adm.delete_person(id)
             return '', 200
         else:
             '''Wenn unter id kein Person existiert.'''
@@ -708,9 +703,8 @@ class ZeitintervallIDOperations(Resource):
         Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        zi = adm.get_zeitintervall_by_id(id)
-        if zi is not None:
-            adm.delete_zeitintervall(zi)
+        if id is not None:
+            adm.delete_zeitintervall(id)
             return '', 200
         else:
             '''Wenn unter id kein Zeitintervall existiert.'''
