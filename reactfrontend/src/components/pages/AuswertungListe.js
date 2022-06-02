@@ -14,7 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
-import ProjektUebersichtEintrag from './ProjektUebersichtEintrag';
+import AuswertungListenEintrag from './AuswertungListenEintrag';
 import ProjektDialog from '../dialogs/ProjektDialog';
 
 
@@ -114,14 +114,13 @@ class Auswertung extends Component {
                     <Grid item xs={12}>
                         <List >
                             {
-                                Object.values(projekt).map(projekt =>
-                                    <ProjektUebersichtEintrag key={Object.keys(projekt)[projekt.id]} projekt={projekt} aktivitaet={aktivitaet} show={this.props.show}
+                                projekt.map(projekt =>
+                                    <AuswertungListenEintrag key={(projekt)[projekt.id]} projekt={projekt} aktivitaet={aktivitaet} show={this.props.show}
                                         getProjekt={this.getProjekt} getAktivitaetbyProjektID={this.getAktivitaetbyProjektID} />)
                             }
                         </List>
                     </Grid>
                 </Grid>
-                <ProjektDialog show={showProjektDialog} onclose={this.closeProjektDialog} />
             </div>
         );
     }

@@ -70,7 +70,7 @@ class ProjektUebersichtEintrag extends Component {
         this.setState({
             currentAktivitaet: aktivitaet,
         },
-        this.toggleAktivitaetBearbeiten
+            this.toggleAktivitaetBearbeiten
         );
     }
 
@@ -182,25 +182,23 @@ class ProjektUebersichtEintrag extends Component {
                                         <TableBody>
                                             {
                                                 aktivitaetliste.map(aktivitaet =>
-                                                    <div key={aktivitaet.getID()}>
-                                                        <TableRow>
-                                                            <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
-                                                            <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
-                                                            <TableCell>
-                                                                <Grid item>
-                                                                    <Tooltip title='Bearbeiten' placement="bottom">
-                                                                        <IconButton variant='contained' onClick={()=> this.aktivitaetBearbeitenClicked(aktivitaet)}>
-                                                                            <EditIcon />
-                                                                        </IconButton>
-                                                                    </Tooltip>
-                                                                    <Tooltip title='Löschen' placement="bottom">
-                                                                        <IconButton variant="contained" onClick={this.deleteButtonClicked}><DeleteIcon /></IconButton>
-                                                                    </Tooltip>
-                                                                </Grid>
-                                                            </TableCell>
-                                                            
-                                                        </TableRow>
-                                                    </div>
+                                                    <TableRow key={aktivitaet.getID()}>
+                                                        <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
+                                                        <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
+                                                        <TableCell>
+                                                            <Grid item>
+                                                                <Tooltip title='Bearbeiten' placement="bottom">
+                                                                    <IconButton variant='contained' onClick={() => this.aktivitaetBearbeitenClicked(aktivitaet)}>
+                                                                        <EditIcon />
+                                                                    </IconButton>
+                                                                </Tooltip>
+                                                                <Tooltip title='Löschen' placement="bottom">
+                                                                    <IconButton variant="contained" onClick={this.deleteButtonClicked}><DeleteIcon /></IconButton>
+                                                                </Tooltip>
+                                                            </Grid>
+                                                        </TableCell>
+
+                                                    </TableRow>
                                                 )}
                                         </TableBody>
                                     </Table>
@@ -214,8 +212,8 @@ class ProjektUebersichtEintrag extends Component {
                     <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} />
                     <ProjektLöschenDialog show={showProjektLöschenDialog} onClose={this.deleteProjektButtonClicked} />
                     {currentAktivitaet ?
-                    <AktivitaetBearbeiten show={showAktivitaetBearbeiten} projekt={projekt} aktivitaet={currentAktivitaet} onClose={this.aktivitaetBearbeitenClosed} />
-                    : null}
+                        <AktivitaetBearbeiten show={showAktivitaetBearbeiten} projekt={projekt} aktivitaet={currentAktivitaet} onClose={this.aktivitaetBearbeitenClosed} />
+                        : null}
                 </div>
                 : null
         );

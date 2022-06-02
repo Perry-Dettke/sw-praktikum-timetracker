@@ -72,7 +72,10 @@ class TimetrackerAdministration (object):
         with ArbeitszeitkontoMapper() as mapper:
             mapper.delete(arbeitszeitkonto)
 
-
+    def get_arbeitszeitkonto_by_person_id(self, person_id):
+        """Die Arbeitszeitkonten mit der gegebenen Personen ID auslesen."""
+        with ArbeitszeitkontoMapper() as mapper:
+            return mapper.find_by_person_id(person_id)
 
     """
     Buchung-spezifische Methoden
@@ -87,10 +90,6 @@ class TimetrackerAdministration (object):
         with BuchungMapper() as mapper:
             return mapper.find_by_id(id)
 
-    def get_buchung_by_erstellt_von(self, erstellt_von):       
-        """Die Buchung mit der gegebenen Person, die die Buchung erstellt hat auslesen."""
-        with BuchungMapper() as mapper:
-            return mapper.find_by_erstellt_von(erstellt_von)                #muss noch im Mapper geschrieben werden
 
     def get_all_buchung(self):
         """Alle Buchungen auslesen."""

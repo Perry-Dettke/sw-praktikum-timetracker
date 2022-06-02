@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import{Typography, IconButton, Grid, Tooltip, ListItem, Divider} from '@mui/material';
+import{Typography, IconButton, Grid, Tooltip, ListItem, Divider, Table, TableHead, TableBody, TableRow, TableCell, Paper} from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -74,42 +74,48 @@ class BuchungListenEintrag extends Component {
 
         return (
             <div>
-                <ListItem>
-                    <Grid container alignItems="center" spacing={2}>
-                        <Grid item xs={2}>
-                            <Typography>{buchung.letzte_aenderung}</Typography>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Typography>{buchung.erstellt_von}</Typography>
-                        </Grid>
-                        {/* <Grid item xs={3}>
-                            <Typography>{buchung.Zeit oder sowas}</Typography>
-                        </Grid> */}
-
-
-                        <Grid item>
-                    <Tooltip title='Bearbeiten' placement="bottom">
-                      <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}>
-                          <EditIcon />
-                      </IconButton>
-                    </Tooltip>
+                <Grid container alignItems="center" spacing={2}>
+                    <Grid item xs={12}>
+                        <Table>
+                            <TableHead sx={{
+                                backgroundColor: '#dedede'
+                                }}>
+                                <TableRow>
+                                    <TableCell>Datum</TableCell>
+                                    <TableCell>Aktivität</TableCell>
+                                    <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
+                                    <TableCell>Stunden die gebucht wurden</TableCell>
+                                    <TableCell>Bearbeiten</TableCell>
+                                    <TableCell>Löchen</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell>Daten</TableCell>
+                                    <TableCell>Daten</TableCell>
+                                    <TableCell>Daten</TableCell>
+                                    <TableCell>Daten</TableCell>
+                                    <TableCell>
+                                        <Tooltip title='Bearbeiten' placement="bottom">
+                                            <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}>
+                                                <EditIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </TableCell>
+                                    <TableCell>
+                                    <Tooltip title='Löschen' placement="bottom">
+                                        <IconButton variant="contained"  onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
+                                    </Tooltip>
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
                     </Grid>
-                    <Grid item>
-                      <Tooltip title='Löschen' placement="bottom">
-                      <IconButton variant="contained"  onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
-                      </Tooltip>
-                    </Grid>
-                    </Grid>
-                </ListItem>
-                <ListItem>
-                    {/* <LoadingProgress show={loadingInProgress}/>
-                    <ContextErrorMessage error={error} contextErrorMsg={'Die Buchung konnte nicht geladen werden'}
-                                         onReload={this.getBuchung}/> */}
-                </ListItem>
-
-                <Divider/>
+                </Grid>
+     
                 {/* <BuchungForm show={showBuchungForm} buchung={buchung} onClose={this.buchungFormClosed} getBuchung= {this.getBuchung}/>
                 <BuchungLöschenDialog show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchung= {this.getPerson}/>        */}
+            
             </div>
         );
     }

@@ -141,8 +141,10 @@ class EreignisMapper(Mapper):
 
         cursor = self._cnx.cursor()
 
-        command = "UPDATE ereignis SET letzte_aenderung=%s, erstellungs_zeitpunkt=%s,  WHERE id=%s"
-        data = (ereignis.get_letzte_aenderung(), ereignis.get_erstellungs_zeitpunkt(), ereignis.get_id())
+        command = "UPDATE ereignis SET letzte_aenderung=%s, erstellungs_zeitpunkt=%s  WHERE id=%s"
+        data = (ereignis.get_letzte_aenderung(),
+                ereignis.get_erstellungs_zeitpunkt(),
+                ereignis.get_id())
 
         result = ereignis
         cursor.execute(command, data)

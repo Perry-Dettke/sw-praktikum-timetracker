@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Header from './components/layout/Header';
-import Home from './components/HomeSeite';
+import Home from './components/pages/HomeSeite';
 import PersonListe from './components/pages/PersonListe';
 import ProjektListe from './components/pages/ProjektListe';
 import BuchungListe from './components/pages/BuchungListe';
@@ -11,7 +11,7 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 //import Personen_uebersicht from './components/pages/PersonenÜbersicht';
 import Buchung from './components/pages/xBuchungSeite';
 import Projekt_uebersicht from './components/pages/ProjektÜbersicht';
-import Auswertung from './components/pages/AuswertungSeite';
+import Auswertung from './components/pages/AuswertungListe';
 
 
 class App extends React.Component {
@@ -41,11 +41,11 @@ class App extends React.Component {
                 <Route path={'/*'} element={<Home/>}/>
                 <Route path={'/home'} element={<Home/>} />
                 <Route path={'/projekt_uebersicht'} element={<Projekt_uebersicht/>} />
-                <Route path={'/buchung'} element={<Buchung/>} />  
+                <Route path={'/buchung'} element={<BuchungListe/>} />  
                 <Route path={'/auswertung'} element={<Auswertung/>} />
-                {/*<Route path={'/projekt'} element={<ProjektListe/>} />
+                {/* <Route path={'/projekt'} element={<ProjektListe/>} /> */}
                 <Route path={'/person'} element={<PersonListe/>} /> 
-                <Route path={'/personen_uebersicht'} element={<Personen_uebersicht/>} /> */}            
+                {/* <Route path={'/personen_uebersicht'} element={<Personen_uebersicht/>} />            */}
             </Routes> 
           </div>
         </div>

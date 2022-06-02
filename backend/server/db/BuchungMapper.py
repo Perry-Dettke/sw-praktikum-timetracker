@@ -19,18 +19,19 @@ class BuchungMapper(Mapper):
 
         cursor = self._cnx.cursor()
 
-        command = "SELECT id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id, aktivitaet_id FROM buchung"
+        command = "SELECT id, letzte_aenderung, datum, stunden, arbeitszeitkonto_id FROM buchung"
 
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id, aktivitaet_id) in tuples:
+        for (id, letzte_aenderung, datum, stunden, arbeitszeitkonto_id) in tuples:
             buchung = Buchung()
             buchung.set_id(id)
             buchung.set_letzte_aenderung(letzte_aenderung)
-            buchung.set_erstellt_von(erstellt_von)
+            buchung.set_datum(datum)
+            buchung.set_stunden(stunden)
             buchung.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-            buchung.set_aktivitaet_id(aktivitaet_id)
+
 
             result.append(buchung)
 
@@ -49,18 +50,19 @@ class BuchungMapper(Mapper):
 
         result = None
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id, aktivitaet_id FROM buchung WHERE id ='{}'".format(id)
+        command = "SELECT id, letzte_aenderung, datum, stunden, arbeitszeitkonto_id FROM buchung WHERE id ='{}'".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id, aktivitaet_id) = tuples[0]
+            (id, letzte_aenderung, datum, stunden, arbeitszeitkonto_id) = tuples[0]
             buchung = Buchung()
             buchung.set_id(id)
             buchung.set_letzte_aenderung(letzte_aenderung)
-            buchung.set_erstellt_von(erstellt_von)
+            buchung.set_datum(datum)
+            buchung.set_stunden(stunden)
             buchung.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-            buchung.set_aktivitaet_id(aktivitaet_id)
+
 
             result = buchung
         except IndexError:
@@ -87,18 +89,19 @@ class BuchungMapper(Mapper):
 
         result = None
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id, aktivitaet_id FROM buchung WHERE arbeitszeitkonto_id='{}'".format(arbeitszeitkonto_id)
+        command = "SELECT id, letzte_aenderung, datum, stunden, arbeitszeitkonto_id FROM buchung WHERE arbeitszeitkonto_id='{}'".format(arbeitszeitkonto_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id, aktivitaet_id) = tuples[0]
+            (id, letzte_aenderung, datum, stunden, arbeitszeitkonto_id) = tuples[0]
             buchung = Buchung()
             buchung.set_id(id)
             buchung.set_letzte_aenderung(letzte_aenderung)
-            buchung.set_erstellt_von(erstellt_von)
+            buchung.set_datum(datum)
+            buchung.set_stunden(stunden)
             buchung.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-            buchung.set_aktivitaet_id(aktivitaet_id)
+
             result = Buchung
 
         except IndexError:
@@ -128,8 +131,14 @@ class BuchungMapper(Mapper):
             else:
                 Buchung.set_id(1)
 
-        command = "INSERT INTO buchung (id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id, aktivitaet_id) VALUES (%s,%s,%s,%s,%s)"
-        data = (Buchung.get_id(), Buchung.get_erstellt_von(), Buchung.get_arbeitszeitkonto_id(), Buchung.get_letzte_aenderung(), Buchung.get_aktivitaet_id())
+        command = "INSERT INTO buchung (id, letzte_aenderung, datum, stunden, arbeitszeitkonto_id) VALUES (%s,%s,%s,%s,%s)"
+        data = (Buchung.get_id(),
+                Buchung.get_letzte_aenderung(),
+                Buchung.get_datum(),
+                Buchung.get_stunden(),
+                Buchung.get_arbeitszeitkonto_id(),
+
+                )
         cursor.execute(command,data)
 
         self._cnx.commit()
@@ -146,11 +155,12 @@ class BuchungMapper(Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE buchung " + "SET letzte_aenderung=%s, arbeitszeitkonto_id=%s, aktivitaet_id=%s WHERE id=%s"
+        command = "UPDATE buchung " + "SET letzte_aenderung=%s, stunden=%s, arbeitszeitkonto_id=%s WHERE id=%s"
         data = (
             Buchung.get_letzte_aenderung(),
+            Buchung.get_stunden(),
             Buchung.get_arbeitszeitkonto_id(),
-            Buchung.get_aktivitaet_id(),
+            Buchung.get_id(),
             )
 
         cursor.execute(command, data)

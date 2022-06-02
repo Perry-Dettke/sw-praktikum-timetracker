@@ -36,7 +36,7 @@ class Aktivitaet(bo.BusinessObjekt):
     
     def __str__(self):
         #Erzeugen einer einfachen textuellen Darstellung der jeweiligen Instanz
-        return f'Aktivitaet: {self.get_bezeichnung()}, {self.get_kapazitaet(), self.get_kapazitaet()}'
+        return f'Aktivitaet: {self.get_bezeichnung()}, {self.get_kapazitaet()}'
     
     @staticmethod
     def from_dict(dictionary=dict()):

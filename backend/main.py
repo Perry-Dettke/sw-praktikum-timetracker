@@ -53,17 +53,25 @@ aktivitaet = api.inherit('Aktivitaet', bo, {
 })
 
 arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {
-    'arbeitsleistung': fields.String(attribute='_arbeitsleistung',
-                                description='Arbeitsleistung im Arbeitszeitkonto'),
+    'person_id': fields.Integer(attribute='_person_id',
+                                description='Personen ID der das Arbeitszeitkonto gehört'),
+    'aktivitaet_id': fields.Integer(attribute='_aktivitaet_id',
+                                description='Aktiviät ID zu Verbindung mit der Personen ID'),
 })
 
 buchung = api.inherit('Buchung', bo, {
-    'erstellt_von': fields.String(attribute='_erstellt_von',
-                                description='Person die die Buchung durchgeführt hat'),
-    'arbeitskonto_id': fields.Integer(attribute='_arbeitskonto_id',
-                                description='ID des Arbeitskonto auf dem die Buchung durchgeführt wird'),
-    'aktivitaet_id': fields.Integer(attribute='_aktivitaet_id',
-                                description='ID der Aktivitaet auf dem die Buchung durchgeführt wird'),
+    'datum': fields.Date(attribute='_datum',
+                                description='Datum an dem die Buchung durchgeführt wurde'),
+    'stunden': fields.Float(attribute='stunden',
+                                description='Stunden der Buchung'),
+    'arbeitszeitkonto_id': fields.Integer(attribute='_arbeitszeitkonto_id',
+                                description='ID des Arbeitszeitkonto auf dem die Buchung durchgeführt wird'),
+
+})
+
+ereignis = api.inherit('Ereignis', bo, {
+    'erstellungs_zeitpunkt': fields.String(attribute='_erstellungs_zeitpunkt',       #DateTime richtig?
+                            description='Erstellungszeitpunkt eines Ereignis')
 })
 
 person = api.inherit('Person', bo, {
@@ -77,9 +85,6 @@ person = api.inherit('Person', bo, {
                                 description='Benutzername einer Person'),
     'google_user_id': fields.String(attribute='_google_user_id',
                                 description='Gegebene ID von Google'),
-    'arbeitszeitkonto_id': fields.Integer(attribute='_arbeitszeitkonto_id',
-                                description='ID des Arbeitszeitkonto einer Person'),
-
 })
 
 projekt = api.inherit('Projekt', bo, {
@@ -98,10 +103,7 @@ zeitintervall = api.inherit('Zeitintervall', bo, {
                             description='Ende eines Zeitintervall'),
 })
 
-ereignis = api.inherit('Ereignis', bo, {
-    'erstellungs_zeitpunkt': fields.String(attribute='_erstellungs_zeitpunkt',       #DateTime richtig?
-                            description='Erstellungszeitpunkt eines Ereignis'),
-})
+
 
 
 #Aktivitaet related
@@ -153,9 +155,8 @@ class AktivitaetIDOperations(Resource):
         Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        akt = adm.get_aktivitaet_by_id(id)
-        if akt is not None:
-            adm.delete_aktivitaet(akt)
+        if id is not None:
+            adm.delete_aktivitaet(id)
             return '', 200
         else:
             '''Wenn unter id keine Aktivitaet existiert.'''
@@ -177,19 +178,22 @@ class AktivitaetIDOperations(Resource):
             return '', 500
 
 
+
+@timetracker.route('/akitvitaetbyprojektid/<int:projekt_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class AktivitaetbyProjektOperations(Resource):
     @timetracker.marshal_with(aktivitaet)
-    def get(self, id):
-        """Auslesen eines bestimmten Aktivitaet-Objekts.
-        Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
+    def get(self, projekt_id):
+        """Auslesen eines bestimmten Aktivitaets-Objekts aufgrund seiner Projekt ID.
+        Das auszulesende Objekt wird durch die ```projekt_id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        akt = adm.get_aktivitaet_by_projekt_id(id)
+        akt = adm.get_aktivitaet_by_projekt_id(projekt_id)
 
         if akt is not None:
             return akt
         else:
             return '', 500 
-
 
 
 
@@ -242,9 +246,8 @@ class ArbeitszeitkontoIDOperations(Resource):
         Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        azt = adm.get_arbeitszeitkonto_by_id(id)
-        if azt is not None:
-            adm.delete_arbeitszeitkonto(azt)
+        if id is not None:
+            adm.delete_arbeitszeitkonto(id)
             return '', 200
         else:
             '''Wenn unter id kein Arbeitszeitkonto existiert.'''
@@ -277,6 +280,23 @@ class ArbeitszeitkontoIDOperations(Resource):
             return azt
         else:
             return '', 500 
+
+@timetracker.route('/arbeitszeitkontobypersonid/<int:person_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ArbeitszeitkontoByPersonOperations(Resource):
+    @timetracker.marshal_with(arbeitszeitkonto)
+    def get(self, person_id):
+        """Auslesen eines bestimmten Arbeitszeitkonto-Objekts aufgrund seiner Projekt ID.
+        Das auszulesende Objekt wird durch die ```person_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        azt = adm.get_arbeitszeitkonto_by_person_id(person_id)
+
+        if azt is not None:
+            return azt
+        else:
+            return '', 500 
+
 
 
 
@@ -330,9 +350,8 @@ class BuchungIDOperations(Resource):
         Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        bu = adm.get_buchung_by_id(id)
-        if bu is not None:
-            adm.delete_buchung(bu)
+        if id is not None:
+            adm.delete_buchung(id)
             return '', 200
         else:
             '''Wenn unter id kein Buchung existiert.'''
@@ -418,9 +437,8 @@ class EreignisIDOperations(Resource):
         Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        er = adm.get_ereignis_by_id(id)
-        if er is not None:
-            adm.delete_ereignis(er)
+        if id is not None:
+            adm.delete_ereignis(id)
             return '', 200
         else:
             '''Wenn unter id kein Ereignis existiert.'''
@@ -505,9 +523,8 @@ class PersonIDOperations(Resource):
         Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        per = adm.get_person_by_id(id)
-        if per is not None:
-            adm.delete_person(per)
+        if id is not None:
+            adm.delete_person(id)
             return '', 200
         else:
             '''Wenn unter id kein Person existiert.'''
@@ -541,26 +558,29 @@ class PersonIDOperations(Resource):
         else:
             return '', 500 
 
-@timetracker.route('/personbygoogle/<string:google_user_id>')
-@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-class PersonGoogleOperations(Resource):
-    @timetracker.marshal_with(person)
-    def get(self, google_user_id):
-        """Auslesen eines bestimmten Person-Objekts.
-        Das auszulesende Objekt wird durch die ```google_id``` in dem URI bestimmt.
-        """
-        adm = TimetrackerAdministration()
-        pe = adm.get_person_by_google_user_id(google_user_id)
-        if pe is not None:
-            return pe
-        else:
-            return '', 500 
 
-    def post(self, google_user_id):
-        ''' Person das erste mal anlegen '''
-        adm = TimetrackerAdministration()
-        adm.add_person_google_user_id(google_user_id)
-        return '', 200
+# Brauchen wir die Funktion üverhaupt?
+
+# @timetracker.route('/personbygoogle/<string:google_user_id>')     
+# @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+# class PersonGoogleOperations(Resource):
+#     @timetracker.marshal_with(person)
+#     def get(self, google_user_id):
+#         """Auslesen eines bestimmten Person-Objekts.
+#         Das auszulesende Objekt wird durch die ```google_id``` in dem URI bestimmt.
+#         """
+#         adm = TimetrackerAdministration()
+#         pe = adm.get_person_by_google_user_id(google_user_id)
+#         if pe is not None:
+#             return pe
+#         else:
+#             return '', 500 
+
+#     def post(self, google_user_id):
+#         ''' Person das erste mal anlegen '''
+#         adm = TimetrackerAdministration()
+#         adm.add_person_google_user_id(google_user_id)
+#         return '', 200
 
 
 
@@ -596,11 +616,12 @@ class ProjektOperations(Resource):
             """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
             wird auch dem Client zurückgegeben. 
             """
-            pro = adm.create_projekt(proposal)
-            return pro, 200
+            a = adm.create_projekt(proposal)
+            return a, 200
         else:
             '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
             return '', 500
+
 
 
 @timetracker.route('/projekt/<int:id>')
@@ -699,9 +720,8 @@ class ZeitintervallIDOperations(Resource):
         Das zu löschende Objekt wird durch die ```id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        zi = adm.get_zeitintervall_by_id(id)
-        if zi is not None:
-            adm.delete_zeitintervall(zi)
+        if id is not None:
+            adm.delete_zeitintervall(id)
             return '', 200
         else:
             '''Wenn unter id kein Zeitintervall existiert.'''

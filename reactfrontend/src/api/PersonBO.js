@@ -3,14 +3,13 @@ import BusinessObject from './BusinessObject';
 
 export default class PersonBO extends BusinessObject {
 
-    constructor(vor_name, nach_name, email, benutzer_name, google_user_id, arbeitszeitkonto_id){
+    constructor(vor_name, nach_name, email, benutzer_name, google_user_id){
         super();
         this.vor_name = vor_name;
         this.nach_name = nach_name;
         this.email = email;
         this.benutzer_name = benutzer_name;
         this.google_user_id = google_user_id;
-        this.arbeitszeitkonto_id = arbeitszeitkonto_id;
     }
     // Vorname setzen
     setVor_name(vor_name) {
@@ -51,14 +50,6 @@ export default class PersonBO extends BusinessObject {
     // Google_user_id auslesen
     getGoogle_user_id() {
     return this.google_user_id;
-    }
-    // Arbeitskonto_id setzen
-    setArbeitszeitkonto_id(arbeitszeitkonto_id) {
-    this.arbeitszeitkonto_id = arbeitszeitkonto_id;
-    }
-    // Arbeitskonto_id auslesen
-    getArbeitszeitkonto_id() {
-    return this.arbeitszeitkonto_id;
     }
 
     static fromJSON(person) {
