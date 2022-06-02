@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import{Typography, IconButton, Grid, Tooltip, ListItem, Divider, Table, TableHead, TableBody, TableRow, TableCell} from '@mui/material';
+import{Typography, IconButton, Grid, Tooltip, ListItem, Divider, Table, TableHead, TableBody, TableRow, TableCell, Paper} from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -74,40 +74,43 @@ class BuchungListenEintrag extends Component {
 
         return (
             <div>
-                <Typography>Test BuchungsListenEintrag</Typography>
                 <Grid container alignItems="center" spacing={2}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Letzte Änderung</TableCell>
-                                <TableCell>Aktivität</TableCell>
-                                <TableCell>Art der Buchung? Zeitintervall/Ereignis</TableCell>
-                                <TableCell>Stunden die gebucht wurden</TableCell>
-                                <TableCell>Bearbeiten</TableCell>
-                                <TableCell>Löchen</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell>Daten</TableCell>
-                                <TableCell>Daten</TableCell>
-                                <TableCell>Daten</TableCell>
-                                <TableCell>Daten</TableCell>
-                                <TableCell>
-                                    <Tooltip title='Bearbeiten' placement="bottom">
-                                        <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}>
-                                            <EditIcon />
-                                        </IconButton>
+                    <Grid item xs={12}>
+                        <Table>
+                            <TableHead sx={{
+                                backgroundColor: '#dedede'
+                                }}>
+                                <TableRow>
+                                    <TableCell>Letzte Änderung</TableCell>
+                                    <TableCell>Aktivität</TableCell>
+                                    <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
+                                    <TableCell>Stunden die gebucht wurden</TableCell>
+                                    <TableCell>Bearbeiten</TableCell>
+                                    <TableCell>Löchen</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell>Daten</TableCell>
+                                    <TableCell>Daten</TableCell>
+                                    <TableCell>Daten</TableCell>
+                                    <TableCell>Daten</TableCell>
+                                    <TableCell>
+                                        <Tooltip title='Bearbeiten' placement="bottom">
+                                            <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}>
+                                                <EditIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </TableCell>
+                                    <TableCell>
+                                    <Tooltip title='Löschen' placement="bottom">
+                                        <IconButton variant="contained"  onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
                                     </Tooltip>
-                                </TableCell>
-                                <TableCell>
-                                <Tooltip title='Löschen' placement="bottom">
-                                    <IconButton variant="contained"  onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
-                                </Tooltip>
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </Grid>
                 </Grid>
      
                 {/* <BuchungForm show={showBuchungForm} buchung={buchung} onClose={this.buchungFormClosed} getBuchung= {this.getBuchung}/>

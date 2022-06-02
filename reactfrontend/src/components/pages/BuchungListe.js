@@ -4,8 +4,9 @@ import AddIcon from '@mui/icons-material/Add';
 
 import BuchungListenEintrag from './BuchungListenEintrag.js'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-// import BuchungDialog from '../dialogs/BuchungDialog';
-// import BuchungForm from '../dialogs/BuchungForm';
+import BuchungDialog from '../dialogs/BuchungDialog.js';
+
+
 
 
 class BuchungListe extends Component {
@@ -16,7 +17,7 @@ class BuchungListe extends Component {
     // Init an empty state
     this.state = {
       buchung: [],
-      showBuchungAnlegen: false,
+      showBuchungDialog: false,
     };
   }
 /*
@@ -29,29 +30,25 @@ class BuchungListe extends Component {
           });
         });
       }
+  */
 
-  // Add Button - Oeffnet den Buchung hinzufuegen Dialog
-  addBuchungButtonClicked = event => {
+  //BuchungDialog anzeigen
+  buchungAnlegenButtonClicked = event => {
     event.stopPropagation();
     this.setState({
-      showBuchungForm: true
+    showBuchungDialog: true,
+    });
+}
+
+  //BuchungDialog schließen
+  BuchungDialogClosed = event => {
+    event.stopPropagation();
+    this.setState({
+      showBuchungDialog: false,
     });
   }
 
-  //BuchungAnlegen anzeigen
-  showBuchungAnlegen = () => {
-      this.setState({ showBuchung: true}, () => {
-          // console.log(this.state.showBuchung);
-      });
-  };
-
-  //BuchungAnlegen schließen
-  closeBuchungDialog = () => {
-      this.setState({ showBuchung: false});
-  };
-
-
-
+  /*
   componentDidMount() {
       this.getBuchung();
   }
@@ -60,34 +57,48 @@ class BuchungListe extends Component {
   /** Renders the component */
   render() {
 
-    const { buchung, showBuchungForm, showBuchungDelete } = this.state;
+    const { buchung, showBuchungDialog } = this.state;
 
     return (
       <div>
         {/* <Button variant="contained" sx={{width:250}} onClick={this.showBuchungDialog}> Neue Buchung Erstellen</Button> */}
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12}>
+          <Grid item xs={2}/>
+          <Grid item xs={4}>
             <Button 
                 sx={{
                     m: 1,
-                    width: 300,
+                    width: 350,
                     height: 50,
                     alignItems: 'center',
-                    }}   variant="contained" color="primary" aria-label="add" onClick={this.projektAnlegenButtonClicked}>
+                    }}   variant="contained" color="primary" aria-label="add" onClick={this.buchungAnlegenButtonClicked}>
                     <AddIcon />   
-                    neue Buchung erstellen
+                    &nbsp; Ereignis-Buchung erstellen
             </Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Button 
+                sx={{
+                    m: 1,
+                    width: 350,
+                    height: 50,
+                    alignItems: 'center',
+                    }}   variant="contained" color="primary" aria-label="add" onClick={this.buchungAnlegenButtonClicked}>
+                    <AddIcon />   
+                    &nbsp; Zeitintervall-Buchung erstellen
+            </Button>
+          </Grid>
+          <Grid item xs={2}/>
+          <Grid item xs={12}>
+            <Typography><h1>Übersicht eigener Buchungen</h1></Typography>
           </Grid>
           <Grid item xs={12}>
             <List>
-              {
-                  buchung.map(buchung =>
-                      <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show}/>)
-                  }
+              <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show}/>
             </List>
           </Grid>
         </Grid>
-        {/* {<BuchungForm show={showBuchungForm} onClose={this.buchungFormClosed} getAtivitaet = {this.getBuchung}/>} */}
+        <BuchungDialog show={showBuchungDialog} onClose={this.buchungDialogClosed} />
 
       </div>
     );
