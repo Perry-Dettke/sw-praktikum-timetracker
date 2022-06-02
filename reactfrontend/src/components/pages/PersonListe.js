@@ -53,21 +53,21 @@ class PersonListe extends Component {
   }
 
 //wird aufgerufen, wenn Dialog Fenster geschloßen wird
-personFormClosed = person => {
-  this.getPerson();
-  if (person) {
-    const newPersonList = [...this.state.person, person];
-    this.setState({
-      person: newPersonList,
-      filteredPerson: [...newPersonList],
-      showPersonForm: false
-    });
-  } else {
-    this.setState({
-      showPersonForm: false
-    });
-  }
-}
+// personFormClosed = person => {
+//   this.getPerson();
+//   if (person) {
+//     const newPersonList = [...this.state.person, person];
+//     this.setState({
+//       person: newPersonList,
+//       filteredPerson: [...newPersonList],
+//       showPersonForm: false
+//     });
+//   } else {
+//     this.setState({
+//       showPersonForm: false
+//     });
+//   }
+// }
 
   //   // Person Dialog Button geklickt - Oeffnet den Person hinzufuegen Dialog
   //   personDialogButtonClicked = event => {
