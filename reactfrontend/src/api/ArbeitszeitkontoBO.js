@@ -3,18 +3,28 @@ import BusinessObject from './BusinessObject';
 
 export default class ArbeitszeitkontoBO extends BusinessObject {
 
-    constructor(arbeitsleistung){
+    constructor(person_id, aktivitaet_id){
         super();
-        this.arbeitsleistung = arbeitsleistung;
-    }
-    // Arbeitsleistung erstellen 
-    setArbeitsleistung(arbeitsleistung){
-        this.arbeitsleistung = arbeitsleistung
+        this.person_id = person_id;
+        this.aktivitaet_id = aktivitaet_id;
     }
 
-    // Arbeitsleistung auslesen
-    getArbeitsleistung(){
-        return this.arbeitsleistung
+    // Personen ID erstellen 
+    setPerson_id(person_id){
+        this.person_id = person_id
+    }
+    // Personen ID auslesen
+    getPerson_id(){
+        return this.person_id
+    }
+
+    // Aktivitaet ID erstellen 
+    setAktivitaet_id(aktivitaet_id){
+        this.aktivitaet_id = this.aktivitaet_id
+    }
+    // Aktivitaet ID auslesen
+    getAktivitaet_id(){
+        return this.aktivitaet_id
     }
 
     // Objekt anhand einer JSON-Struktur erstellen
