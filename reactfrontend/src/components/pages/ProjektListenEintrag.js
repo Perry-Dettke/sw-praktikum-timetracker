@@ -4,9 +4,7 @@ import {ListItem, Typography, IconButton, Grid, Tooltip, Divider} from '@mui/mat
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-// import ProjektLöschenDialog from '../dialogs/ProjektLöschenDialog';
-// import ProjektForm from '../dialogs/ProjektForm';
-
+import ProjektLöschenDialog from '../dialogs/ProjektLöschenDialog';
 
 
 class ProjektListenEintrag extends Component {
@@ -17,7 +15,7 @@ class ProjektListenEintrag extends Component {
         //gebe einen leeren status
         this.state = {
             showProjektForm: false,
-            showProjektDelete: false,
+            showProjektLöschenDialog: false,
         };
     }
 
@@ -53,14 +51,14 @@ class ProjektListenEintrag extends Component {
         console.log("Delete Button")
         event.stopPropagation();
         this.setState({
-          showProejktDelete: true
+            showProjektLöschenDialog: true,
         });
       }
     
       //Wird aufgerufen, wenn das Dialog-Fenster PorjektDeleteDialog geschlossen wird
       projektDeleteClosed = () => {
           this.setState({
-            showProjektDelete: false
+            showProjektLöschenDialog: false
           });
           this.getProjekt();
       }
@@ -69,7 +67,7 @@ class ProjektListenEintrag extends Component {
     //Renders the component
     render() {
         const {classes, projekt} = this.props;
-        const {showProjektForm, error, loadingInProgress, showProjektDelete} = this.state;
+        const {showProjektForm, error, loadingInProgress, showProjektLöschenDialog} = this.state;
 
         return (
             <div>
@@ -95,7 +93,7 @@ class ProjektListenEintrag extends Component {
                     </Grid>
                     <Grid item>
                       <Tooltip title='Löschen' placement="bottom">
-                      <IconButton variant="contained"  onClick={this.projektDeleteButtonClicked}><DeleteIcon /></IconButton>
+                        <IconButton variant="contained"  onClick={this.projektDeleteButtonClicked}><DeleteIcon /></IconButton>
                       </Tooltip>
                     </Grid>
                     </Grid>
@@ -107,8 +105,8 @@ class ProjektListenEintrag extends Component {
                 </ListItem>
 
                 <Divider/>
-                {/* <ProjektForm show={showProjektForm} projekt={projekt} onClose={this.projektFormClosed} getProjekt= {this.getProjekt}/>
-                <ProjektLöschenDialog show={showProjektDelete} projekt={projekt} onClose={this.projektDeleteClosed} getProjekt= {this.getPerson}/>        */}
+                {/* <ProjektForm show={showProjektForm} projekt={projekt} onClose={this.projektFormClosed} getProjekt= {this.getProjekt}/>*/}
+                <ProjektLöschenDialog show={showProjektLöschenDialog} projekt={projekt} onClose={this.projektDeleteClosed} getProjekt= {this.getPerson}/>
             </div>
         );
     }
