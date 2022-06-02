@@ -1,68 +1,50 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Card, Button, Grid, Typography, withStyles, Paper, FormControl, InputLabel, Select, MenuItem, TextField } from '@material-ui/core';
+import { Button, Grid, Typography } from '@mui/material';
 
-/**
- * Render eine Seite für nicht eingeloggte Nutzer.
- * Dafür wird eine existierende Google Account Sign in Komponente verwendet.
- * Die Komponente nutzt eine Firebase für einen redirect.
- *
+/** 
+ * Renders a landing page for users who are not signed in. Provides a sign in button 
+ * for using an existing google account to sign in. The component uses firebase to 
+ * do redirect based signin process.
+ * 
  * @see See Googles [firebase authentication](https://firebase.google.com/docs/web/setup)
  * @see See Googles [firebase API reference](https://firebase.google.com/docs/reference/js)
- *
+ * 
  */
-
 class SignIn extends Component {
 
-    constructor(props) {
-        super(props);
+	/** 
+	 * Handles the click event of the sign in button an calls the prop onSignIn handler
+	 */
+	handleSignInButtonClicked = () => {
+		this.props.onSignIn();
+	}
 
-        this.state = {
-            
-            vor_nameValidationFailed: false,
-            vor_nameEdited: false,
-            
-        };
-    }
-
-
-    // rendert die  Komponente SignIn Seite
-    render() {
-        const {  vor_nameValidationFailed, vor_nameEdited } = this.state;
-        const {classes} = this.props;
-
-        return <div>
-            <Paper>
-                <Card>
-                    <Typography  align='center' variant='h6'>Willkommen zum Time Tracker</Typography>
-                    <Grid container justify='center'>
-                        <Grid item>
-                            
-                            <form  autoComplete="on">
-                                <TextField id="vor_name" label="Vorname" error={vor_nameValidationFailed}
-                                           onChange={this.textFieldValueChange}/>
-                            </form>
-                            
-                        </Grid>
-                    </Grid>
-                    <Typography  align='center'>Für die Nutzung der weiteren Funktionen müssen
-                        Sie sich authentifizieren.</Typography>
-                    <Grid container justify='center'>
-                        <Grid item>
-                            <Button style={{marginBottom: "2em"}} variant='contained' color='primary'
-                                    onClick={this.handleSignInButtonClicked}
-                                    disabled={ vor_nameValidationFailed || !vor_nameEdited }>
-                                Anmelden
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Card>
-            </Paper>
-        </div>
-    }
+	/** Renders the sign in page, if user objext is null */
+	render() {
+		return (
+			<div>
+				<Typography sx={{margin: 2}} align='center' variant='h6'>Welcome to the HdM React/Python Project Showcase</Typography>
+				<Typography sx={{margin: 2}} align='center'>It appears, that you are not signed in.</Typography>
+				<Typography sx={{margin: 2}} align='center'>To use the services of the HdM Bank please</Typography>
+				<Grid container justifyContent='center'>
+					<Grid item>
+						<Button variant='contained' color='primary' onClick={this.handleSignInButtonClicked}>
+							Sign in with Google
+						</Button>
+					</Grid>
+				</Grid>
+			</div>
+		);
+	}
 }
 
-
-
+/** PropTypes */
+SignIn.propTypes = {
+	/** 
+	 * Handler function, which is called if the user wants to sign in.
+	 */
+	onSignIn: PropTypes.func.isRequired,
+}
 
 export default SignIn;

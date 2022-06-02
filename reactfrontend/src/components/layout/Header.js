@@ -3,6 +3,7 @@ import { Component } from 'react'
 import PropTypes from 'prop-types';
 import { Paper, Typography, Tabs, Tab } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import ProfileDropDown from '../dialogs/ProfileDropDown';
 
 /**
  * Shows the header with the main navigation Tabs within a Paper.
@@ -32,7 +33,7 @@ class Header extends Component {
 
     return (
       <Paper variant='outlined' >
-        <ProfileDropdown user = {user} />
+        <ProfileDropDown user={user} />
         <Typography variant='h3' component='h1' align='center' color='#323748' fontFamily='Verdana'>
           TIME
         </Typography>
