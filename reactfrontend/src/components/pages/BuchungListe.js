@@ -17,20 +17,29 @@ class BuchungListe extends Component {
     // Init an empty state
     this.state = {
       buchung: [],
+      arbeitszeitkonten: [],
       showBuchungDialog: false,
     };
   }
-/*
-  // Fetches all BuchungBOs from the backend 
-  getBuchung = () => {
+
+  // Gibt alle Arbeitszeitkonten einer Prson zurück
+  getArbeitszeitkontoByPersonID = () => {
     var api = TimetrackerAPI.getAPI();
-        api.getBuchung().then((buchungBOs) => {
+        api.getArbeitszeitkontobyPersonID(1).then((arbeitszeitkontoBOs) => {
           this.setState({
-            buchung: buchungBOs,
+            arbeitszeitkonten: arbeitszeitkontoBOs,
           });
         });
       }
-  */
+
+    //Gibt alle Buchugen einer Person zurück, anhand der Arbeitszeitkonten
+    getAktivitaetbyProjektID = () => {
+      TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.props.projekt.getID()).then((aktivitaetBOs) => {
+          this.setState({
+              aktivitaetliste: aktivitaetBOs,
+          });
+      });
+  }
 
   //BuchungDialog anzeigen
   buchungAnlegenButtonClicked = event => {
@@ -48,18 +57,22 @@ class BuchungListe extends Component {
     });
   }
 
-  /*
+  
   componentDidMount() {
-      this.getBuchung();
+      this.getArbeitszeitkontoByPersonID();
+
   }
-  */
+
 
   /** Renders the component */
   render() {
 
-    const { buchung, showBuchungDialog } = this.state;
+    const { buchung, arbeitszeitkonten, showBuchungDialog } = this.state;
+    console.log(Object.values(arbeitszeitkonten.getID()))
+
 
     return (
+      arbeitszeitkonten ?
       <div>
         {/* <Button variant="contained" sx={{width:250}} onClick={this.showBuchungDialog}> Neue Buchung Erstellen</Button> */}
         <Grid container spacing={2} alignItems="center">
@@ -101,6 +114,7 @@ class BuchungListe extends Component {
         <BuchungDialog show={showBuchungDialog} onClose={this.buchungDialogClosed} />
 
       </div>
+      : null
     );
   }
 }

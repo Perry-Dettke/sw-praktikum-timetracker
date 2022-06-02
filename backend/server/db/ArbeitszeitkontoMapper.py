@@ -71,6 +71,35 @@ class ArbeitszeitkontoMapper (Mapper):
 
         return arbeitszeitkonto
 
+
+    def find_by_person_id(self, person_id):
+        """Auslesen aller Arbeitszeitkonten anhand der Person ID."""
+
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT * FROM arbeitszeitkonto WHERE person_id={}".format(person_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            for (id, letzte_aenderung, person_id, aktivitaet_id) in tuples:
+                arbeitszeitkonto = Arbeitszeitkonto()
+                arbeitszeitkonto.set_id(id)
+                arbeitszeitkonto.set_letzte_aenderung(letzte_aenderung)
+                arbeitszeitkonto.set_person_id(person_id)
+                arbeitszeitkonto.set_aktivitaet_id(aktivitaet_id)
+                result.append(arbeitszeitkonto)
+
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            arbeitszeitkonto = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
     def insert(self, arbeitszeitkonto):
         """Einfügen eines Arbeitszeitkonto-Objekts in die Datenbank.
 

@@ -72,7 +72,10 @@ class TimetrackerAdministration (object):
         with ArbeitszeitkontoMapper() as mapper:
             mapper.delete(arbeitszeitkonto)
 
-
+    def get_arbeitszeitkonto_by_person_id(self, person_id):
+        """Die Arbeitszeitkonten mit der gegebenen Personen ID auslesen."""
+        with ArbeitszeitkontoMapper() as mapper:
+            return mapper.find_by_person_id(person_id)
 
     """
     Buchung-spezifische Methoden

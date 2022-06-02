@@ -281,6 +281,23 @@ class ArbeitszeitkontoIDOperations(Resource):
         else:
             return '', 500 
 
+@timetracker.route('/arbeitszeitkontobypersonid/<int:person_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ArbeitszeitkontoByPersonOperations(Resource):
+    @timetracker.marshal_with(arbeitszeitkonto)
+    def get(self, person_id):
+        """Auslesen eines bestimmten Arbeitszeitkonto-Objekts aufgrund seiner Projekt ID.
+        Das auszulesende Objekt wird durch die ```person_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        azt = adm.get_arbeitszeitkonto_by_person_id(person_id)
+
+        if azt is not None:
+            return azt
+        else:
+            return '', 500 
+
+
 
 
 
