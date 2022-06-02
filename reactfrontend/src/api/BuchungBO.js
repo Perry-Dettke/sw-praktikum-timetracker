@@ -9,14 +9,7 @@ export default class BuchungBO extends BusinessObject {
         this.arbeitszeitkonto_id = arbeitszeitkonto_id;
         this.aktivitaet_id = aktivitaet_id;
     }
-    // letzte Aenderung setzen
-    setLetzte_aenderung(letzte_aenderung) {
-    this.letzte_aenderung = letzte_aenderung;
-    }
-    // letzte Aenderung auslesen
-    getLetzte_aenderung() {
-    return this.letzte_aenderung;
-    }
+
     // erstellt_von setzen
     setErstellt_von(erstellt_von) {
     this.erstellt_von = erstellt_von;
