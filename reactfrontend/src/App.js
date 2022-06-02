@@ -41,7 +41,7 @@ class App extends React.Component {
                 <Route path={'/*'} element={<Home/>}/>
                 <Route path={'/home'} element={<Home/>} />
                 <Route path={'/projekt_uebersicht'} element={<Projekt_uebersicht/>} />
-                <Route path={'/buchung'} element={<Buchung/>} />  
+                <Route path={'/buchung'} element={<BuchungListe/>} />  
                 <Route path={'/auswertung'} element={<Auswertung/>} />
                 {/* <Route path={'/projekt'} element={<ProjektListe/>} /> */}
                 <Route path={'/person'} element={<PersonListe/>} /> 
