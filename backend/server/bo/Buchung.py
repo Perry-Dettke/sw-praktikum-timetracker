@@ -7,7 +7,7 @@ class Buchung(bo.BusinessObjekt):
     def __init__(self):
         # Definieren der Attribute, der Klasse Buchung
         super().__init__()
-        self._erstellt_von = ''
+        self._erstellt_von = 0
         self._arbeitszeitkonto_id = 0
         self._aktivitaet_id = 0
         

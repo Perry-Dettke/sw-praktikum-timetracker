@@ -18,7 +18,6 @@ class PersonForm extends Component {
 
         let vn = "", nn = "", em = "", bn = "";
         if (props.person) {
-            console.log(props.person)
             vn = props.person.vor_name;
             nn = props.person.nach_name;
             em = props.person.email;
@@ -31,7 +30,7 @@ class PersonForm extends Component {
             benutzer_name : bn,
         };
 
-        this.baseState = this.state;
+        this.initialState = this.state;
     }
 
     addPerson = () => {
@@ -39,32 +38,24 @@ class PersonForm extends Component {
         newPerson.setID(0)
         newPerson.setVor_name(this.state.vor_name)
         newPerson.setNach_name(this.state.nach_name)
+        newPerson.setEmail(this.state.email)
         newPerson.setBenutzer_name(this.state.benutzer_name)
         TimetrackerAPI.getAPI().addPerson(newPerson).then(person => {
-            this.props.getPerson()
-            this.setState(this.baseState);
-            this.props.onClose(personalbar); //Aufrufen parent in backend
-        }).catch(e =>
-            this.setState({
-                addingInProgress: false,
-                addingError: e
-            })
-        );
-        // Ladeanimation einblenden
-        this.setState({
-            addingProgress: true,
-            addingError: null
-        });
+            console.log(person)
+            this.setState(this.initialState);
+            this.props.onClose(person); //Aufrufen parent in backend
+        })
     }
 
     updatePerson = () => {
         let person = this.props.person;
         person.setVor_name(this.state.vor_name)
         person.setNach_name(this.state.nach_name)
+        person.setEmail(this.state.email)
         person.setBenutzer_name(this.state.benutzer_name)
         TimetrackerAPI.getAPI().updatePerson(person).then(person => {
             this.props.getPerson()
-            this.setState(this.baseState);
+            this.setState(this.initialState);
             this.props.onClose(person); //Aufrufen parent in backend
         }).catch(e =>
             this.setState({
@@ -99,7 +90,7 @@ class PersonForm extends Component {
 
 
     handleClose = () => {
-        this.setState(this.baseState);
+        this.setState(this.initialState);
         this.props.onClose(null);
     }
 
@@ -108,7 +99,7 @@ class PersonForm extends Component {
     render() {
         const { classes, show, person } = this.props;
         const {vor_name, nach_name, benutzer_name, email } = this.state;
-
+        console.log(vor_name)
         let title = '';
         let header = '';
 
@@ -121,7 +112,7 @@ class PersonForm extends Component {
             header = 'Person einfügen';
         }
 
-        console.log(person)
+
 
         return (
             show ?
@@ -140,6 +131,9 @@ class PersonForm extends Component {
                         <form  noValidate autoComplete='off'>
 
                         <TextField autoFocus type='text' required fullWidth margin='normal' id='vor_name' label='Vorname:' value={vor_name} onChange={this.textFieldValueChange} />
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='nach_name' label='Nachname:' value={nach_name} onChange={this.textFieldValueChange} />
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='email' label='Email:' value={email} onChange={this.textFieldValueChange} />
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='benutzer_name' label='Benutzername:' value={benutzer_name} onChange={this.textFieldValueChange} />
 
 
 

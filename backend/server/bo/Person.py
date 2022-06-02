@@ -10,7 +10,7 @@ class Person(bo.BusinessObjekt):
         self._nach_name = ""
         self._email = ""
         self._benutzer_name = ""
-        self._google_user_id = 0
+        self._google_user_id = ""
         self._arbeitszeitkonto_id = 0
 
 
@@ -77,9 +77,9 @@ class Person(bo.BusinessObjekt):
         obj.set_vor_name(dictionary["vor_name"])
         obj.set_nach_name(dictionary["nach_name"])
         obj.set_email(dictionary["email"])
-        obj.set_google_user_id(dictionary["google_user_id"])
         obj.set_benutzer_name(dictionary["benutzer_name"])
-        obj.set_arbeitszeitkonto_id(dictionary["arbeitszeitkonto_id"])
+        # obj.set_google_user_id(dictionary["google_user_id"])
+        # obj.set_arbeitszeitkonto_id(dictionary["arbeitszeitkonto_id"])
 
         return obj
 

@@ -121,8 +121,10 @@ class ProjektMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE projekt " + "SET auftraggeber=%s, projektersteller_id=%s WHERE id=%s"
+        command = "UPDATE projekt " + "SET letzte_aenderung=%s, bezeichnung=%s, auftraggeber=%s, projektersteller_id=%s WHERE id=%s"
         data = (
+            projekt.get_letzte_aenderung(),
+            projekt.get_bezeichnung(),
             projekt.get_auftraggeber(),
             projekt.get_projektersteller_id(),
             projekt.get_id())

@@ -129,7 +129,12 @@ class BuchungMapper(Mapper):
                 Buchung.set_id(1)
 
         command = "INSERT INTO buchung (id, letzte_aenderung, erstellt_von, arbeitszeitkonto_id, aktivitaet_id) VALUES (%s,%s,%s,%s,%s)"
-        data = (Buchung.get_id(), Buchung.get_erstellt_von(), Buchung.get_arbeitszeitkonto_id(), Buchung.get_letzte_aenderung(), Buchung.get_aktivitaet_id())
+        data = (Buchung.get_id(),
+                Buchung.get_letzte_aenderung(),
+                Buchung.get_erstellt_von(),
+                Buchung.get_arbeitszeitkonto_id(),
+                Buchung.get_aktivitaet_id(),
+                )
         cursor.execute(command,data)
 
         self._cnx.commit()
@@ -146,11 +151,12 @@ class BuchungMapper(Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE buchung " + "SET letzte_aenderung=%s, arbeitszeitkonto_id=%s, aktivitaet_id=%s WHERE id=%s"
+        command = "UPDATE buchung " + "SET letzte_aenderung=%s,  arbeitszeitkonto_id=%s, aktivitaet_id=%s WHERE id=%s"
         data = (
             Buchung.get_letzte_aenderung(),
             Buchung.get_arbeitszeitkonto_id(),
             Buchung.get_aktivitaet_id(),
+            Buchung.get_id(),
             )
 
         cursor.execute(command, data)

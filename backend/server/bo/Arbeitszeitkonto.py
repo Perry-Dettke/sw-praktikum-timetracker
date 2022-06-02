@@ -14,7 +14,7 @@ class Arbeitszeitkonto(bo.BusinessObjekt):
     
     def set_arbeitsleistung(self, arbeitsleistung):
         # Setzen der Arbeitsleistung
-        self._bezeichnung = arbeitsleistung
+        self._arbeitsleistung = arbeitsleistung
 
         
     def __str__(self):

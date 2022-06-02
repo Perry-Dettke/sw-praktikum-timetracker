@@ -53,17 +53,22 @@ aktivitaet = api.inherit('Aktivitaet', bo, {
 })
 
 arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {
-    'arbeitsleistung': fields.String(attribute='_arbeitsleistung',
+    'arbeitsleistung': fields.Float(attribute='_arbeitsleistung',
                                 description='Arbeitsleistung im Arbeitszeitkonto'),
 })
 
 buchung = api.inherit('Buchung', bo, {
-    'erstellt_von': fields.String(attribute='_erstellt_von',
-                                description='Person die die Buchung durchgeführt hat'),
-    'arbeitskonto_id': fields.Integer(attribute='_arbeitskonto_id',
-                                description='ID des Arbeitskonto auf dem die Buchung durchgeführt wird'),
+    'erstellt_von': fields.Integer(attribute='_erstellt_von',
+                                description='Person ID der Person, die die Buchung durchgeführt hat'),
+    'arbeitszeitkonto_id': fields.Integer(attribute='_arbeitszeitkonto_id',
+                                description='ID des Arbeitszeitkonto auf dem die Buchung durchgeführt wird'),
     'aktivitaet_id': fields.Integer(attribute='_aktivitaet_id',
                                 description='ID der Aktivitaet auf dem die Buchung durchgeführt wird'),
+})
+
+ereignis = api.inherit('Ereignis', bo, {
+    'erstellungs_zeitpunkt': fields.String(attribute='_erstellungs_zeitpunkt',       #DateTime richtig?
+                            description='Erstellungszeitpunkt eines Ereignis')
 })
 
 person = api.inherit('Person', bo, {
@@ -98,10 +103,7 @@ zeitintervall = api.inherit('Zeitintervall', bo, {
                             description='Ende eines Zeitintervall'),
 })
 
-ereignis = api.inherit('Ereignis', bo, {
-    'erstellungs_zeitpunkt': fields.String(attribute='_erstellungs_zeitpunkt',       #DateTime richtig?
-                            description='Erstellungszeitpunkt eines Ereignis'),
-})
+
 
 
 #Aktivitaet related
@@ -176,19 +178,22 @@ class AktivitaetIDOperations(Resource):
             return '', 500
 
 
+
+@timetracker.route('/akitvitaetbyprojektid/<int:projekt_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class AktivitaetbyProjektOperations(Resource):
     @timetracker.marshal_with(aktivitaet)
-    def get(self, id):
-        """Auslesen eines bestimmten Aktivitaet-Objekts.
-        Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
+    def get(self, projekt_id):
+        """Auslesen eines bestimmten Aktivitaets-Objekts aufgrund seiner Projekt ID.
+        Das auszulesende Objekt wird durch die ```projekt_id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        akt = adm.get_aktivitaet_by_projekt_id(id)
+        akt = adm.get_aktivitaet_by_projekt_id(projekt_id)
 
         if akt is not None:
             return akt
         else:
             return '', 500 
-
 
 
 
@@ -536,26 +541,29 @@ class PersonIDOperations(Resource):
         else:
             return '', 500 
 
-@timetracker.route('/personbygoogle/<string:google_user_id>')
-@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-class PersonGoogleOperations(Resource):
-    @timetracker.marshal_with(person)
-    def get(self, google_user_id):
-        """Auslesen eines bestimmten Person-Objekts.
-        Das auszulesende Objekt wird durch die ```google_id``` in dem URI bestimmt.
-        """
-        adm = TimetrackerAdministration()
-        pe = adm.get_person_by_google_user_id(google_user_id)
-        if pe is not None:
-            return pe
-        else:
-            return '', 500 
 
-    def post(self, google_user_id):
-        ''' Person das erste mal anlegen '''
-        adm = TimetrackerAdministration()
-        adm.add_person_google_user_id(google_user_id)
-        return '', 200
+# Brauchen wir die Funktion üverhaupt?
+
+# @timetracker.route('/personbygoogle/<string:google_user_id>')     
+# @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+# class PersonGoogleOperations(Resource):
+#     @timetracker.marshal_with(person)
+#     def get(self, google_user_id):
+#         """Auslesen eines bestimmten Person-Objekts.
+#         Das auszulesende Objekt wird durch die ```google_id``` in dem URI bestimmt.
+#         """
+#         adm = TimetrackerAdministration()
+#         pe = adm.get_person_by_google_user_id(google_user_id)
+#         if pe is not None:
+#             return pe
+#         else:
+#             return '', 500 
+
+#     def post(self, google_user_id):
+#         ''' Person das erste mal anlegen '''
+#         adm = TimetrackerAdministration()
+#         adm.add_person_google_user_id(google_user_id)
+#         return '', 200
 
 
 
@@ -591,11 +599,12 @@ class ProjektOperations(Resource):
             """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
             wird auch dem Client zurückgegeben. 
             """
-            pro = adm.create_projekt(proposal)
-            return pro, 200
+            a = adm.create_projekt(proposal)
+            return a, 200
         else:
             '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
             return '', 500
+
 
 
 @timetracker.route('/projekt/<int:id>')

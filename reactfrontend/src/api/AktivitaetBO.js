@@ -3,21 +3,13 @@ import BusinessObject from './BusinessObject';
 
 export default class AktivitaetBO extends BusinessObject {
 
-    constructor(letzte_aenderung, bezeichnung, kapazitaet, projekt_id){
+    constructor( bezeichnung, kapazitaet, projekt_id){
         super();
-        this.letzte_aenderung = letzte_aenderung;           //muss des nicht raus, da es von dem BO letzte_aenderung erbt?
         this.bezeichnung = bezeichnung;
         this.kapazitaet = kapazitaet;
         this.projekt_id = projekt_id;
     }
-    // Letzte Aenderung erstellen 
-    setLetzte_aenderung(letzte_aenderung) {
-    this.letzte_aenderung = letzte_aenderung;
-    }
-    // Letzte Aenderung auslesen
-    getLetzte_aenderung() {
-    return this.letzte_aenderung;
-    }
+
     // Bezeichnung setzen 
     setBezeichnung(bezeichnung) {
     this.bezeichnung = bezeichnung;
