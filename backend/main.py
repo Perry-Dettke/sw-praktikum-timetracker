@@ -53,17 +53,20 @@ aktivitaet = api.inherit('Aktivitaet', bo, {
 })
 
 arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {
-    'arbeitsleistung': fields.Float(attribute='_arbeitsleistung',
-                                description='Arbeitsleistung im Arbeitszeitkonto'),
+    'person_id': fields.Integer(attribute='_person_id',
+                                description='Personen ID der das Arbeitszeitkonto gehört'),
+    'aktivitaet_id': fields.Integer(attribute='_aktivitaet_id',
+                                description='Aktiviät ID zu Verbindung mit der Personen ID'),
 })
 
 buchung = api.inherit('Buchung', bo, {
-    'erstellt_von': fields.Integer(attribute='_erstellt_von',
-                                description='Person ID der Person, die die Buchung durchgeführt hat'),
+    'datum': fields.Date(attribute='_datum',
+                                description='Datum an dem die Buchung durchgeführt wurde'),
+    'stunden': fields.Float(attribute='stunden',
+                                description='Stunden der Buchung'),
     'arbeitszeitkonto_id': fields.Integer(attribute='_arbeitszeitkonto_id',
                                 description='ID des Arbeitszeitkonto auf dem die Buchung durchgeführt wird'),
-    'aktivitaet_id': fields.Integer(attribute='_aktivitaet_id',
-                                description='ID der Aktivitaet auf dem die Buchung durchgeführt wird'),
+
 })
 
 ereignis = api.inherit('Ereignis', bo, {
@@ -82,9 +85,6 @@ person = api.inherit('Person', bo, {
                                 description='Benutzername einer Person'),
     'google_user_id': fields.String(attribute='_google_user_id',
                                 description='Gegebene ID von Google'),
-    'arbeitszeitkonto_id': fields.Integer(attribute='_arbeitszeitkonto_id',
-                                description='ID des Arbeitszeitkonto einer Person'),
-
 })
 
 projekt = api.inherit('Projekt', bo, {
@@ -280,6 +280,23 @@ class ArbeitszeitkontoIDOperations(Resource):
             return azt
         else:
             return '', 500 
+
+@timetracker.route('/arbeitszeitkontobypersonid/<int:person_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ArbeitszeitkontoByPersonOperations(Resource):
+    @timetracker.marshal_with(arbeitszeitkonto)
+    def get(self, person_id):
+        """Auslesen eines bestimmten Arbeitszeitkonto-Objekts aufgrund seiner Projekt ID.
+        Das auszulesende Objekt wird durch die ```person_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        azt = adm.get_arbeitszeitkonto_by_person_id(person_id)
+
+        if azt is not None:
+            return azt
+        else:
+            return '', 500 
+
 
 
 

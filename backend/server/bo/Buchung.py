@@ -1,5 +1,6 @@
 #import BusinessObjekt as bo
 import server.bo.BusinessObjekt as bo
+import datetime
 
 
 class Buchung(bo.BusinessObjekt):
@@ -7,17 +8,26 @@ class Buchung(bo.BusinessObjekt):
     def __init__(self):
         # Definieren der Attribute, der Klasse Buchung
         super().__init__()
-        self._erstellt_von = 0
+        self._datum = datetime.date.today()
+        self._stunden = 0.0
         self._arbeitszeitkonto_id = 0
-        self._aktivitaet_id = 0
+
         
-    def get_erstellt_von(self):
-        # Ausgeben von erstellt_von
-        return self._erstellt_von
+    def get_datum(self):
+        # Ausgeben des Datums 
+        return self._datum
     
-    def set_erstellt_von(self, erstellt_von):
-        # Setzen von erstellt_von
-        self._erstellt_von = erstellt_von
+    def set_datum(self, datum):
+        # Setzen des Datums
+        self._datum = datum
+
+    def get_stunden(self):
+        # Ausgeben der Stunden
+        return self._stunden
+    
+    def set_stunden(self, stunden):
+        # Setzen der Stunden 
+        self._stunden = stunden
     
     def get_arbeitszeitkonto_id(self):
         # Ausgeben der Arbeitszeitkonto ID
@@ -27,23 +37,17 @@ class Buchung(bo.BusinessObjekt):
         # Setzen der Arbeitszeitkonto ID
         self._arbeitszeitkonto_id = arbeitszeitkonto_id
 
-    def get_aktivitaet_id(self):
-        # Ausgeben der Aktivitaet ID
-        return self._aktivitaet_id
-    
-    def set_aktivitaet_id(self, aktivitaet_id):
-        # Setzen der Arbeitszeitkonto ID
-        self._aktivitaet_id = aktivitaet_id
+
 
     def __str__(self):
         #Erzeugen einer einfachen textuellen Darstellung der jeweiligen Instanz
-        return f'Buchung: {self.get_erstellt_von()},{self.get_arbeitszeitkonto_id(),},{self.get_aktivitaet_id(),}'
+        return f'Buchung: {self.get_datum()},{self.get_stunden()},{self.get_arbeitszeitkonto_id()}'
     
     @staticmethod
     def from_dict(dictionary=dict()):
         #Umwandeln eines Python dict() in eine Buchung().
         obj = Buchung()
-        obj.set_erstellt_von(dictionary["erstellt_von"])
+        obj.set_datum(dictionary["datum"])
+        obj.set_stunden(dictionary["stunden"])
         obj.set_arbeitszeitkonto_id(dictionary["arbeitszeitkonto_id"])
-        obj.set_aktivitaet_id(dictionary["aktivitaet_id"])
         return obj

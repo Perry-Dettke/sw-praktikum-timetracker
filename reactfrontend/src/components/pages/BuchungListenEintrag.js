@@ -81,7 +81,7 @@ class BuchungListenEintrag extends Component {
                                 backgroundColor: '#dedede'
                                 }}>
                                 <TableRow>
-                                    <TableCell>Letzte Änderung</TableCell>
+                                    <TableCell>Datum</TableCell>
                                     <TableCell>Aktivität</TableCell>
                                     <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
                                     <TableCell>Stunden die gebucht wurden</TableCell>

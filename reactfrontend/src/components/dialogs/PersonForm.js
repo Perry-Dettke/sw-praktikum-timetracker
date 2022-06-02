@@ -99,7 +99,6 @@ class PersonForm extends Component {
     render() {
         const { classes, show, person } = this.props;
         const {vor_name, nach_name, benutzer_name, email } = this.state;
-        console.log(vor_name)
         let title = '';
         let header = '';
 
