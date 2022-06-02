@@ -95,10 +95,10 @@ class Projekt_uebersicht extends Component {
                         </Button>
                     </Grid>
                     <Grid item xs={12}>
-                        <List >
+                        <List>
                             {
-                                Object.values(projekt).map(projekt =>
-                                    <ProjektUebersichtEintrag key={Object.keys(projekt)[projekt.id]} projekt={projekt} show={this.props.show} />)
+                                projekt.map(projekt =>
+                                    <ProjektUebersichtEintrag key={projekt[projekt.id]} projekt={projekt} show={this.props.show} />)
                             }
                         </List>
                     </Grid>

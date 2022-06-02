@@ -4,8 +4,9 @@ import AddIcon from '@mui/icons-material/Add';
 
 import BuchungListenEintrag from './BuchungListenEintrag.js'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-// import BuchungDialog from '../dialogs/BuchungDialog';
-// import BuchungForm from '../dialogs/BuchungForm';
+import BuchungDialog from '../dialogs/BuchungDialog.js';
+
+
 
 
 class BuchungListe extends Component {
@@ -15,14 +16,12 @@ class BuchungListe extends Component {
 
     // Init an empty state
     this.state = {
-      buchung: null,
-      filteredBuchung: [],
-      showBuchungForm: false,
-      showBuchungDelete: false,
+      buchung: [],
+      showBuchungDialog: false,
     };
   }
-
-  /** Fetches all BuchungBOs from the backend */
+/*
+  // Fetches all BuchungBOs from the backend 
   getBuchung = () => {
     var api = TimetrackerAPI.getAPI();
         api.getBuchung().then((buchungBOs) => {
@@ -31,99 +30,79 @@ class BuchungListe extends Component {
           });
         });
       }
+  */
 
-    // set loading to true
-
-  // Add Button - Oeffnet den Buchung hinzufuegen Dialog
-  addBuchungButtonClicked = event => {
+  //BuchungDialog anzeigen
+  buchungAnlegenButtonClicked = event => {
     event.stopPropagation();
     this.setState({
-      showBuchungForm: true
+    showBuchungDialog: true,
     });
-  }
-
-
-
-
-
-
-
-
-//wird aufgerufen, wenn Dialog Fenster geschloßen wird
-buchungFormClosed = buchung => {
-  this.getBuchung();
-  if (buchung) {
-    const newBuchungList = [...this.state.buchung, buchung];
-    this.setState({
-      buchung: newBuchungList,
-      filteredBuchung: [...newBuchungList],
-      showBuchungForm: false
-    });
-  } else {
-    this.setState({
-      showBuchungForm: false
-    });
-  }
 }
 
+  //BuchungDialog schließen
+  BuchungDialogClosed = event => {
+    event.stopPropagation();
+    this.setState({
+      showBuchungDialog: false,
+    });
+  }
 
+  /*
+  componentDidMount() {
+      this.getBuchung();
+  }
+  */
 
+  /** Renders the component */
+  render() {
 
+    const { buchung, showBuchungDialog } = this.state;
 
+    return (
+      <div>
+        {/* <Button variant="contained" sx={{width:250}} onClick={this.showBuchungDialog}> Neue Buchung Erstellen</Button> */}
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={2}/>
+          <Grid item xs={4}>
+            <Button 
+                sx={{
+                    m: 1,
+                    width: 350,
+                    height: 50,
+                    alignItems: 'center',
+                    }}   variant="contained" color="primary" aria-label="add" onClick={this.buchungAnlegenButtonClicked}>
+                    <AddIcon />   
+                    &nbsp; Ereignis-Buchung erstellen
+            </Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Button 
+                sx={{
+                    m: 1,
+                    width: 350,
+                    height: 50,
+                    alignItems: 'center',
+                    }}   variant="contained" color="primary" aria-label="add" onClick={this.buchungAnlegenButtonClicked}>
+                    <AddIcon />   
+                    &nbsp; Zeitintervall-Buchung erstellen
+            </Button>
+          </Grid>
+          <Grid item xs={2}/>
+          <Grid item xs={12}>
+            <Typography><h1>Übersicht eigener Buchungen</h1></Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <List>
+              <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show}/>
+            </List>
+          </Grid>
+        </Grid>
+        <BuchungDialog show={showBuchungDialog} onClose={this.buchungDialogClosed} />
 
-    //BuchungDialog anzeigen
-    showBuchungDialog = () => {
-        this.setState({ showBuchung: true}, () => {
-            // console.log(this.state.showBuchung);
-        });
-    };
-
-    //BuchungDialog schließen
-    closeBuchungDialog = () => {
-        this.setState({ showBuchung: false});
-    };
-
-
-
-    componentDidMount() {
-        this.getBuchung();
-    }
-
-    /** Renders the component */
-    render() {
-
-        const { buchung, showBuchungForm, showBuchungDelete } = this.state;
-
-
-
-        return (
-            <div>
-                {/* <Button variant="contained" sx={{width:250}} onClick={this.showBuchungDialog}> Neue Buchung Erstellen</Button> */}
-                <Grid container spacing={2} alignItems="center">
-                </Grid>
-                <Grid item>
-                <Tooltip title='Buchung anlegen' placement="left">
-                    <Fab size="medium"  color="primary" aria-label="add" onClick={this.addBuchungButtonClicked}>
-                        <AddIcon />
-                    </Fab>
-                </Tooltip>
-            </Grid>
-                <Paper>
-                    <List >
-                        {
-                            Object.values(buchung).map(buchung =>
-                                <BuchungListenEintrag key={Object.keys(buchung)[buchung.id]} buchung={buchung} show={this.props.show}
-                                    getBuchung={this.getBuchung} />)
-
-
-                        }
-                    </List>
-                </Paper>
-                {/* {<BuchungForm show={showBuchungForm} onClose={this.buchungFormClosed} getAtivitaet = {this.getBuchung}/>} */}
-
-            </div>
-        );
-    }
+      </div>
+    );
+  }
 }
 
 
