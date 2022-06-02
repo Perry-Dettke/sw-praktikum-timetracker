@@ -53,8 +53,10 @@ aktivitaet = api.inherit('Aktivitaet', bo, {
 })
 
 arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {
-    'arbeitsleistung': fields.Float(attribute='_arbeitsleistung',
-                                description='Arbeitsleistung im Arbeitszeitkonto'),
+    'person_id': fields.Integer(attribute='_person_id',
+                                description='Personen ID der das Arbeitszeitkonto gehört'),
+    'aktivitaet_id': fields.Integer(attribute='_aktivitaet_id',
+                                description='Aktiviät ID zu Verbindung mit der Personen ID'),
 })
 
 buchung = api.inherit('Buchung', bo, {
@@ -83,9 +85,6 @@ person = api.inherit('Person', bo, {
                                 description='Benutzername einer Person'),
     'google_user_id': fields.String(attribute='_google_user_id',
                                 description='Gegebene ID von Google'),
-    'arbeitszeitkonto_id': fields.Integer(attribute='_arbeitszeitkonto_id',
-                                description='ID des Arbeitszeitkonto einer Person'),
-
 })
 
 projekt = api.inherit('Projekt', bo, {

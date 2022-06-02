@@ -19,14 +19,15 @@ class ArbeitszeitkontoMapper (Mapper):
         result = []
         cursor = self._cnx.cursor()
 
-        cursor.execute("SELECT id, letzte_aenderung, arbeitsleistung from arbeitszeitkonto")
+        cursor.execute("SELECT id, letzte_aenderung, person_id, aktivitaet_id from arbeitszeitkonto")
         tuples = cursor.fetchall()
 
-        for (id, letzte_aenderung, arbeitsleistung) in tuples:
+        for (id, letzte_aenderung, person_id, aktivitaet_id) in tuples:
             arbeitszeitkonto = Arbeitszeitkonto()
             arbeitszeitkonto.set_id(id)
             arbeitszeitkonto.set_letzte_aenderung(letzte_aenderung)
-            arbeitszeitkonto.set_arbeitsleistung(arbeitsleistung)
+            arbeitszeitkonto.set_person_id(person_id)
+            arbeitszeitkonto.set_aktivitaet_id(aktivitaet_id)
             result.append(arbeitszeitkonto)
 
         self._cnx.commit()
@@ -48,16 +49,17 @@ class ArbeitszeitkontoMapper (Mapper):
 
 
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, arbeitsleistung FROM arbeitszeitkonto WHERE id={}".format(id)
+        command = "SELECT id, letzte_aenderung, person_id, aktivitaet_id FROM arbeitszeitkonto WHERE id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, arbeitsleistung) = tuples[0]
+            (id, letzte_aenderung, person_id, aktivitaet_id) = tuples[0]
             arbeitszeitkonto = Arbeitszeitkonto()
             arbeitszeitkonto.set_id(id)
             arbeitszeitkonto.set_letzte_aenderung(letzte_aenderung)
-            arbeitszeitkonto.set_arbeitsleistung(arbeitsleistung)
+            arbeitszeitkonto.set_person_id(person_id)
+            arbeitszeitkonto.set_aktivitaet_id(aktivitaet_id)
 
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
@@ -86,10 +88,11 @@ class ArbeitszeitkontoMapper (Mapper):
         for (maxid) in tuples:
             arbeitszeitkonto.set_id(maxid[0] + 1)
 
-        command = "INSERT INTO arbeitszeitkonto (id, letzte_aenderung, arbeitsleistung) VALUES (%s,%s,%s)"
+        command = "INSERT INTO arbeitszeitkonto (id, letzte_aenderung, person_id, aktivitaet_id) VALUES (%s,%s,%s,%s)"
         data = (arbeitszeitkonto.get_id(),
                 arbeitszeitkonto.get_letzte_aenderung(),
-                arbeitszeitkonto.get_arbeitsleistung())
+                arbeitszeitkonto.get_person_id(),
+                arbeitszeitkonto.get_aktivitaet_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -104,9 +107,10 @@ class ArbeitszeitkontoMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE arbeitszeitkonto " + "SET letzte_aenderung=%s, arbeitsleistung=%s WHERE id=%s"
+        command = "UPDATE arbeitszeitkonto " + "SET letzte_aenderung=%s, person_id=%s, aktivitaet_id=%s WHERE id=%s"
         data = (arbeitszeitkonto.get_letzte_aenderung(),
-                arbeitszeitkonto.get_arbeitsleistung(),
+                arbeitszeitkonto.get_person_id(),
+                arbeitszeitkonto.get_aktivitaet_id(),
                 arbeitszeitkonto.get_id())
         cursor.execute(command, data)
 
