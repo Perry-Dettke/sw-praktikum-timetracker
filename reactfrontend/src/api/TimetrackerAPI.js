@@ -15,57 +15,63 @@ export default class TimetrackerAPI {
   // URL des Flask Servers
   #ServerBaseURL = '/timetracker';
 
-  #addPersonURL = () => `${this.#ServerBaseURL}/person`;
-  #getPersonbyIDURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
-  #getPersonURL = () => `${this.#ServerBaseURL}/person`;
-  #updatePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
-  #deletePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
-  #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
-  // #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
-
-  #addProjektURL = () => `${this.#ServerBaseURL}/projekt`;
-  #getProjektbyIDURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
-  #getProjektURL = () => `${this.#ServerBaseURL}/projekt`;
-
-  #updateProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
-  #deleteProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
-
-  // #addPersonProjektURL = () => `${this.#ServerBaseURL}/personprojekt`;
-  // #getPersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
-  // #updatePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
-  // #deletePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
-
-  // linkPersonProjektURL = () => `${this.#ServerBaseURL}/link`;
-
+// *** Aktivitaet realted *** // 
   #addAktivitaetURL = () => `${this.#ServerBaseURL}/aktivitaet`;
   #getAktivitaetURL = () => `${this.#ServerBaseURL}/aktivitaet`;
   #getAktivitaetbyProjektIDURL = (projekt_id) => `${this.#ServerBaseURL}/akitvitaetbyprojektid/${projekt_id}`;
   #updateAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
   #deleteAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
 
+// *** Arbeitszeitkonto realted *** //
+  #addArbeitszeitkontoURL = () => `${this.#ServerBaseURL}/arbeitszeitkonto`;
+  #getArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
+  #updateArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
+  #deleteArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
+  #getArbeitszeitkontobyPersonIDURL = (person_id) => `${this.#ServerBaseURL}/arbeitszeitkontobypersonid/${person_id}`;
+
+// *** Buchung realted *** //
   #addBuchungURL = () => `${this.#ServerBaseURL}/buchung`;
   #getBuchungURL = () => `${this.#ServerBaseURL}/buchung`;
   #getBuchungbyIDURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
-
-  //#updateBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
+  #updateBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
   #deleteBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
 
+// *** Ereignis realted *** //
   #addEreignisURL = () => `${this.#ServerBaseURL}/ereignis`;
   #getEreignisURL = () => `${this.#ServerBaseURL}/ereignis`;
   #getEreignisbyIDURL = (id) => `${this.#ServerBaseURL}/ereignis/${id}`;
   //#updateEreignisURL = (id) => `${this.#ServerBaseURL}/ereignis/${id}`;
   #deleteEreignisURL = (id) => `${this.#ServerBaseURL}/ereignis/${id}`;
 
+// *** Person realted *** //
+  #addPersonURL = () => `${this.#ServerBaseURL}/person`;
+  #getPersonbyIDURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
+  #getPersonURL = () => `${this.#ServerBaseURL}/person`;
+  #updatePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
+  #deletePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
+  #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
+  #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
+
+// *** Projekt realted *** //
+  #addProjektURL = () => `${this.#ServerBaseURL}/projekt`;
+  #getProjektbyIDURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
+  #getProjektURL = () => `${this.#ServerBaseURL}/projekt`;
+  #updateProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
+  #deleteProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
+
+// *** PersonProjekt realted *** //  
+  // #addPersonProjektURL = () => `${this.#ServerBaseURL}/personprojekt`;
+  // #getPersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
+  // #updatePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
+  // #deletePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
+  // linkPersonProjektURL = () => `${this.#ServerBaseURL}/link`;
+
+// *** Zeitintervall realted *** //
   #addZeitintervallURL = () => `${this.#ServerBaseURL}/zeitintervall`;
   #getZeitintervallURL = (id) => `${this.#ServerBaseURL}/zeitintervall/${id}`;
   #updateZeitintervallURL = (id) => `${this.#ServerBaseURL}/zeitintervall/${id}`;
   #deleteZeitintervallURL = (id) => `${this.#ServerBaseURL}/zeitintervall/${id}`;
 
-  #addArbeitszeitkontoURL = () => `${this.#ServerBaseURL}/arbeitszeitkonto`;
-  #getArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
-  #updateArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
-  #deleteArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
-  #getArbeitszeitkontobyPersonIDURL = (person_id) => `${this.#ServerBaseURL}/arbeitszeitkontobypersonid/${person_id}`;
 
 
   static getAPI() {
@@ -88,7 +94,284 @@ export default class TimetrackerAPI {
     })
 
 
+// *** Aktivitaet realted *** //
+  getAktivitaetbyProjektID(projekt_id) {
+    // Aktivitaet abfragen
+    return this.#fetchAdvanced(this.#getAktivitaetbyProjektIDURL(projekt_id)).then((responseJSON) => {
+      let aktivitaetliste = [];
+      responseJSON.map(item => {
+        let aktivitaet = AktivitaetBO.fromJSON(item);
+        aktivitaetliste.push(aktivitaet);
+      })
 
+      return new Promise(function (resolve) {
+        resolve(aktivitaetliste)
+      })
+    })
+  }
+
+
+  updateAktivitaet(aktivitaetBO) {
+    // Aktivitaet updaten
+    return this.#fetchAdvanced(this.#updateAktivitaetURL(aktivitaetBO.getID()), {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(aktivitaetBO)
+    }).then((responseJSON) => {
+      let responseAktivitaetBO = PersonBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(responseAktivitaetBO);
+      })
+    })
+  }
+
+
+  addAktivitaet(aktivitaetBO) {
+    // Aktivitaet neu anlegen
+    return this.#fetchAdvanced(this.#addAktivitaetURL(), {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(aktivitaetBO)
+    }).then((responseJSON) => {
+      let responseAktivitaetBO = AktivitaetBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(responseAktivitaetBO);
+      })
+    })
+  }
+
+
+
+  deleteAktivitaet(aktivitaetBO) {
+    // Aktivitaet löschen
+    return this.#fetchAdvanced(this.#deleteAktivitaetURL(aktivitaetBO.getID()), {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(aktivitaetBO)
+    })
+  }
+
+// *** Arbeitszeitkonto realted *** //
+  getArbeitszeitkonto(arbeitszeitkontoID) {
+    // Arbeitszeitkonto abfragen
+    return this.#fetchAdvanced(this.#getArbeitszeitkontoURL(arbeitszeitkontoID)).then((responseJSON) => {
+      let arbeitszeitkonto = ArbeitszeitkontoBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(arbeitszeitkonto)
+      })
+    })
+  }
+
+  addArbeitszeitkonto(arbeitszeitkontoBO) {
+    // Arbeitszeitkonto neu anlegen
+    return this.#fetchAdvanced(this.#addArbeitszeitkontoURL(), {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(arbeitszeitkontoBO)
+    }).then((responseJSON) => {
+      let responseArbeitszeitkontoBO = ArbeitszeitkontoBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(responseArbeitszeitkontoBO);
+      })
+    })
+  }
+
+
+  updateArbeitszeitkonto(arbeitszeitkontoBO) {
+    // Arbeitszeitkonto updaten
+    return this.#fetchAdvanced(this.#updateArbeitszeitkontoURL(arbeitszeitkontoBO.getID()), {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(arbeitszeitkontoBO)
+    }).then((responseJSON) => {
+      let responseArbeitszeitkontoBO = ArbeitszeitkontoBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(responseArbeitszeitkontoBO);
+      })
+    })
+  }
+
+  deleteArbeitszeitkonto(arbeitszeitkontoBO) {
+    // Arbeitszeitkonto löschen
+    return this.#fetchAdvanced(this.#deleteArbeitszeitkontoURL(arbeitszeitkontoBO.getID()), {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(arbeitszeitkontoBO)
+    })
+  }
+
+  getArbeitszeitkontobyPersonID(person_id) {
+    // Aktivitaet abfragen
+    return this.#fetchAdvanced(this.#getArbeitszeitkontobyPersonIDURL(person_id)).then((responseJSON) => {
+      let arbeitszeitkontoliste = [];
+      responseJSON.map(item => {
+        let arbeitszeitkonto = ArbeitszeitkontoBO.fromJSON(item);
+        arbeitszeitkontoliste.push(arbeitszeitkonto);
+      })
+
+      return new Promise(function (resolve) {
+        resolve(arbeitszeitkontoliste)
+      })
+    })
+  }
+
+// *** Buchung realted *** //
+ getBuchung() {
+    // Projekt abfragen
+    console.log("Test")
+    return this.#fetchAdvanced(this.#getBuchungURL()).then((responseJSON) => {
+      let buchung = BuchungBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(buchung)
+        console.log("Test 2", buchung)
+      })
+    })
+  }
+
+  // getBuchungbyID(buchungID) {
+  //   // Buchung abfragen
+  //   return this.#fetchAdvanced(this.#getBuchungbyIDURL(buchungID)).then((responseJSON) => {
+  //     let buchung = BuchungBO.fromJSON(responseJSON);
+  //     return new Promise(function (resolve) {
+  //       resolve(buchung)
+  //     })
+  //   })
+  // }
+
+  addBuchung(buchungBO) {
+    // Buchung neu anlegen
+    return this.#fetchAdvanced(this.#addBuchungURL(), {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(buchungBO)
+    }).then((responseJSON) => {
+      let responseBuchungBO = BuchungBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(responseBuchungBO);
+      })
+    })
+  }
+
+
+  /* updateBuchung(buchungBO) {
+       // Buchung updaten
+       return this.#fetchAdvanced(this.#updateBuchungURL(buchungBO.getID()), {
+         method: 'PUT',
+         headers: {
+           'Accept': 'application/json, text/plain',
+           'Content-type': 'application/json',
+         },
+         body: JSON.stringify(buchungBO)
+       }).then((responseJSON) => {
+         let responseBuchungBO = BuchungBO.fromJSON(responseJSON);
+         return new Promise(function (resolve) {
+           resolve(responseBuchungBO);
+         })
+       })
+     } */
+
+  deleteBuchung(BuchungBO) {
+    // Buchung löschen
+    return this.#fetchAdvanced(this.#deleteBuchungURL(BuchungBO.getID()), {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(BuchungBO)
+    })
+  }
+
+// *** Ereignis realted *** //
+  getEreignisbyID(ereignisID) {
+    // Ereignis abfragen
+    return this.#fetchAdvanced(this.#getEreignisbyIDURL(ereignisID)).then((responseJSON) => {
+      let ereignis = EreignisBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(ereignis)
+      })
+    })
+  }
+
+  getEreignis() {
+    // Ereignis abfragen
+    return this.#fetchAdvanced(this.#getEreignisURL()).then((responseJSON) => {
+      let ereignis = EreignisBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(ereignis)
+      })
+    })
+  }
+
+  addEreignis(ereignisBO) {
+    // Ereignis neu anlegen
+    return this.#fetchAdvanced(this.#addEreignisURL(), {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(ereignisBO)
+    }).then((responseJSON) => {
+      let responseEreignisBO = EreignisBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(responseEreignisBO);
+      })
+    })
+  }
+
+
+  /* updateEreignis(ereignisBO) {
+    // Ereignis updaten
+    return this.#fetchAdvanced(this.#updateEreignisURL(ereignisBO.getID()), {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(ereignisBO)
+    }).then((responseJSON) => {
+      let responseEreignisBO = EreignisBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(responseEreignisBO);
+      })
+    })
+  } */
+
+  deleteEreignis(EreignisBO) {
+    // Ereignis löschen
+    return this.#fetchAdvanced(this.#deleteEreignisURL(EreignisBO.getID()), {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(EreignisBO)
+    })
+  }
+
+// *** Person realted *** //
   getPersonbyID(personID) {
     // Person abfragen
     return this.#fetchAdvanced(this.#getPersonbyIDURL(personID)).then((responseJSON) => {
@@ -109,8 +392,6 @@ export default class TimetrackerAPI {
       })
     })
   }
-
-
 
   getPersonByGoogle(googleid) {
     // Person anhand der GoogleID auslesen
@@ -177,18 +458,16 @@ export default class TimetrackerAPI {
     })
   }
 
-
-
-
-  // getProjektbyID(projektID) {
-  //     // Projekt abfragen
-  //     return this.#fetchAdvanced(this.#getProjektURL()).then((responseJSON) => {
-  //       let projekt = ProjektBO.fromJSON(responseJSON);
-  //       return new Promise(function (resolve) {
-  //         resolve(projekt)
-  //       })
-  //     })
-  //   }
+// *** Projekt realted *** //
+  getProjektbyID(id) {
+      // Projekt abfragen
+      return this.#fetchAdvanced(this.#getProjektbyIDURL(id)).then((responseJSON) => {
+        let projekt = ProjektBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(projekt)
+        })
+      })
+    }
 
   getProjekt() {
     // Projekt abfragen
@@ -274,287 +553,7 @@ export default class TimetrackerAPI {
        })
      }*/
 
-
-
-
-  getAktivitaetbyProjektID(projekt_id) {
-    // Aktivitaet abfragen
-    return this.#fetchAdvanced(this.#getAktivitaetbyProjektIDURL(projekt_id)).then((responseJSON) => {
-      let aktivitaetliste = [];
-      responseJSON.map(item => {
-        let aktivitaet = AktivitaetBO.fromJSON(item);
-        aktivitaetliste.push(aktivitaet);
-      })
-
-      return new Promise(function (resolve) {
-        resolve(aktivitaetliste)
-      })
-    })
-  }
-
-
-  updateAktivitaet(aktivitaetBO) {
-    // Aktivitaet updaten
-    return this.#fetchAdvanced(this.#updateAktivitaetURL(aktivitaetBO.getID()), {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(aktivitaetBO)
-    }).then((responseJSON) => {
-      let responseAktivitaetBO = PersonBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(responseAktivitaetBO);
-      })
-    })
-  }
-
-
-  addAktivitaet(aktivitaetBO) {
-    // Aktivitaet neu anlegen
-    return this.#fetchAdvanced(this.#addAktivitaetURL(), {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(aktivitaetBO)
-    }).then((responseJSON) => {
-      let responseAktivitaetBO = AktivitaetBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(responseAktivitaetBO);
-      })
-    })
-  }
-
-
-
-  deleteAktivitaet(aktivitaetBO) {
-    // Aktivitaet löschen
-    return this.#fetchAdvanced(this.#deleteAktivitaetURL(aktivitaetBO.getID()), {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(aktivitaetBO)
-    })
-  }
-
-  getBuchung() {
-    // Projekt abfragen
-    console.log("Test")
-    return this.#fetchAdvanced(this.#getBuchungURL()).then((responseJSON) => {
-      let buchung = BuchungBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(buchung)
-        console.log("Test 2", buchung)
-      })
-    })
-  }
-
-  // getBuchungbyID(buchungID) {
-  //   // Buchung abfragen
-  //   return this.#fetchAdvanced(this.#getBuchungbyIDURL(buchungID)).then((responseJSON) => {
-  //     let buchung = BuchungBO.fromJSON(responseJSON);
-  //     return new Promise(function (resolve) {
-  //       resolve(buchung)
-  //     })
-  //   })
-  // }
-
-  addBuchung(buchungBO) {
-    // Buchung neu anlegen
-    return this.#fetchAdvanced(this.#addBuchungURL(), {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(buchungBO)
-    }).then((responseJSON) => {
-      let responseBuchungBO = BuchungBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(responseBuchungBO);
-      })
-    })
-  }
-
-
-  /* updateBuchung(buchungBO) {
-       // Buchung updaten
-       return this.#fetchAdvanced(this.#updateBuchungURL(buchungBO.getID()), {
-         method: 'PUT',
-         headers: {
-           'Accept': 'application/json, text/plain',
-           'Content-type': 'application/json',
-         },
-         body: JSON.stringify(buchungBO)
-       }).then((responseJSON) => {
-         let responseBuchungBO = BuchungBO.fromJSON(responseJSON);
-         return new Promise(function (resolve) {
-           resolve(responseBuchungBO);
-         })
-       })
-     } */
-
-  deleteBuchung(BuchungBO) {
-    // Buchung löschen
-    return this.#fetchAdvanced(this.#deleteBuchungURL(BuchungBO.getID()), {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(BuchungBO)
-    })
-  }
-
-  getEreignisbyID(ereignisID) {
-    // Ereignis abfragen
-    return this.#fetchAdvanced(this.#getEreignisbyIDURL(ereignisID)).then((responseJSON) => {
-      let ereignis = EreignisBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(ereignis)
-      })
-    })
-  }
-
-  getEreignis() {
-    // Ereignis abfragen
-    return this.#fetchAdvanced(this.#getEreignisURL()).then((responseJSON) => {
-      let ereignis = EreignisBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(ereignis)
-      })
-    })
-  }
-
-
-
-
-
-
-
-  addEreignis(ereignisBO) {
-    // Ereignis neu anlegen
-    return this.#fetchAdvanced(this.#addEreignisURL(), {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(ereignisBO)
-    }).then((responseJSON) => {
-      let responseEreignisBO = EreignisBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(responseEreignisBO);
-      })
-    })
-  }
-
-
-  /* updateEreignis(ereignisBO) {
-    // Ereignis updaten
-    return this.#fetchAdvanced(this.#updateEreignisURL(ereignisBO.getID()), {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(ereignisBO)
-    }).then((responseJSON) => {
-      let responseEreignisBO = EreignisBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(responseEreignisBO);
-      })
-    })
-  } */
-
-  deleteEreignis(EreignisBO) {
-    // Ereignis löschen
-    return this.#fetchAdvanced(this.#deleteEreignisURL(EreignisBO.getID()), {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(EreignisBO)
-    })
-  }
-
-  getArbeitszeitkonto(arbeitszeitkontoID) {
-    // Arbeitszeitkonto abfragen
-    return this.#fetchAdvanced(this.#getArbeitszeitkontoURL(arbeitszeitkontoID)).then((responseJSON) => {
-      let arbeitszeitkonto = ArbeitszeitkontoBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(arbeitszeitkonto)
-      })
-    })
-  }
-
-  addArbeitszeitkonto(arbeitszeitkontoBO) {
-    // Arbeitszeitkonto neu anlegen
-    return this.#fetchAdvanced(this.#addArbeitszeitkontoURL(), {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(arbeitszeitkontoBO)
-    }).then((responseJSON) => {
-      let responseArbeitszeitkontoBO = ArbeitszeitkontoBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(responseArbeitszeitkontoBO);
-      })
-    })
-  }
-
-
-  updateArbeitszeitkonto(arbeitszeitkontoBO) {
-    // Arbeitszeitkonto updaten
-    return this.#fetchAdvanced(this.#updateArbeitszeitkontoURL(arbeitszeitkontoBO.getID()), {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(arbeitszeitkontoBO)
-    }).then((responseJSON) => {
-      let responseArbeitszeitkontoBO = ArbeitszeitkontoBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(responseArbeitszeitkontoBO);
-      })
-    })
-  }
-
-  deleteArbeitszeitkonto(arbeitszeitkontoBO) {
-    // Arbeitszeitkonto löschen
-    return this.#fetchAdvanced(this.#deleteArbeitszeitkontoURL(arbeitszeitkontoBO.getID()), {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(arbeitszeitkontoBO)
-    })
-  }
-
-  getArbeitszeitkontobyPersonID(person_id) {
-    // Aktivitaet abfragen
-    return this.#fetchAdvanced(this.#getArbeitszeitkontobyPersonIDURL(person_id)).then((responseJSON) => {
-      let arbeitszeitkontoliste = [];
-      responseJSON.map(item => {
-        let arbeitszeitkonto = ArbeitszeitkontoBO.fromJSON(item);
-        arbeitszeitkontoliste.push(arbeitszeitkonto);
-      })
-
-      return new Promise(function (resolve) {
-        resolve(arbeitszeitkontoliste)
-      })
-    })
-  }
+// Zeitintervall realted
 
   getZeitintervall(zeitintervallID) {
     // Zeitintervall abfragen
