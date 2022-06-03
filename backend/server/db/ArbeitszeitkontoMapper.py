@@ -156,7 +156,7 @@ class ArbeitszeitkontoMapper (Mapper):
         cursor.close()
 
 
-with ArbeitszeitkontoMapper() as mapper:
-    result = mapper.find_all()
-    for t in result:    
-        print(t)
+# with ArbeitszeitkontoMapper() as mapper:
+#     result = mapper.find_all()
+#     for t in result:    
+#         print(t)

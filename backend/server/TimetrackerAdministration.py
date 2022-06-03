@@ -90,6 +90,10 @@ class TimetrackerAdministration (object):
         with BuchungMapper() as mapper:
             return mapper.find_by_id(id)
 
+    def get_buchung_by_arbeitszeitkonto_id(self, arbeitszeitkonto_id):
+        """Die Buchung mit der gegebenen Arbeitszeitkonto ID auslesen."""
+        with BuchungMapper() as mapper:
+            return mapper.find_by_arbeitszeitkonto_id(arbeitszeitkonto_id)
 
     def get_all_buchung(self):
         """Alle Buchungen auslesen."""

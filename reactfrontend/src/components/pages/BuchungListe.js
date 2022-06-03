@@ -17,29 +17,22 @@ class BuchungListe extends Component {
     // Init an empty state
     this.state = {
       buchung: [],
-      arbeitszeitkonten: [],
+      buchungliste: [],
       showBuchungDialog: false,
     };
   }
 
-  // Gibt alle Arbeitszeitkonten einer Prson zurück
-  getArbeitszeitkontoByPersonID = () => {
-    var api = TimetrackerAPI.getAPI();
-        api.getArbeitszeitkontobyPersonID(1).then((arbeitszeitkontoBOs) => {
-          this.setState({
-            arbeitszeitkonten: arbeitszeitkontoBOs,
-          });
+//// muss umgeschrieben werden get Person by Person ID
+  getBuchungbyArbeitszeitkontoID = () => {
+    console.log("String")
+    TimetrackerAPI.getAPI().getBuchungbyArbeitszeitkontoID(1).then((buchungBOs) => {
+        this.setState({
+            buchungliste: buchungBOs,
         });
-      }
+    });
+}
 
-    //Gibt alle Buchugen einer Person zurück, anhand der Arbeitszeitkonten
-    getAktivitaetbyProjektID = () => {
-      TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.props.projekt.getID()).then((aktivitaetBOs) => {
-          this.setState({
-              aktivitaetliste: aktivitaetBOs,
-          });
-      });
-  }
+
 
   //BuchungDialog anzeigen
   buchungAnlegenButtonClicked = event => {
@@ -59,20 +52,19 @@ class BuchungListe extends Component {
 
   
   componentDidMount() {
-      this.getArbeitszeitkontoByPersonID();
-
+      this.getBuchungbyArbeitszeitkontoID();
   }
 
 
   /** Renders the component */
   render() {
 
-    const { buchung, arbeitszeitkonten, showBuchungDialog } = this.state;
-    console.log(Object.values(arbeitszeitkonten.getID()))
+    const { buchung,  showBuchungDialog, buchungliste } = this.state;
+    console.log(buchungliste)
 
 
     return (
-      arbeitszeitkonten ?
+      buchungliste ?
       <div>
         {/* <Button variant="contained" sx={{width:250}} onClick={this.showBuchungDialog}> Neue Buchung Erstellen</Button> */}
         <Grid container spacing={2} alignItems="center">
@@ -107,7 +99,11 @@ class BuchungListe extends Component {
           </Grid>
           <Grid item xs={12}>
             <List>
-              <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show}/>
+              {
+
+              buchungliste.map(buchung =>
+              <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show}/>)
+               } 
             </List>
           </Grid>
         </Grid>

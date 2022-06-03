@@ -35,6 +35,7 @@ export default class TimetrackerAPI {
   #getBuchungbyIDURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
   #updateBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
   #deleteBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
+  #getBuchungbyArbeitszeitkontoIDURL = (arbeitszeitkonto_id) => `${this.#ServerBaseURL}/buchungbyarbeitszeitkontoid/${arbeitszeitkonto_id}`;
 
 // *** Ereignis realted *** //
   #addEreignisURL = () => `${this.#ServerBaseURL}/ereignis`;
@@ -223,7 +224,7 @@ export default class TimetrackerAPI {
     return this.#fetchAdvanced(this.#getArbeitszeitkontobyPersonIDURL(person_id)).then((responseJSON) => {
       let arbeitszeitkontoliste = [];
       responseJSON.map(item => {
-        let arbeitszeitkonto = ArbeitszeitkontoBO.fromJSON(item);
+        let arbeitszeitkonto = ArbeitszeitkontoBO.fromJSON(item).getID();
         arbeitszeitkontoliste.push(arbeitszeitkonto);
       })
 
@@ -245,6 +246,23 @@ export default class TimetrackerAPI {
       })
     })
   }
+
+  getBuchungbyArbeitszeitkontoID(arbeitszeitkonto_id) {
+    // Aktivitaet abfragen
+    return this.#fetchAdvanced(this.#getBuchungbyArbeitszeitkontoIDURL(arbeitszeitkonto_id)).then((responseJSON) => {
+      let buchungliste = [];
+      responseJSON.map(item => {
+        let buchung = BuchungBO.fromJSON(item);
+        buchungliste.push(buchung);
+      })
+
+      return new Promise(function (resolve) {
+        resolve(buchungliste)
+      })
+    })
+  }
+
+
 
   // getBuchungbyID(buchungID) {
   //   // Buchung abfragen

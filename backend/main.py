@@ -62,7 +62,7 @@ arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {
 buchung = api.inherit('Buchung', bo, {
     'datum': fields.Date(attribute='_datum',
                                 description='Datum an dem die Buchung durchgeführt wurde'),
-    'stunden': fields.Float(attribute='stunden',
+    'stunden': fields.Float(attribute='_stunden',
                                 description='Stunden der Buchung'),
     'arbeitszeitkonto_id': fields.Integer(attribute='_arbeitszeitkonto_id',
                                 description='ID des Arbeitszeitkonto auf dem die Buchung durchgeführt wird'),
@@ -380,6 +380,22 @@ class BuchungIDOperations(Resource):
         """
         adm = TimetrackerAdministration()
         bu = adm.get_buchung_by_id(id)
+
+        if bu is not None:
+            return bu
+        else:
+            return '', 500 
+
+@timetracker.route('/buchungbyarbeitszeitkontoid/<int:arbeitszeitkonto_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class BuchungByArbeitszeitkontoIDOperations(Resource):
+    @timetracker.marshal_with(buchung)
+    def get(self, arbeitszeitkonto_id):
+        """Auslesen eines bestimmten Buchung-Objekts aufgrund seiner Arbeitszeitkonto ID.
+        Das auszulesende Objekt wird durch die ```arbeitszeitkonto_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        bu = adm.get_buchung_by_arbeitszeitkonto_id(arbeitszeitkonto_id)
 
         if bu is not None:
             return bu

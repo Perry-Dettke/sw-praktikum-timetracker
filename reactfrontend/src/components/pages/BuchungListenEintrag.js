@@ -5,6 +5,8 @@ import{Typography, IconButton, Grid, Tooltip, ListItem, Divider, Table, TableHea
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
+
+import TimetrackerAPI from '../../api/TimetrackerAPI';
 // import BuchungLöschenDialog from '../dialogs/BuchungLöschenDialog';
 // import BuchungForm from '../dialogs/BuchungForm';
 
@@ -17,6 +19,7 @@ class BuchungListenEintrag extends Component {
 
         //gebe einen leeren status
         this.state = {
+            buchungliste: [],
             showBuchungForm: false,
             showBuchungDelete: false,
         };
@@ -27,6 +30,14 @@ class BuchungListenEintrag extends Component {
         this.props.getBuchung();
     }
 
+
+  getBuchungbyArbeitszeitkontoID = () => {
+    TimetrackerAPI.getAPI().getBuchungbyArbeitszeitkontoID([1]).then((buchungBOs) => {
+        this.setState({
+            buchungliste: buchungBOs,
+        });
+    });
+}
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
         event.stopPropagation();
@@ -66,13 +77,19 @@ class BuchungListenEintrag extends Component {
           this.getBuchung();
       }
 
+      componentDidMount() {
+        this.getBuchungbyArbeitszeitkontoID();
+  
+    }
 
     //Renders the component
     render() {
-        const {classes, buchung} = this.props;
-        const {showBuchungForm, error, loadingInProgress, showBuchungDelete} = this.state;
+        const {classes} = this.props;
+        const {buchungliste, showBuchungForm, error, loadingInProgress, showBuchungDelete} = this.state;
+        console.log(buchungliste)
 
         return (
+            buchungliste ?
             <div>
                 <Grid container alignItems="center" spacing={2}>
                     <Grid item xs={12}>
@@ -90,12 +107,15 @@ class BuchungListenEintrag extends Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <TableRow>
+                                {
+                                buchungliste.map(buchung =>
+                                <TableRow key={buchung.getID()}>
+                                    <TableCell><Typography> {buchung.getDatum()}</Typography></TableCell>
+                                    <TableCell><Typography> {buchung.getDatum()}</Typography></TableCell>
                                     <TableCell>Daten</TableCell>
-                                    <TableCell>Daten</TableCell>
-                                    <TableCell>Daten</TableCell>
-                                    <TableCell>Daten</TableCell>
+                                    <TableCell><Typography> {buchung.getStunden()}</Typography></TableCell>
                                     <TableCell>
+                               
                                         <Tooltip title='Bearbeiten' placement="bottom">
                                             <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}>
                                                 <EditIcon />
@@ -106,8 +126,10 @@ class BuchungListenEintrag extends Component {
                                     <Tooltip title='Löschen' placement="bottom">
                                         <IconButton variant="contained"  onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
                                     </Tooltip>
+                                   
                                     </TableCell>
                                 </TableRow>
+                                )}
                             </TableBody>
                         </Table>
                     </Grid>
@@ -117,6 +139,7 @@ class BuchungListenEintrag extends Component {
                 <BuchungLöschenDialog show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchung= {this.getPerson}/>        */}
             
             </div>
+            : null
         );
     }
 }

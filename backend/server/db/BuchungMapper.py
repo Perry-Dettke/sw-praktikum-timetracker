@@ -78,40 +78,34 @@ class BuchungMapper(Mapper):
 
 
     def find_by_arbeitszeitkonto_id(self, arbeitszeitkonto_id):
+        """Auslesen aller Buchungen anhand der Arbeitszeitkonto ID."""
 
-        """
-        Suchen einer Person nach der übergebenen ID.
-
-        :param id Primärschlüsselattribut eines Arbeitszeitkontos aus der Datenbank
-        :return Arbeitszeitkonto-Objekt, welche mit der ID übereinstimmt,
-                None wenn kein Eintrag gefunden wurde
-        """
-
-        result = None
+        result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, datum, stunden, arbeitszeitkonto_id FROM buchung WHERE arbeitszeitkonto_id='{}'".format(arbeitszeitkonto_id)
+        command = "SELECT * FROM buchung WHERE arbeitszeitkonto_id={}".format(arbeitszeitkonto_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, datum, stunden, arbeitszeitkonto_id) = tuples[0]
-            buchung = Buchung()
-            buchung.set_id(id)
-            buchung.set_letzte_aenderung(letzte_aenderung)
-            buchung.set_datum(datum)
-            buchung.set_stunden(stunden)
-            buchung.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-
-            result = Buchung
+            for (id, letzte_aenderung, datum, stunden, arbeitszeitkonto_id) in tuples:
+                buchung = Buchung()
+                buchung.set_id(id)
+                buchung.set_letzte_aenderung(letzte_aenderung)
+                buchung.set_datum(datum)
+                buchung.set_stunden(stunden)
+                buchung.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
+                result.append(buchung)
 
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
             keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None
+            buchung = None
 
         self._cnx.commit()
         cursor.close()
+
         return result
+
 
     def insert(self, Buchung):
         """
