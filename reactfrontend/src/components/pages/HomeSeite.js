@@ -4,8 +4,7 @@ import {Paper, Box, Button, TableBody, TableCell, TableContainer, TableHead, Tab
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import EditIcon from '@mui/icons-material/Edit';
 import PersonForm from '../dialogs/PersonForm';
-
-
+import SignUp from './SignUp';
 
  class Home extends Component {
 
@@ -35,6 +34,14 @@ import PersonForm from '../dialogs/PersonForm';
         });
     }
 
+    // SignUp anzeigen
+  closeSignup = (person) => {
+    this.setState({
+      currentUser: person.getID(),
+      person: person,
+    });
+  }
+
     //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
     personFormClosed = (person) => {
       if (person) {
@@ -48,6 +55,7 @@ import PersonForm from '../dialogs/PersonForm';
           });
       }
   }
+
 
 
 
