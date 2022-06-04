@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Paper, Button, withStyles } from '@material-ui/core';
-import { TimetrackerAPI } from '../api';
-import PersonForm from './dialogs/PersonForm';
+import TimetrackerAPI from '../../api/TimetrackerAPI';
+import PersonForm from 'reactfrontend/src/components/dialogs/PersonForm.js';
 
 
 class SignUp extends Component {
@@ -13,9 +13,7 @@ class SignUp extends Component {
         this.state = {
             currentUser: props.currentUser,
             person: null,
-            profile: null,
             showPerson: false,
-            showProfile: false,
         };
     }
 
@@ -103,7 +101,7 @@ class SignUp extends Component {
                         ? this.link()
                         : null}
                     <PersonForm show={showPerson} person={person} onClose={this.closePersonDialog} />
-                    <ProfileForm show={showProfile} profile={profile} interests={interests} onClose={this.closeProfileDialog} />
+    
                 </div>}
             </div>
         );
