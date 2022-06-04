@@ -19,25 +19,35 @@ class BuchungListenEintrag extends Component {
 
         //gebe einen leeren status
         this.state = {
-            buchungliste: [],
+            aktivitaet: null,
             showBuchungForm: false,
             showBuchungDelete: false,
         };
     }
 
-    //Gibt den aktuellen Buchung zurück
-    getBuchung = () => {
-        this.props.getBuchung();
+    //Gibt die aktuellen Buchungen zurück
+    getBuchungbyPersonID = () => {
+        this.props.getBuchungbyPersonID();
+    }
+
+    ereignisbuchungCheck = () => {
+        if (this.props.buchung.getEreignisbuchung() === true) {
+            return "Ereignisbuchung"}
+        else {
+            return "Zetintervallbuchung"
+        }
+        
+    }
+
+    getAktivitaet = () => {
+        TimetrackerAPI.getAPI().getAktivitaetbyID(this.props.buchung.getAktivitaet_id()).then((aktivitaetBOs) => {
+            this.setState({
+                aktivitaet: aktivitaetBOs,
+            });
+        });
     }
 
 
-  getBuchungbyArbeitszeitkontoID = () => {
-    TimetrackerAPI.getAPI().getBuchungbyArbeitszeitkontoID([1]).then((buchungBOs) => {
-        this.setState({
-            buchungliste: buchungBOs,
-        });
-    });
-}
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
         event.stopPropagation();
@@ -77,42 +87,29 @@ class BuchungListenEintrag extends Component {
           this.getBuchung();
       }
 
-      componentDidMount() {
-        this.getBuchungbyArbeitszeitkontoID();
-  
+    componentDidMount() {
+        this.getAktivitaet();
     }
 
     //Renders the component
     render() {
-        const {classes} = this.props;
-        const {buchungliste, showBuchungForm, error, loadingInProgress, showBuchungDelete} = this.state;
-        console.log(buchungliste)
+        const {classes, buchung} = this.props;
+        const {aktivitaet, showBuchungForm, error, loadingInProgress, showBuchungDelete} = this.state;
+        console.log(aktivitaet)
 
         return (
-            buchungliste ?
+            aktivitaet ?
             <div>
                 <Grid container alignItems="center" spacing={2}>
                     <Grid item xs={12}>
                         <Table>
-                            <TableHead sx={{
-                                backgroundColor: '#dedede'
-                                }}>
-                                <TableRow>
-                                    <TableCell>Datum</TableCell>
-                                    <TableCell>Aktivität</TableCell>
-                                    <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
-                                    <TableCell>Stunden die gebucht wurden</TableCell>
-                                    <TableCell>Bearbeiten</TableCell>
-                                    <TableCell>Löchen</TableCell>
-                                </TableRow>
-                            </TableHead>
+
                             <TableBody>
-                                {
-                                buchungliste.map(buchung =>
+
                                 <TableRow key={buchung.getID()}>
                                     <TableCell><Typography> {buchung.getDatum()}</Typography></TableCell>
-                                    <TableCell><Typography> {buchung.getDatum()}</Typography></TableCell>
-                                    <TableCell>Daten</TableCell>
+                                    <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
+                                    <TableCell><Typography> {this.ereignisbuchungCheck()}</Typography></TableCell>
                                     <TableCell><Typography> {buchung.getStunden()}</Typography></TableCell>
                                     <TableCell>
                                
@@ -129,7 +126,7 @@ class BuchungListenEintrag extends Component {
                                    
                                     </TableCell>
                                 </TableRow>
-                                )}
+                                
                             </TableBody>
                         </Table>
                     </Grid>

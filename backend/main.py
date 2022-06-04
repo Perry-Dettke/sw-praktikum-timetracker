@@ -181,6 +181,19 @@ class AktivitaetIDOperations(Resource):
         else:
             return '', 500
 
+    @timetracker.marshal_with(aktivitaet)
+    def get(self, id):
+        """Auslesen eines bestimmten Aktivitaet-Objekts.
+        Das auszulesende Objekt wird durch die ```id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        akt = adm.get_aktivitaet_by_id(id)
+
+        if akt is not None:
+            return akt
+        else:
+            return '', 500 
+
 
 
 @timetracker.route('/akitvitaetbyprojektid/<int:projekt_id>')
@@ -390,21 +403,21 @@ class BuchungIDOperations(Resource):
         else:
             return '', 500 
 
-# @timetracker.route('/buchungbyarbeitszeitkontoid/<int:arbeitszeitkonto_id>')
-# @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-# class BuchungByArbeitszeitkontoIDOperations(Resource):
-#     @timetracker.marshal_with(buchung)
-#     def get(self, arbeitszeitkonto_id):
-#         """Auslesen eines bestimmten Buchung-Objekts aufgrund seiner Arbeitszeitkonto ID.
-#         Das auszulesende Objekt wird durch die ```arbeitszeitkonto_id``` in dem URI bestimmt.
-#         """
-#         adm = TimetrackerAdministration()
-#         bu = adm.get_buchung_by_arbeitszeitkonto_id(arbeitszeitkonto_id)
+@timetracker.route('/buchungbypersonid/<int:person_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class BuchungByPersonIDOperations(Resource):
+    @timetracker.marshal_with(buchung)
+    def get(self, person_id):
+        """Auslesen eines bestimmten Buchung-Objekts aufgrund seiner Arbeitszeitkonto ID.
+        Das auszulesende Objekt wird durch die ```person_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        bu = adm.get_buchung_by_person_id(person_id)
 
-#         if bu is not None:
-#             return bu
-#         else:
-#             return '', 500 
+        if bu is not None:
+            return bu
+        else:
+            return '', 500 
 
 
 

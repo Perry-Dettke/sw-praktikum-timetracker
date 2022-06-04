@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, TextField, InputAdornment, IconButton, Grid, Typography, Paper, List, Fab, Tooltip } from '@mui/material';
+import { Button, TextField, InputAdornment, IconButton, Grid, Typography, Paper, List, Fab, Tooltip, Table, TableHead, TableBody, TableRow, TableCell} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 import BuchungListenEintrag from './BuchungListenEintrag.js'
@@ -22,10 +22,8 @@ class BuchungListe extends Component {
     };
   }
 
-//// muss umgeschrieben werden get Person by Person ID
-  getBuchungbyArbeitszeitkontoID = () => {
-    console.log("String")
-    TimetrackerAPI.getAPI().getBuchungbyArbeitszeitkontoID(1).then((buchungBOs) => {
+  getBuchungbyPersonID = () => {
+    TimetrackerAPI.getAPI().getBuchungbyPersonID(1).then((buchungBOs) => {
         this.setState({
             buchungliste: buchungBOs,
         });
@@ -52,7 +50,7 @@ class BuchungListe extends Component {
 
   
   componentDidMount() {
-      this.getBuchungbyArbeitszeitkontoID();
+      this.getBuchungbyPersonID();
   }
 
 
@@ -98,7 +96,22 @@ class BuchungListe extends Component {
             <Typography><h1>Übersicht eigener Buchungen</h1></Typography>
           </Grid>
           <Grid item xs={12}>
+            <Table>
+          <TableHead sx={{
+                                backgroundColor: '#dedede'
+                                }}>
+                                <TableRow>
+                                    <TableCell>Datum</TableCell>
+                                    <TableCell>Aktivität</TableCell>
+                                    <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
+                                    <TableCell>Stunden die gebucht wurden</TableCell>
+                                    <TableCell>Bearbeiten</TableCell>
+                                    <TableCell>Löchen</TableCell>
+                                </TableRow>
+                            </TableHead>
+                </Table>
             <List>
+              
               {
 
               buchungliste.map(buchung =>

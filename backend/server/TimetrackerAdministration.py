@@ -28,6 +28,11 @@ class TimetrackerAdministration (object):
         with AktivitaetMapper() as mapper:
             return mapper.insert(aktivitaet)
 
+    def get_aktivitaet_by_id(self, id):
+        """Die Aktivitaet mit der gegebenen  ID auslesen."""
+        with AktivitaetMapper() as mapper:
+            return mapper.find_by_id(id)
+
     def get_aktivitaet_by_projekt_id(self, projekt_id):
         """Die Aktivitaet mit der gegebenen Projekt ID auslesen."""
         with AktivitaetMapper() as mapper:
@@ -90,10 +95,10 @@ class TimetrackerAdministration (object):
         with BuchungMapper() as mapper:
             return mapper.find_by_id(id)
 
-    def get_buchung_by_arbeitszeitkonto_id(self, arbeitszeitkonto_id):
-        """Die Buchung mit der gegebenen Arbeitszeitkonto ID auslesen."""
+    def get_buchung_by_person_id(self, person_id):
+        """Die Buchung mit der gegebenen Person ID auslesen."""
         with BuchungMapper() as mapper:
-            return mapper.find_by_arbeitszeitkonto_id(arbeitszeitkonto_id)
+            return mapper.find_by_person_id(person_id)
 
     def get_all_buchung(self):
         """Alle Buchungen auslesen."""

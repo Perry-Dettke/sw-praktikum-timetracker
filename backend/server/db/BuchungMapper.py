@@ -81,34 +81,36 @@ class BuchungMapper(Mapper):
         return result
 
 
-    # def find_by_arbeitszeitkonto_id(self, arbeitszeitkonto_id):
-    #     """Auslesen aller Buchungen anhand der Arbeitszeitkonto ID."""
+    def find_by_person_id(self, person_id):
+        """Auslesen aller Buchungen anhand der Arbeitszeitkonto ID."""
 
-    #     result = []
-    #     cursor = self._cnx.cursor()
-    #     command = "SELECT * FROM buchung WHERE arbeitszeitkonto_id={}".format(arbeitszeitkonto_id)
-    #     cursor.execute(command)
-    #     tuples = cursor.fetchall()
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT * FROM buchung WHERE person_id={}".format(person_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
 
-    #     try:
-    #         for (id, letzte_aenderung, datum, stunden, arbeitszeitkonto_id) in tuples:
-    #             buchung = Buchung()
-    #             buchung.set_id(id)
-    #             buchung.set_letzte_aenderung(letzte_aenderung)
-    #             buchung.set_datum(datum)
-    #             buchung.set_stunden(stunden)
-    #             buchung.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
-    #             result.append(buchung)
+        try:
+            for (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id ) in tuples:
+                buchung = Buchung()
+                buchung.set_id(id)
+                buchung.set_letzte_aenderung(letzte_aenderung)
+                buchung.set_datum(datum)
+                buchung.set_stunden(stunden)
+                buchung.set_ereignisbuchung(ereignisbuchung)
+                buchung.set_person_id(person_id)
+                buchung.set_aktivitaet_id(aktivitaet_id)
+                result.append(buchung)
 
-    #     except IndexError:
-    #         """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
-    #         keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-    #         buchung = None
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            buchung = None
 
-    #     self._cnx.commit()
-    #     cursor.close()
+        self._cnx.commit()
+        cursor.close()
 
-    #     return result
+        return result
 
 
     def insert(self, Buchung):

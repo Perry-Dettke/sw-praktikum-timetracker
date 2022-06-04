@@ -15,7 +15,7 @@ class ProjektListe extends Component {
 
     // Init an empty state
     this.state = {
-      projekt: [],
+      projektliste: [],
       filteredProjekt: [],
       showProjektForm: false,
       showAktivitaetForm: false,
@@ -28,7 +28,7 @@ class ProjektListe extends Component {
     var api = TimetrackerAPI.getAPI();
         api.getProjekt().then((projektBOs) => {
           this.setState({
-            projekt: projektBOs,
+            projektliste: projektBOs,
           });
         });
       }
@@ -99,7 +99,7 @@ projektFormClosed = projekt => {
     /** Renders the component */
     render() {
 
-        const { projekt, showProjektForm, showAktivitaetForm, showProjektDelete } = this.state;
+        const { projektliste, showProjektForm, showAktivitaetForm, showProjektDelete } = this.state;
 
 
 
@@ -123,7 +123,7 @@ projektFormClosed = projekt => {
                 <Paper>
                     <List >
                         {
-                            Object.values(projekt).map(projekt =>
+                            Object.values(projektliste).map(projekt =>
                                 <ProjektListenEintrag key={Object.keys(projekt)[projekt.id]} projekt={projekt} show={this.props.show}
                                     getProjekt={this.getProjekt} />)
 
