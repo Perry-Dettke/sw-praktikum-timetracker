@@ -8,7 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 // import BuchungLöschenDialog from '../dialogs/BuchungLöschenDialog';
-// import BuchungForm from '../dialogs/BuchungForm';
+import Buchungdialog1 from '../dialogs/BuchungDialog1';
 
 
 
@@ -20,7 +20,7 @@ class BuchungListenEintrag extends Component {
         //gebe einen leeren status
         this.state = {
             aktivitaet: null,
-            showBuchungForm: false,
+            showBuchungdialog1: false,
             showBuchungDelete: false,
         };
     }
@@ -52,20 +52,20 @@ class BuchungListenEintrag extends Component {
     bearbeitenButtonClicked = event => {
         event.stopPropagation();
         this.setState({
-            showBuchungForm: true
+            showBuchungdialog1: true
         });
     }
 
     //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
-    buchungFormClosed = (buchung) => {
+    buchungdialog1Closed = (buchung) => {
         if (buchung) {
             this.setState({
                 buchung: buchung,
-                showBuchungForm: false
+                showBuchungdialog1: false
             });
         } else {
             this.setState({
-                showBuchungForm: false
+                showBuchungdialog1: false
             });
         }
     }
@@ -94,8 +94,8 @@ class BuchungListenEintrag extends Component {
     //Renders the component
     render() {
         const {classes, buchung} = this.props;
-        const {aktivitaet, showBuchungForm, error, loadingInProgress, showBuchungDelete} = this.state;
-        console.log(aktivitaet)
+        const {aktivitaet, showBuchungdialog1, error, loadingInProgress, showBuchungDelete} = this.state;
+        console.log(showBuchungdialog1)
 
         return (
             aktivitaet ?
@@ -132,8 +132,10 @@ class BuchungListenEintrag extends Component {
                     </Grid>
                 </Grid>
      
-                {/* <BuchungForm show={showBuchungForm} buchung={buchung} onClose={this.buchungFormClosed} getBuchung= {this.getBuchung}/>
-                <BuchungLöschenDialog show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchung= {this.getPerson}/>        */}
+                <Buchungdialog1 show={showBuchungdialog1} buchung={buchung} aktivitaet={aktivitaet} onClose={this.buchungDialogClosed}/>
+
+
+                {/* <BuchungLöschenDialog show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed}/> */}
             
             </div>
             : null

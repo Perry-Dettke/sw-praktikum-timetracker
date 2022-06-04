@@ -288,7 +288,7 @@ getAktivitaetbyID(id) {
   }
 
 
-  /* updateBuchung(buchungBO) {
+   updateBuchung(buchungBO) {
        // Buchung updaten
        return this.#fetchAdvanced(this.#updateBuchungURL(buchungBO.getID()), {
          method: 'PUT',
@@ -303,7 +303,7 @@ getAktivitaetbyID(id) {
            resolve(responseBuchungBO);
          })
        })
-     } */
+     } 
 
   deleteBuchung(BuchungBO) {
     // Buchung löschen
