@@ -6,6 +6,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import PersonForm from '../dialogs/PersonForm';
 import SignUp from './SignUp';
 
+
+
  class Home extends Component {
 
     constructor(props) {
@@ -33,14 +35,7 @@ import SignUp from './SignUp';
             showPersonForm: true
         });
     }
-
-    // SignUp anzeigen
-  closeSignup = (person) => {
-    this.setState({
-      currentUser: person.getID(),
-      person: person,
-    });
-  }
+    
 
     //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
     personFormClosed = (person) => {
