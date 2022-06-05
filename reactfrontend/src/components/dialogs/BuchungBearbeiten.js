@@ -14,24 +14,27 @@ import { EventBusyRounded } from '@mui/icons-material';
 import AktivitaetBO from '../../api/AktivitaetBO';
 
 
-class BuchungDialog1 extends Component {
+class BuchungBearbeiten extends Component {
 
     constructor(props) {
         super(props);
 
-        let st = "", ak = "";
+        let st = "", ak = "", ai;
         if (props.aktivitaet) {
             ak = props.aktivitaet.bezeichnung
         }
         if (props.buchung) {
             st = props.buchung.stunden
-
-       
+        }
+        if (props.aktivitaet) {
+            ai = props.buchung.aktivitaet_id
         }
         this.state = {
             stunden: st,
             bezeichnung: ak,
-            value: ""
+            aktivitaet_id: ai,
+            value: "",
+            aktivitaetID : 0,
           
         };
 
@@ -50,6 +53,7 @@ class BuchungDialog1 extends Component {
         let buchung = this.props.buchung;
         // buchung.setEreignisbuchung(this.state.ereignisbuchung)
         buchung.setStunden(this.state.stunden)
+        buchung.setAktivitaet_id(this.state.aktivitaet_id)
         TimetrackerAPI.getAPI().updateBuchung(buchung).then(buchung => {
             this.props.getBuchung()
             this.setState(this.initialState);
@@ -81,8 +85,8 @@ class BuchungDialog1 extends Component {
         });
       }
     
-    handleChange = (event) => {
-        this.setState({ value: event.target.value });
+    handleChange = (e) => {
+        this.setState({ aktivitaet_id: e.target.value });
     }
 
 
@@ -98,8 +102,8 @@ class BuchungDialog1 extends Component {
 
     render() {
         const { show, buchung, aktivitaet, aktivitaetliste } = this.props;
-        const { bezeichnung, stunden, value } = this.state;
-        console.log(value, "hiii2")
+        const { bezeichnung, stunden, value, aktivitaet_id } = this.state;
+        console.log(aktivitaet_id, "hiii2")
 
 
         return (
@@ -124,27 +128,19 @@ class BuchungDialog1 extends Component {
                         {/* <TextField autoFocus type='text' required fullWidth margin='normal' id='benutzer_name' label='Benutzername:' value={benutzer_name} onChange={this.textFieldValueChange} /> */}
                         
                         <FormControl fullWidth>
-                        <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                            Aktivitaet
-                        </InputLabel>
-                            <NativeSelect
-                                defaultValue={value}
-                                onChange={this.handleChange()}
+                        <InputLabel id='aktivitaet-label'>Aktivität</InputLabel>
+                                <Select labelId='aktivitaet-label' id='aktivitaet' value={aktivitaet_id} defaultValue={aktivitaet.bezeichnung} onChange={this.handleChange}>
 
-                            >
-
-                                {aktivitaetliste.map((aktivitaet) => {
-                                    return (
-                                        <option 
-                                        value={aktivitaet.getProjektID()}>
-                                            {aktivitaet.getBezeichnung()}
-                                        </option>
-                                    );
-                                    
-                                })
-                                }
-                                
-                            </NativeSelect>
+                                    {aktivitaetliste.map((aktivitaet) => {
+                                                        return (
+                                                        <MenuItem
+                                                        value={aktivitaet.getID()}>
+                                                            {aktivitaet.getBezeichnung()}
+                                                        </MenuItem>
+                                                        );
+                                                    })
+                                                    }
+                                </Select>
                         </FormControl>
 
 
@@ -171,4 +167,4 @@ class BuchungDialog1 extends Component {
 }
 
 
-export default BuchungDialog1;
+export default BuchungBearbeiten;

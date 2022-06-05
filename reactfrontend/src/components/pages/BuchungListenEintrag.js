@@ -8,7 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 // import BuchungLöschenDialog from '../dialogs/BuchungLöschenDialog';
-import Buchungdialog1 from '../dialogs/BuchungDialog1';
+import BuchungBearbeiten from '../dialogs/BuchungBearbeiten';
 
 
 
@@ -20,7 +20,7 @@ class BuchungListenEintrag extends Component {
         //gebe einen leeren status
         this.state = {
             aktivitaet: null,
-            showBuchungdialog1: false,
+            showBuchungBearbeiten: false,
             showBuchungDelete: false,
             aktivitaetliste: [],
         };
@@ -71,6 +71,7 @@ class BuchungListenEintrag extends Component {
                 this.setState({
                     aktivitaetliste: aktivitaetBOs,
                 });
+                console.log(this.state.aktivitaet.getProjektID())
             });
         }
         , 1000);
@@ -88,20 +89,20 @@ class BuchungListenEintrag extends Component {
     bearbeitenButtonClicked = event => {
         event.stopPropagation();
         this.setState({
-            showBuchungdialog1: true
+            showBuchungBearbeiten: true
         });
     }
 
     //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
-    buchungdialog1Closed = (buchung) => {
+    buchungBearbeitenClosed = (buchung) => {
         if (buchung) {
             this.setState({
                 buchung: buchung,
-                showBuchungdialog1: false
+                showBuchungBearbeiten: false
             });
         } else {
             this.setState({
-                showBuchungdialog1: false
+                showBuchungBearbeiten: false
             });
         }
     }
@@ -135,7 +136,7 @@ class BuchungListenEintrag extends Component {
     //Renders the component
     render() {
         const {classes, buchung} = this.props;
-        const {aktivitaet, showBuchungdialog1, error, loadingInProgress, showBuchungDelete, aktivitaetliste} = this.state;
+        const {aktivitaet, showBuchungBearbeiten, showBuchungDelete, aktivitaetliste} = this.state;
         console.log(aktivitaetliste)
 
         return (
@@ -173,7 +174,7 @@ class BuchungListenEintrag extends Component {
                     </Grid>
                 </Grid>
      
-                <Buchungdialog1 show={showBuchungdialog1} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungdialog1Closed}/>
+                <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed}/>
 
 
                 {/* <BuchungLöschenDialog show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed}/> */}
