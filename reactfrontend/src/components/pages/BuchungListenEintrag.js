@@ -22,6 +22,7 @@ class BuchungListenEintrag extends Component {
             aktivitaet: null,
             showBuchungdialog1: false,
             showBuchungDelete: false,
+            aktivitaetliste: [],
         };
     }
 
@@ -48,6 +49,41 @@ class BuchungListenEintrag extends Component {
     }
 
 
+    
+    getAktivitaetbyProjektID = () => {
+
+        TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.state.aktivitaet.getProjektID()).then((aktivitaetBOs) => {
+            this.setState({
+                aktivitaetliste: aktivitaetBOs,
+            });
+        });
+    }
+
+   
+
+
+
+    sendMessage = () => {
+        this.timer = setTimeout(() => 
+        {
+
+            TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.state.aktivitaet.getProjektID()).then((aktivitaetBOs) => {
+                this.setState({
+                    aktivitaetliste: aktivitaetBOs,
+                });
+            });
+        }
+        , 1000);
+      }
+
+
+
+
+
+
+
+
+
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
         event.stopPropagation();
@@ -72,7 +108,6 @@ class BuchungListenEintrag extends Component {
 
      //Öffnet das Dialog-Fenster BuchungDeleteDialog, wenn der Button geklickt wurde
      buchungDeleteButtonClicked =  event => {
-        console.log("Delete Button")
         event.stopPropagation();
         this.setState({
           showProejktDelete: true
@@ -89,13 +124,19 @@ class BuchungListenEintrag extends Component {
 
     componentDidMount() {
         this.getAktivitaet();
+        // setTimeout(this.getAktivitaetbyProjektID(), 50000)
+        this.sendMessage()
+        
     }
+
+
+ 
 
     //Renders the component
     render() {
         const {classes, buchung} = this.props;
-        const {aktivitaet, showBuchungdialog1, error, loadingInProgress, showBuchungDelete} = this.state;
-        console.log(showBuchungdialog1)
+        const {aktivitaet, showBuchungdialog1, error, loadingInProgress, showBuchungDelete, aktivitaetliste} = this.state;
+        console.log(aktivitaetliste)
 
         return (
             aktivitaet ?
@@ -132,7 +173,7 @@ class BuchungListenEintrag extends Component {
                     </Grid>
                 </Grid>
      
-                <Buchungdialog1 show={showBuchungdialog1} buchung={buchung} aktivitaet={aktivitaet} onClose={this.buchungDialogClosed}/>
+                <Buchungdialog1 show={showBuchungdialog1} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungdialog1Closed}/>
 
 
                 {/* <BuchungLöschenDialog show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed}/> */}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, NativeSelect } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from "@mui/material/InputLabel";
@@ -11,6 +11,7 @@ import { TableCell } from '@material-ui/core';
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import ProjektBO from '../../api/ProjektBO'
 import { EventBusyRounded } from '@mui/icons-material';
+import AktivitaetBO from '../../api/AktivitaetBO';
 
 
 class BuchungDialog1 extends Component {
@@ -30,6 +31,7 @@ class BuchungDialog1 extends Component {
         this.state = {
             stunden: st,
             bezeichnung: ak,
+            value: ""
           
         };
 
@@ -38,6 +40,11 @@ class BuchungDialog1 extends Component {
 
     }
     
+    
+
+
+
+
 
     updateBuchung = () => {
         let buchung = this.props.buchung;
@@ -74,7 +81,9 @@ class BuchungDialog1 extends Component {
         });
       }
     
-    
+    handleChange = (event) => {
+        this.setState({ value: event.target.value });
+    }
 
 
     // Dialog schließen
@@ -88,10 +97,9 @@ class BuchungDialog1 extends Component {
 
 
     render() {
-        const { show, buchung, aktivitaet } = this.props;
-        const { bezeichnung, stunden } = this.state;
-        console.log(aktivitaet, "test1223")
-        console.log(stunden)
+        const { show, buchung, aktivitaet, aktivitaetliste } = this.props;
+        const { bezeichnung, stunden, value } = this.state;
+        console.log(value, "hiii2")
 
 
         return (
@@ -110,23 +118,33 @@ class BuchungDialog1 extends Component {
 
                         <form  noValidate autoComplete='off'>
 
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='aktivitaet' label='Aktivitaet:' value={bezeichnung} onChange={this.textFieldValueChange} />
+                        {/* <TextField autoFocus type='text' required fullWidth margin='normal' id='aktivitaet' label='Aktivitaet:' value={bezeichnung} onChange={this.textFieldValueChange} /> */}
                         <TextField autoFocus type='text' required fullWidth margin='normal' id='stunden' label='Stunden:' value={stunden} onChange={this.textFieldValueChange} />
                         {/* <TextField autoFocus type='text' required fullWidth margin='normal' id='email' label='Email:' value={email} onChange={this.textFieldValueChange} /> */}
                         {/* <TextField autoFocus type='text' required fullWidth margin='normal' id='benutzer_name' label='Benutzername:' value={benutzer_name} onChange={this.textFieldValueChange} /> */}
+                        
                         <FormControl fullWidth>
-                            <InputLabel id="Aktivitaet">Aktivitaet</InputLabel>
-                            <Select
-                                labelId="Aktivitaet"
-                                id="Aktivitaet"
-                                value={bezeichnung}
-                                label={bezeichnung}
-                                // onChange={handleChange}
+                        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                            Aktivitaet
+                        </InputLabel>
+                            <NativeSelect
+                                defaultValue={value}
+                                onChange={this.handleChange()}
+
                             >
-                                <MenuItem value={10}>{bezeichnung}</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
-                            </Select>
+
+                                {aktivitaetliste.map((aktivitaet) => {
+                                    return (
+                                        <option 
+                                        value={aktivitaet.getProjektID()}>
+                                            {aktivitaet.getBezeichnung()}
+                                        </option>
+                                    );
+                                    
+                                })
+                                }
+                                
+                            </NativeSelect>
                         </FormControl>
 
 
