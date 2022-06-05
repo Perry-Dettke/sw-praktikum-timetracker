@@ -18,14 +18,18 @@ class BuchungDialog1 extends Component {
     constructor(props) {
         super(props);
 
-        let st = "" ;
+        let st = "", ak = "";
+        if (props.aktivitaet) {
+            ak = props.aktivitaet.bezeichnung
+        }
         if (props.buchung) {
             st = props.buchung.stunden
 
-           
+       
         }
         this.state = {
             stunden: st,
+            bezeichnung: ak,
           
         };
 
@@ -84,9 +88,9 @@ class BuchungDialog1 extends Component {
 
 
     render() {
-        const { show, buchung } = this.props;
-        const { ereignisbuchung, stunden } = this.state;
-        console.log(ereignisbuchung)
+        const { show, buchung, aktivitaet } = this.props;
+        const { bezeichnung, stunden } = this.state;
+        console.log(aktivitaet, "test1223")
         console.log(stunden)
 
 
@@ -106,11 +110,24 @@ class BuchungDialog1 extends Component {
 
                         <form  noValidate autoComplete='off'>
 
-                        {/* <TextField autoFocus type='text' required fullWidth margin='normal' id='vor_name' label='Vorname:' value={ereignisbuchung} onChange={this.textFieldValueChange} /> */}
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='aktivitaet' label='Aktivitaet:' value={bezeichnung} onChange={this.textFieldValueChange} />
                         <TextField autoFocus type='text' required fullWidth margin='normal' id='stunden' label='Stunden:' value={stunden} onChange={this.textFieldValueChange} />
                         {/* <TextField autoFocus type='text' required fullWidth margin='normal' id='email' label='Email:' value={email} onChange={this.textFieldValueChange} /> */}
                         {/* <TextField autoFocus type='text' required fullWidth margin='normal' id='benutzer_name' label='Benutzername:' value={benutzer_name} onChange={this.textFieldValueChange} /> */}
-
+                        <FormControl fullWidth>
+                            <InputLabel id="Aktivitaet">Aktivitaet</InputLabel>
+                            <Select
+                                labelId="Aktivitaet"
+                                id="Aktivitaet"
+                                value={bezeichnung}
+                                label={bezeichnung}
+                                // onChange={handleChange}
+                            >
+                                <MenuItem value={10}>{bezeichnung}</MenuItem>
+                                <MenuItem value={20}>Twenty</MenuItem>
+                                <MenuItem value={30}>Thirty</MenuItem>
+                            </Select>
+                        </FormControl>
 
 
                         </form>
