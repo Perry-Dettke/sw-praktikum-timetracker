@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
-// import BuchungLöschenDialog from '../dialogs/BuchungLöschenDialog';
+import BuchungLöschen from '../dialogs/BuchungLöschen';
 import BuchungBearbeiten from '../dialogs/BuchungBearbeiten';
 
 
@@ -22,7 +22,7 @@ class BuchungListenEintrag extends Component {
             aktivitaet: null,
             projekt: null,
             showBuchungBearbeiten: false,
-            showBuchungDelete: false,
+            showBuchungLöschen: false,
             aktivitaetliste: [],
         };
     }
@@ -78,13 +78,6 @@ class BuchungListenEintrag extends Component {
       }
 
 
-
-
-
-
-
-
-
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
         event.stopPropagation();
@@ -108,19 +101,21 @@ class BuchungListenEintrag extends Component {
     }
 
      //Öffnet das Dialog-Fenster BuchungDeleteDialog, wenn der Button geklickt wurde
-     buchungDeleteButtonClicked =  event => {
+     buchungLöschenButtonClicked =  event => {
         event.stopPropagation();
         this.setState({
-          showProejktDelete: true
+          showBuchungLöschen: true
         });
       }
     
       //Wird aufgerufen, wenn das Dialog-Fenster PorjektDeleteDialog geschlossen wird
-      buchungDeleteClosed = () => {
+      buchungLöschenClosed = () => {
           this.setState({
-            showBuchungDelete: false
+            showBuchungLöschen: false
           });
-          this.getBuchung();
+
+          this.forceUpdate();
+          console.log("Uhwaf")
       }
 
     componentDidMount() {
@@ -135,8 +130,8 @@ class BuchungListenEintrag extends Component {
 
     //Renders the component
     render() {
-        const {classes, buchung, buchungliste} = this.props;
-        const {aktivitaet, projekt, showBuchungBearbeiten, showBuchungDelete, aktivitaetliste} = this.state;
+        const {buchung} = this.props;
+        const {aktivitaet, projekt, showBuchungBearbeiten, showBuchungLöschen, aktivitaetliste} = this.state;
         console.log(projekt)
         // console.log(this.state.aktivitaet.getProjektID())
 
@@ -166,7 +161,7 @@ class BuchungListenEintrag extends Component {
                                     </TableCell>
                                     <TableCell>
                                     <Tooltip title='Löschen' placement="bottom">
-                                        <IconButton variant="contained"  onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
+                                        <IconButton variant="contained"  onClick={this.buchungLöschenButtonClicked}><DeleteIcon /></IconButton>
                                     </Tooltip>
                                    
                                     </TableCell>
@@ -178,9 +173,7 @@ class BuchungListenEintrag extends Component {
                 </Grid>
      
                 <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed}/>
-
-
-                {/* <BuchungLöschenDialog show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed}/> */}
+                <BuchungLöschen show={showBuchungLöschen} buchung={buchung} onClose={this.buchungLöschenClosed}/>
             
             </div>
             : null
