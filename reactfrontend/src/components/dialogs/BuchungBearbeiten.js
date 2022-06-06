@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, NativeSelect } from '@mui/material';
+import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from "@mui/material/InputLabel";
@@ -42,12 +42,6 @@ class BuchungBearbeiten extends Component {
  
 
     }
-    
-    
-
-
-
-
 
     updateBuchung = () => {
         let buchung = this.props.buchung;
@@ -101,32 +95,29 @@ class BuchungBearbeiten extends Component {
 
 
     render() {
-        const { show, buchung, aktivitaet, aktivitaetliste } = this.props;
-        const { bezeichnung, stunden, value, aktivitaet_id } = this.state;
-        console.log(aktivitaet_id, "hiii2")
+        const { show, aktivitaet, aktivitaetliste } = this.props;
+        const {stunden, aktivitaet_id } = this.state;
+        console.log(aktivitaet_id)
 
 
         return (
             show ?
-
                 <Dialog open={show}  onClose={this.handleClose} maxWidth='xs' fullWidth>
-                    <DialogTitle >
-                        <IconButton  onClick={this.handleClose}>
+                    <DialogTitle > {"Buchung Bearbeiten"}
+                        <IconButton  onClick={this.handleClose} right>
                             <CloseIcon />
                         </IconButton>
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            
+                            Geben Sie die neue Stundenanzahl oder Aktivität an.
                         </DialogContentText>
 
                         <form  noValidate autoComplete='off'>
 
-                        {/* <TextField autoFocus type='text' required fullWidth margin='normal' id='aktivitaet' label='Aktivitaet:' value={bezeichnung} onChange={this.textFieldValueChange} /> */}
+                        {/* Textfeld für die Stunden */}
                         <TextField autoFocus type='text' required fullWidth margin='normal' id='stunden' label='Stunden:' value={stunden} onChange={this.textFieldValueChange} />
-                        {/* <TextField autoFocus type='text' required fullWidth margin='normal' id='email' label='Email:' value={email} onChange={this.textFieldValueChange} /> */}
-                        {/* <TextField autoFocus type='text' required fullWidth margin='normal' id='benutzer_name' label='Benutzername:' value={benutzer_name} onChange={this.textFieldValueChange} /> */}
-                        
+                        {/* Dropdown für Aktivitaet */}
                         <FormControl fullWidth>
                         <InputLabel id='aktivitaet-label'>Aktivität</InputLabel>
                                 <Select labelId='aktivitaet-label' id='aktivitaet' value={aktivitaet_id} defaultValue={aktivitaet.bezeichnung} onChange={this.handleChange}>
@@ -142,8 +133,6 @@ class BuchungBearbeiten extends Component {
                                                     }
                                 </Select>
                         </FormControl>
-
-
                         </form>
 
                     </DialogContent>
@@ -151,14 +140,10 @@ class BuchungBearbeiten extends Component {
               <Button color='secondary' onClick={this.handleClose}>
                 Abbrechen
               </Button>
-              {buchung ?
+
                 <Button variant='contained' color='primary' onClick={this.updateBuchung}>
                   Speichern
                   </Button>
-                : <Button variant='contained' color='primary' onClick={this.addBuchung}>
-                  Anlegen
-                  </Button>
-              }
             </DialogActions>
                 </Dialog>
                 : null

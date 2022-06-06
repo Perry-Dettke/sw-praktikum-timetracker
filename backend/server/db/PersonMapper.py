@@ -198,8 +198,9 @@ class PersonMapper (Mapper):
             person.get_nach_name(),
             person.get_email(),
             person.get_benutzer_name(),
-            person.get_id(),
-            person.get_arbeitszeitkonto_id())
+            person.get_arbeitszeitkonto_id(),
+            person.get_id(),)
+
         cursor.execute(command, data)
 
         self._cnx.commit()

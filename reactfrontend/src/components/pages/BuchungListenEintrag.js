@@ -20,6 +20,7 @@ class BuchungListenEintrag extends Component {
         //gebe einen leeren status
         this.state = {
             aktivitaet: null,
+            projekt: null,
             showBuchungBearbeiten: false,
             showBuchungDelete: false,
             aktivitaetliste: [],
@@ -49,21 +50,20 @@ class BuchungListenEintrag extends Component {
     }
 
 
-    
-    getAktivitaetbyProjektID = () => {
 
-        TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.state.aktivitaet.getProjektID()).then((aktivitaetBOs) => {
+    getProjekt = () => {
+        this.timer = setTimeout(() => {
+        TimetrackerAPI.getAPI().getProjektbyID(this.state.aktivitaet.getProjektID()).then((projektBOs) => {
             this.setState({
-                aktivitaetliste: aktivitaetBOs,
+                projekt: projektBOs,
             });
         });
     }
+    , 1000);
+    }
 
-   
 
-
-
-    sendMessage = () => {
+    getAktivitaetbyProjektID = () => {
         this.timer = setTimeout(() => 
         {
 
@@ -125,8 +125,8 @@ class BuchungListenEintrag extends Component {
 
     componentDidMount() {
         this.getAktivitaet();
-        // setTimeout(this.getAktivitaetbyProjektID(), 50000)
-        this.sendMessage()
+        this.getProjekt();
+        this.getAktivitaetbyProjektID()
         
     }
 
@@ -135,21 +135,24 @@ class BuchungListenEintrag extends Component {
 
     //Renders the component
     render() {
-        const {classes, buchung} = this.props;
-        const {aktivitaet, showBuchungBearbeiten, showBuchungDelete, aktivitaetliste} = this.state;
-        console.log(aktivitaetliste)
+        const {classes, buchung, buchungliste} = this.props;
+        const {aktivitaet, projekt, showBuchungBearbeiten, showBuchungDelete, aktivitaetliste} = this.state;
+        console.log(projekt)
+        // console.log(this.state.aktivitaet.getProjektID())
 
         return (
-            aktivitaet ?
+            aktivitaet && projekt ?
             <div>
                 <Grid container alignItems="center" spacing={2}>
                     <Grid item xs={12}>
                         <Table>
 
                             <TableBody>
+                                
 
                                 <TableRow key={buchung.getID()}>
                                     <TableCell><Typography> {buchung.getDatum()}</Typography></TableCell>
+                                    <TableCell><Typography> {projekt.getBezeichnung()}</Typography></TableCell>
                                     <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
                                     <TableCell><Typography> {this.ereignisbuchungCheck()}</Typography></TableCell>
                                     <TableCell><Typography> {buchung.getStunden()}</Typography></TableCell>
@@ -168,7 +171,7 @@ class BuchungListenEintrag extends Component {
                                    
                                     </TableCell>
                                 </TableRow>
-                                
+                            
                             </TableBody>
                         </Table>
                     </Grid>

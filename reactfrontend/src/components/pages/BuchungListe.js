@@ -102,13 +102,15 @@ class BuchungListe extends Component {
                                 }}>
                                 <TableRow>
                                     <TableCell>Datum</TableCell>
+                                    <TableCell>Projekt</TableCell>
                                     <TableCell>Aktivität</TableCell>
                                     <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
                                     <TableCell>Stunden die gebucht wurden</TableCell>
                                     <TableCell>Bearbeiten</TableCell>
-                                    <TableCell>Löchen</TableCell>
+                                    <TableCell>Löschen</TableCell>
                                 </TableRow>
                             </TableHead>
+                            
                 </Table>
             <List>
               
