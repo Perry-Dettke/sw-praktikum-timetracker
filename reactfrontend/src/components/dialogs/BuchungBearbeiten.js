@@ -33,8 +33,6 @@ class BuchungBearbeiten extends Component {
             stunden: st,
             bezeichnung: ak,
             aktivitaet_id: ai,
-            value: "",
-            aktivitaetID : 0,
           
         };
 

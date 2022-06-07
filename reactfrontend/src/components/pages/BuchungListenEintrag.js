@@ -90,9 +90,9 @@ class BuchungListenEintrag extends Component {
     buchungBearbeitenClosed = (buchung) => {
         if (buchung) {
             this.setState({
-                buchung: buchung,
                 showBuchungBearbeiten: false
             });
+            this.getAktivitaet()
         } else {
             this.setState({
                 showBuchungBearbeiten: false
@@ -113,9 +113,7 @@ class BuchungListenEintrag extends Component {
           this.setState({
             showBuchungLöschen: false
           });
-
-          this.forceUpdate();
-          console.log("Uhwaf")
+          this.props.getBuchung()
       }
 
     componentDidMount() {

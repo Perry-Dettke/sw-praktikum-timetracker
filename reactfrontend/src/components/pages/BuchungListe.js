@@ -27,6 +27,8 @@ class BuchungListe extends Component {
         this.setState({
             buchungliste: buchungBOs,
         });
+        console.log("getBuchung")
+
     });
 }
 
@@ -117,7 +119,7 @@ class BuchungListe extends Component {
               {
 
               buchungliste.map(buchung =>
-              <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show}/>)
+              <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID}/>)
                } 
             </List>
           </Grid>
