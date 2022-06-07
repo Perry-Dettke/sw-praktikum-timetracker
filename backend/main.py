@@ -703,6 +703,22 @@ class ProjektIDOperations(Resource):
         else:
             return '', 500 
 
+@timetracker.route('/projektbyprojekterstellerid/<int:projektersteller_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjektbyProjekterstellerIDOperations(Resource):
+    @timetracker.marshal_with(projekt)
+    def get(self, projektersteller_id):
+        """Auslesen eines bestimmten Projekt-Objekts aufgrund seiner Projekt ID.
+        Das auszulesende Objekt wird durch die ```projektersteller_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        pro = adm.get_projekt_by_projektersteller_id(projektersteller_id)
+
+        if pro is not None:
+            return pro
+        else:
+            return '', 500 
+
 
 #Zeitintervall related
 @timetracker.route('/zeitintervall')

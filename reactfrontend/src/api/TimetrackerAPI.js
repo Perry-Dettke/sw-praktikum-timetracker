@@ -55,6 +55,7 @@ export default class TimetrackerAPI {
 // *** Projekt realted *** //
   #addProjektURL = () => `${this.#ServerBaseURL}/projekt`;
   #getProjektbyIDURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
+  #getProjektbyProjekterstellerIDURL = (projektersteller_id) => `${this.#ServerBaseURL}/projektbyprojekterstellerid/${projektersteller_id}`;
   #getProjektURL = () => `${this.#ServerBaseURL}/projekt`;
   #updateProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
   #deleteProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
@@ -482,6 +483,20 @@ getAktivitaetbyID(id) {
         })
       })
     }
+
+  getProjektbyProjekterstellerID(projektersteller_id) {
+    // Aktivitaet abfragen
+    return this.#fetchAdvanced(this.#getProjektbyProjekterstellerIDURL(projektersteller_id)).then((responseJSON) => {
+      let projektliste = [];
+      responseJSON.map(item => {
+        let projekt = ProjektBO.fromJSON(item);
+        projektliste.push(projekt);
+      })
+      return new Promise(function (resolve) {
+        resolve(projektliste)
+      })
+    })
+  }
 
   getProjekt() {
     // Projekt abfragen

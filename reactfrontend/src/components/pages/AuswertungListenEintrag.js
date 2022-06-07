@@ -15,7 +15,6 @@ class AuswertungListenEintrag extends Component {
 
         //gebe einen leeren status
         this.state = {
-            showAuswertungDialog: false,
         };
     }
 
@@ -24,20 +23,6 @@ class AuswertungListenEintrag extends Component {
         this.props.getProjekt();
     }
 
-
-    //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
-    auswertungDialogClosed = (projekt) => {
-        if (projekt) {
-            this.setState({
-                projekt: projekt,
-                showAuswertungDialog: false
-            });
-        } else {
-            this.setState({
-                showAuswertungDialog: false
-            });
-        }
-    }
 
 
     //Renders the component
