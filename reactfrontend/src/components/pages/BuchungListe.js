@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, TextField, InputAdornment, IconButton, Grid, Typography, Paper, List, Fab, Tooltip, Table, TableHead, TableBody, TableRow, TableCell} from '@mui/material';
+import { Button, TextField, InputAdornment, IconButton, Grid, Typography, List, Box, Fab, TableContainer, Table, TableHead, TableBody, TableRow, TableCell} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 import BuchungListenEintrag from './BuchungListenEintrag.js'
@@ -66,11 +66,12 @@ class BuchungListe extends Component {
     return (
       buchungliste ?
       <div>
+        <Grid>
         {/* <Button variant="contained" sx={{width:250}} onClick={this.showBuchungDialog}> Neue Buchung Erstellen</Button> */}
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={2}/>
-          <Grid item xs={4}>
-            <Button 
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={1}>
+            <Grid item xs={6} >
+              <Button 
                 sx={{
                     m: 1,
                     width: 350,
@@ -79,10 +80,10 @@ class BuchungListe extends Component {
                     }}   variant="contained" color="primary" aria-label="add" onClick={this.buchungAnlegenButtonClicked}>
                     <AddIcon />   
                     &nbsp; Ereignis-Buchung erstellen
-            </Button>
-          </Grid>
-          <Grid item xs={4}>
-            <Button 
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button 
                 sx={{
                     m: 1,
                     width: 350,
@@ -91,14 +92,69 @@ class BuchungListe extends Component {
                     }}   variant="contained" color="primary" aria-label="add" onClick={this.buchungAnlegenButtonClicked}>
                     <AddIcon />   
                     &nbsp; Zeitintervall-Buchung erstellen
-            </Button>
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={2}/>
-          <Grid item xs={12}>
-            <Typography><h1>Übersicht eigener Buchungen</h1></Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Table>
+        </Box>
+ 
+
+        <List>
+        {
+                buchungliste.map(buchung =>
+                  <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID}/>)
+              }
+        </List>
+
+
+
+
+
+
+
+
+
+
+        {/* <TableContainer>
+          <h2>Übersicht eigener Buchungen</h2>    
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Datum</TableCell>
+                <TableCell>Projekt</TableCell>
+                <TableCell>Aktivität</TableCell>
+                <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
+                <TableCell>Stunden die gebucht wurden</TableCell>
+                <TableCell>Bearbeiten</TableCell>
+                <TableCell>Löschen</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {
+                buchungliste.map(buchung =>
+                  <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID}/>)
+              }
+            </TableBody>
+          </Table>
+        </TableContainer> */}
+
+        
+        <BuchungDialog show={showBuchungDialog} onClose={this.buchungDialogClosed} />
+        </Grid>
+      </div>
+      : null
+    );
+  }
+}
+
+
+
+
+export default BuchungListe;
+
+
+  
+
+            {/* <Table>
           <TableHead sx={{
                                 backgroundColor: '#dedede'
                                 }}>
@@ -121,21 +177,7 @@ class BuchungListe extends Component {
               buchungliste.map(buchung =>
               <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID}/>)
                } 
-            </List>
-          </Grid>
-        </Grid>
-        <BuchungDialog show={showBuchungDialog} onClose={this.buchungDialogClosed} />
-
-      </div>
-      : null
-    );
-  }
-}
+            </List> */}
 
 
 
-
-export default BuchungListe;
-
-
-  

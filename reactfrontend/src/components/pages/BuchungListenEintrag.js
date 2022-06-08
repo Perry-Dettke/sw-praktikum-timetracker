@@ -136,43 +136,43 @@ class BuchungListenEintrag extends Component {
         return (
             aktivitaet && projekt ?
             <div>
-                <Grid container alignItems="center" spacing={2}>
-                    <Grid item xs={12}>
-                        <Table>
 
-                            <TableBody>
-                                
 
-                                <TableRow key={buchung.getID()}>
-                                    <TableCell><Typography> {buchung.getDatum()}</Typography></TableCell>
-                                    <TableCell><Typography> {projekt.getBezeichnung()}</Typography></TableCell>
-                                    <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
-                                    <TableCell><Typography> {this.ereignisbuchungCheck()}</Typography></TableCell>
-                                    <TableCell><Typography> {buchung.getStunden()}</Typography></TableCell>
-                                    <TableCell>
-                               
-                                        <Tooltip title='Bearbeiten' placement="bottom">
-                                            <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}>
-                                                <EditIcon />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </TableCell>
-                                    <TableCell>
-                                    <Tooltip title='Löschen' placement="bottom">
-                                        <IconButton variant="contained"  onClick={this.buchungLöschenButtonClicked}><DeleteIcon /></IconButton>
-                                    </Tooltip>
-                                   
-                                    </TableCell>
-                                </TableRow>
-                            
-                            </TableBody>
-                        </Table>
-                    </Grid>
-                </Grid>
-     
+            <Table>
+            <TableHead>
+                <TableRow>
+                    <TableCell>Datum</TableCell>
+                    <TableCell>Projekt</TableCell>
+                    <TableCell>Aktivität</TableCell>
+                    <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
+                    <TableCell>Stunden die gebucht wurden</TableCell>
+                    <TableCell>Bearbeiten</TableCell>
+                    <TableCell>Löschen</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                <TableRow key={buchung.getID()}>
+                    <TableCell>{buchung.getDatum()}</TableCell>
+                    <TableCell>{projekt.getBezeichnung()}</TableCell>
+                    <TableCell>{aktivitaet.getBezeichnung()}</TableCell>
+                    <TableCell>{this.ereignisbuchungCheck()}</TableCell>
+                    <TableCell>{buchung.getStunden()}</TableCell>
+                    <TableCell>                
+                        <Tooltip title='Bearbeiten' placement="bottom">
+                            <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}><EditIcon /></IconButton>
+                        </Tooltip>
+                    </TableCell>
+                    <TableCell>
+                        <Tooltip title='Löschen' placement="bottom">
+                            <IconButton variant="contained"  onClick={this.buchungLöschenButtonClicked}><DeleteIcon /></IconButton>
+                        </Tooltip>
+                    </TableCell>
+                </TableRow>
+            </TableBody>
+            </Table>
                 <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed}/>
                 <BuchungLöschen show={showBuchungLöschen} buchung={buchung} onClose={this.buchungLöschenClosed}/>
-            
+
             </div>
             : null
         );
