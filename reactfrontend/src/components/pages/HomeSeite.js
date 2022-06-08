@@ -13,7 +13,8 @@ import SignUp from './SignUp';
     constructor(props) {
         super(props);
     
-        this.state = {
+        this.state = {  
+          currentUser: props.currentUser,  
           person: null,
           showPersonForm: false
         }
@@ -27,6 +28,33 @@ import SignUp from './SignUp';
               });
             });
           }
+    // Personendaten abrufen
+  getPerson = () => {
+    TimetrackerAPI.getAPI().getPersonByGoogle(this.state.currentUser.uid).then((person) =>
+        this.setState({
+          person: person,
+        })
+      ).catch((e) =>
+        this.setState({
+          person: null,
+        })
+      );
+  };
+
+
+    // SignUp anzeigen
+  closeSignup = (person) => {
+    this.setState({
+      currentUser: person.getID(),
+      person: person,
+    });
+  }
+
+  showPersonForm = () => {
+      if(!this.state.person) {
+          this.setState({ showPersonForm: true });
+      }
+  }
 
 //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
@@ -37,8 +65,9 @@ import SignUp from './SignUp';
     }
     
 
+
     //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
-    personFormClosed = (person) => {
+    ClosePersonForm = (person) => {
       if (person) {
           this.setState({
               person: person,
@@ -61,7 +90,7 @@ componentDidMount() {
 
     render(){
 
-        const { person, showPersonForm } = this.state;
+        const { person, showPersonForm, currentUser } = this.state;
 
           
         return(
@@ -105,15 +134,16 @@ componentDidMount() {
                         <p> 
                             <Button variant="contained">Logout</Button>
                             <Button variant="contained">Profil löschen</Button>
+                            <SignUp onClose={this.closeSignup}  />
+                            <PersonForm show={showPersonForm} person={person} currentUser={currentUser}onClose={this.ClosePersonForm} />
                         </p>
                     </div>
+                    
                 </Paper>
                 <Paper>
 
                 </Paper>
                 </Box>
-
-                <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
             </div> 
             : null
         );
