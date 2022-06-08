@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
-import {Paper, Box, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Grid, IconButton} from '@mui/material';
+import {Paper, Box, Button, Tooltip, IconButton} from '@mui/material';
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import EditIcon from '@mui/icons-material/Edit';
 import PersonForm from '../dialogs/PersonForm';
@@ -27,19 +27,10 @@ import SignUp from './SignUp';
                 person: personBO,
               });
             });
-          }
-    // Personendaten abrufen
-  getPerson = () => {
-    TimetrackerAPI.getAPI().getPersonByGoogle(this.state.currentUser.uid).then((person) =>
-        this.setState({
-          person: person,
-        })
-      ).catch((e) =>
-        this.setState({
-          person: null,
-        })
-      );
-  };
+    }
+
+
+
 
 
     // SignUp anzeigen

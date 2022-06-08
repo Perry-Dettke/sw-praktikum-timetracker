@@ -25,7 +25,7 @@ class SignUp extends Component {
     // PersonForm schließen
     closePersonForm = person => {
         if (person) {
-            TimetrackerAPI.getAPI().addPersonGoogle(person.getGoogle_user_id(), this.state.currentUser.uid)
+            TimetrackerAPI.getAPI().addPersonGoogle(person.getID(), this.state.currentUser.uid)
             this.setState({
                 person: person,
                 showPersonForm: false
@@ -54,7 +54,7 @@ class SignUp extends Component {
                                     <Button variant='contained' color='primary' onClick={this.showPersonForm}>
                                         Account erstellen
                                     </Button></div>
-                                : <p>Personendaten erfolgreich gespeichert. (ID: {person.getGoogle_user_id()})</p>}
+                                : <p>Personendaten erfolgreich gespeichert. (ID: {person.getID()})</p>}
                         </div>
                     </Paper>
                     <PersonForm show={showPersonForm} person={person} onClose={this.closePersonForm} />   
