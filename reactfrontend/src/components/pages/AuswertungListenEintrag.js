@@ -16,7 +16,9 @@ class AuswertungListenEintrag extends Component {
         //gebe einen leeren status
         this.state = {
           aktivitaetliste: [],
+          aktivitaetlisteKopie: [],
           buchungliste: [],
+          run: false,
         };
     }
 
@@ -34,14 +36,45 @@ class AuswertungListenEintrag extends Component {
         });
     }
 
-    getBuchungbyAktivitaetID = () => {
-        TimetrackerAPI.getAPI().getBuchungbyAktivitaetID(1).then((buchungBOs) => {
-            this.setState({
-                buchungliste: buchungBOs,
-            });
-        });
-    }
+    // getBuchungbyAktivitaetID = () => {
+    
+    //     if (this.state.aktivitaetliste) {
+    //         for (let i = 0; i < this.state.aktivitaetliste.length; i++) {
+    //             let id = this.state.aktivitaetliste[i].getID()
+    //             TimetrackerAPI.getAPI().getBuchungbyAktivitaetID(id).then((buchungBOs) => {
+    //                 let stunden = 0
+    //                 buchungBOs.map(buchungBO => {
+    //                     stunden += buchungBO.getStunden()
+    //                 })
+    //                 this.state.aktivitaetliste[i].setStunden(stunden)
+    //             });
+    //         };
+    //     };
+    // }
 
+    getBuchungbyAktivitaetID = () => {
+        this.timer = setTimeout(() => {
+            if (this.state.aktivitaetliste) {
+                var aktivitaetliste = this.state.aktivitaetliste
+                for (let i = 0; i < aktivitaetliste.length; i++) {
+                    let id = aktivitaetliste[i].getID()
+                    TimetrackerAPI.getAPI().getBuchungbyAktivitaetID(id).then((buchungBOs) => {
+                        let stunden = 0
+                        buchungBOs.map(buchungBO => {
+                            stunden += buchungBO.getStunden()
+                        })
+                        console.log(stunden)
+                        aktivitaetliste[i].setStunden(stunden)
+                    });
+                    this.setState({
+                    aktivitaetlisteKopie: aktivitaetliste,
+                    run: true,
+                    })
+                };
+            };
+    }
+    , 1000);
+    }
 
     componentDidMount () {
         this.getAktivitaetbyProjektID();
@@ -52,11 +85,11 @@ class AuswertungListenEintrag extends Component {
     //Renders the component
     render() {
         const { projekt } = this.props;
-        const { aktivitaetliste, buchungliste } = this.state;
-        console.log(buchungliste)
+        const { aktivitaetliste, run, aktivitaetlisteKopie} = this.state;
+        console.log(aktivitaetlisteKopie, "Test")
 
         return (
-            aktivitaetliste ?
+            aktivitaetlisteKopie && run ?
             <div>
                 <Grid container spacing={4} alignItems="center">
                     <Grid item xs={12} textAlign="center">
@@ -93,15 +126,18 @@ class AuswertungListenEintrag extends Component {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                    {
-                                                aktivitaetliste.map(aktivitaet =>
+                                    {           
+                                                aktivitaetlisteKopie.map(aktivitaet =>
+        
+                                                      
                                                     <TableRow key={aktivitaet.getID()}>
                                                         <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
-                                                        <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
-                                                        <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
-                                                        <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
+                                                        <TableCell><Typography> {aktivitaet.getStunden()}</Typography></TableCell>
+                                                        <TableCell><Typography> {aktivitaet[0]}</Typography></TableCell>
+                                                        <TableCell><Typography> {aktivitaet[3]}</Typography></TableCell>
 
                                                     </TableRow>
+                                                    
                                                 )}
                                     </TableBody>
                                 </Table>

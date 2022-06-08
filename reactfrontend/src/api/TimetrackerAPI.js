@@ -262,8 +262,7 @@ getAktivitaetbyID(id) {
 
   getBuchungbyAktivitaetID(aktivitaet_id) {
     // Aktivitaet abfragen
-
-      return aktivitaet_id.map(aktivitaet =>  this.#fetchAdvanced(this.#getBuchungbyAktivitaetIDURL(aktivitaet)).then((responseJSON) => {
+      return this.#fetchAdvanced(this.#getBuchungbyAktivitaetIDURL(aktivitaet_id)).then((responseJSON) => {
       let buchungliste = [];
       responseJSON.map(item => {
         let buchung = BuchungBO.fromJSON(item);
@@ -273,7 +272,7 @@ getAktivitaetbyID(id) {
         resolve(buchungliste)
       })
     })
-  )}
+  }
 
 
 
