@@ -113,6 +113,38 @@ class BuchungMapper(Mapper):
         return result
 
 
+    def find_by_aktivitaet_id(self, aktivitaet_id):
+        """Auslesen aller Buchungen anhand der Arbeitszeitkonto ID."""
+
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT * FROM buchung WHERE aktivitaet_id={}".format(aktivitaet_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            for (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id ) in tuples:
+                buchung = Buchung()
+                buchung.set_id(id)
+                buchung.set_letzte_aenderung(letzte_aenderung)
+                buchung.set_datum(datum)
+                buchung.set_stunden(stunden)
+                buchung.set_ereignisbuchung(ereignisbuchung)
+                buchung.set_person_id(person_id)
+                buchung.set_aktivitaet_id(aktivitaet_id)
+                result.append(buchung)
+
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            buchung = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
+
     def insert(self, Buchung):
         """
         Einfügen eineS buchung-Objekts in die DB

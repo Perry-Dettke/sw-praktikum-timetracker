@@ -15,7 +15,8 @@ class AuswertungListenEintrag extends Component {
 
         //gebe einen leeren status
         this.state = {
-          aktivitaetliste: []
+          aktivitaetliste: [],
+          buchungliste: [],
         };
     }
 
@@ -33,18 +34,26 @@ class AuswertungListenEintrag extends Component {
         });
     }
 
-
+    getBuchungbyAktivitaetID = () => {
+        TimetrackerAPI.getAPI().getBuchungbyAktivitaetID(1).then((buchungBOs) => {
+            this.setState({
+                buchungliste: buchungBOs,
+            });
+        });
+    }
 
 
     componentDidMount () {
         this.getAktivitaetbyProjektID();
+        this.getBuchungbyAktivitaetID();
     }
 
 
     //Renders the component
     render() {
         const { projekt } = this.props;
-        const { aktivitaetliste } = this.state;
+        const { aktivitaetliste, buchungliste } = this.state;
+        console.log(buchungliste)
 
         return (
             aktivitaetliste ?

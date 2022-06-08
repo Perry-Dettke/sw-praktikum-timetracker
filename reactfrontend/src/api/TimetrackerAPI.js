@@ -35,6 +35,7 @@ export default class TimetrackerAPI {
   #updateBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
   #deleteBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
   #getBuchungbyPersonIDURL = (person_id) => `${this.#ServerBaseURL}/buchungbypersonid/${person_id}`;
+  #getBuchungbyAktivitaetIDURL = (aktivitaet_id) => `${this.#ServerBaseURL}/buchungbyaktivitaetid/${aktivitaet_id}`;
 
 // *** Ereignis realted *** //
   #addEreignisURL = () => `${this.#ServerBaseURL}/ereignis`;
@@ -258,6 +259,21 @@ getAktivitaetbyID(id) {
       })
     })
   }
+
+  getBuchungbyAktivitaetID(aktivitaet_id) {
+    // Aktivitaet abfragen
+
+      return aktivitaet_id.map(aktivitaet =>  this.#fetchAdvanced(this.#getBuchungbyAktivitaetIDURL(aktivitaet)).then((responseJSON) => {
+      let buchungliste = [];
+      responseJSON.map(item => {
+        let buchung = BuchungBO.fromJSON(item);
+        buchungliste.push(buchung);
+      })
+      return new Promise(function (resolve) {
+        resolve(buchungliste)
+      })
+    })
+  )}
 
 
 

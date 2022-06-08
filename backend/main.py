@@ -214,6 +214,7 @@ class AktivitaetbyProjektOperations(Resource):
 
 
 
+
 #Arbeitszeitkonto related
 @timetracker.route('/arbeitszeitkonto')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -413,6 +414,23 @@ class BuchungByPersonIDOperations(Resource):
         """
         adm = TimetrackerAdministration()
         bu = adm.get_buchung_by_person_id(person_id)
+
+        if bu is not None:
+            return bu
+        else:
+            return '', 500 
+
+
+@timetracker.route('/buchungbyaktivitaetid/<int:aktivitaet_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class BuchungByAktivitaetIDOperations(Resource):
+    @timetracker.marshal_with(buchung)
+    def get(self, aktivitaet_id):
+        """Auslesen eines bestimmten Buchung-Objekts aufgrund seiner Arbeitszeitkonto ID.
+        Das auszulesende Objekt wird durch die ```aktivitaet_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        bu = adm.get_buchung_by_aktivitaet_id(aktivitaet_id)
 
         if bu is not None:
             return bu

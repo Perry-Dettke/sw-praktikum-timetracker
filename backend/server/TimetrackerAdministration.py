@@ -100,6 +100,12 @@ class TimetrackerAdministration (object):
         with BuchungMapper() as mapper:
             return mapper.find_by_person_id(person_id)
 
+    def get_buchung_by_aktivitaet_id(self, aktivitaet_id):
+        """Die Buchung mit der gegebenen Aktivitaet ID auslesen."""
+        with BuchungMapper() as mapper:
+            return mapper.find_by_aktivitaet_id(aktivitaet_id)
+
+
     def get_all_buchung(self):
         """Alle Buchungen auslesen."""
         with BuchungMapper() as mapper:
