@@ -403,7 +403,7 @@ export default class TimetrackerAPI {
     })
   }
 
-  /* addPersonGoogle(personID, googleid) {
+   addPersonGoogle(personID, googleid) {
        // Person einer GoogleID zuweisen
        return this.#fetchAdvanced(this.#addPersonGoogleURL(googleid), {
          method: 'POST',
@@ -413,7 +413,7 @@ export default class TimetrackerAPI {
          },
          body: JSON.stringify({ 'personID': personID, 'googleid': googleid })
        })
-     }*/
+  }
 
   updatePerson(personBO) {
     // Person updaten
