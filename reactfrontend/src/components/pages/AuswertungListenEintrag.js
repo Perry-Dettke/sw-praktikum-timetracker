@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
-
+import TimetrackerAPI from '../../api/TimetrackerAPI';
 
 class AuswertungListenEintrag extends Component {
 
@@ -15,6 +15,7 @@ class AuswertungListenEintrag extends Component {
 
         //gebe einen leeren status
         this.state = {
+          aktivitaetliste: []
         };
     }
 
@@ -23,14 +24,30 @@ class AuswertungListenEintrag extends Component {
         this.props.getProjekt();
     }
 
+    //Gibt Aktivitaet pro Projekt zurück
+    getAktivitaetbyProjektID = () => {
+        TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.props.projekt.getID()).then((aktivitaetBOs) => {
+            this.setState({
+                aktivitaetliste: aktivitaetBOs,
+            });
+        });
+    }
+
+
+
+
+    componentDidMount () {
+        this.getAktivitaetbyProjektID();
+    }
 
 
     //Renders the component
     render() {
         const { projekt } = this.props;
-        const { } = this.state;
+        const { aktivitaetliste } = this.state;
 
         return (
+            aktivitaetliste ?
             <div>
                 <Grid container spacing={4} alignItems="center">
                     <Grid item xs={12} textAlign="center">
@@ -54,27 +71,7 @@ class AuswertungListenEintrag extends Component {
                                             Zeitraum auswählen</Button>
                                     </Grid>
                                 </Grid>
-                                <br />
-                                <Table>
-                                    <TableHead sx={{
-                                        backgroundColor: '#dedede'
-                                    }}>
-                                        <TableRow>
-                                            <TableCell>Person</TableCell>
-                                            <TableCell>Aktivität</TableCell>
-                                            <TableCell>Arbeitsleistung</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell><Typography> Vorname Nachname</Typography></TableCell>
-                                            <TableCell><Typography> Aktivitätsbezeichnung</Typography></TableCell>
-                                            <TableCell><Typography> Stundenanzahl</Typography></TableCell>
 
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
-                                <br />
                                 <Table>
                                     <TableHead sx={{
                                         backgroundColor: '#dedede'
@@ -83,15 +80,20 @@ class AuswertungListenEintrag extends Component {
                                             <TableCell>Aktivität</TableCell>
                                             <TableCell>Kapazität</TableCell>
                                             <TableCell>Ist-Stunden</TableCell>
+                                            <TableCell>Reststunden</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        <TableRow>
-                                            <TableCell><Typography> Aktivitätsbezeichnung</Typography></TableCell>
-                                            <TableCell><Typography> in Stunden</Typography></TableCell>
-                                            <TableCell><Typography> Gesamtstunden aller Personen für die Aktivität</Typography></TableCell>
+                                    {
+                                                aktivitaetliste.map(aktivitaet =>
+                                                    <TableRow key={aktivitaet.getID()}>
+                                                        <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
+                                                        <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
+                                                        <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
+                                                        <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
 
-                                        </TableRow>
+                                                    </TableRow>
+                                                )}
                                     </TableBody>
                                 </Table>
 
@@ -99,8 +101,9 @@ class AuswertungListenEintrag extends Component {
                         </Accordion>
                     </Grid>
                 </Grid>
-
+                
             </div >
+            : null
         );
     }
 }

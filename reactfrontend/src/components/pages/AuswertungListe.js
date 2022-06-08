@@ -41,21 +41,9 @@ class Auswertung extends Component {
     }
 
 
-    
-    getAktivitaetbyProjektID = () => {
-        var akt = TimetrackerAPI.getAPI();
-            akt.getAktivitaetbyProjektID().then((aktivitaetBOs) => {
-                this.setState({
-                    aktivitaet: aktivitaetBOs,
-                });
-            });
-    }
-
-
-
     componentDidMount() {
         this.getProjektbyProjekterstellerID();
-        // this.getAktivitaetbyProjektID();
+
     }
     
 
@@ -63,9 +51,9 @@ class Auswertung extends Component {
     render() {
         const { expandedState } = this.props;
         
-        const{projektliste, aktivitaet, showProjektDialog} = this.state;
+        const{projektliste} = this.state;
         console.log(projektliste)
-
+        
         return (
             <div>
                 <Grid container spacing={4}  alignItems="left">
@@ -75,8 +63,7 @@ class Auswertung extends Component {
                         <List >
                             {
                                 projektliste.map(projekt =>
-                                    <AuswertungListenEintrag key={(projekt)[projekt.id]} projekt={projekt} aktivitaet={aktivitaet} show={this.props.show}
-                                        getProjekt={this.getProjekt} getAktivitaetbyProjektID={this.getAktivitaetbyProjektID} />)
+                                    <AuswertungListenEintrag key={(projekt)[projekt.id]} projekt={projekt}/>)
                             }
                         </List>
                     </Grid>
