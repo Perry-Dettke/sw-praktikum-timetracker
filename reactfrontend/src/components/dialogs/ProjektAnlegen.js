@@ -15,8 +15,61 @@ class ProjektAnlegen extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            counter: 0,
+            values: []
+        }
+
         this.baseState = this.state;
     }
+
+
+    renderBranch = () => {
+        const { values } = this.state
+        return (
+            <>
+                <div>
+                    <TextField
+                        label="Aktivität"
+                        variant="outlined"
+                        name="name"
+                        size="small" 
+                        autocomplete='off'  
+                    />
+                    &emsp;
+                    <TextField
+                        label="Kapazität in Stunden"
+                        variant="outlined"
+                        multiline
+                        name="name"
+                        size="small"
+                        autocomplete='off'
+                    />
+                    
+                </div>
+                <br/>
+          </>
+        )
+    }
+
+    renderBranches = () => {
+        const { counter } = this.state
+        const result = []
+        for (let i = 0; i <= counter; i++) {
+          result.push(this.renderBranch(i))
+        }
+        return result
+    }  
+
+    appendDiv = () => {
+        this.setState({
+          counter: this.state.counter + 1,
+          values: [
+            ...this.state.values,
+          ]
+        })
+    }
+
 
     //Dialog schließen
     handleClose = () => {
@@ -69,6 +122,7 @@ class ProjektAnlegen extends Component {
                                 <Select
                                     labelId="person"
                                     id="person"
+                                    // multiple
                                     // value={person}
                                     label="Person"
                                     onChange={this.handleChange}
@@ -78,39 +132,24 @@ class ProjektAnlegen extends Component {
                                     <MenuItem value={3}>Person 3</MenuItem>
                                 </Select>
                             </FormControl>
-                            <br/><br/>
-                            {/* Auch hier wenn Aktivität ausgefüllt, dann neues Feld einfügen, um weitere Aktivitäten einzufügen
-                                Kapazität pro Aktivität eintragen!*/}                            
+                            <br/><br/>                          
                             <div>
-                                <TextField
-                                    label="Aktivität"
-                                    variant="outlined"
-                                    name="name"
-                                    size="small"
-                                    // value={this.state.name}
-                                    onChange={this.handleChange}
-                                    autocomplete='off'
-                                />
-                                &emsp;
-                                <TextField
-                                    label="Kapazität in Stunden"
-                                    variant="outlined"
-                                    multiline
-                                    name="name"
-                                    size="small"
-                                    // value={this.state.name}
-                                    onChange={this.handleChange}
-                                    autocomplete='off'
-                                />
+                                {this.renderBranches()}
                                 <Button
                                 sx={{
                                 marginLeft: 2,
                                 marginTop: 0.5,
-                                width: 25,
+                                width: 500,
                                 height: 30,
                                 alignItems: 'center',
-                                }}   variant="contained" /*onClick={}*/>
-                                    <AddIcon /> 
+                                }}   
+                                variant="contained" 
+                                className="addbranch"  
+                                onClick={this.appendDiv} 
+                                >
+                                    <AddIcon />
+                                    &emsp;
+                                    <Typography>Weitere Aktivität hinzufügen</Typography> 
                                 </Button>
                             </div>
                             </DialogContentText>
