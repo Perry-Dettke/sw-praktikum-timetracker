@@ -58,8 +58,7 @@ DROP TABLE IF EXISTS `arbeitszeitkonto`;
 CREATE TABLE `arbeitszeitkonto` (
   `id` int NOT NULL AUTO_INCREMENT,
   `letzte_aenderung` datetime NOT NULL,
-  `person_id` int NOT NULL,
-  `aktivitaet_id` int NOT NULL,
+  `gesamtstunden` float DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -70,7 +69,7 @@ CREATE TABLE `arbeitszeitkonto` (
 
 LOCK TABLES `arbeitszeitkonto` WRITE;
 /*!40000 ALTER TABLE `arbeitszeitkonto` DISABLE KEYS */;
-INSERT INTO `arbeitszeitkonto` VALUES (1,'2022-06-01 17:43:54',1,1),(2,'2022-05-17 20:00:00',1,1),(3,'2022-05-17 20:00:00',2,1),(4,'2022-05-17 20:00:00',2,3),(5,'2022-05-17 20:00:00',3,2);
+INSERT INTO `arbeitszeitkonto` VALUES (1,'2022-06-01 17:43:54',100),(2,'2022-05-17 20:00:00',200),(3,'2022-05-17 20:00:00',300),(4,'2022-05-17 20:00:00',400),(5,'2022-05-17 20:00:00',NULL);
 /*!40000 ALTER TABLE `arbeitszeitkonto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +85,9 @@ CREATE TABLE `buchung` (
   `letzte_aenderung` datetime NOT NULL,
   `datum` date NOT NULL,
   `stunden` float NOT NULL,
-  `arbeitszeitkonto_id` int NOT NULL,
+  `ereignisbuchung` tinyint DEFAULT NULL,
+  `person_id` int DEFAULT NULL,
+  `aktivitaet_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -97,7 +98,7 @@ CREATE TABLE `buchung` (
 
 LOCK TABLES `buchung` WRITE;
 /*!40000 ALTER TABLE `buchung` DISABLE KEYS */;
-INSERT INTO `buchung` VALUES (1,'2022-06-02 16:46:39','2022-06-02',10,1),(2,'2022-06-02 17:46:39','2022-06-02',5,2),(3,'2022-06-02 16:46:39','2022-06-02',3,2),(4,'2022-06-02 16:46:39','2022-06-02',2,3),(5,'2022-06-02 16:46:39','2022-06-02',1,1),(6,'2022-06-02 16:46:39','2022-06-02',5,4),(7,'2022-06-02 16:46:39','2022-06-02',10,1);
+INSERT INTO `buchung` VALUES (1,'2022-06-02 16:46:39','2022-06-02',10,1,1,1),(2,'2022-06-02 17:46:39','2022-06-02',5,0,2,1),(3,'2022-06-02 16:46:39','2022-06-02',3,0,2,2),(4,'2022-06-02 16:46:39','2022-06-02',2,1,3,3),(5,'2022-06-02 16:46:39','2022-06-02',1,1,1,2),(6,'2022-06-02 16:46:39','2022-06-02',5,1,4,1),(7,'2022-06-02 16:46:39','2022-06-02',10,1,1,3);
 /*!40000 ALTER TABLE `buchung` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,6 +142,7 @@ CREATE TABLE `person` (
   `email` varchar(45) NOT NULL,
   `benutzer_name` varchar(45) NOT NULL,
   `google_user_id` varchar(45) DEFAULT NULL,
+  `arbeitszeitkonto_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -151,7 +153,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (1,'2022-06-02 10:54:32','Lisaaa','Mülleraa','MüllerMailaa','müüllleeeraa','dwqjnw8931u489'),(2,'2022-05-17 20:00:00','Sven','Bayer','sven.bayer@web.de','Sven1893','2184u1hjbdwq'),(3,'2022-05-17 20:00:00','Lisa','Singer','lisa.singer@web.de','Lischen','daaad221sh732814'),(4,'2022-05-17 20:00:00','Ralf','Roller','ralf.roller@web.de','ralle44','diuh128231'),(5,'2022-06-01 22:14:26','Peter','Panne','ppmail','pppi','kwuqie8714');
+INSERT INTO `person` VALUES (1,'2022-06-02 10:54:32','Lisaaa','Mülleraa','MüllerMailaa','müüllleeeraa','dwqjnw8931u489',1),(2,'2022-06-02 20:59:36','Joshua','Bayer','Mail@mail.de','YOungJosh','2184u1hjbdwq',2),(3,'2022-05-17 20:00:00','Lisa','Singer','lisa.singer@web.de','Lischen','daaad221sh732814',3),(4,'2022-05-17 20:00:00','Ralf','Roller','ralf.roller@web.de','ralle44','diuh128231',4),(5,'2022-06-01 22:14:26','Peter','Panne','ppmail','pppi','kwuqie8714',NULL);
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,4 +244,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-02 17:21:28
+-- Dump completed on 2022-06-04 12:00:18

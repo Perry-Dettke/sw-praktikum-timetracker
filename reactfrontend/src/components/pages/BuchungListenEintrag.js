@@ -5,8 +5,10 @@ import{Typography, IconButton, Grid, Tooltip, ListItem, Divider, Table, TableHea
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-// import BuchungLöschenDialog from '../dialogs/BuchungLöschenDialog';
-// import BuchungForm from '../dialogs/BuchungForm';
+
+import TimetrackerAPI from '../../api/TimetrackerAPI';
+import BuchungLöschen from '../dialogs/BuchungLöschen';
+import BuchungBearbeiten from '../dialogs/BuchungBearbeiten';
 
 
 
@@ -17,106 +19,162 @@ class BuchungListenEintrag extends Component {
 
         //gebe einen leeren status
         this.state = {
-            showBuchungForm: false,
-            showBuchungDelete: false,
+            aktivitaet: null,
+            projekt: null,
+            showBuchungBearbeiten: false,
+            showBuchungLöschen: false,
+            aktivitaetliste: [],
         };
     }
 
-    //Gibt den aktuellen Buchung zurück
-    getBuchung = () => {
-        this.props.getBuchung();
+    //Gibt die aktuellen Buchungen zurück
+    getBuchungbyPersonID = () => {
+        this.props.getBuchungbyPersonID();
     }
+
+    ereignisbuchungCheck = () => {
+        if (this.props.buchung.getEreignisbuchung() === true) {
+            return "Ereignisbuchung"}
+        else {
+            return "Zetintervallbuchung"
+        }
+        
+    }
+
+    getAktivitaet = () => {
+        TimetrackerAPI.getAPI().getAktivitaetbyID(this.props.buchung.getAktivitaet_id()).then((aktivitaetBOs) => {
+            this.setState({
+                aktivitaet: aktivitaetBOs,
+            });
+        });
+    }
+
+
+
+    getProjekt = () => {
+        this.timer = setTimeout(() => {
+        TimetrackerAPI.getAPI().getProjektbyID(this.state.aktivitaet.getProjektID()).then((projektBOs) => {
+            this.setState({
+                projekt: projektBOs,
+            });
+        });
+    }
+    , 1000);
+    }
+
+
+    getAktivitaetbyProjektID = () => {
+        this.timer = setTimeout(() => 
+        {
+
+            TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.state.aktivitaet.getProjektID()).then((aktivitaetBOs) => {
+                this.setState({
+                    aktivitaetliste: aktivitaetBOs,
+                });
+                console.log(this.state.aktivitaet.getProjektID())
+            });
+        }
+        , 1000);
+      }
+
 
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
         event.stopPropagation();
         this.setState({
-            showBuchungForm: true
+            showBuchungBearbeiten: true
         });
     }
 
     //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
-    buchungFormClosed = (buchung) => {
+    buchungBearbeitenClosed = (buchung) => {
         if (buchung) {
             this.setState({
-                buchung: buchung,
-                showBuchungForm: false
+                showBuchungBearbeiten: false
             });
+            this.getAktivitaet()
         } else {
             this.setState({
-                showBuchungForm: false
+                showBuchungBearbeiten: false
             });
         }
     }
 
      //Öffnet das Dialog-Fenster BuchungDeleteDialog, wenn der Button geklickt wurde
-     buchungDeleteButtonClicked =  event => {
-        console.log("Delete Button")
+     buchungLöschenButtonClicked =  event => {
         event.stopPropagation();
         this.setState({
-          showProejktDelete: true
+          showBuchungLöschen: true
         });
       }
     
       //Wird aufgerufen, wenn das Dialog-Fenster PorjektDeleteDialog geschlossen wird
-      buchungDeleteClosed = () => {
+      buchungLöschenClosed = () => {
           this.setState({
-            showBuchungDelete: false
+            showBuchungLöschen: false
           });
-          this.getBuchung();
+          this.props.getBuchung()
       }
 
+    componentDidMount() {
+        this.getAktivitaet();
+        this.getProjekt();
+        this.getAktivitaetbyProjektID()
+        
+    }
+
+
+ 
 
     //Renders the component
     render() {
-        const {classes, buchung} = this.props;
-        const {showBuchungForm, error, loadingInProgress, showBuchungDelete} = this.state;
+        const {buchung} = this.props;
+        const {aktivitaet, projekt, showBuchungBearbeiten, showBuchungLöschen, aktivitaetliste} = this.state;
+        console.log(projekt)
+        // console.log(this.state.aktivitaet.getProjektID())
 
         return (
+            aktivitaet && projekt ?
             <div>
-                <Grid container alignItems="center" spacing={2}>
-                    <Grid item xs={12}>
-                        <Table>
-                            <TableHead sx={{
-                                backgroundColor: '#dedede'
-                                }}>
-                                <TableRow>
-                                    <TableCell>Datum</TableCell>
-                                    <TableCell>Aktivität</TableCell>
-                                    <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
-                                    <TableCell>Stunden die gebucht wurden</TableCell>
-                                    <TableCell>Bearbeiten</TableCell>
-                                    <TableCell>Löchen</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell>Daten</TableCell>
-                                    <TableCell>Daten</TableCell>
-                                    <TableCell>Daten</TableCell>
-                                    <TableCell>Daten</TableCell>
-                                    <TableCell>
-                                        <Tooltip title='Bearbeiten' placement="bottom">
-                                            <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}>
-                                                <EditIcon />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </TableCell>
-                                    <TableCell>
-                                    <Tooltip title='Löschen' placement="bottom">
-                                        <IconButton variant="contained"  onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
-                                    </Tooltip>
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </Grid>
-                </Grid>
-     
-                {/* <BuchungForm show={showBuchungForm} buchung={buchung} onClose={this.buchungFormClosed} getBuchung= {this.getBuchung}/>
-                <BuchungLöschenDialog show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchung= {this.getPerson}/>        */}
-            
+
+
+            <Table>
+            <TableHead>
+                <TableRow>
+                    <TableCell>Datum</TableCell>
+                    <TableCell>Projekt</TableCell>
+                    <TableCell>Aktivität</TableCell>
+                    <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
+                    <TableCell>Stunden die gebucht wurden</TableCell>
+                    <TableCell>Bearbeiten</TableCell>
+                    <TableCell>Löschen</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                <TableRow key={buchung.getID()}>
+                    <TableCell>{buchung.getDatum()}</TableCell>
+                    <TableCell>{projekt.getBezeichnung()}</TableCell>
+                    <TableCell>{aktivitaet.getBezeichnung()}</TableCell>
+                    <TableCell>{this.ereignisbuchungCheck()}</TableCell>
+                    <TableCell>{buchung.getStunden()}</TableCell>
+                    <TableCell>                
+                        <Tooltip title='Bearbeiten' placement="bottom">
+                            <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}><EditIcon /></IconButton>
+                        </Tooltip>
+                    </TableCell>
+                    <TableCell>
+                        <Tooltip title='Löschen' placement="bottom">
+                            <IconButton variant="contained"  onClick={this.buchungLöschenButtonClicked}><DeleteIcon /></IconButton>
+                        </Tooltip>
+                    </TableCell>
+                </TableRow>
+            </TableBody>
+            </Table>
+                <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed}/>
+                <BuchungLöschen show={showBuchungLöschen} buchung={buchung} onClose={this.buchungLöschenClosed}/>
+
             </div>
+            : null
         );
     }
 }
