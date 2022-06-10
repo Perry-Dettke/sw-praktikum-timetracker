@@ -60,6 +60,40 @@ class TimetrackerAdministration (object):
 
 
 
+    def get_person_by_aktivitaet_id(self, aktivitaet_id):
+        person_id_liste = []
+        with BuchungMapper() as mapper:
+            buchungliste = mapper.find_by_aktivitaet_id(aktivitaet_id)
+
+            for i in buchungliste:
+                person_id_liste.append(i.get_person_id())
+
+
+
+        with PersonMapper() as mapper:
+            personliste = []
+
+            for i in person_id_liste:
+                personliste.append(mapper.find_by_id(i))
+                
+            
+            with BuchungMapper() as mapper:
+                for j in personliste:
+                    buchungsliste = mapper.find_by_person_id(j.get_id())
+                    stunden = 0
+                    for a in buchungliste:
+                        stunden += a.get_stunden()
+
+                    j.set_stunden(stunden)
+
+            return personliste
+
+
+
+
+
+
+
 
     def save_aktivitaet(self, aktivitaet):
         """Die gegebenen Aktivitaet speichern."""

@@ -52,6 +52,9 @@ export default class TimetrackerAPI {
   #deletePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
   #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
   #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
+  #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
+  
+
 
 // *** Projekt realted *** //
   #addProjektURL = () => `${this.#ServerBaseURL}/projekt`;

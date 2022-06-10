@@ -11,6 +11,7 @@ export default class PersonBO extends BusinessObject {
         this.benutzer_name = benutzer_name;
         this.google_user_id = google_user_id;
         this.arbeitszeitkonto_id = arbeitszeitkonto_id;
+        this.stunden = 0.0
     }
     // Vorname setzen
     setVor_name(vor_name) {
@@ -59,6 +60,14 @@ export default class PersonBO extends BusinessObject {
     // ARbeitszeitkonto ID auslesen
     getArbeitszeitkonto_id() {
     return this.arbeitszeitkonto_id;
+    }
+    // Stunden  setzen
+    setStunden(stunden) {
+    this.stunden = stunden;
+    }
+    // Stunden auslesen 
+    getStunden() {
+    return this.stunden;
     }
 
     static fromJSON(person) {

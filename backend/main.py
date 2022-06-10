@@ -91,6 +91,8 @@ person = api.inherit('Person', bo, {
                                 description='Gegebene ID von Google'),
     'arbeitszeitkonto_id': fields.Integer(attribute='_arbeitszeitkonto_id',
                                 description='Arbeitszeitkonto ID der Person'),
+    'stunden': fields.Float(attribute='_stunden',
+                                description='stunden der Person'),
 })
 
 projekt = api.inherit('Projekt', bo, {
@@ -627,6 +629,22 @@ class PersonIDOperations(Resource):
         else:
             return '', 500 
 
+
+@timetracker.route('/akitvitaetbyprojektidTEST/<int:aktivitaet_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class PersonbyAktivitaetOperations(Resource):
+    @timetracker.marshal_with(person)
+    def get(self, aktivitaet_id):
+        """Auslesen eines bestimmten Aktivitaets-Objekts aufgrund seiner Projekt ID.
+        Das auszulesende Objekt wird durch die ```aktivitaet_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        per = adm.get_person_by_aktivitaet_id(aktivitaet_id)
+
+        if per is not None:
+            return per
+        else:
+            return '', 500 
 
 # Brauchen wir die Funktion üverhaupt?
 

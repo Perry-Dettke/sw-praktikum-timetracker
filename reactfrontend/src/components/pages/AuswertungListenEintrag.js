@@ -33,6 +33,19 @@ class AuswertungListenEintrag extends Component {
         });
     }
 
+
+    getPersonbyAktivitaetID = () => {
+        TimetrackerAPI.getAPI().getPersonbyAktivitaetID(this.props.aktivitaet.getID()).then((aktivitaetBOs) => {
+            this.setState({
+                aktivitaetliste: aktivitaetBOs,
+            });
+        });
+    }
+
+
+
+    
+
     // getBuchungbyAktivitaetID = () => {
 
     //     if (this.state.aktivitaetliste) {
