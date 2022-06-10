@@ -248,6 +248,32 @@ class BuchungMapper(Mapper):
         self._cnx.commit()
         cursor.close()
 
+    def delete_by_aktivitaet_id(self, aktivitaet_id):
+        """Löschen der Daten einer Buchung aus der Datenbank
+
+        :param aktivitaet_id 
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM buchung WHERE aktivitaet_id={}".format(aktivitaet_id)
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+        
+    def delete_by_person_id(self, person_id):
+        """Löschen der Daten einer Buchung aus der Datenbank
+
+        :param person_id 
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM buchung WHERE person_id={}".format(person_id)
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+        
 '''Only for testing purpose'''
 
 if (__name__ == "__main__"):

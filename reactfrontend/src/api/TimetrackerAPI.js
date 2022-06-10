@@ -52,7 +52,7 @@ export default class TimetrackerAPI {
   #deletePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
   #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
   #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
-  #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
+
   
 
 
@@ -500,11 +500,15 @@ getAktivitaetbyID(id) {
     })
   }
 
-  deletePerson(id) {
-    // Person löschen
-    return this.#fetchAdvanced(this.#deletePersonURL(id), {
+  deletePerson(personBO) {
+    // Projekt löschen
+    return this.#fetchAdvanced(this.#deletePersonURL(personBO.getID()), {
       method: 'DELETE',
-
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(personBO)
     })
   }
 

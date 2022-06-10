@@ -104,6 +104,8 @@ class TimetrackerAdministration (object):
         """Die gegebenene Aktivitaet aus unserem System löschen."""
         with AktivitaetMapper() as mapper:
             mapper.delete(aktivitaet)
+        with BuchungMapper() as mapper:
+            mapper.delete_by_aktivitaet_id(aktivitaet)
 
 
     """
@@ -259,7 +261,13 @@ class TimetrackerAdministration (object):
     def delete_person(self, id):
         """Die gegebenene Person aus unserem System löschen."""
         with PersonMapper() as mapper:
+            a = mapper.find_by_id(id)
+        with ArbeitszeitkontoMapper() as mapper:
+            mapper.delete(a.get_arbeitszeitkonto_id())
+        with PersonMapper() as mapper:
             mapper.delete(id)
+        with BuchungMapper() as mapper:
+            mapper.delete_by_person_id(id)
 
     def add_person_google_user_id(self,google_user_id):
         with PersonMapper() as mapper:
@@ -296,6 +304,13 @@ class TimetrackerAdministration (object):
         """Das gegebenene Projekt aus unserem System löschen."""
         with ProjektMapper() as mapper:
             mapper.delete(id)
+        with AktivitaetMapper() as mapper:
+            akitivitaetliste = mapper.find_by_projekt_id(id)
+            for i in akitivitaetliste:
+                with BuchungMapper() as mapper:
+                    mapper.delete_by_aktivitaet_id(i.get_id())
+        with AktivitaetMapper() as mapper:
+            mapper.delete_by_projekt_id(id)
 
     """
     Zeitintervall-spezifische Methoden
