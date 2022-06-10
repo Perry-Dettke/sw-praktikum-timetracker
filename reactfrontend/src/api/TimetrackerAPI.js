@@ -234,14 +234,16 @@ getAktivitaetbyID(id) {
 
 
 // *** Buchung realted *** //
- getBuchung() {
-    // Projekt abfragen
-    console.log("Test")
+  getBuchung() {
+    // Buchung abfragen
     return this.#fetchAdvanced(this.#getBuchungURL()).then((responseJSON) => {
-      let buchung = BuchungBO.fromJSON(responseJSON);
+      let buchungliste = [];
+      responseJSON.map(item => {
+        let buchung = BuchungBO.fromJSON(item);
+        buchungliste.push(buchung);
+      })
       return new Promise(function (resolve) {
-        resolve(buchung)
-        console.log("Test 2", buchung)
+        resolve(buchungliste);
       })
     })
   }
@@ -272,9 +274,24 @@ getAktivitaetbyID(id) {
         resolve(buchungliste)
       })
     })
+    
   }
+/// Stunden aus buchungen
 
-
+//  getBuchungbyAktivitaetID(aktivitaet_id) {
+//     // Aktivitaet abfragen
+//       return this.#fetchAdvanced(this.#getBuchungbyAktivitaetIDURL(aktivitaet_id)).then((responseJSON) => {
+//       let stunden = 0;
+//       responseJSON.map(item => {
+//         let buchungstunden = BuchungBO.fromJSON(item).getStunden();
+//         stunden += buchungstunden;
+//         console.log(stunden)
+//       })
+//       return new Promise(function (resolve) {
+//         resolve(stunden)
+//       })
+//     })
+//   }
 
   // getBuchungbyID(buchungID) {
   //   // Buchung abfragen

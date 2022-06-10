@@ -104,40 +104,7 @@ class BuchungListe extends Component {
                   <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID}/>)
               }
         </List>
-
-
-
-
-
-
-
-
-
-
-        {/* <TableContainer>
-          <h2>Übersicht eigener Buchungen</h2>    
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Datum</TableCell>
-                <TableCell>Projekt</TableCell>
-                <TableCell>Aktivität</TableCell>
-                <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
-                <TableCell>Stunden die gebucht wurden</TableCell>
-                <TableCell>Bearbeiten</TableCell>
-                <TableCell>Löschen</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {
-                buchungliste.map(buchung =>
-                  <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID}/>)
-              }
-            </TableBody>
-          </Table>
-        </TableContainer> */}
-
-        
+            
         <BuchungDialog show={showBuchungDialog} onClose={this.buchungDialogClosed} />
         </Grid>
       </div>
@@ -152,32 +119,6 @@ class BuchungListe extends Component {
 export default BuchungListe;
 
 
-  
-
-            {/* <Table>
-          <TableHead sx={{
-                                backgroundColor: '#dedede'
-                                }}>
-                                <TableRow>
-                                    <TableCell>Datum</TableCell>
-                                    <TableCell>Projekt</TableCell>
-                                    <TableCell>Aktivität</TableCell>
-                                    <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
-                                    <TableCell>Stunden die gebucht wurden</TableCell>
-                                    <TableCell>Bearbeiten</TableCell>
-                                    <TableCell>Löschen</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            
-                </Table>
-            <List>
-              
-              {
-
-              buchungliste.map(buchung =>
-              <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID}/>)
-               } 
-            </List> */}
 
 
 

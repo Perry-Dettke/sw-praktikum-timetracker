@@ -33,10 +33,33 @@ class TimetrackerAdministration (object):
         with AktivitaetMapper() as mapper:
             return mapper.find_by_id(id)
 
+    # def get_aktivitaet_by_projekt_id(self, projekt_id):
+    #     """Die Aktivitaet mit der gegebenen Projekt ID auslesen."""
+    #     with AktivitaetMapper() as mapper:
+    #         return mapper.find_by_projekt_id(projekt_id)
+
+### Stunden
     def get_aktivitaet_by_projekt_id(self, projekt_id):
         """Die Aktivitaet mit der gegebenen Projekt ID auslesen."""
+
         with AktivitaetMapper() as mapper:
-            return mapper.find_by_projekt_id(projekt_id)
+            akitvitaetliste = mapper.find_by_projekt_id(projekt_id)
+        with BuchungMapper() as mapper:
+            
+            
+            for i in akitvitaetliste:
+
+                buchungliste = mapper.find_by_aktivitaet_id(i.get_id())
+                stunden = 0
+                for a in buchungliste:
+                    stunden += a.get_stunden()
+
+                i.set_stunden(stunden)
+
+        return akitvitaetliste
+
+
+
 
     def save_aktivitaet(self, aktivitaet):
         """Die gegebenen Aktivitaet speichern."""
@@ -105,6 +128,10 @@ class TimetrackerAdministration (object):
         with BuchungMapper() as mapper:
             return mapper.find_by_aktivitaet_id(aktivitaet_id)
 
+    # def get_buchung_by_datum(self, aktivitaet_id, start, ende):
+    #     """Die Buchung mit der gegebenen Aktivitaet ID auslesen."""
+    #     with BuchungMapper() as mapper:
+    #         return mapper.find_by_datum(aktivitaet_id, start, ende)
 
     def get_all_buchung(self):
         """Alle Buchungen auslesen."""
@@ -263,3 +290,11 @@ class TimetrackerAdministration (object):
         """Das gegebenene Zeitintervall aus unserem System löschen."""
         with ZeitintervallMapper() as mapper:
             mapper.delete(zeitintervall)
+
+if (__name__ == "__main__"):
+    with ZeitintervallMapper() as mapper:
+        result = mapper.find_all()
+        for zeitintervall in result:
+            print(zeitintervall)
+
+

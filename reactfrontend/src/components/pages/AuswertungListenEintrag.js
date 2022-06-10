@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
 import { Typography, Button, IconButton, Grid, Tooltip, Accordion, AccordionSummary, AccordionDetails, Table, TableCell, TableHead, TableRow, TableBody } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
+import { StayCurrentLandscapeTwoTone } from '@mui/icons-material';
 
 class AuswertungListenEintrag extends Component {
 
@@ -15,10 +14,8 @@ class AuswertungListenEintrag extends Component {
 
         //gebe einen leeren status
         this.state = {
-          aktivitaetliste: [],
-          aktivitaetlisteKopie: [],
-          buchungliste: [],
-          run: false,
+            aktivitaetliste: [],
+            buchungliste: [],
         };
     }
 
@@ -37,7 +34,7 @@ class AuswertungListenEintrag extends Component {
     }
 
     // getBuchungbyAktivitaetID = () => {
-    
+
     //     if (this.state.aktivitaetliste) {
     //         for (let i = 0; i < this.state.aktivitaetliste.length; i++) {
     //             let id = this.state.aktivitaetliste[i].getID()
@@ -52,103 +49,99 @@ class AuswertungListenEintrag extends Component {
     //     };
     // }
 
-    getBuchungbyAktivitaetID = () => {
-        this.timer = setTimeout(() => {
-            if (this.state.aktivitaetliste) {
-                var aktivitaetliste = this.state.aktivitaetliste
-                for (let i = 0; i < aktivitaetliste.length; i++) {
-                    let id = aktivitaetliste[i].getID()
-                    TimetrackerAPI.getAPI().getBuchungbyAktivitaetID(id).then((buchungBOs) => {
-                        let stunden = 0
-                        buchungBOs.map(buchungBO => {
-                            stunden += buchungBO.getStunden()
-                        })
-                        console.log(stunden)
-                        aktivitaetliste[i].setStunden(stunden)
-                    });
-                    this.setState({
-                    aktivitaetlisteKopie: aktivitaetliste,
-                    run: true,
-                    })
-                };
-            };
-    }
-    , 1000);
-    }
+    // getBuchungbyAktivitaetID = () => {
+    //     this.timer = setTimeout(() => {
+    //         if (this.state.aktivitaetliste) {
+    //             var aktivitaetliste = this.state.aktivitaetliste
+    //             for (let i = 0; i < aktivitaetliste.length; i++) {
+    //                 let id = aktivitaetliste[i].getID()
+    //                 TimetrackerAPI.getAPI().getBuchungbyAktivitaetID(id).then((stundenAPI) => {
 
-    componentDidMount () {
+    //                     this.setState({
+    //                         stundenliste: [...this.state.stundenliste, stundenAPI]
+
+    //                     });
+    //                 })
+    //             };
+    //         };
+    //     }
+    //         , 1000);
+    // }
+
+
+
+    componentDidMount() {
         this.getAktivitaetbyProjektID();
-        this.getBuchungbyAktivitaetID();
+
+
     }
 
 
     //Renders the component
     render() {
         const { projekt } = this.props;
-        const { aktivitaetliste, run, aktivitaetlisteKopie} = this.state;
-        console.log(aktivitaetlisteKopie, "Test")
+        const { aktivitaetliste, buchungliste } = this.state;
+        // console.log("Akti", aktivitaetliste)
+        console.log(buchungliste, "Test")
+
+
 
         return (
-            aktivitaetlisteKopie && run ?
-            <div>
-                <Grid container spacing={4} alignItems="center">
-                    <Grid item xs={12} textAlign="center">
-                        <Accordion>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                                sx={{
-                                    backgroundColor: "#dedede",
-                                }}
-                            >
-                                <Typography><b>{projekt.bezeichnung}</b></Typography>
-                            </AccordionSummary>
-                            <AccordionDetails sx={{
-                                backgroundColor: "#eeeeee",
-                            }}>
-                                <Grid container alignItems="center" spacing={2}>
-                                    <Grid item xs={3}>
-                                        <Button variant="contained" color="primary" aria-label="add" onClick={this.aktivitaetDialogButtonClicked} startIcon={<AccessTimeIcon />}>
-                                            Zeitraum auswählen</Button>
+            aktivitaetliste ?
+                <div>
+                    <Grid container spacing={4} alignItems="center">
+                        <Grid item xs={12} textAlign="center">
+                            <Accordion>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                    aria-controls="panel1a-content"
+                                    id="panel1a-header"
+                                    sx={{
+                                        backgroundColor: "#dedede",
+                                    }}
+                                >
+                                    <Typography><b>{projekt.bezeichnung}</b></Typography>
+                                </AccordionSummary>
+                                <AccordionDetails sx={{
+                                    backgroundColor: "#eeeeee",
+                                }}>
+                                    <Grid container alignItems="center" spacing={2}>
+                                        <Grid item xs={3}>
+                                            <Button variant="contained" color="primary" aria-label="add" onClick={this.aktivitaetDialogButtonClicked} startIcon={<AccessTimeIcon />}>
+                                                Zeitraum auswählen</Button>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
 
-                                <Table>
-                                    <TableHead sx={{
-                                        backgroundColor: '#dedede'
-                                    }}>
-                                        <TableRow>
-                                            <TableCell>Aktivität</TableCell>
-                                            <TableCell>Kapazität</TableCell>
-                                            <TableCell>Ist-Stunden</TableCell>
-                                            <TableCell>Reststunden</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                    {           
-                                                aktivitaetlisteKopie.map(aktivitaet =>
-        
-                                                      
+                                    <Table>
+                                        <TableHead sx={{
+                                            backgroundColor: '#dedede'
+                                        }}>
+                                            <TableRow>
+                                                <TableCell>Aktivität</TableCell>
+                                                <TableCell>Kapazität</TableCell>
+                                                <TableCell>Ist-Stunden</TableCell>
+                                                <TableCell>Reststunden</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {
+                                                aktivitaetliste.map(aktivitaet =>
                                                     <TableRow key={aktivitaet.getID()}>
                                                         <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
+                                                        <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
                                                         <TableCell><Typography> {aktivitaet.getStunden()}</Typography></TableCell>
-                                                        <TableCell><Typography> {aktivitaet[0]}</Typography></TableCell>
-                                                        <TableCell><Typography> {aktivitaet[3]}</Typography></TableCell>
-
+                                                        <TableCell><Typography> {aktivitaet.getKapazitaet() - aktivitaet.getStunden()}</Typography></TableCell>
                                                     </TableRow>
-                                                    
                                                 )}
-                                    </TableBody>
-                                </Table>
 
-                            </AccordionDetails>
-                        </Accordion>
+                                        </TableBody>
+                                    </Table>
+                                </AccordionDetails>
+                            </Accordion>
+                        </Grid>
                     </Grid>
-                </Grid>
-                
-            </div >
-            : null
+                </div >
+                : null
         );
     }
 }
