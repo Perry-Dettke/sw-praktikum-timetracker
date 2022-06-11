@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import { Typography, Button, IconButton, Grid, Tooltip, Accordion, AccordionSummary, AccordionDetails, Table, TableCell, TableHead, TableRow, TableBody } from '@mui/material';
+import { Typography, Button, IconButton, Grid, Tooltip, Accordion, AccordionSummary, AccordionDetails, Table, TableCell, TableHead, TableRow, TableBody, Box } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import { StayCurrentLandscapeTwoTone } from '@mui/icons-material';
+import AuswertungListenEintragPerson from './AuswertungListenEintragPerson';
 
 class AuswertungListenEintrag extends Component {
 
@@ -16,6 +16,7 @@ class AuswertungListenEintrag extends Component {
         this.state = {
             aktivitaetliste: [],
             buchungliste: [],
+            personliste: []
         };
     }
 
@@ -34,17 +35,18 @@ class AuswertungListenEintrag extends Component {
     }
 
 
-    getPersonbyAktivitaetID = () => {
-        TimetrackerAPI.getAPI().getPersonbyAktivitaetID(this.props.aktivitaet.getID()).then((aktivitaetBOs) => {
+    getPersonbyAktivitaetID = (id) => {
+        console.log(id)
+        TimetrackerAPI.getAPI().getPersonbyAktivitaetID(id).then((personBOs) => {
             this.setState({
-                aktivitaetliste: aktivitaetBOs,
-            });
+                personliste: personBOs
+            })
         });
     }
 
 
 
-    
+
 
     // getBuchungbyAktivitaetID = () => {
 
@@ -139,8 +141,41 @@ class AuswertungListenEintrag extends Component {
                                         <TableBody>
                                             {
                                                 aktivitaetliste.map(aktivitaet =>
+
                                                     <TableRow key={aktivitaet.getID()}>
-                                                        <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
+                                                        <TableCell> <Accordion>
+                                                            <AccordionSummary
+                                                                expandIcon={<ExpandMoreIcon />}
+                                                                aria-controls="panel1a-content"
+                                                                id="panel1a-header"
+                                                                sx={{
+                                                                    backgroundColor: "#dedede",
+                                                                }}
+                                                            >
+                                                                <Typography><b>{aktivitaet.getBezeichnung()}</b></Typography>
+                                                            </AccordionSummary>
+                                                            <AccordionDetails sx={{
+                                                                backgroundColor: "#eeeeee",
+                                                            }}>
+
+
+                                                                <Table>
+                                                                    <TableHead sx={{
+
+                                                                    }}>
+                                                                        <strong>Person die bereits auf die Aktivität gebucht haben:</strong>
+                                                                    </TableHead>
+
+                                                                    <TableBody>
+                                                                        <AuswertungListenEintragPerson key={(aktivitaet)[aktivitaet.id]} aktivitaet={aktivitaet} />
+                                                                    </TableBody>
+
+
+                                                                </Table>
+
+
+                                                            </AccordionDetails>
+                                                        </Accordion></TableCell>
                                                         <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
                                                         <TableCell><Typography> {aktivitaet.getStunden()}</Typography></TableCell>
                                                         <TableCell><Typography> {aktivitaet.getKapazitaet() - aktivitaet.getStunden()}</Typography></TableCell>
@@ -162,3 +197,6 @@ class AuswertungListenEintrag extends Component {
 
 
 export default AuswertungListenEintrag;
+
+
+

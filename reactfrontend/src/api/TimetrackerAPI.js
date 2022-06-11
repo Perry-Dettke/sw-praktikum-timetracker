@@ -52,6 +52,7 @@ export default class TimetrackerAPI {
   #deletePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
   #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
   #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
+  #getPersonbyAktivitaetIDURL = (aktivitaet_id) => `${this.#ServerBaseURL}/personbyaktivitaet/${aktivitaet_id}`;
 
 
 
@@ -430,6 +431,21 @@ export default class TimetrackerAPI {
         resolve(person)
       })
     })
+  }
+
+  getPersonbyAktivitaetID(aktivitaet_id) {
+    // Person abfragen
+      return this.#fetchAdvanced(this.#getPersonbyAktivitaetIDURL(aktivitaet_id)).then((responseJSON) => {
+      let personliste = [];
+      responseJSON.map(item => {
+        let person = PersonBO.fromJSON(item);
+        personliste.push(person);
+      })
+      return new Promise(function (resolve) {
+        resolve(personliste)
+      })
+    })
+    
   }
 
 
