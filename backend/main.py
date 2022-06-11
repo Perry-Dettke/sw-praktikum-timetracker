@@ -630,7 +630,7 @@ class PersonIDOperations(Resource):
             return '', 500 
 
 
-@timetracker.route('/akitvitaetbyprojektidTEST/<int:aktivitaet_id>')
+@timetracker.route('/personbyaktivitaet/<int:aktivitaet_id>')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class PersonbyAktivitaetOperations(Resource):
     @timetracker.marshal_with(person)
@@ -861,5 +861,3 @@ class ZeitintervallIDOperations(Resource):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-

@@ -138,19 +138,9 @@ class BuchungListenEintrag extends Component {
             <div>
 
 
-            <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell>Datum</TableCell>
-                    <TableCell>Projekt</TableCell>
-                    <TableCell>Aktivität</TableCell>
-                    <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
-                    <TableCell>Stunden die gebucht wurden</TableCell>
-                    <TableCell>Bearbeiten</TableCell>
-                    <TableCell>Löschen</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
+
+
+ 
                 <TableRow key={buchung.getID()}>
                     <TableCell>{buchung.getDatum()}</TableCell>
                     <TableCell>{projekt.getBezeichnung()}</TableCell>
@@ -168,8 +158,10 @@ class BuchungListenEintrag extends Component {
                         </Tooltip>
                     </TableCell>
                 </TableRow>
-            </TableBody>
-            </Table>
+
+
+
+
                 <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed}/>
                 <BuchungLöschen show={showBuchungLöschen} buchung={buchung} onClose={this.buchungLöschenClosed}/>
 
