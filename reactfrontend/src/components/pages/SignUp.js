@@ -25,7 +25,7 @@ class SignUp extends Component {
     // PersonForm schließen
     closePersonForm = person => {
         if (person) {
-            TimetrackerAPI.getAPI().addPersonGoogle(person.getID(), this.state.currentUser.uid)
+            TimetrackerAPI.getAPI().addPersonGoogleURL(person.getID(), this.state.currentUser.uid)
             this.setState({
                 person: person,
                 showPersonForm: false

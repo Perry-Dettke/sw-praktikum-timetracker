@@ -50,8 +50,8 @@ export default class TimetrackerAPI {
   #getPersonURL = () => `${this.#ServerBaseURL}/person`;
   #updatePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
   #deletePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
-  #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
-  #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
+  #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/firebasw/${id}`;
+  #addPersonGoogleURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
   #getPersonbyAktivitaetIDURL = (aktivitaet_id) => `${this.#ServerBaseURL}/personbyaktivitaet/${aktivitaet_id}`;
 
   
@@ -469,17 +469,17 @@ getAktivitaetbyID(id) {
     })
   }
 
-  /* addPersonGoogle(personID, googleid) {
-       // Person einer GoogleID zuweisen
-       return this.#fetchAdvanced(this.#addPersonGoogleURL(googleid), {
-         method: 'POST',
-         headers: {
-           'Accept': 'application/json, text/plain',
-           'Content-type': 'application/json',
-         },
-         body: JSON.stringify({ 'personID': personID, 'googleid': googleid })
-       })
-     }*/
+  addPersonGoogle(personID, googleid) {
+    // Person einer GoogleID zuweisen
+    return this.#fetchAdvanced(this.#addPersonGoogleURL(googleid), {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({ 'personID': personID, 'googleid': googleid })
+    })
+  }
 
   updatePerson(personBO) {
     // Person updaten
