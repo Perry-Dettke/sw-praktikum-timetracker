@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {Button, IconButton, Dialog, DialogContent, DialogContentText,DialogTitle, DialogActions, TextField} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import ContextErrorMessage from './ContextErrorMessage';
-import LoadingProgress from './LoadingProgress';
 import { withStyles } from '@mui/styles';
 
 
