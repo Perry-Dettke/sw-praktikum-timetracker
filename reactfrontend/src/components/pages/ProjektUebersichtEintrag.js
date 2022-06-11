@@ -182,11 +182,11 @@ class ProjektUebersichtEintrag extends Component {
                                         </Grid>
                                     </Grid>
                                     <br />
-                                    <Typography align='left'><b>Auftraggeber:</b>{projekt.getAuftraggeber()}<br /></Typography>
+                                    <Typography align='left'><b>Auftraggeber: </b>{projekt.getAuftraggeber()}<br /></Typography>
                                     {ersteller ?
-                                    <Typography align='left'><b>Ersteller:</b>{ersteller.getVor_name()} {ersteller.getNach_name()}<br /></Typography>
+                                    <Typography align='left'><b>Ersteller: </b>{ersteller.getVor_name()} {ersteller.getNach_name()}<br /></Typography>
                                     : null}
-                                    <Typography align='left'><b>Teilnehmer:</b></Typography>
+                                    <Typography align='left'><b>Teilnehmer: </b></Typography>
                                     <ul>
                                     {personenliste.map(person =>
                                     <Typography align='left'><li>{person.getVor_name()} {person.getNach_name()} </li></Typography>
