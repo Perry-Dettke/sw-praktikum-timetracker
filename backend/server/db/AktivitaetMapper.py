@@ -159,6 +159,23 @@ class AktivitaetMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
+    def delete_by_projekt_id(self, projekt_id):
+        """Löschen der Daten eines Aktivitaet-Objekts aus der Datenbank 
+    
+        :param projekt_id
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM aktivitaet WHERE projekt_id={}".format(projekt_id)
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+
+
+
+
+
     """Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
     um die grundsätzliche Funktion zu überprüfen.
     

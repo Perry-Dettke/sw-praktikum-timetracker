@@ -68,6 +68,7 @@ class ProjektListenEintrag extends Component {
     render() {
         const {classes, projekt} = this.props;
         const {showProjektForm, error, loadingInProgress, showProjektLöschenDialog} = this.state;
+        console.log(projekt)
 
         return (
             <div>
