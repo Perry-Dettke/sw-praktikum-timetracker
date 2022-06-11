@@ -1,24 +1,13 @@
 import React from 'react';
 import './App.css';
-<<<<<<< HEAD
 import Header from './components/layout/Header';
 import Home from './components/pages/HomeSeite';
-import PersonListe from './components/pages/PersonListe';
-import ProjektListe from './components/pages/ProjektListe';
 import { BrowserRouter as Router, Route, Routes, useLocation, Navigate} from 'react-router-dom';
 import { Container, ThemeProvider, CssBaseline } from '@mui/material';
 
 //import Personen_uebersicht from './components/pages/PersonenÜbersicht';
-import Buchung from './components/pages/xBuchungSeite';
-import Personen_uebersicht from'./components/pages/PersonenÜbersicht';
 
-=======
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-
-import Header from './components/layout/Header';
-import Home from './components/pages/HomeSeite';
 import BuchungListe from './components/pages/BuchungListe';
->>>>>>> main
 import Projekt_uebersicht from './components/pages/ProjektÜbersicht';
 import Auswertung from './components/pages/AuswertungListe';
 import { initializeApp } from 'firebase/app';
@@ -113,7 +102,6 @@ class App extends React.Component {
 
 
   /** Renders the whole app */
-<<<<<<< HEAD
   render() {
 		const { currentUser, appError, authError, authLoading } = this.state;
 		// console.log(currentUser)
@@ -144,11 +132,8 @@ class App extends React.Component {
 										<SignIn onSignIn={this.handleSignIn} />
 								} />
 								<Route path={process.env.PUBLIC_URL + '/home'} element={<Secured user={currentUser}><Home /> </Secured>} />
-								<Route path={process.env.PUBLIC_URL + '/projekt'} element={<Secured user={currentUser}><ProjektListe /></Secured>} />
-								<Route path={process.env.PUBLIC_URL + '/person'} element={<Secured user={currentUser}> <PersonListe /></Secured>} />
-								<Route path={process.env.PUBLIC_URL + '/buchung'} element={<Secured user={currentUser}> <Buchung /></Secured>} />
-								<Route path={process.env.PUBLIC_URL + '/personen_uebersicht'} element={<Secured user={currentUser}> <Personen_uebersicht/></Secured>} />
-								<Route path={process.env.PUBLIC_URL + '/projekt_uebersicht'} element={<Secured user={currentUser}> <Projekt_uebersicht/></Secured>} />
+								<Route path={process.env.PUBLIC_URL + '/projekt'} element={<Secured user={currentUser}><Projekt_uebersicht /></Secured>} />
+								<Route path={process.env.PUBLIC_URL + '/buchung'} element={<Secured user={currentUser}> <BuchungListe /></Secured>} />
 								<Route path={process.env.PUBLIC_URL + '/auswertung'} element={<Secured user={currentUser}><Auswertung/></Secured>} />
 							</Route>
 						</Routes>
@@ -157,26 +142,6 @@ class App extends React.Component {
 			</ThemeProvider>
 		);
 	}
-=======
-  render(){
-    return (
-      <Router>
-        <div className="App">
-          <Header />
-          <div className="content">
-            <Routes>
-                <Route path={'/*'} element={<Home/>}/>
-                <Route path={'/home'} element={<Home/>} />
-                <Route path={'/projekt_uebersicht'} element={<Projekt_uebersicht/>} />
-                <Route path={'/buchung'} element={<BuchungListe/>} />  
-                <Route path={'/auswertung'} element={<Auswertung/>} />
-            </Routes> 
-          </div>
-        </div>
-      </Router>
-    );
-  }
->>>>>>> main
 }
 
 export default App;

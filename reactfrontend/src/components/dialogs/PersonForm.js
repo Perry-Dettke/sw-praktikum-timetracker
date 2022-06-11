@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import {Button, IconButton, Dialog, DialogContent, DialogContentText,DialogTitle, DialogActions, TextField} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-<<<<<<< HEAD
-=======
-import { withStyles } from '@mui/styles';
->>>>>>> main
 
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
