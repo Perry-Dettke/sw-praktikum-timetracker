@@ -176,6 +176,29 @@ class ProjektMapper (Mapper):
 
 
 
+    def find_person_in_projekt(self, projekt_id):
+        """Auslesen aller Teilnehmer eines Projekts."""
+
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT person_id FROM projekt_person WHERE projekt_id={}".format(projekt_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            for (person_id) in tuples:
+                result.append(person_id[0])
+
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            result = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
 
 
 """Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 

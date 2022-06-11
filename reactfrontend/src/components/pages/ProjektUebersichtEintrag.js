@@ -11,7 +11,6 @@ import AktivitaetDialog from '../dialogs/AktivitaetDialog';
 import AktivitaetBearbeiten from '../dialogs/AktivitaetBearbeiten';
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import ProjektLöschenDialog from '../dialogs/ProjektLöschenDialog';
-// import ProjektForm from '../dialogs/ProjektForm';
 
 
 
@@ -22,12 +21,14 @@ class ProjektUebersichtEintrag extends Component {
 
         //gebe einen leeren status
         this.state = {
-            aktivitaetliste: null,
+            aktivitaetliste: [],
             showAktivitaetDialog: false,
             showAktivitaetBearbeiten: false,
             showProjektAnlegen: false,
             showProjektLöschenDialog: false,
             currentAktivitaet: null,
+            ersteller: null,
+            personenliste: [],
         };
     }
 
@@ -36,6 +37,24 @@ class ProjektUebersichtEintrag extends Component {
         TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.props.projekt.getID()).then((aktivitaetBOs) => {
             this.setState({
                 aktivitaetliste: aktivitaetBOs,
+            });
+        });
+    }
+
+    //Gibt Ersteller des Projekt zurück
+    getErstellerbyID = () => {
+        TimetrackerAPI.getAPI().getPersonbyID(this.props.projekt.getProjekterstellerID()).then((personBOs) => {
+            this.setState({
+                ersteller: personBOs,
+            });
+        });
+    }
+
+    //Gibt Teilnehmer des Projekt zurück
+    getPersonInProjekt = () => {
+        TimetrackerAPI.getAPI().getPersonInProjekt(this.props.projekt.getID()).then((personBOs) => {
+            this.setState({
+                personenliste: personBOs,
             });
         });
     }
@@ -70,7 +89,7 @@ class ProjektUebersichtEintrag extends Component {
         this.setState({
             currentAktivitaet: aktivitaet,
         },
-            this.toggleAktivitaetBearbeiten
+            this.toggleAktivitaetBearbeiten()
         );
     }
 
@@ -119,17 +138,19 @@ class ProjektUebersichtEintrag extends Component {
 
     componentDidMount() {
         this.getAktivitaetbyProjektID();
+        this.getErstellerbyID();
+        this.getPersonInProjekt();
     }
 
 
     //Renders the component
     render() {
         const { projekt } = this.props;
-        const { showAktivitaetDialog, showAktivitaetBearbeiten, showProjektAnlegen, aktivitaetliste, showProjektLöschenDialog, currentAktivitaet } = this.state;
-        console.log(currentAktivitaet);
+        const { ersteller, showAktivitaetDialog, showAktivitaetBearbeiten, showProjektAnlegen, aktivitaetliste, 
+                showProjektLöschenDialog, currentAktivitaet, personenliste } = this.state;
 
         return (
-            aktivitaetliste ?
+            aktivitaetliste && personenliste ?
                 <div>
                     <Grid container spacing={4} alignItems="center">
                         <Grid item xs={12} textAlign="center">
@@ -161,9 +182,16 @@ class ProjektUebersichtEintrag extends Component {
                                         </Grid>
                                     </Grid>
                                     <br />
-                                    <Typography align='left'><u>Auftraggeber:</u> {projekt.auftraggeber} <br /></Typography>
-                                    <Typography align='left'><u>Ersteller:</u> {projekt.projektersteller_id} <br /><br /></Typography>
-                                    <Typography align='left'>???? Personen die im Projekt mitarbeiten HIER anzeigen lassen ???? <br /><br /></Typography>
+                                    <Typography align='left'><b>Auftraggeber: </b>{projekt.getAuftraggeber()}<br /></Typography>
+                                    {ersteller ?
+                                    <Typography align='left'><b>Ersteller: </b>{ersteller.getVor_name()} {ersteller.getNach_name()}<br /></Typography>
+                                    : null}
+                                    <Typography align='left'><b>Teilnehmer: </b></Typography>
+                                    <ul>
+                                    {personenliste.map(person =>
+                                    <Typography align='left'><li>{person.getVor_name()} {person.getNach_name()} </li></Typography>
+                                    )}
+                                    </ul><br />
                                     <Grid item xs={3}>
                                         <Button variant="contained" color="primary" aria-label="add" onClick={this.aktivitaetDialogButtonClicked} startIcon={<AddIcon />}>
                                             Aktivität hinzufügen</Button>
@@ -211,10 +239,12 @@ class ProjektUebersichtEintrag extends Component {
                     <AktivitaetDialog show={showAktivitaetDialog} projekt={projekt} onClose={this.aktivitaetDialogClosed} />
                     <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} />
                     <ProjektLöschenDialog show={showProjektLöschenDialog} onClose={this.deleteProjektButtonClicked} />
-                    {currentAktivitaet ?
-                        <AktivitaetBearbeiten show={showAktivitaetBearbeiten} projekt={projekt} aktivitaet={currentAktivitaet} onClose={this.aktivitaetBearbeitenClosed} />
-                        : null}
-                </div>
+                    {
+                        currentAktivitaet ?
+                            <AktivitaetBearbeiten show={showAktivitaetBearbeiten} projekt={projekt} aktivitaet={currentAktivitaet} onClose={this.aktivitaetBearbeitenClosed} />
+                            : null
+                    }
+                </div >
                 : null
         );
     }
