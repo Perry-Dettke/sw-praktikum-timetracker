@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+<<<<<<< HEAD
 import Header from './components/layout/Header';
 import Home from './components/pages/HomeSeite';
 import PersonListe from './components/pages/PersonListe';
@@ -11,6 +12,13 @@ import { Container, ThemeProvider, CssBaseline } from '@mui/material';
 import Buchung from './components/pages/xBuchungSeite';
 import Personen_uebersicht from'./components/pages/PersonenÜbersicht';
 
+=======
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+
+import Header from './components/layout/Header';
+import Home from './components/pages/HomeSeite';
+import BuchungListe from './components/pages/BuchungListe';
+>>>>>>> main
 import Projekt_uebersicht from './components/pages/ProjektÜbersicht';
 import Auswertung from './components/pages/AuswertungListe';
 import { initializeApp } from 'firebase/app';
@@ -18,6 +26,10 @@ import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged } f
 import firebaseConfig from './firebaseconfig';
 import SignIn from './components/pages/SignIn';
 import Theme from './components/layout/Theme';
+
+
+import TimetrackerAPI from './api/TimetrackerAPI';
+
 
 
 
@@ -101,6 +113,7 @@ class App extends React.Component {
 
 
   /** Renders the whole app */
+<<<<<<< HEAD
   render() {
 		const { currentUser, appError, authError, authLoading } = this.state;
 		// console.log(currentUser)
@@ -144,6 +157,26 @@ class App extends React.Component {
 			</ThemeProvider>
 		);
 	}
+=======
+  render(){
+    return (
+      <Router>
+        <div className="App">
+          <Header />
+          <div className="content">
+            <Routes>
+                <Route path={'/*'} element={<Home/>}/>
+                <Route path={'/home'} element={<Home/>} />
+                <Route path={'/projekt_uebersicht'} element={<Projekt_uebersicht/>} />
+                <Route path={'/buchung'} element={<BuchungListe/>} />  
+                <Route path={'/auswertung'} element={<Auswertung/>} />
+            </Routes> 
+          </div>
+        </div>
+      </Router>
+    );
+  }
+>>>>>>> main
 }
 
 export default App;

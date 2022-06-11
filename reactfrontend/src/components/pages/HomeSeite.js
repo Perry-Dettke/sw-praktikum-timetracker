@@ -113,7 +113,7 @@ componentDidMount() {
                         <p>
                             <strong>Name:</strong> {person.getVor_name()} {person.getNach_name()}
                         </p>
-                      
+
                         <p>
                         <strong>Email:</strong> {person.getEmail()}
                         </p>
