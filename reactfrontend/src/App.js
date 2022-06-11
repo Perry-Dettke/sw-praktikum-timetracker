@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+<<<<<<< Updated upstream
 import Header from './components/layout/Header';
 import Home from './components/pages/HomeSeite';
 import { BrowserRouter as Router, Route, Routes, useLocation, Navigate} from 'react-router-dom';
@@ -7,6 +8,12 @@ import { Container, ThemeProvider, CssBaseline } from '@mui/material';
 
 //import Personen_uebersicht from './components/pages/PersonenÜbersicht';
 
+=======
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+
+import Header from './components/layout/Header';
+import Home from './components/pages/HomeSeite';
+>>>>>>> Stashed changes
 import BuchungListe from './components/pages/BuchungListe';
 import Projekt_uebersicht from './components/pages/ProjektÜbersicht';
 import Auswertung from './components/pages/AuswertungListe';
@@ -102,6 +109,7 @@ class App extends React.Component {
 
 
   /** Renders the whole app */
+<<<<<<< Updated upstream
   render() {
 		const { currentUser, appError, authError, authLoading } = this.state;
 		// console.log(currentUser)
@@ -142,6 +150,26 @@ class App extends React.Component {
 			</ThemeProvider>
 		);
 	}
+=======
+  render(){
+    return (
+      <Router>
+        <div className="App">
+          <Header />
+          <div className="content">
+            <Routes>
+                <Route path={'/*'} element={<Home/>}/>
+                <Route path={'/home'} element={<Home/>} />
+                <Route path={'/projekt_uebersicht'} element={<Projekt_uebersicht/>} />
+                <Route path={'/buchung'} element={<BuchungListe/>} />  
+                <Route path={'/auswertung'} element={<Auswertung/>} />
+            </Routes> 
+          </div>
+        </div>
+      </Router>
+    );
+  }
+>>>>>>> Stashed changes
 }
 
 export default App;
