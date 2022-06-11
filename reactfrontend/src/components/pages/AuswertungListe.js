@@ -25,77 +25,25 @@ class Auswertung extends Component {
 
         //init empty state
         this.state = {
-            projekt: [],
+            projektliste: [],
             aktivitaet: [],
-            showProjektDialog: false,
     };
     }
 
     /** Fetches all PersonBOs from the backend */
-    getProjekt = () => {
+    getProjektbyProjekterstellerID = () => {
         var pro = TimetrackerAPI.getAPI();
-            pro.getProjekt().then((projektBOs) => {
+            pro.getProjektbyProjekterstellerID(1).then((projektBOs) => {
               this.setState({
-                projekt: projektBOs,
+                projektliste: projektBOs,
               });
             });
     }
-    
-    getAktivitaetbyProjektID = () => {
-        var akt = TimetrackerAPI.getAPI();
-            akt.getAktivitaetbyProjektID().then((aktivitaetBOs) => {
-                this.setState({
-                    aktivitaet: aktivitaetBOs,
-                });
-            });
-    }
-
-    //PersonDialog anzeigen
-    showProjektDialog = () => {
-        this.setState({ showProjektDialog: true});
-    };
-
-
-    // Add Button - Oeffnet den Person hinzufuegen Dialog
-    addProjektButtonClicked = event => {
-    event.stopPropagation();
-    this.setState({
-      showProjektDialog: true,
-    });
-  }
-
-  /*
-    //wird aufgerufen, wenn Dialog Fenster geschloßen wird
-    projektFormClosed = projekt => {
-        this.getProjekt();
-        if (projekt) {
-        const newProjektList = [...this.state.projekt, projekt];
-        this.setState({
-            projekt: newProjektList,
-            filteredProjekt: [...newProjektList],
-            showProjektForm: false
-        });
-        } else {
-        this.setState({
-            showProjektForm: false
-        });
-        }
-    }
-*/
-
-    
-
-    //ProjektDialog schließen
-    closeProjektDialog = () => {
-        this.setState({ 
-            showProjektDialog: false});
-    };
-
 
 
     componentDidMount() {
-        this.getProjekt();
-        this.getAktivitaetbyProjektID();
+        this.getProjektbyProjekterstellerID();
+
     }
     
 
@@ -103,9 +51,9 @@ class Auswertung extends Component {
     render() {
         const { expandedState } = this.props;
         
-        const{projekt, aktivitaet, showProjektDialog} = this.state;
-        console.log(projekt)
-
+        const{projektliste} = this.state;
+        console.log(projektliste)
+        
         return (
             <div>
                 <Grid container spacing={4}  alignItems="left">
@@ -114,9 +62,8 @@ class Auswertung extends Component {
                     <Grid item xs={12}>
                         <List >
                             {
-                                projekt.map(projekt =>
-                                    <AuswertungListenEintrag key={(projekt)[projekt.id]} projekt={projekt} aktivitaet={aktivitaet} show={this.props.show}
-                                        getProjekt={this.getProjekt} getAktivitaetbyProjektID={this.getAktivitaetbyProjektID} />)
+                                projektliste.map(projekt =>
+                                    <AuswertungListenEintrag key={(projekt)[projekt.id]} projekt={projekt}/>)
                             }
                         </List>
                     </Grid>

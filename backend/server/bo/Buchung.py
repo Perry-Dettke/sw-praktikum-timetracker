@@ -10,7 +10,9 @@ class Buchung(bo.BusinessObjekt):
         super().__init__()
         self._datum = datetime.date.today()
         self._stunden = 0.0
-        self._arbeitszeitkonto_id = 0
+        self._ereignisbuchung = 0
+        self._person_id = 0
+        self.aktivitaet_id = 0
 
         
     def get_datum(self):
@@ -28,20 +30,36 @@ class Buchung(bo.BusinessObjekt):
     def set_stunden(self, stunden):
         # Setzen der Stunden 
         self._stunden = stunden
+
+    def get_ereignisbuchung(self):
+        # Ausgeben ob Ereignisbuchung Ja oder Nein
+        return self._ereignisbuchung
     
-    def get_arbeitszeitkonto_id(self):
-        # Ausgeben der Arbeitszeitkonto ID
-        return self._arbeitszeitkonto_id
+    def set_ereignisbuchung(self, ereignisbuchung):
+        # Setzen der Ereignisbuchung Ja oder Nein
+        self._ereignisbuchung = ereignisbuchung
     
-    def set_arbeitszeitkonto_id(self, arbeitszeitkonto_id):
+    def get_person_id(self):
+        # Ausgeben der Person ID
+        return self._person_id
+    
+    def set_person_id(self, person_id):
         # Setzen der Arbeitszeitkonto ID
-        self._arbeitszeitkonto_id = arbeitszeitkonto_id
+        self._person_id = person_id
+
+    def get_aktivitaet_id(self):
+        # Ausgeben der Person ID
+        return self._aktivitaet_id
+    
+    def set_aktivitaet_id(self, aktivitaet_id):
+        # Setzen der Arbeitszeitkonto ID
+        self._aktivitaet_id = aktivitaet_id
 
 
 
     def __str__(self):
         #Erzeugen einer einfachen textuellen Darstellung der jeweiligen Instanz
-        return f'Buchung: {self.get_datum()},{self.get_stunden()},{self.get_arbeitszeitkonto_id()}'
+        return f'Buchung: {self.get_datum()},{self.get_stunden()},{self.get_ereignisbuchung()}{self.get_person_id()}{self.get_aktivitaet_id()}'
     
     @staticmethod
     def from_dict(dictionary=dict()):
@@ -49,5 +67,7 @@ class Buchung(bo.BusinessObjekt):
         obj = Buchung()
         obj.set_datum(dictionary["datum"])
         obj.set_stunden(dictionary["stunden"])
-        obj.set_arbeitszeitkonto_id(dictionary["arbeitszeitkonto_id"])
+        obj.set_ereignisbuchung(dictionary["ereignisbuchung"])
+        obj.set_person_id(dictionary["person_id"])
+        obj.set_aktivitaet_id(dictionary["aktivitaet_id"])
         return obj

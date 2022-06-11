@@ -9,6 +9,7 @@ class Aktivitaet(bo.BusinessObjekt):
         self._bezeichnung = ''
         self._kapazitaet = 0.0
         self._projekt_id = 0
+        self._stunden = 0.0
         
     def get_bezeichnung(self):
         # Ausgeben der Bezeichnung
@@ -33,10 +34,18 @@ class Aktivitaet(bo.BusinessObjekt):
     def set_projekt_id(self, projekt_id):
         # Setzen der Projekt ID
         self._projekt_id = projekt_id
+
+    def get_stunden(self):
+        # Ausgeben der Stunden
+        return self._stunden
+    
+    def set_stunden(self, stunden):
+        # Setzen der Stunden 
+        self._stunden = stunden
     
     def __str__(self):
         #Erzeugen einer einfachen textuellen Darstellung der jeweiligen Instanz
-        return f'Aktivitaet: {self.get_bezeichnung()}, {self.get_kapazitaet()}'
+        return f'Aktivitaet: {self.get_bezeichnung()}, {self.get_kapazitaet()}, {self.get_stunden()}'
     
     @staticmethod
     def from_dict(dictionary=dict()):
@@ -45,4 +54,5 @@ class Aktivitaet(bo.BusinessObjekt):
         obj.set_bezeichnung(dictionary["bezeichnung"])
         obj.set_kapazitaet(dictionary["kapazitaet"])
         obj.set_projekt_id(dictionary["projekt_id"])
+        obj.set_stunden(dictionary["stunden"])
         return obj
