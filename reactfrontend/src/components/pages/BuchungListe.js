@@ -66,6 +66,10 @@ class BuchungListe extends Component {
     return (
       buchungliste ?
       <div>
+        <Box sx={{ bgcolor: 'success.main' }}>
+                        <h2>Hier kannst du neue Buchungen erstellen.</h2>
+                        <h3>Zudem werden dir deine bereits erstellten Buchungen angezeigt und du kannst diese bearbeiten oder löschen.</h3>
+        </Box>
         <Grid>
         {/* <Button variant="contained" sx={{width:250}} onClick={this.showBuchungDialog}> Neue Buchung Erstellen</Button> */}
         <Box sx={{ flexGrow: 1 }}>

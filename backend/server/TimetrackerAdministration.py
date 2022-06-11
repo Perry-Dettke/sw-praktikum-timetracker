@@ -66,8 +66,10 @@ class TimetrackerAdministration (object):
             buchungliste = mapper.find_by_aktivitaet_id(aktivitaet_id)
 
             for i in buchungliste:
-                person_id_liste.append(i.get_person_id())
-
+                if i.get_person_id() in person_id_liste:
+                    pass
+                else:
+                    person_id_liste.append(i.get_person_id())
 
 
         with PersonMapper() as mapper:
@@ -78,6 +80,7 @@ class TimetrackerAdministration (object):
                 
             
             with BuchungMapper() as mapper:
+                buchungen = []
                 for j in personliste:
                     buchungsliste = mapper.find_by_person_id(j.get_id())
                     stunden = 0

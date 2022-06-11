@@ -56,6 +56,7 @@ class Auswertung extends Component {
         
         return (
             <div>
+                <h2> Es werden dir nur die Projekte angezeigt, die du selbst erstellt hast!</h2>
                 <Grid container spacing={4}  alignItems="left">
                     <Grid item xs={12}>
                     </Grid>
