@@ -15,20 +15,20 @@ export default class TimetrackerAPI {
   // URL des Flask Servers
   #ServerBaseURL = '/timetracker';
 
-// *** Aktivitaet realted *** // 
+  // *** Aktivitaet realted *** // 
   #addAktivitaetURL = () => `${this.#ServerBaseURL}/aktivitaet`;
   #getAktivitaetbyIDURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
   #getAktivitaetbyProjektIDURL = (projekt_id) => `${this.#ServerBaseURL}/akitvitaetbyprojektid/${projekt_id}`;
   #updateAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
   #deleteAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
 
-// *** Arbeitszeitkonto realted *** //
+  // *** Arbeitszeitkonto realted *** //
   #addArbeitszeitkontoURL = () => `${this.#ServerBaseURL}/arbeitszeitkonto`;
   #getArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
   #updateArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
   #deleteArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
 
-// *** Buchung realted *** //
+  // *** Buchung realted *** //
   #addBuchungURL = () => `${this.#ServerBaseURL}/buchung`;
   #getBuchungURL = () => `${this.#ServerBaseURL}/buchung`;
   #getBuchungbyIDURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
@@ -37,14 +37,14 @@ export default class TimetrackerAPI {
   #getBuchungbyPersonIDURL = (person_id) => `${this.#ServerBaseURL}/buchungbypersonid/${person_id}`;
   #getBuchungbyAktivitaetIDURL = (aktivitaet_id) => `${this.#ServerBaseURL}/buchungbyaktivitaetid/${aktivitaet_id}`;
 
-// *** Ereignis realted *** //
+  // *** Ereignis realted *** //
   #addEreignisURL = () => `${this.#ServerBaseURL}/ereignis`;
   #getEreignisURL = () => `${this.#ServerBaseURL}/ereignis`;
   #getEreignisbyIDURL = (id) => `${this.#ServerBaseURL}/ereignis/${id}`;
   //#updateEreignisURL = (id) => `${this.#ServerBaseURL}/ereignis/${id}`;
   #deleteEreignisURL = (id) => `${this.#ServerBaseURL}/ereignis/${id}`;
 
-// *** Person realted *** //
+  // *** Person realted *** //
   #addPersonURL = () => `${this.#ServerBaseURL}/person`;
   #getPersonbyIDURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
   #getPersonURL = () => `${this.#ServerBaseURL}/person`;
@@ -53,10 +53,10 @@ export default class TimetrackerAPI {
   #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
   #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
 
-  
 
 
-// *** Projekt realted *** //
+
+  // *** Projekt realted *** //
   #addProjektURL = () => `${this.#ServerBaseURL}/projekt`;
   #getProjektbyIDURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
   #getProjektbyProjekterstellerIDURL = (projektersteller_id) => `${this.#ServerBaseURL}/projektbyprojekterstellerid/${projektersteller_id}`;
@@ -64,14 +64,14 @@ export default class TimetrackerAPI {
   #updateProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
   #deleteProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
 
-// *** PersonProjekt realted *** //  
+  // *** PersonProjekt realted *** //  
   // #addPersonProjektURL = () => `${this.#ServerBaseURL}/personprojekt`;
-  // #getPersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
+  #getPersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projekt_person/${projekt_id}`;
   // #updatePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // #deletePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // linkPersonProjektURL = () => `${this.#ServerBaseURL}/link`;
 
-// *** Zeitintervall realted *** //
+  // *** Zeitintervall realted *** //
   #addZeitintervallURL = () => `${this.#ServerBaseURL}/zeitintervall`;
   #getZeitintervallURL = (id) => `${this.#ServerBaseURL}/zeitintervall/${id}`;
   #updateZeitintervallURL = (id) => `${this.#ServerBaseURL}/zeitintervall/${id}`;
@@ -99,16 +99,16 @@ export default class TimetrackerAPI {
     })
 
 
-// *** Aktivitaet realted *** //
-getAktivitaetbyID(id) {
-  // Aktivitaet abfragen
-  return this.#fetchAdvanced(this.#getAktivitaetbyIDURL(id)).then((responseJSON) => {
-    let aktivitaet = AktivitaetBO.fromJSON(responseJSON);
-    return new Promise(function (resolve) {
-      resolve(aktivitaet)
+  // *** Aktivitaet realted *** //
+  getAktivitaetbyID(id) {
+    // Aktivitaet abfragen
+    return this.#fetchAdvanced(this.#getAktivitaetbyIDURL(id)).then((responseJSON) => {
+      let aktivitaet = AktivitaetBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(aktivitaet)
+      })
     })
-  })
-}
+  }
 
 
   getAktivitaetbyProjektID(projekt_id) {
@@ -176,7 +176,7 @@ getAktivitaetbyID(id) {
     })
   }
 
-// *** Arbeitszeitkonto realted *** //
+  // *** Arbeitszeitkonto realted *** //
   getArbeitszeitkonto(arbeitszeitkontoID) {
     // Arbeitszeitkonto abfragen
     return this.#fetchAdvanced(this.#getArbeitszeitkontoURL(arbeitszeitkontoID)).then((responseJSON) => {
@@ -236,7 +236,7 @@ getAktivitaetbyID(id) {
 
 
 
-// *** Buchung realted *** //
+  // *** Buchung realted *** //
   getBuchung() {
     // Buchung abfragen
     return this.#fetchAdvanced(this.#getBuchungURL()).then((responseJSON) => {
@@ -267,7 +267,7 @@ getAktivitaetbyID(id) {
 
   getBuchungbyAktivitaetID(aktivitaet_id) {
     // Aktivitaet abfragen
-      return this.#fetchAdvanced(this.#getBuchungbyAktivitaetIDURL(aktivitaet_id)).then((responseJSON) => {
+    return this.#fetchAdvanced(this.#getBuchungbyAktivitaetIDURL(aktivitaet_id)).then((responseJSON) => {
       let buchungliste = [];
       responseJSON.map(item => {
         let buchung = BuchungBO.fromJSON(item);
@@ -277,24 +277,24 @@ getAktivitaetbyID(id) {
         resolve(buchungliste)
       })
     })
-    
-  }
-/// Stunden aus buchungen
 
-//  getBuchungbyAktivitaetID(aktivitaet_id) {
-//     // Aktivitaet abfragen
-//       return this.#fetchAdvanced(this.#getBuchungbyAktivitaetIDURL(aktivitaet_id)).then((responseJSON) => {
-//       let stunden = 0;
-//       responseJSON.map(item => {
-//         let buchungstunden = BuchungBO.fromJSON(item).getStunden();
-//         stunden += buchungstunden;
-//         console.log(stunden)
-//       })
-//       return new Promise(function (resolve) {
-//         resolve(stunden)
-//       })
-//     })
-//   }
+  }
+  /// Stunden aus buchungen
+
+  //  getBuchungbyAktivitaetID(aktivitaet_id) {
+  //     // Aktivitaet abfragen
+  //       return this.#fetchAdvanced(this.#getBuchungbyAktivitaetIDURL(aktivitaet_id)).then((responseJSON) => {
+  //       let stunden = 0;
+  //       responseJSON.map(item => {
+  //         let buchungstunden = BuchungBO.fromJSON(item).getStunden();
+  //         stunden += buchungstunden;
+  //         console.log(stunden)
+  //       })
+  //       return new Promise(function (resolve) {
+  //         resolve(stunden)
+  //       })
+  //     })
+  //   }
 
   // getBuchungbyID(buchungID) {
   //   // Buchung abfragen
@@ -324,22 +324,22 @@ getAktivitaetbyID(id) {
   }
 
 
-   updateBuchung(buchungBO) {
-       // Buchung updaten
-       return this.#fetchAdvanced(this.#updateBuchungURL(buchungBO.getID()), {
-         method: 'PUT',
-         headers: {
-           'Accept': 'application/json, text/plain',
-           'Content-type': 'application/json',
-         },
-         body: JSON.stringify(buchungBO)
-       }).then((responseJSON) => {
-         let responseBuchungBO = BuchungBO.fromJSON(responseJSON);
-         return new Promise(function (resolve) {
-           resolve(responseBuchungBO);
-         })
-       })
-     } 
+  updateBuchung(buchungBO) {
+    // Buchung updaten
+    return this.#fetchAdvanced(this.#updateBuchungURL(buchungBO.getID()), {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(buchungBO)
+    }).then((responseJSON) => {
+      let responseBuchungBO = BuchungBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(responseBuchungBO);
+      })
+    })
+  }
 
   deleteBuchung(BuchungBO) {
     // Buchung löschen
@@ -353,7 +353,7 @@ getAktivitaetbyID(id) {
     })
   }
 
-// *** Ereignis realted *** //
+  // *** Ereignis realted *** //
   getEreignisbyID(ereignisID) {
     // Ereignis abfragen
     return this.#fetchAdvanced(this.#getEreignisbyIDURL(ereignisID)).then((responseJSON) => {
@@ -421,7 +421,7 @@ getAktivitaetbyID(id) {
     })
   }
 
-// *** Person realted *** //
+  // *** Person realted *** //
   getPersonbyID(personID) {
     // Person abfragen
     return this.#fetchAdvanced(this.#getPersonbyIDURL(personID)).then((responseJSON) => {
@@ -436,9 +436,13 @@ getAktivitaetbyID(id) {
   getPerson() {
     // Person abfragen
     return this.#fetchAdvanced(this.#getPersonURL()).then((responseJSON) => {
-      let person = PersonBO.fromJSON(responseJSON);
+      let personenliste = [];
+      responseJSON.map(item => {
+        let person = PersonBO.fromJSON(item);
+        personenliste.push(person);
+      })
       return new Promise(function (resolve) {
-        resolve(person)
+        resolve(personenliste)
       })
     })
   }
@@ -512,16 +516,16 @@ getAktivitaetbyID(id) {
     })
   }
 
-// *** Projekt realted *** //
+  // *** Projekt realted *** //
   getProjektbyID(id) {
-      // Projekt abfragen
-      return this.#fetchAdvanced(this.#getProjektbyIDURL(id)).then((responseJSON) => {
-        let projekt = ProjektBO.fromJSON(responseJSON);
-        return new Promise(function (resolve) {
-          resolve(projekt)
-        })
+    // Projekt abfragen
+    return this.#fetchAdvanced(this.#getProjektbyIDURL(id)).then((responseJSON) => {
+      let projekt = ProjektBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(projekt)
       })
-    }
+    })
+  }
 
   getProjektbyProjekterstellerID(projektersteller_id) {
     // Aktivitaet abfragen
@@ -602,6 +606,19 @@ getAktivitaetbyID(id) {
     })
   }
 
+  getPersonInProjekt(projekt_id) {
+    // Teilnehmer eines Projekt abfragen
+    return this.#fetchAdvanced(this.#getPersonInProjektURL(projekt_id)).then((responseJSON) => {
+      let personenliste = [];
+      responseJSON.map(item => {
+        let person = PersonBO.fromJSON(item);
+        personenliste.push(person);
+      })
+      return new Promise(function (resolve) {
+        resolve(personenliste)
+      })
+    })
+  }
 
 
 
@@ -621,7 +638,7 @@ getAktivitaetbyID(id) {
        })
      }*/
 
-// Zeitintervall realted
+  // Zeitintervall realted
 
   getZeitintervall(zeitintervallID) {
     // Zeitintervall abfragen

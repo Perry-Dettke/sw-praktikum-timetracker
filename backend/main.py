@@ -773,6 +773,46 @@ class ProjektbyProjekterstellerIDOperations(Resource):
         else:
             return '', 500 
 
+#Projekt-Person Beziehung
+@timetracker.route('/projekt_person/<int:projekt_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('projekt_id', 'Die ID des Projekt-Objekts.')
+class ProjektPersonOperations(Resource):
+    @timetracker.marshal_list_with(person, code=200)
+    #@secured
+    def get(self, projekt_id):
+        """Auslesen aller Teilnehmer eines Projekts
+        """
+        adm = TimetrackerAdministration()
+        pro = adm.get_person_in_projekt(projekt_id)
+        return pro
+
+    @timetracker.marshal_list_with(projekt, code=200)
+    @timetracker.expect(projekt)
+    #@secured
+    def post(self):
+        """Anlegen eines neuen Projekt-Objekts.
+        **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
+        So ist zum Beispiel die Vergabe der ID nicht Aufgabe des Clients.
+        Selbst wenn der Client eine ID in dem Proposal vergeben sollte, so
+        liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
+        zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
+        """
+        adm = TimetrackerAdministration()
+        proposal = Projekt.from_dict(api.payload)
+
+        """RATSCHLAG: Prüfen Sie stets die Referenzen auf valide Werte, bevor Sie diese verwenden!"""
+        if proposal is not None:
+            """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
+            wird auch dem Client zurückgegeben. 
+            """
+            a = adm.create_projekt(proposal)
+            return a, 200
+        else:
+            '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
+            return '', 500
+
+
 
 #Zeitintervall related
 @timetracker.route('/zeitintervall')

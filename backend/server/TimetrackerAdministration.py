@@ -312,6 +312,18 @@ class TimetrackerAdministration (object):
         with AktivitaetMapper() as mapper:
             mapper.delete_by_projekt_id(id)
 
+    def get_person_in_projekt(self, projekt_id):
+        """Die Teilnehmer eines Projekts auslesen."""
+        with ProjektMapper() as mapper:
+            id_list = mapper.find_person_in_projekt(projekt_id)
+        personen_list = []
+        for id in id_list:
+            with PersonMapper() as mapper:
+                personen_list.append(mapper.find_by_id(id))
+        return personen_list
+                
+            
+
     """
     Zeitintervall-spezifische Methoden
     """
