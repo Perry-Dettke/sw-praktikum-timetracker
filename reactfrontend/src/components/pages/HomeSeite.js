@@ -20,17 +20,24 @@ import SignUp from './SignUp';
         }
     }
 
-    getPersonbyID = () => {
-        var api = TimetrackerAPI.getAPI();
-            api.getPersonbyID(2).then((personBO) => {
-                this.setState({
-                person: personBO,
-              });
-            });
+    componentDidMount() {
+        this.getPerson();
     }
 
 
 
+    // Personendaten abrufen
+  getPerson = () => {
+    TimetrackerAPI.getAPI().getPersonByGoogle(this.state.currentUser.uid).then((person) =>
+        this.setState({
+          person: person,
+        })
+      ).catch((e) =>
+        this.setState({
+          person: null,
+        })
+      );
+  };
 
 
     // SignUp anzeigen
@@ -113,7 +120,7 @@ componentDidMount() {
                         <p>
                             <strong>Name:</strong> {person.getVor_name()} {person.getNach_name()}
                         </p>
-
+                      
                         <p>
                         <strong>Email:</strong> {person.getEmail()}
                         </p>
