@@ -11,6 +11,8 @@ class Person(bo.BusinessObjekt):
         self._email = ""
         self._benutzer_name = ""
         self._google_user_id = ""
+        self._arbeitszeitkonto_id = 0
+        self._stunden = 0.0
 
 
 
@@ -54,13 +56,29 @@ class Person(bo.BusinessObjekt):
         """ Setzen der Google User ID. """
         self._google_user_id = google_user_id
 
+    def get_arbeitszeitkonto_id(self):
+        """ Ausgeben der Arbeitszeitkonto ID. """
+        return self._arbeitszeitkonto_id
+    
+    def set_arbeitszeitkonto_id(self, arbeitszeitkonto_id):
+        """ Setzen der Arbeitszeitkonto ID. """
+        self._arbeitszeitkonto_id = arbeitszeitkonto_id
+            
+    def get_stunden(self):
+        # Ausgeben der Stunden
+        return self._stunden
+    
+    def set_stunden(self, stunden):
+        # Setzen der Stunden 
+        self._stunden = stunden
+
 
 
 
     
     def __str__(self):
         """ Erzeugen einer einfachen textuellen Darstellung der jeweiligen Instanz. """
-        return f'Person: {self.get_vor_name()}, {self.get_nach_name()}, {self.get_email()}, {self.get_benutzer_name()}, {self.get_google_user_id()} '
+        return f'Person: {self.get_vor_name()}, {self.get_nach_name()}, {self.get_email()}, {self.get_benutzer_name()}, {self.get_google_user_id()},{self.get_arbeitszeitkonto_id}, {self.get_stunden()} '
     
     @staticmethod
     def from_dict(dictionary=dict()):
@@ -70,7 +88,9 @@ class Person(bo.BusinessObjekt):
         obj.set_nach_name(dictionary["nach_name"])
         obj.set_email(dictionary["email"])
         obj.set_benutzer_name(dictionary["benutzer_name"])
+        obj.set_stunden(dictionary["stunden"])
         # obj.set_google_user_id(dictionary["google_user_id"])
+        # obj.set_arbeitszeitkonto_id(dictionary["arbeitszeitkonto_id"])
 
         return obj
 

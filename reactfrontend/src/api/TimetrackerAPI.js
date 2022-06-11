@@ -17,7 +17,7 @@ export default class TimetrackerAPI {
 
 // *** Aktivitaet realted *** // 
   #addAktivitaetURL = () => `${this.#ServerBaseURL}/aktivitaet`;
-  #getAktivitaetURL = () => `${this.#ServerBaseURL}/aktivitaet`;
+  #getAktivitaetbyIDURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
   #getAktivitaetbyProjektIDURL = (projekt_id) => `${this.#ServerBaseURL}/akitvitaetbyprojektid/${projekt_id}`;
   #updateAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
   #deleteAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
@@ -27,7 +27,6 @@ export default class TimetrackerAPI {
   #getArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
   #updateArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
   #deleteArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
-  #getArbeitszeitkontobyPersonIDURL = (person_id) => `${this.#ServerBaseURL}/arbeitszeitkontobypersonid/${person_id}`;
 
 // *** Buchung realted *** //
   #addBuchungURL = () => `${this.#ServerBaseURL}/buchung`;
@@ -35,6 +34,8 @@ export default class TimetrackerAPI {
   #getBuchungbyIDURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
   #updateBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
   #deleteBuchungURL = (id) => `${this.#ServerBaseURL}/buchung/${id}`;
+  #getBuchungbyPersonIDURL = (person_id) => `${this.#ServerBaseURL}/buchungbypersonid/${person_id}`;
+  #getBuchungbyAktivitaetIDURL = (aktivitaet_id) => `${this.#ServerBaseURL}/buchungbyaktivitaetid/${aktivitaet_id}`;
 
 // *** Ereignis realted *** //
   #addEreignisURL = () => `${this.#ServerBaseURL}/ereignis`;
@@ -52,9 +53,13 @@ export default class TimetrackerAPI {
   #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
   #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
 
+  
+
+
 // *** Projekt realted *** //
   #addProjektURL = () => `${this.#ServerBaseURL}/projekt`;
   #getProjektbyIDURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
+  #getProjektbyProjekterstellerIDURL = (projektersteller_id) => `${this.#ServerBaseURL}/projektbyprojekterstellerid/${projektersteller_id}`;
   #getProjektURL = () => `${this.#ServerBaseURL}/projekt`;
   #updateProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
   #deleteProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
@@ -95,6 +100,17 @@ export default class TimetrackerAPI {
 
 
 // *** Aktivitaet realted *** //
+getAktivitaetbyID(id) {
+  // Aktivitaet abfragen
+  return this.#fetchAdvanced(this.#getAktivitaetbyIDURL(id)).then((responseJSON) => {
+    let aktivitaet = AktivitaetBO.fromJSON(responseJSON);
+    return new Promise(function (resolve) {
+      resolve(aktivitaet)
+    })
+  })
+}
+
+
   getAktivitaetbyProjektID(projekt_id) {
     // Aktivitaet abfragen
     return this.#fetchAdvanced(this.#getAktivitaetbyProjektIDURL(projekt_id)).then((responseJSON) => {
@@ -218,33 +234,67 @@ export default class TimetrackerAPI {
     })
   }
 
-  getArbeitszeitkontobyPersonID(person_id) {
-    // Aktivitaet abfragen
-    return this.#fetchAdvanced(this.#getArbeitszeitkontobyPersonIDURL(person_id)).then((responseJSON) => {
-      let arbeitszeitkontoliste = [];
-      responseJSON.map(item => {
-        let arbeitszeitkonto = ArbeitszeitkontoBO.fromJSON(item);
-        arbeitszeitkontoliste.push(arbeitszeitkonto);
-      })
 
-      return new Promise(function (resolve) {
-        resolve(arbeitszeitkontoliste)
-      })
-    })
-  }
 
 // *** Buchung realted *** //
- getBuchung() {
-    // Projekt abfragen
-    console.log("Test")
+  getBuchung() {
+    // Buchung abfragen
     return this.#fetchAdvanced(this.#getBuchungURL()).then((responseJSON) => {
-      let buchung = BuchungBO.fromJSON(responseJSON);
+      let buchungliste = [];
+      responseJSON.map(item => {
+        let buchung = BuchungBO.fromJSON(item);
+        buchungliste.push(buchung);
+      })
       return new Promise(function (resolve) {
-        resolve(buchung)
-        console.log("Test 2", buchung)
+        resolve(buchungliste);
       })
     })
   }
+
+  getBuchungbyPersonID(person_id) {
+    // Aktivitaet abfragen
+    return this.#fetchAdvanced(this.#getBuchungbyPersonIDURL(person_id)).then((responseJSON) => {
+      let buchungliste = [];
+      responseJSON.map(item => {
+        let buchung = BuchungBO.fromJSON(item);
+        buchungliste.push(buchung);
+      })
+      return new Promise(function (resolve) {
+        resolve(buchungliste)
+      })
+    })
+  }
+
+  getBuchungbyAktivitaetID(aktivitaet_id) {
+    // Aktivitaet abfragen
+      return this.#fetchAdvanced(this.#getBuchungbyAktivitaetIDURL(aktivitaet_id)).then((responseJSON) => {
+      let buchungliste = [];
+      responseJSON.map(item => {
+        let buchung = BuchungBO.fromJSON(item);
+        buchungliste.push(buchung);
+      })
+      return new Promise(function (resolve) {
+        resolve(buchungliste)
+      })
+    })
+    
+  }
+/// Stunden aus buchungen
+
+//  getBuchungbyAktivitaetID(aktivitaet_id) {
+//     // Aktivitaet abfragen
+//       return this.#fetchAdvanced(this.#getBuchungbyAktivitaetIDURL(aktivitaet_id)).then((responseJSON) => {
+//       let stunden = 0;
+//       responseJSON.map(item => {
+//         let buchungstunden = BuchungBO.fromJSON(item).getStunden();
+//         stunden += buchungstunden;
+//         console.log(stunden)
+//       })
+//       return new Promise(function (resolve) {
+//         resolve(stunden)
+//       })
+//     })
+//   }
 
   // getBuchungbyID(buchungID) {
   //   // Buchung abfragen
@@ -274,7 +324,7 @@ export default class TimetrackerAPI {
   }
 
 
-  /* updateBuchung(buchungBO) {
+   updateBuchung(buchungBO) {
        // Buchung updaten
        return this.#fetchAdvanced(this.#updateBuchungURL(buchungBO.getID()), {
          method: 'PUT',
@@ -289,7 +339,7 @@ export default class TimetrackerAPI {
            resolve(responseBuchungBO);
          })
        })
-     } */
+     } 
 
   deleteBuchung(BuchungBO) {
     // Buchung löschen
@@ -450,11 +500,15 @@ export default class TimetrackerAPI {
     })
   }
 
-  deletePerson(id) {
-    // Person löschen
-    return this.#fetchAdvanced(this.#deletePersonURL(id), {
+  deletePerson(personBO) {
+    // Projekt löschen
+    return this.#fetchAdvanced(this.#deletePersonURL(personBO.getID()), {
       method: 'DELETE',
-
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(personBO)
     })
   }
 
@@ -468,6 +522,20 @@ export default class TimetrackerAPI {
         })
       })
     }
+
+  getProjektbyProjekterstellerID(projektersteller_id) {
+    // Aktivitaet abfragen
+    return this.#fetchAdvanced(this.#getProjektbyProjekterstellerIDURL(projektersteller_id)).then((responseJSON) => {
+      let projektliste = [];
+      responseJSON.map(item => {
+        let projekt = ProjektBO.fromJSON(item);
+        projektliste.push(projekt);
+      })
+      return new Promise(function (resolve) {
+        resolve(projektliste)
+      })
+    })
+  }
 
   getProjekt() {
     // Projekt abfragen

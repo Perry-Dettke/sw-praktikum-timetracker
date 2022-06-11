@@ -8,6 +8,7 @@ export default class AktivitaetBO extends BusinessObject {
         this.bezeichnung = bezeichnung;
         this.kapazitaet = kapazitaet;
         this.projekt_id = projekt_id;
+        this.stunden = 0.0;
     }
 
     // Bezeichnung setzen 
@@ -34,6 +35,14 @@ export default class AktivitaetBO extends BusinessObject {
     // Projekt ID auslesen 
     getProjektID() {
     return this.projekt_id;
+    }
+    // Stunden  setzen
+    setStunden(stunden) {
+    this.stunden = stunden;
+    }
+    // Stunden auslesen 
+    getStunden() {
+    return this.stunden;
     }
 
     static fromJSON(aktivitaet) {
