@@ -104,7 +104,7 @@ class App extends React.Component {
   /** Renders the whole app */
   render() {
 		const { currentUser, appError, authError, authLoading } = this.state;
-		// console.log(currentUser)
+		console.log(currentUser)
 
 		return (
 			<ThemeProvider theme={Theme}>
