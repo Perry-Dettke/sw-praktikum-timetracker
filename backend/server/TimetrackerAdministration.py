@@ -39,7 +39,7 @@ class TimetrackerAdministration (object):
     #         return mapper.find_by_projekt_id(projekt_id)
 
 ### Stunden
-    def get_aktivitaet_by_projekt_id(self, projekt_id):
+    def get_aktivitaet_by_projekt_id(self, projekt_id, start, ende):
         """Die Aktivitaet mit der gegebenen Projekt ID auslesen."""
 
         with AktivitaetMapper() as mapper:
@@ -49,7 +49,7 @@ class TimetrackerAdministration (object):
             
             for i in akitvitaetliste:
 
-                buchungliste = mapper.find_by_aktivitaet_id(i.get_id())
+                buchungliste = mapper.find_by_aktivitaet_id_and_datum(i.get_id(), start, ende)
                 stunden = 0
                 for a in buchungliste:
                     stunden += a.get_stunden()
@@ -60,33 +60,33 @@ class TimetrackerAdministration (object):
 
 
 
-    def get_person_by_aktivitaet_id(self, aktivitaet_id):
+    def get_person_by_aktivitaet_id(self, aktivitaet_id, start, ende):
         person_id_liste = []
         with BuchungMapper() as mapper:
-            buchungliste = mapper.find_by_aktivitaet_id(aktivitaet_id)
+            buchungliste = mapper.find_by_aktivitaet_id_and_datum(aktivitaet_id, start, ende)
 
-            for i in buchungliste:
-                if i.get_person_id() not in person_id_liste:
-                    person_id_liste.append(i.get_person_id())
+        for i in buchungliste:
+            if i.get_person_id() not in person_id_liste:
+                person_id_liste.append(i.get_person_id())
 
 
         with PersonMapper() as mapper:
             personliste = []
 
-            for i in person_id_liste:
-                personliste.append(mapper.find_by_id(i))
+            for id in person_id_liste:
+                personliste.append(mapper.find_by_id(id))
                 
             
-            with BuchungMapper() as mapper:
-                for j in personliste:
-                    buchungsliste = mapper.find_by_person_id(j.get_id())
-                    stunden = 0
-                    for a in buchungliste:
-                        stunden += a.get_stunden()
+        with BuchungMapper() as mapper:
+            for pe in personliste:
+                stunden = 0
+                for bu in buchungliste:
+                    if bu.get_person_id() == pe.get_id():
+                        stunden += bu.get_stunden()
 
-                    j.set_stunden(stunden)
+                    pe.set_stunden(stunden)
 
-            return personliste
+        return personliste
 
 
 
@@ -164,10 +164,10 @@ class TimetrackerAdministration (object):
         with BuchungMapper() as mapper:
             return mapper.find_by_aktivitaet_id(aktivitaet_id)
 
-    # def get_buchung_by_datum(self, aktivitaet_id, start, ende):
-    #     """Die Buchung mit der gegebenen Aktivitaet ID auslesen."""
-    #     with BuchungMapper() as mapper:
-    #         return mapper.find_by_datum(aktivitaet_id, start, ende)
+    def get_buchung_by_datum(self, aktivitaet_id, start, ende):
+        """Die Buchung mit der gegebenen Aktivitaet ID auslesen."""
+        with BuchungMapper() as mapper:
+            return mapper.find_by_datum(aktivitaet_id, start, ende)
 
     def get_all_buchung(self):
         """Alle Buchungen auslesen."""

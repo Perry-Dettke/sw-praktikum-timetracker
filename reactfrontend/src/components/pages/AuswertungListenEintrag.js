@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Typography, Button, IconButton, Grid, Tooltip, Accordion, AccordionSummary, AccordionDetails, Table, TableCell, TableHead, TableRow, TableBody, Box } from '@mui/material';
+import { Typography, Button, IconButton, Grid, TextField, Accordion, AccordionSummary, AccordionDetails, Table, TableCell, TableHead, TableRow, TableBody, Box } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimetrackerAPI from '../../api/TimetrackerAPI';
@@ -16,7 +16,9 @@ class AuswertungListenEintrag extends Component {
         this.state = {
             aktivitaetliste: [],
             buchungliste: [],
-            personliste: []
+            personliste: [],
+            start: null,
+            ende: null
         };
     }
 
@@ -26,8 +28,9 @@ class AuswertungListenEintrag extends Component {
     }
 
     //Gibt Aktivitaet pro Projekt zurück
-    getAktivitaetbyProjektID = () => {
-        TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.props.projekt.getID()).then((aktivitaetBOs) => {
+    getAktivitaetbyProjektID = (start = "2000-01-01", ende = "3000-01-01") => {
+        TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.props.projekt.getID(), start, ende).then((aktivitaetBOs) => {
+            console.log("Kilick")
             this.setState({
                 aktivitaetliste: aktivitaetBOs,
             });
@@ -35,14 +38,25 @@ class AuswertungListenEintrag extends Component {
     }
 
 
-    getPersonbyAktivitaetID = (id) => {
-        console.log(id)
-        TimetrackerAPI.getAPI().getPersonbyAktivitaetID(id).then((personBOs) => {
-            this.setState({
-                personliste: personBOs
-            })
-        });
+
+    zeitraumClicked = () => {
+        this.getAktivitaetbyProjektID(this.state.start, this.state.ende);
+      }
+    
+
+  // Textfelder ändern
+  textFieldValueChange = (event) => {
+    const value = event.target.value;
+
+    let error = false;
+    if (value.trim().length === 0) {
+      error = true;
     }
+
+    this.setState({
+      [event.target.id]: event.target.value,
+    });
+  }
 
 
 
@@ -88,16 +102,15 @@ class AuswertungListenEintrag extends Component {
     componentDidMount() {
         this.getAktivitaetbyProjektID();
 
-
     }
 
 
     //Renders the component
     render() {
         const { projekt } = this.props;
-        const { aktivitaetliste, buchungliste } = this.state;
+        const { aktivitaetliste, buchungliste, start, ende } = this.state;
         // console.log("Akti", aktivitaetliste)
-        console.log(buchungliste, "Test")
+        console.log(aktivitaetliste, "Test")
 
 
 
@@ -121,10 +134,12 @@ class AuswertungListenEintrag extends Component {
                                     backgroundColor: "#eeeeee",
                                 }}>
                                     <Grid container alignItems="center" spacing={2}>
-                                        <Grid item xs={3}>
-                                            <Button variant="contained" color="primary" aria-label="add" onClick={this.aktivitaetDialogButtonClicked} startIcon={<AccessTimeIcon />}>
-                                                Zeitraum auswählen</Button>
-                                        </Grid>
+                                    <Grid item xs={3}>
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start:' value={start} onChange={this.textFieldValueChange} />
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende:' value={ende} onChange={this.textFieldValueChange} />
+                            <Button variant="contained" color="primary" aria-label="add" onClick={this.zeitraumClicked} startIcon={<AccessTimeIcon />}>
+                                Zeitraum auswählen</Button>
+                        </Grid>
                                     </Grid>
 
                                     <Table>
@@ -140,9 +155,8 @@ class AuswertungListenEintrag extends Component {
                                         </TableHead>
                                         <TableBody>
                                             {
-                                                aktivitaetliste.map(aktivitaet =>
-
-                                                    <TableRow key={aktivitaet.getID()}>
+                                                aktivitaetliste.map((aktivitaet, index) =>
+                                                    <TableRow key={`${aktivitaet.getID() + index}`}>
                                                         <TableCell> <Accordion>
                                                             <AccordionSummary
                                                                 expandIcon={<ExpandMoreIcon />}
@@ -157,20 +171,14 @@ class AuswertungListenEintrag extends Component {
                                                             <AccordionDetails sx={{
                                                                 backgroundColor: "#eeeeee",
                                                             }}>
-
-
                                                                 <Table>
                                                                     <TableHead sx={{
-
                                                                     }}>
                                                                         <strong>Person die bereits auf die Aktivität gebucht haben:</strong>
                                                                     </TableHead>
-
                                                                     <TableBody>
                                                                         <AuswertungListenEintragPerson key={(aktivitaet)[aktivitaet.id]} aktivitaet={aktivitaet} />
                                                                     </TableBody>
-
-
                                                                 </Table>
 
 

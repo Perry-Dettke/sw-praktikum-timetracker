@@ -200,16 +200,16 @@ class AktivitaetIDOperations(Resource):
 
 
 
-@timetracker.route('/akitvitaetbyprojektid/<int:projekt_id>')
+@timetracker.route('/akitvitaetbyprojektid/<int:projekt_id>/<string:start>/<string:ende>')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class AktivitaetbyProjektOperations(Resource):
     @timetracker.marshal_with(aktivitaet)
-    def get(self, projekt_id):
+    def get(self, projekt_id, start, ende):
         """Auslesen eines bestimmten Aktivitaets-Objekts aufgrund seiner Projekt ID.
         Das auszulesende Objekt wird durch die ```projekt_id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        akt = adm.get_aktivitaet_by_projekt_id(projekt_id)
+        akt = adm.get_aktivitaet_by_projekt_id(projekt_id, start, ende)
 
         if akt is not None:
             return akt
@@ -441,16 +441,16 @@ class BuchungByAktivitaetIDOperations(Resource):
         else:
             return '', 500 
 
-# @timetracker.route('/buchungbyaktiviaet_idanddatum/<int:aktivitaet_id>/<int:start>/<int:ende>')
+# @timetracker.route('/buchungbyaktiviaet_idanddatum/<int:aktivitaet_id>')
 # @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 # class BuchungByAktivitaetIDOperations(Resource):
 #     @timetracker.marshal_with(buchung)
-#     def get(self, aktivitaet_id, start, ende):
+#     def get(self, aktivitaet_id):
 #         """Auslesen eines bestimmten Buchung-Objekts aufgrund seiner Arbeitszeitkonto ID.
 #         Das auszulesende Objekt wird durch die ```aktivitaet_id``` in dem URI bestimmt.
 #         """
 #         adm = TimetrackerAdministration()
-#         bu = adm.get_buchung_by_datum(aktivitaet_id, start, ende)
+#         bu = adm.get_buchung_by_datum(aktivitaet_id)
 
 #         if bu is not None:
 #             return bu
@@ -630,16 +630,16 @@ class PersonIDOperations(Resource):
             return '', 500 
 
 
-@timetracker.route('/personbyaktivitaet/<int:aktivitaet_id>')
+@timetracker.route('/personbyaktivitaet/<int:aktivitaet_id>/<string:start>/<string:ende>')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class PersonbyAktivitaetOperations(Resource):
     @timetracker.marshal_with(person)
-    def get(self, aktivitaet_id):
+    def get(self, aktivitaet_id, start, ende):
         """Auslesen eines bestimmten Aktivitaets-Objekts aufgrund seiner Projekt ID.
         Das auszulesende Objekt wird durch die ```aktivitaet_id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        per = adm.get_person_by_aktivitaet_id(aktivitaet_id)
+        per = adm.get_person_by_aktivitaet_id(aktivitaet_id, start, ende)
 
         if per is not None:
             return per

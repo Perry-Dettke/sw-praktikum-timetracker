@@ -18,7 +18,7 @@ export default class TimetrackerAPI {
   // *** Aktivitaet realted *** // 
   #addAktivitaetURL = () => `${this.#ServerBaseURL}/aktivitaet`;
   #getAktivitaetbyIDURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
-  #getAktivitaetbyProjektIDURL = (projekt_id) => `${this.#ServerBaseURL}/akitvitaetbyprojektid/${projekt_id}`;
+  #getAktivitaetbyProjektIDURL = (projekt_id, start, ende) => `${this.#ServerBaseURL}/akitvitaetbyprojektid/${projekt_id}/${start}/${ende}`;
   #updateAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
   #deleteAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
 
@@ -52,7 +52,7 @@ export default class TimetrackerAPI {
   #deletePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
   #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
   #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
-  #getPersonbyAktivitaetIDURL = (aktivitaet_id) => `${this.#ServerBaseURL}/personbyaktivitaet/${aktivitaet_id}`;
+  #getPersonbyAktivitaetIDURL = (aktivitaet_id, start, ende) => `${this.#ServerBaseURL}/personbyaktivitaet/${aktivitaet_id}/${start}/${ende}`;
 
 
 
@@ -112,13 +112,14 @@ export default class TimetrackerAPI {
   }
 
 
-  getAktivitaetbyProjektID(projekt_id) {
+  getAktivitaetbyProjektID(projekt_id, start, ende) {
     // Aktivitaet abfragen
-    return this.#fetchAdvanced(this.#getAktivitaetbyProjektIDURL(projekt_id)).then((responseJSON) => {
+    return this.#fetchAdvanced(this.#getAktivitaetbyProjektIDURL(projekt_id, start, ende)).then((responseJSON) => {
       let aktivitaetliste = [];
       responseJSON.map(item => {
         let aktivitaet = AktivitaetBO.fromJSON(item);
         aktivitaetliste.push(aktivitaet);
+        console.log(responseJSON)
       })
 
       return new Promise(function (resolve) {
@@ -433,9 +434,9 @@ export default class TimetrackerAPI {
     })
   }
 
-  getPersonbyAktivitaetID(aktivitaet_id) {
+  getPersonbyAktivitaetID(aktivitaet_id, start, ende) {
     // Person abfragen
-      return this.#fetchAdvanced(this.#getPersonbyAktivitaetIDURL(aktivitaet_id)).then((responseJSON) => {
+      return this.#fetchAdvanced(this.#getPersonbyAktivitaetIDURL(aktivitaet_id, start, ende)).then((responseJSON) => {
       let personliste = [];
       responseJSON.map(item => {
         let person = PersonBO.fromJSON(item);

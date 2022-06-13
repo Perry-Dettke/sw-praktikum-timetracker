@@ -18,9 +18,9 @@ class AuswertungListenEintragPerson extends Component {
         };
     }
 
-    getPersonbyAktivitaetID = () => {
-        console.log()
-        TimetrackerAPI.getAPI().getPersonbyAktivitaetID(this.props.aktivitaet.getID()).then((personBOs) => {
+    getPersonbyAktivitaetID = (start = "2000-01-01", ende = "3000-01-01") => {
+        console.log("Person")
+        TimetrackerAPI.getAPI().getPersonbyAktivitaetID(this.props.aktivitaet.getID(), start, ende).then((personBOs) => {
             this.setState({
                 personliste: personBOs
             })
@@ -34,7 +34,8 @@ class AuswertungListenEintragPerson extends Component {
     render() {
         const { } = this.props;
         const { personliste } = this.state;
-        console.log(this.props.aktivitaet.getID())
+        console.log(personliste)
+
 
         return (
             <div>
