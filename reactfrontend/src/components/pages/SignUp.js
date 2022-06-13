@@ -42,8 +42,10 @@ class SignUp extends Component {
 
 
     render() {
-        const { classes } = this.props;
+        const { classes, currentUser } = this.props;
         const { person, showPersonForm} = this.state;
+        console.log(currentUser)
+        console.log("Testtttt")
         return (
             <div>
                 { <div>
@@ -60,7 +62,7 @@ class SignUp extends Component {
                                 : <p>Personendaten erfolgreich gespeichert. (ID: {person.getID()})</p>}
                         </div>
                     </Paper>
-                    <PersonForm show={showPersonForm} person={person} onClose={this.closePersonForm} />   
+                    <PersonForm show={showPersonForm} person={person} onClose={this.closePersonForm} currentUser={currentUser} />   
                 </div>}
             </div>
         );

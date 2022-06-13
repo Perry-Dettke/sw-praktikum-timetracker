@@ -14,7 +14,7 @@ import SignUp from './SignUp';
         super(props);
     
         this.state = {  
-          currentUser: props.currentUser,  
+
           person: null,
           showPersonForm: false
         }
@@ -32,7 +32,7 @@ import SignUp from './SignUp';
     // }
 
     getPerson = () => {
-        TimetrackerAPI.getAPI().getPersonByGoogle(this.state.currentUser.uid).then((person) =>
+        TimetrackerAPI.getAPI().getPersonByGoogle(this.props.currentUser.uid).then((person) =>
             this.setState({
               person: person,
             })
@@ -91,13 +91,18 @@ import SignUp from './SignUp';
 
 
 componentDidMount() {
-  this.getPerson(); //name frei wählbar (sollte Sinn ergeben)
+  this.getPerson(); 
+
   
 }
 
 
     render(){
-        const { person, showPersonForm, currentUser } = this.state;
+        const { currentUser } = this.props;
+        const { person, showPersonForm } = this.state;
+        console.log(currentUser)
+        console.log(person)
+        console.log()
         
         return(
             person ?
@@ -150,7 +155,7 @@ componentDidMount() {
                 </Paper>
                 </Box>
             </div> 
-            : <SignUp onClose={this.closeSignup}  />
+            :  <SignUp onClose={this.closeSignup} currentUser={currentUser}  />
             
         );
     }
