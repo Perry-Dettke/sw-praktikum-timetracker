@@ -27,6 +27,8 @@ class Header extends Component {
     })
   };
 
+  
+
   /** Renders the component */
   render() {
     const{ user } = this.props;
