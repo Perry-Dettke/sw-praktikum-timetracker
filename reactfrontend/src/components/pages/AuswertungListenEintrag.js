@@ -19,7 +19,6 @@ class AuswertungListenEintrag extends Component {
             personliste: [],
             start: null,
             ende: null,
-
         };
     }
 
@@ -39,6 +38,7 @@ class AuswertungListenEintrag extends Component {
 
     zeitraumClicked = () => {
         this.getAktivitaetbyProjektID(this.state.start, this.state.ende);
+        this.child.getPersonbyAktivitaetID(this.state.start, this.state.ende);
       }
 
 
@@ -175,7 +175,7 @@ class AuswertungListenEintrag extends Component {
                                                                         <strong>Person die bereits auf die Aktivität gebucht haben:</strong>
                                                                     </TableHead>
                                                                     <TableBody>
-                                                                        <AuswertungListenEintragPerson key={(aktivitaet)[aktivitaet.id]} aktivitaet={aktivitaet} />
+                                                                        <AuswertungListenEintragPerson key={(aktivitaet)[aktivitaet.id]} aktivitaet={aktivitaet} ref={instance => { this.child = instance; }} />
                                                                     </TableBody>
                                                                 </Table>
 

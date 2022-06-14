@@ -15,20 +15,27 @@ class AuswertungListenEintragPerson extends Component {
         //gebe einen leeren status
         this.state = {
             personliste: [],
+            start: this.props.start,
+            ende: this.props.ende,
         };
     }
 
     getPersonbyAktivitaetID = (start = "2000-01-01", ende = "3000-01-01") => {
-        console.log("Person")
+        console.log(start, ende)
         TimetrackerAPI.getAPI().getPersonbyAktivitaetID(this.props.aktivitaet.getID(), start, ende).then((personBOs) => {
+            console.log(start, ende, "START")
+            console.log(personBOs)
             this.setState({
                 personliste: personBOs
             })
         });
     }
 
+
+
     componentDidMount() {
         this.getPersonbyAktivitaetID();
+
     }
 
     render() {

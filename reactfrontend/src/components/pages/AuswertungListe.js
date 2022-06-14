@@ -19,7 +19,7 @@ class Auswertung extends Component {
             projektliste: [],
             aktivitaet: [],
         };
-        this.child = React.createRef()
+
     }
 
     /** Fetches all PersonBOs from the backend */

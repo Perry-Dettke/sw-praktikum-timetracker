@@ -82,7 +82,7 @@ class TimetrackerAdministration (object):
     def get_person_by_aktivitaet_id(self, aktivitaet_id, start, ende):
         person_id_liste = []
         with BuchungMapper() as mapper:
-            buchungliste = mapper.find_by_aktivitaet_id_and_datum(aktivitaet_id, start, ende)
+            buchungliste = mapper.find_by_aktivitaet_id(aktivitaet_id)
 
         for i in buchungliste:
             if i.get_person_id() not in person_id_liste:
@@ -97,9 +97,10 @@ class TimetrackerAdministration (object):
                 
             
         with BuchungMapper() as mapper:
+            buchungliste2 = mapper.find_by_aktivitaet_id_and_datum(aktivitaet_id, start, ende)
             for pe in personliste:
                 stunden = 0
-                for bu in buchungliste:
+                for bu in buchungliste2:
                     if bu.get_person_id() == pe.get_id():
                         stunden += bu.get_stunden()
 
