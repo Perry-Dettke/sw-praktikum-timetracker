@@ -4,7 +4,7 @@ import {Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogAct
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 
-class ProjektLöschenDialog extends Component {
+class ProjektLoeschen extends Component {
 
   constructor(props) {
     super(props);
@@ -62,4 +62,4 @@ class ProjektLöschenDialog extends Component {
 
 
 
-export default ProjektLöschenDialog;
+export default ProjektLoeschen;
