@@ -791,12 +791,7 @@ class ProjektPersonOperations(Resource):
     @timetracker.expect(projekt)
     #@secured
     def post(self):
-        """Anlegen eines neuen Projekt-Objekts.
-        **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
-        So ist zum Beispiel die Vergabe der ID nicht Aufgabe des Clients.
-        Selbst wenn der Client eine ID in dem Proposal vergeben sollte, so
-        liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
-        zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
+        """Anlegen eines neuen Projekt-Person-Objekts.
         """
         adm = TimetrackerAdministration()
         proposal = Projekt.from_dict(api.payload)
@@ -806,10 +801,22 @@ class ProjektPersonOperations(Resource):
             """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
             wird auch dem Client zurückgegeben. 
             """
-            a = adm.create_projekt(proposal)
+            a = adm.create_person_in_projekt(proposal)
             return a, 200
         else:
             '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
+            return '', 500
+
+    def delete(self, projekt_id):
+        """Löschen eines bestimmten Projekt-Person-Objekts.
+        Das zu löschende Objekt wird durch die ```projekt_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        if id is not None:
+            adm.delete_person_projekt(projekt_id)
+            return '', 200
+        else:
+            '''Wenn unter projekt_id kein Projekt existiert.'''
             return '', 500
 
 

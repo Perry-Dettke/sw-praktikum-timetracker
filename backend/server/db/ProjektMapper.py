@@ -199,6 +199,56 @@ class ProjektMapper (Mapper):
 
         return result
 
+    def insert_person_in_projekt(self, projekt_person):
+        """Einfügen eines Projekt-Person-Objekts in die Datenbank.
+
+        Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
+        berichtigt.
+
+        :param projekt das zu speichernde Objekt
+        :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
+        """
+        cursor = self._cnx.cursor()
+        cursor.execute("SELECT MAX(id) AS maxid FROM projekt ")
+        tuples = cursor.fetchall()
+
+        for (maxid) in tuples:
+            if maxid[0] is not None:
+                """Wenn wir eine maximale ID festellen konnten, zählen wir diese
+                um 1 hoch und weisen diesen Wert als ID dem Projekt-Objekt zu."""
+                projekt_person.set_id(maxid[0] + 1)
+            else:
+                """Wenn wir KEINE maximale ID feststellen konnten, dann gehen wir
+                davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
+                projekt_person.set_id(1)
+
+        command = "INSERT INTO projekt_person (id, projekt_id, person_id ) VALUES (%s,%s,%s)"
+        data = (
+            projekt_person.get_id(),
+            #wie geht das hier?
+            projekt_person.get_projekt_id(),
+            projekt_person.get_person_id(),
+        )
+
+        cursor.execute(command, data)
+        self._cnx.commit()
+        cursor.close()
+
+        return projekt_person
+
+    def delete_person_in_projekt(self, projekt_id):
+        """Löschen der Daten eines Projekt-Person-Objekts aus der Datenbank.
+
+        :param projekt das aus der DB zu löschende "Objekt"
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM projekt_person WHERE projekt_id={}".format(projekt_id)
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+
 
 
 """Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 

@@ -276,7 +276,7 @@ class TimetrackerAdministration (object):
     Projekt-spezifische Methoden
     """
     def create_projekt(self, projekt): 
-        """Projekt anlegen"""
+        """Projekt anlegen."""
         with ProjektMapper() as mapper:
             return mapper.insert(projekt)
 
@@ -321,6 +321,17 @@ class TimetrackerAdministration (object):
             with PersonMapper() as mapper:
                 personen_list.append(mapper.find_by_id(id))
         return personen_list
+
+    def create_person_in_projekt(self, projekt_id): 
+        """Person in Projekt anlegen."""
+        with ProjektMapper() as mapper:
+            return mapper.insert_person_in_projekt(projekt_id)
+
+    def delete_person_projekt(self, projekt_id):
+        """Eine Person aus dem gegebenenen Projekt aus unserem System löschen."""
+        with ProjektMapper() as mapper:
+            mapper.delete_person_in_projekt(projekt_id)
+        #dazugehörige Buchungen löschen?
                 
             
 
