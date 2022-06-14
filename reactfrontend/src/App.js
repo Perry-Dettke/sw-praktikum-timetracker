@@ -7,6 +7,7 @@ import Home from './components/pages/HomeSeite';
 import BuchungListe from './components/pages/BuchungListe';
 import Projekt_uebersicht from './components/pages/ProjektÜbersicht';
 import Auswertung from './components/pages/AuswertungListe';
+import AuswertungPerson from './components/pages/AuswertungPersonListe';
 
 import TimetrackerAPI from './api/TimetrackerAPI';
 
@@ -42,6 +43,7 @@ class App extends React.Component {
                 <Route path={'/projekt_uebersicht'} element={<Projekt_uebersicht/>} />
                 <Route path={'/buchung'} element={<BuchungListe/>} />  
                 <Route path={'/auswertung'} element={<Auswertung/>} />
+                <Route path={'/auswertung_person'} element={<AuswertungPerson/>} />
             </Routes> 
           </div>
         </div>

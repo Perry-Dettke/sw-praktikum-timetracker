@@ -815,6 +815,25 @@ class ProjektPersonOperations(Resource):
             return '', 500
 
 
+@timetracker.route('/projekt_person_datum/<int:projekt_id>/<string:start>/<string:ende>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('projekt_id', 'Die ID des Projekt-Objekts.')
+class ProjektPersonOperations(Resource):
+    @timetracker.marshal_list_with(person, code=200)
+    #@secured
+    def get(self, projekt_id, start, ende):
+        """Auslesen aller Teilnehmer eines Projekts
+        """
+        adm = TimetrackerAdministration()
+        pro = adm.get_person_in_projekt_stunden(projekt_id, start, ende)
+        return pro
+
+
+    
+
+
+
+
 
 #Zeitintervall related
 @timetracker.route('/zeitintervall')

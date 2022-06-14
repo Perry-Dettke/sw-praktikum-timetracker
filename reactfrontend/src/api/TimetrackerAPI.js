@@ -68,6 +68,8 @@ export default class TimetrackerAPI {
   // *** PersonProjekt realted *** //  
   // #addPersonProjektURL = () => `${this.#ServerBaseURL}/personprojekt`;
   #getPersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projekt_person/${projekt_id}`;
+  #getPersonInProjektStundenURL = (projekt_id, start, ende) => `${this.#ServerBaseURL}/projekt_person_datum/${projekt_id}/${start}/${ende}`;
+  
   // #updatePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // #deletePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // linkPersonProjektURL = () => `${this.#ServerBaseURL}/link`;
@@ -636,6 +638,21 @@ export default class TimetrackerAPI {
       })
     })
   }
+
+  getPersonInProjektStunden(projekt_id, start, ende) {
+    // Teilnehmer eines Projekt abfragen
+    return this.#fetchAdvanced(this.#getPersonInProjektStundenURL(projekt_id, start, ende)).then((responseJSON) => {
+      let personenliste = [];
+      responseJSON.map(item => {
+        let person = PersonBO.fromJSON(item);
+        personenliste.push(person);
+      })
+      return new Promise(function (resolve) {
+        resolve(personenliste)
+      })
+    })
+  }
+  
 
 
 

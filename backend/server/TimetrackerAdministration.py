@@ -341,8 +341,28 @@ class TimetrackerAdministration (object):
             with PersonMapper() as mapper:
                 personen_list.append(mapper.find_by_id(id))
         return personen_list
-                
-            
+
+### Mit Stunden und Datum
+    def get_person_in_projekt_stunden(self, projekt_id, start, ende):
+        """Die Teilnehmer eines Projekts auslesen."""
+        with ProjektMapper() as mapper:
+            id_list = mapper.find_person_in_projekt(projekt_id)
+        personen_list = []
+        for id in id_list:
+            with PersonMapper() as mapper:
+                personen_list.append(mapper.find_by_id(id))
+
+        with BuchungMapper() as mapper:
+            for per in personen_list:
+                buchungliste = mapper.find_by_person_id_and_datum(per.get_id(), start, ende)
+                stunden = 0
+                for bu in buchungliste:
+                    stunden += bu.get_stunden()
+
+                per.set_stunden(stunden)
+
+            return personen_list
+
 
     """
     Zeitintervall-spezifische Methoden
