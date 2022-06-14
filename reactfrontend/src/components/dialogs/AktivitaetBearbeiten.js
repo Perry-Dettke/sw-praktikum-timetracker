@@ -14,7 +14,7 @@ class AktivitaetBearbeiten extends Component {
 
     constructor(props) {
         super(props);
-        
+
         let bz = "", kap = "";
         if (props.aktivitaet) {
             console.log(props.aktivitaet)
@@ -22,8 +22,8 @@ class AktivitaetBearbeiten extends Component {
             kap = props.aktivitaet.getKapazitaet();
         }
         this.state = {
-            bezeichnung : bz,
-            kapazitaet : kap,
+            bezeichnung: bz,
+            kapazitaet: kap,
         };
 
         this.baseState = this.state;
@@ -62,58 +62,58 @@ class AktivitaetBearbeiten extends Component {
 
     render() {
         const { show, projekt } = this.props
-        const {bezeichnung, kapazitaet} = this.state
+        const { bezeichnung, kapazitaet } = this.state
 
         let title = 'Aktivität bearbeiten';
 
         return (
             show ?
-                <div>
-                    <Dialog open={show} onClose={this.handleClose} maxWidth='xl'>
-                        <DialogTitle id='form-dialog-title'>{title}
-                            <IconButton onClick={this.handleClose}>
-                                <CloseIcon />
-                            </IconButton>
-                        </DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                <b>{/*projekt.bezeichnung - wie geht das?*/}</b>
-                            </DialogContentText>
-                            <div>
-                                <TextField
-                                    id="bezeichnung"
-                                    label='Bezeichnung:'
-                                    variant="outlined"
-                                    size="small"
-                                    value={bezeichnung}
-                                    onChange={this.textFieldValueChange}
-                                    autocomplete='off'
+                    <div>
+                        <Dialog open={show} onClose={this.handleClose} maxWidth='xl'>
+                            <DialogTitle id='form-dialog-title'>{title}
+                                <IconButton onClick={this.handleClose}>
+                                    <CloseIcon />
+                                </IconButton>
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    <b>{projekt.getBezeichnung()}</b>
+                                </DialogContentText>
+                                <div>
+                                    <TextField
+                                        id="bezeichnung"
+                                        label='Bezeichnung:'
+                                        variant="outlined"
+                                        size="small"
+                                        value={bezeichnung}
+                                        onChange={this.textFieldValueChange}
+                                        autocomplete='off'
 
-                                ></TextField>
-                            </div>
-                            <div>
-                                {/* Kapazität auswählen */}
-                                <TextField
-                                    id="kapazitaet"
-                                    label='Kapazität in Stunden:'
-                                    variant="outlined"
-                                    size="small"
-                                    value={kapazitaet}
-                                    onChange={this.textFieldValueChange}
-                                    autocomplete='off'
+                                    ></TextField>
+                                </div>
+                                <div>
+                                    {/* Kapazität auswählen */}
+                                    <TextField
+                                        id="kapazitaet"
+                                        label='Kapazität in Stunden:'
+                                        variant="outlined"
+                                        size="small"
+                                        value={kapazitaet}
+                                        onChange={this.textFieldValueChange}
+                                        autocomplete='off'
 
-                                ></TextField>
-                            </div>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button color='secondary' onClick={this.handleClose}>
-                                Abbrechen
-                            </Button>
-                            <Button variant='contained' color='primary'  onClick={this.addAktivitaet}>
-                                Bestätigen
-                            </Button>
-                        </DialogActions>
-                    </Dialog></div>
+                                    ></TextField>
+                                </div>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button color='secondary' onClick={this.handleClose}>
+                                    Abbrechen
+                                </Button>
+                                <Button variant='contained' color='primary' onClick={this.updateAktivitaet}>
+                                    Bestätigen
+                                </Button>
+                            </DialogActions>
+                        </Dialog></div>
                 : null
         );
     }
