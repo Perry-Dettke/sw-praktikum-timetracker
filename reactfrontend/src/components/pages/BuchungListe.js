@@ -23,7 +23,7 @@ class BuchungListe extends Component {
   }
 
   getBuchungbyPersonID = () => {
-    TimetrackerAPI.getAPI().getBuchungbyPersonID(1).then((buchungBOs) => {
+    TimetrackerAPI.getAPI().getBuchungbyPersonID(3).then((buchungBOs) => {
       this.setState({
         buchungliste: buchungBOs,
       });

@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
-import BuchungLöschen from '../dialogs/BuchungLöschen';
+import BuchungDelete from '../dialogs/BuchungDelete';
 import BuchungBearbeiten from '../dialogs/BuchungBearbeiten';
 
 
@@ -22,7 +22,7 @@ class BuchungListenEintrag extends Component {
             aktivitaet: null,
             projekt: null,
             showBuchungBearbeiten: false,
-            showBuchungLöschen: false,
+            showBuchungDelete: false,
             aktivitaetliste: [],
         };
     }
@@ -101,17 +101,17 @@ class BuchungListenEintrag extends Component {
     }
 
      //Öffnet das Dialog-Fenster BuchungDeleteDialog, wenn der Button geklickt wurde
-     buchungLöschenButtonClicked =  event => {
+     buchungDeleteButtonClicked =  event => {
         event.stopPropagation();
         this.setState({
-          showBuchungLöschen: true
+          showBuchungDelete: true
         });
       }
     
       //Wird aufgerufen, wenn das Dialog-Fenster PorjektDeleteDialog geschlossen wird
-      buchungLöschenClosed = () => {
+      buchungDeleteClosed = () => {
           this.setState({
-            showBuchungLöschen: false
+            showBuchungDelete: false
           });
           this.props.getBuchung()
       }
@@ -129,7 +129,7 @@ class BuchungListenEintrag extends Component {
     //Renders the component
     render() {
         const {buchung} = this.props;
-        const {aktivitaet, projekt, showBuchungBearbeiten, showBuchungLöschen, aktivitaetliste} = this.state;
+        const {aktivitaet, projekt, showBuchungBearbeiten, showBuchungDelete, aktivitaetliste} = this.state;
         console.log(projekt)
         // console.log(this.state.aktivitaet.getProjektID())
 
@@ -154,7 +154,7 @@ class BuchungListenEintrag extends Component {
                     </TableCell>
                     <TableCell>
                         <Tooltip title='Löschen' placement="bottom">
-                            <IconButton variant="contained"  onClick={this.buchungLöschenButtonClicked}><DeleteIcon /></IconButton>
+                            <IconButton variant="contained"  onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
                         </Tooltip>
                     </TableCell>
                 </TableRow>
@@ -163,7 +163,7 @@ class BuchungListenEintrag extends Component {
 
 
                 <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed}/>
-                <BuchungLöschen show={showBuchungLöschen} buchung={buchung} onClose={this.buchungLöschenClosed}/>
+                <BuchungDelete show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed}/>
 
             </div>
             : null

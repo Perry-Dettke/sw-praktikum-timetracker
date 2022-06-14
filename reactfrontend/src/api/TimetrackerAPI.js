@@ -525,6 +525,7 @@ export default class TimetrackerAPI {
 
   deletePerson(personBO) {
     // Projekt löschen
+    console.log(personBO)
     return this.#fetchAdvanced(this.#deletePersonURL(personBO.getID()), {
       method: 'DELETE',
       headers: {
