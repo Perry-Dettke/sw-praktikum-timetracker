@@ -56,7 +56,26 @@ class TimetrackerAdministration (object):
 
                 i.set_stunden(stunden)
 
+
+
+        with BuchungMapper() as mapper:
+            
+            
+            for i in akitvitaetliste:
+
+                buchungliste = mapper.find_by_aktivitaet_id(i.get_id())
+                allstunden = 0
+                for a in buchungliste:
+                    allstunden += a.get_stunden()
+
+                i.set_allstunden(allstunden)
+
         return akitvitaetliste
+
+ 
+
+
+
 
 
 

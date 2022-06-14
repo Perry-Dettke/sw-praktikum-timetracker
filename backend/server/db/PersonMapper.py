@@ -125,7 +125,7 @@ class PersonMapper (Mapper):
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id) = tuples[0]
+            (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, arbeitszeitkonto_id) = tuples[0]
             person = Person()
             person.set_id(id)
             person.set_letzte_aenderung(letzte_aenderung)

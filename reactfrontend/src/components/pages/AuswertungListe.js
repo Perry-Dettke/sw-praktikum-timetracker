@@ -32,19 +32,19 @@ class Auswertung extends Component {
         });
     }
 
-  // Textfelder ändern
-  textFieldValueChange = (event) => {
-    const value = event.target.value;
+    // Textfelder ändern
+    textFieldValueChange = (event) => {
+        const value = event.target.value;
 
-    let error = false;
-    if (value.trim().length === 0) {
-      error = true;
+        let error = false;
+        if (value.trim().length === 0) {
+            error = true;
+        }
+
+        this.setState({
+            [event.target.id]: event.target.value,
+        });
     }
-
-    this.setState({
-      [event.target.id]: event.target.value,
-    });
-  }
 
 
 
@@ -58,25 +58,30 @@ class Auswertung extends Component {
     render() {
         const { expandedState } = this.props;
         const { projektliste, start, ende } = this.state;
+        console.log(projektliste.length)
 
         return (
-            <div>
-                <h2> Es werden dir nur die Projekte angezeigt, die du selbst erstellt hast!</h2>
-                <Grid container spacing={4} alignItems="left">
-                    <Grid item xs={12}>
-                    </Grid>
-                    <Grid item xs={12}>
+            projektliste.length != 0 ?
+                <div>
+                    <h2> Es werden dir nur die Projekte angezeigt, die du selbst erstellt hast!</h2>
+                    <Grid container spacing={4} alignItems="left">
+                        <Grid item xs={12}>
+                        </Grid>
+                        <Grid item xs={12}>
 
 
-                        <List >
-                            {
-                                projektliste.map(projekt =>
-                                    <AuswertungListenEintrag key={(projekt)[projekt.id]} projekt={projekt} ref={this.child} />)
-                            }
-                        </List>
+                            <List >
+                                {
+                                    projektliste.map(projekt =>
+                                        <AuswertungListenEintrag key={(projekt)[projekt.id]} projekt={projekt} ref={this.child} />)
+                                }
+                            </List>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </div>
+                </div>
+                : <div> <h1>Bisher hast du noch keine Projekte erstellt.</h1>
+                    <h3>Gehe auf die Projekt Übersicht um neue Projekte zu erstellen.</h3>
+                </div>
         );
     }
 }

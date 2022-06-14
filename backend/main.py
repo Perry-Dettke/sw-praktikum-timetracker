@@ -51,7 +51,9 @@ aktivitaet = api.inherit('Aktivitaet', bo, {
     'projekt_id': fields.Integer(attribute='_projekt_id',                               
                                 description='Zugehörige Projekt ID der Aktivitaet'),     
     'stunden': fields.Float(attribute='_stunden',                               
-                                description='Stunden der Aktivitaet'),                            
+                                description='Stunden der Aktivitaet'),    
+    'allstunden': fields.Float(attribute='_allstunden',                               
+                                description='Stunden der Aktivitaet'),                                                    
 })
 
 arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {

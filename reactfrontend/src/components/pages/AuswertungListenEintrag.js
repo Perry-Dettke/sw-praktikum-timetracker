@@ -18,7 +18,8 @@ class AuswertungListenEintrag extends Component {
             buchungliste: [],
             personliste: [],
             start: null,
-            ende: null
+            ende: null,
+
         };
     }
 
@@ -27,22 +28,19 @@ class AuswertungListenEintrag extends Component {
         this.props.getProjekt();
     }
 
-    //Gibt Aktivitaet pro Projekt zurück
+    //Gibt Aktivitaet pro Projekt zurück 
     getAktivitaetbyProjektID = (start = "2000-01-01", ende = "3000-01-01") => {
         TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.props.projekt.getID(), start, ende).then((aktivitaetBOs) => {
-            console.log("Kilick")
             this.setState({
                 aktivitaetliste: aktivitaetBOs,
             });
         });
     }
 
-
-
     zeitraumClicked = () => {
         this.getAktivitaetbyProjektID(this.state.start, this.state.ende);
       }
-    
+
 
   // Textfelder ändern
   textFieldValueChange = (event) => {
@@ -155,7 +153,7 @@ class AuswertungListenEintrag extends Component {
                                         </TableHead>
                                         <TableBody>
                                             {
-                                                aktivitaetliste.map((aktivitaet, index) =>
+                                                aktivitaetliste.map((aktivitaet, index ) =>
                                                     <TableRow key={`${aktivitaet.getID() + index}`}>
                                                         <TableCell> <Accordion>
                                                             <AccordionSummary
@@ -186,7 +184,8 @@ class AuswertungListenEintrag extends Component {
                                                         </Accordion></TableCell>
                                                         <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
                                                         <TableCell><Typography> {aktivitaet.getStunden()}</Typography></TableCell>
-                                                        <TableCell><Typography> {aktivitaet.getKapazitaet() - aktivitaet.getStunden()}</Typography></TableCell>
+                                                        
+                                                        <TableCell><Typography> {aktivitaet.getKapazitaet() - aktivitaet.getAllStunden()}</Typography></TableCell>
                                                     </TableRow>
                                                 )}
 
