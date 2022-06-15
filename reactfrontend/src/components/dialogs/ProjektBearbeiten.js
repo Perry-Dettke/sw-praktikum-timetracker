@@ -17,7 +17,6 @@ class ProjektBearbeiten extends Component {
 
         let bz = "", ag = "";
         if (props.projekt) {
-            console.log(props.projekt)
             bz = props.projekt.getBezeichnung();
             ag = props.projekt.getAuftraggeber();
         }
@@ -33,7 +32,7 @@ class ProjektBearbeiten extends Component {
     updateProjekt = () => {
         let projekt = this.props.projekt;
         projekt.setBezeichnung(this.state.bezeichnung)
-        projekt.setKapazitaet(this.state.auftraggeber)
+        projekt.setAuftraggeber(this.state.auftraggeber)
         TimetrackerAPI.getAPI().updateProjekt(projekt).then(projekt => {
             this.props.onClose(projekt);
         })
@@ -80,6 +79,7 @@ class ProjektBearbeiten extends Component {
                                 <FormControl fullWidth>
                                     <TextField
                                         label="Projektname"
+                                        id="bezeichnung"
                                         variant="outlined"
                                         name="name"
                                         size="small"
@@ -92,6 +92,7 @@ class ProjektBearbeiten extends Component {
                                 <FormControl fullWidth>
                                     <TextField
                                         label="Auftraggeber"
+                                        id="auftraggeber"
                                         variant="outlined"
                                         name="name"
                                         size="small"

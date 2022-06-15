@@ -302,15 +302,16 @@ class TimetrackerAdministration (object):
 
     def delete_projekt(self, id):
         """Das gegebenene Projekt aus unserem System löschen."""
-        with ProjektMapper() as mapper:
-            mapper.delete(id)
         with AktivitaetMapper() as mapper:
             akitivitaetliste = mapper.find_by_projekt_id(id)
+        with BuchungMapper() as mapper:
             for i in akitivitaetliste:
-                with BuchungMapper() as mapper:
-                    mapper.delete_by_aktivitaet_id(i.get_id())
+                mapper.delete_by_aktivitaet_id(i.get_id())
         with AktivitaetMapper() as mapper:
             mapper.delete_by_projekt_id(id)
+        with ProjektMapper() as mapper:
+            mapper.delete_person_in_projekt(id)
+            mapper.delete(id)
 
     def get_person_in_projekt(self, projekt_id):
         """Die Teilnehmer eines Projekts auslesen."""
@@ -321,17 +322,28 @@ class TimetrackerAdministration (object):
             with PersonMapper() as mapper:
                 personen_list.append(mapper.find_by_id(id))
         return personen_list
+  
+    def get_projekt_by_person(self, person_id):
+        """Die Projekte einer Person auslesen."""
+        with ProjektMapper() as mapper:
+            id_list = mapper.find_projekt_by_person(person_id)
+        projekt_list = []
+        for id in id_list:
+            with ProjektMapper() as mapper:
+                projekt_list.append(mapper.find_by_id(id))
+        return projekt_list
 
-    def create_person_in_projekt(self, projekt_id): 
+    def create_person_in_projekt(self, projekt_id, person_id_list): 
         """Person in Projekt anlegen."""
         with ProjektMapper() as mapper:
-            return mapper.insert_person_in_projekt(projekt_id)
+            for person_id in person_id_list:
+                mapper.insert_person_in_projekt(projekt_id, person_id)
+            return mapper.find_by_id(projekt_id)
 
     def delete_person_projekt(self, projekt_id):
         """Eine Person aus dem gegebenenen Projekt aus unserem System löschen."""
         with ProjektMapper() as mapper:
             mapper.delete_person_in_projekt(projekt_id)
-        #dazugehörige Buchungen löschen?
                 
             
 

@@ -199,42 +199,41 @@ class ProjektMapper (Mapper):
 
         return result
 
-    def insert_person_in_projekt(self, projekt_person):
-        """Einfügen eines Projekt-Person-Objekts in die Datenbank.
+    def find_projekt_by_person(self, person_id):
+        """Auslesen aller Projekte einer Person."""
 
-        Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
-        berichtigt.
-
-        :param projekt das zu speichernde Objekt
-        :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
-        """
+        result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT MAX(id) AS maxid FROM projekt ")
+        command = "SELECT projekt_id FROM projekt_person WHERE person_id={}".format(person_id)
+        cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (maxid) in tuples:
-            if maxid[0] is not None:
-                """Wenn wir eine maximale ID festellen konnten, zählen wir diese
-                um 1 hoch und weisen diesen Wert als ID dem Projekt-Objekt zu."""
-                projekt_person.set_id(maxid[0] + 1)
-            else:
-                """Wenn wir KEINE maximale ID feststellen konnten, dann gehen wir
-                davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
-                projekt_person.set_id(1)
+        try:
+            for (projekt_id) in tuples:
+                result.append(projekt_id[0])
 
-        command = "INSERT INTO projekt_person (id, projekt_id, person_id ) VALUES (%s,%s,%s)"
-        data = (
-            projekt_person.get_id(),
-            #wie geht das hier?
-            projekt_person.get_projekt_id(),
-            projekt_person.get_person_id(),
-        )
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            result = None
 
-        cursor.execute(command, data)
         self._cnx.commit()
         cursor.close()
 
-        return projekt_person
+        return result
+
+    def insert_person_in_projekt(self, projekt_id, person_id):
+        """Einfügen eines Projekt-Person-Objekts in die Datenbank.
+        """
+        cursor = self._cnx.cursor()
+
+        command = f"INSERT INTO projekt_person (person_id, projekt_id ) VALUES ({person_id},{projekt_id})"
+
+        cursor.execute(command)
+        self._cnx.commit()
+        cursor.close()
+
+        return True
 
     def delete_person_in_projekt(self, projekt_id):
         """Löschen der Daten eines Projekt-Person-Objekts aus der Datenbank.

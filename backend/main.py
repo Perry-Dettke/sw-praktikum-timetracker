@@ -695,6 +695,7 @@ class ProjektOperations(Resource):
         liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
         zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
         """
+        print(api.payload)
         adm = TimetrackerAdministration()
         proposal = Projekt.from_dict(api.payload)
 
@@ -787,25 +788,33 @@ class ProjektPersonOperations(Resource):
         pro = adm.get_person_in_projekt(projekt_id)
         return pro
 
+#Person-Projekt Beziehung
+@timetracker.route('/projektbypersonid/<int:person_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('person_id', 'Die ID des Person-Objekts.')
+class ProjektPersonOperations(Resource):
     @timetracker.marshal_list_with(projekt, code=200)
-    @timetracker.expect(projekt)
     #@secured
-    def post(self):
-        """Anlegen eines neuen Projekt-Person-Objekts.
+    def get(self, person_id):
+        """Auslesen aller Projekte einer Person.
         """
         adm = TimetrackerAdministration()
-        proposal = Projekt.from_dict(api.payload)
+        pro = adm.get_projekt_by_person(person_id)
+        return pro
 
-        """RATSCHLAG: Prüfen Sie stets die Referenzen auf valide Werte, bevor Sie diese verwenden!"""
-        if proposal is not None:
-            """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
-            wird auch dem Client zurückgegeben. 
-            """
-            a = adm.create_person_in_projekt(proposal)
-            return a, 200
+
+    @timetracker.marshal_list_with(projekt, code=200)
+    #@secured
+    def post(self, person_id):
+        """Anlegen eines neuen Projekt-Person-Objekts.
+        """
+        if api.payload:
+            adm = TimetrackerAdministration()
+            response = adm.create_person_in_projekt(api.payload['projekt_id'], api.payload['person_id_list'])
+            return response , 200
         else:
-            '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
-            return '', 500
+            return '' , 500
+
 
     def delete(self, projekt_id):
         """Löschen eines bestimmten Projekt-Person-Objekts.
