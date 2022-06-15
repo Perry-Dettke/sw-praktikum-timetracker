@@ -51,7 +51,8 @@ class Header extends Component {
             <Tab label='Home' component={RouterLink} to={`/home`} />
             <Tab label='Projekt Übersicht' component={RouterLink} to={`/projekt_uebersicht`} />     
             <Tab label='Buchung' component={RouterLink} to={`/buchung`} />
-            <Tab label='Auswertung' component={RouterLink} to={`/auswertung`} />
+            <Tab label='Auswertung Aktivität' component={RouterLink} to={`/auswertung`} />
+            <Tab label='Auswertung Person' component={RouterLink} to={`/auswertung_person`} />
           </Tabs>
           : null
         }

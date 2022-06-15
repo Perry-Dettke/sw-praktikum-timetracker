@@ -16,6 +16,7 @@ import firebaseConfig from './firebaseconfig';
 import SignIn from './components/pages/SignIn';
 import Theme from './components/layout/Theme';
 
+import AuswertungPerson from './components/pages/AuswertungPersonListe';
 
 import TimetrackerAPI from './api/TimetrackerAPI';
 
