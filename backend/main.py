@@ -828,7 +828,17 @@ class ProjektPersonOperations(Resource):
         pro = adm.get_person_in_projekt_stunden(projekt_id, start, ende)
         return pro
 
-
+@timetracker.route('/projektbyperson/<int:person_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjektByPersonOperations(Resource):
+    @timetracker.marshal_list_with(projekt, code=200)
+    #@secured
+    def get(self, person_id):
+        """Auslesen aller Projekte einer Person
+        """
+        adm = TimetrackerAdministration()
+        pro = adm.get_projekt_by_person_id(person_id)
+        return pro
     
 
 

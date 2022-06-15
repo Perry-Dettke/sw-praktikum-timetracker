@@ -69,7 +69,7 @@ export default class TimetrackerAPI {
   // #addPersonProjektURL = () => `${this.#ServerBaseURL}/personprojekt`;
   #getPersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projekt_person/${projekt_id}`;
   #getPersonInProjektStundenURL = (projekt_id, start, ende) => `${this.#ServerBaseURL}/projekt_person_datum/${projekt_id}/${start}/${ende}`;
-  
+  #getProjektByPersonURL = (person_id) => `${this.#ServerBaseURL}/projektbyperson/${person_id}`;
   // #updatePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // #deletePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // linkPersonProjektURL = () => `${this.#ServerBaseURL}/link`;
@@ -121,7 +121,7 @@ export default class TimetrackerAPI {
       responseJSON.map(item => {
         let aktivitaet = AktivitaetBO.fromJSON(item);
         aktivitaetliste.push(aktivitaet);
-        console.log(responseJSON)
+
       })
 
       return new Promise(function (resolve) {
@@ -312,6 +312,7 @@ export default class TimetrackerAPI {
 
   addBuchung(buchungBO) {
     // Buchung neu anlegen
+    console.log(buchungBO)
     return this.#fetchAdvanced(this.#addBuchungURL(), {
       method: 'POST',
       headers: {
@@ -326,6 +327,7 @@ export default class TimetrackerAPI {
       })
     })
   }
+
 
 
   updateBuchung(buchungBO) {
@@ -525,7 +527,6 @@ export default class TimetrackerAPI {
 
   deletePerson(personBO) {
     // Projekt löschen
-    console.log(personBO)
     return this.#fetchAdvanced(this.#deletePersonURL(personBO.getID()), {
       method: 'DELETE',
       headers: {
@@ -636,6 +637,22 @@ export default class TimetrackerAPI {
       })
       return new Promise(function (resolve) {
         resolve(personenliste)
+      })
+    })
+  }
+
+
+  getProjektByPerson(person_id) {
+    // Teilnehmer eines Projekt abfragen
+    return this.#fetchAdvanced(this.#getProjektByPersonURL(person_id)).then((responseJSON) => {
+      console.log(responseJSON)
+      let projektliste = [];
+      responseJSON.map(item => {
+        let projekt = ProjektBO.fromJSON(item);
+        projektliste.push(projekt);
+      })
+      return new Promise(function (resolve) {
+        resolve(projektliste)
       })
     })
   }

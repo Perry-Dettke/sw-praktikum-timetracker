@@ -38,7 +38,7 @@ class AuswertungListenEintrag extends Component {
 
     zeitraumClicked = () => {
         this.getAktivitaetbyProjektID(this.state.start, this.state.ende);
-        this.child.getPersonbyAktivitaetID2(this.state.start, this.state.ende);
+        this.child.getPersonbyAktivitaetID(this.state.start, this.state.ende);
       }
 
 
@@ -133,8 +133,8 @@ class AuswertungListenEintrag extends Component {
                                 }}>
                                     <Grid container alignItems="center" spacing={2}>
                                     <Grid item xs={3}>
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start: (yyyy-mm-dd)' value={start} onChange={this.textFieldValueChange} />
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende: (yyyy-mm-dd)' value={ende} onChange={this.textFieldValueChange} />
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start:' value={start} onChange={this.textFieldValueChange} />
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende:' value={ende} onChange={this.textFieldValueChange} />
                             <Button variant="contained" color="primary" aria-label="add" onClick={this.zeitraumClicked} startIcon={<AccessTimeIcon />}>
                                 Zeitraum auswählen</Button>
                         </Grid>

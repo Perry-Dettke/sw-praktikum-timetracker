@@ -22,7 +22,7 @@ import PersonDelete from '../dialogs/PersonDelete';
 
     getPersonbyID = () => {
         var api = TimetrackerAPI.getAPI();
-            api.getPersonbyID(14).then((personBO) => {
+            api.getPersonbyID(13).then((personBO) => {
                 this.setState({
                 person: personBO,
               });
