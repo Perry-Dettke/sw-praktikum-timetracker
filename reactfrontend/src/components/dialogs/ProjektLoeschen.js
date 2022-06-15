@@ -8,11 +8,6 @@ class ProjektLoeschen extends Component {
 
   constructor(props) {
     super(props);
-
-    // Status initalisieren
-    this.state = {
-      projekt: props.projekt,
-    };
   }
 
   handleClose = () => {
@@ -20,16 +15,15 @@ class ProjektLoeschen extends Component {
   }
 
   deleteProjekt = () => {
-    TimetrackerAPI.getAPI().deleteProjekt(this.state.projekt.id)
+    TimetrackerAPI.getAPI().deleteProjekt(this.props.projekt)
       .then(() => {
-        this.props.getProjekt();
-        this.props.onClose(null);
+        this.props.onClose(this.props.projekt);
       });
   }
 
   render() {
 
-    const { show } = this.props;
+    const { show, projekt } = this.props;
     
     return (
       <div>
@@ -41,7 +35,7 @@ class ProjektLoeschen extends Component {
           <DialogTitle>{"Sind Sie sich sicher?"}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Wenn Sie das Projekt wirklich löschen möchten, drücken Sie auf "JA".
+              Wenn Sie das Projekt {projekt.getBezeichnung()} wirklich löschen möchten, drücken Sie auf "JA".
             </DialogContentText>
           </DialogContent>
           <DialogActions>
