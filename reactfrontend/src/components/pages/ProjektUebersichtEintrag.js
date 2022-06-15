@@ -128,10 +128,14 @@ class ProjektUebersichtEintrag extends Component {
     //Aktivität Löschen Dialog schließen
     aktivitaetLoeschenClosed = (aktivitaet) => {
         if (aktivitaet) {
-            this.getAktivitaetbyProjektID();
             this.setState({
-                showAktivitaetLoeschen: false
-            });
+                showAktivitaetLoeschen: false,
+            },
+            () => this.getAktivitaetbyProjektID(),
+            () => this.getErstellerbyID(),
+            () => this.getPersonInProjekt()
+            );
+            
         } else {
             this.setState({
                 showAktivitaetLoeschen: false
@@ -146,7 +150,23 @@ class ProjektUebersichtEintrag extends Component {
         });
     }
 
-    
+    //Projekt Löschen Dialog schließen
+    projektLoeschenClosed = (projekt) => {
+        if (projekt) {
+            this.setState({
+                showProjektLoeschen: false,
+            },
+            this.props.getProjekt()
+            );
+            
+        } else {
+            this.setState({
+                showProjektLoeschen: false
+            });
+        }
+    }
+
+
     //Wird aufgerufen, wenn der Projekt Bearbeiten Button geklickt wird
     projektBearbeitenClicked = (projekt) => {
         this.setState({
@@ -158,7 +178,6 @@ class ProjektUebersichtEintrag extends Component {
     //Projekt Bearbeiten Dialog schließen
     projektBearbeitenClosed = (projekt) => {
         if (projekt) {
-            this.props.getProjekt();
             this.setState({
                 showProjektBearbeiten: false
             });

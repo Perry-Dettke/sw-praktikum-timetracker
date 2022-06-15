@@ -41,11 +41,19 @@ class ProjektAnlegen extends Component {
         newProjekt.setID(0)
         newProjekt.setBezeichnung(this.state.projektBezeichnung)
         newProjekt.setAuftraggeber(this.state.auftraggeber)
-        newProjekt.setProjekterstellerID(0)
-        //newProjekt.setProjekterstellerID(this.currentUser.getID())
+        newProjekt.setProjekterstellerID(2)
+        //newProjekt.setProjekterstellerID(this.props.person.getID())
         TimetrackerAPI.getAPI().addProjekt(newProjekt).then(projekt => {
-            this.props.onClose(projekt); 
+            this.addPersonInProjekt(projekt)
         })
+    }
+
+    // Person in Projekt hinzufügen
+    addPersonInProjekt = (projekt) => {
+        TimetrackerAPI.getAPI().addPersonInProjekt(projekt.getID(),this.state.personen).then(projekt => {
+            this.props.onClose(projekt)
+        })
+
     }
 
     // Textfelder ändern
@@ -81,8 +89,7 @@ class ProjektAnlegen extends Component {
 
     render() {
         const { show } = this.props
-        const { allePersonen, personen } = this.state
-        const {projektBezeichnung, auftraggeber} = this.state
+        const { allePersonen, personen, projektBezeichnung, auftraggeber } = this.state
 
         let title = 'Neues Projekt';
 
@@ -101,6 +108,7 @@ class ProjektAnlegen extends Component {
                                 <FormControl fullWidth>
                                     <TextField
                                         label="Projektname"
+                                        id="projektBezeichnung"
                                         variant="outlined"
                                         name="name"
                                         size="small"
@@ -113,6 +121,7 @@ class ProjektAnlegen extends Component {
                                 <FormControl fullWidth>
                                     <TextField
                                         label="Auftraggeber"
+                                        id="auftraggeber"
                                         variant="outlined"
                                         name="name"
                                         size="small"
