@@ -67,7 +67,9 @@ export default class TimetrackerAPI {
 
 // *** PersonProjekt realted *** //  
   // #addPersonProjektURL = () => `${this.#ServerBaseURL}/personprojekt`;
-  // #getPersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
+  #getPersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projekt_person/${projekt_id}`;
+  #getPersonInProjektStundenURL = (projekt_id, start, ende) => `${this.#ServerBaseURL}/projekt_person_datum/${projekt_id}/${start}/${ende}`;
+  #getProjektByPersonURL = (person_id) => `${this.#ServerBaseURL}/projektbyperson/${person_id}`;
   // #updatePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // #deletePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // linkPersonProjektURL = () => `${this.#ServerBaseURL}/link`;
@@ -309,6 +311,7 @@ getAktivitaetbyID(id) {
 
   addBuchung(buchungBO) {
     // Buchung neu anlegen
+    console.log(buchungBO)
     return this.#fetchAdvanced(this.#addBuchungURL(), {
       method: 'POST',
       headers: {
@@ -325,22 +328,23 @@ getAktivitaetbyID(id) {
   }
 
 
-   updateBuchung(buchungBO) {
-       // Buchung updaten
-       return this.#fetchAdvanced(this.#updateBuchungURL(buchungBO.getID()), {
-         method: 'PUT',
-         headers: {
-           'Accept': 'application/json, text/plain',
-           'Content-type': 'application/json',
-         },
-         body: JSON.stringify(buchungBO)
-       }).then((responseJSON) => {
-         let responseBuchungBO = BuchungBO.fromJSON(responseJSON);
-         return new Promise(function (resolve) {
-           resolve(responseBuchungBO);
-         })
-       })
-     } 
+
+  updateBuchung(buchungBO) {
+    // Buchung updaten
+    return this.#fetchAdvanced(this.#updateBuchungURL(buchungBO.getID()), {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(buchungBO)
+    }).then((responseJSON) => {
+      let responseBuchungBO = BuchungBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(responseBuchungBO);
+      })
+    })
+  }
 
   deleteBuchung(BuchungBO) {
     // Buchung löschen
@@ -618,6 +622,50 @@ getAktivitaetbyID(id) {
     })
   }
 
+  getPersonInProjekt(projekt_id) {
+    // Teilnehmer eines Projekt abfragen
+    return this.#fetchAdvanced(this.#getPersonInProjektURL(projekt_id)).then((responseJSON) => {
+      let personenliste = [];
+      responseJSON.map(item => {
+        let person = PersonBO.fromJSON(item);
+        personenliste.push(person);
+      })
+      return new Promise(function (resolve) {
+        resolve(personenliste)
+      })
+    })
+  }
+
+
+  getProjektByPerson(person_id) {
+    // Teilnehmer eines Projekt abfragen
+    return this.#fetchAdvanced(this.#getProjektByPersonURL(person_id)).then((responseJSON) => {
+      console.log(responseJSON)
+      let projektliste = [];
+      responseJSON.map(item => {
+        let projekt = ProjektBO.fromJSON(item);
+        projektliste.push(projekt);
+      })
+      return new Promise(function (resolve) {
+        resolve(projektliste)
+      })
+    })
+  }
+
+  getPersonInProjektStunden(projekt_id, start, ende) {
+    // Teilnehmer eines Projekt abfragen
+    return this.#fetchAdvanced(this.#getPersonInProjektStundenURL(projekt_id, start, ende)).then((responseJSON) => {
+      let personenliste = [];
+      responseJSON.map(item => {
+        let person = PersonBO.fromJSON(item);
+        personenliste.push(person);
+      })
+      return new Promise(function (resolve) {
+        resolve(personenliste)
+      })
+    })
+  }
+  
 
 
 

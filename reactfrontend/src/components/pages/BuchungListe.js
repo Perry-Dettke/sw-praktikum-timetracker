@@ -4,7 +4,8 @@ import AddIcon from '@mui/icons-material/Add';
 
 import BuchungListenEintrag from './BuchungListenEintrag.js'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-import BuchungDialog from '../dialogs/BuchungDialog.js';
+
+import EreignisBuchungAnlegen from '../dialogs/EreignisBuchungAnlegen.js';
 
 
 
@@ -18,7 +19,7 @@ class BuchungListe extends Component {
     this.state = {
       buchung: [],
       buchungliste: [],
-      showBuchungDialog: false,
+      showEreignisBuchungAnlegen: false,
     };
   }
 
@@ -27,28 +28,35 @@ class BuchungListe extends Component {
       this.setState({
         buchungliste: buchungBOs,
       });
-      console.log("getBuchung")
-
     });
   }
 
 
 
-  //BuchungDialog anzeigen
-  buchungAnlegenButtonClicked = event => {
+  ereignisBuchungAnlegenButtonClicked = event => {
     event.stopPropagation();
     this.setState({
-      showBuchungDialog: true,
+      showEreignisBuchungAnlegen: true,
     });
   }
 
-  //BuchungDialog schließen
-  BuchungDialogClosed = event => {
-    event.stopPropagation();
-    this.setState({
-      showBuchungDialog: false,
-    });
+  //ProjektDialog schließen
+  ereignisBuchungAnlegenClosed = buchung => {
+    this.getBuchungbyPersonID();
+
+    if (buchung) {
+      const newBuchungList = [...this.state.buchung, buchung];
+      this.setState({
+        buchung: newBuchungList,
+        showEreignisBuchungAnlegen: false
+      });
+    } else {
+      this.setState({
+        showEreignisBuchungAnlegen: false
+      });
+    }
   }
+
 
 
   componentDidMount() {
@@ -59,8 +67,8 @@ class BuchungListe extends Component {
   /** Renders the component */
   render() {
 
-    const { buchung, showBuchungDialog, buchungliste } = this.state;
-    console.log(buchungliste)
+    const { buchung, showEreignisBuchungAnlegen, buchungliste } = this.state;
+    // console.log(buchungliste)
 
 
     return (
@@ -81,7 +89,7 @@ class BuchungListe extends Component {
                       width: 350,
                       height: 50,
                       alignItems: 'center',
-                    }} variant="contained" color="primary" aria-label="add" onClick={this.buchungAnlegenButtonClicked}>
+                    }} variant="contained" color="primary" aria-label="add" onClick={this.ereignisBuchungAnlegenButtonClicked}>
                     <AddIcon />
                     &nbsp; Ereignis-Buchung erstellen
                   </Button>
@@ -101,32 +109,32 @@ class BuchungListe extends Component {
               </Grid>
             </Box>
 
-            <TableHead>
-              <TableRow>
-                <TableCell>Datum</TableCell>
-                <TableCell>Projekt</TableCell>
-                <TableCell>Aktivität</TableCell>
-                <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
-                <TableCell>Stunden die gebucht wurden</TableCell>
-                <TableCell>Bearbeiten</TableCell>
-                <TableCell>Löschen</TableCell>
-              </TableRow>
-            </TableHead>
+            <Table style={{ width: 1400 }}>
 
-            <TableBody>
+              
+   
+                        <TableHead sx={{
+                backgroundColor: '#dedede'
+              }}>
+                <TableRow>
+                  <TableCell>Datum</TableCell>
+                  <TableCell>Projekt</TableCell>
+                  <TableCell>Aktivität</TableCell>
+                  <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
+                  <TableCell>Stunden die gebucht wurden</TableCell>
+                  <TableCell>Bearbeiten</TableCell>
+                  <TableCell>Löschen</TableCell>
+                </TableRow>
+              </TableHead>
 
               {
                 buchungliste.map(buchung =>
                   <TableRow>  <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID} /></TableRow>)
               }
+            </Table>
 
-            </TableBody>
-
-
-
-
-            <BuchungDialog show={showBuchungDialog} onClose={this.buchungDialogClosed} />
           </Grid>
+          <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} onClose={this.ereignisBuchungAnlegenClosed} />
         </div>
         : null
     );

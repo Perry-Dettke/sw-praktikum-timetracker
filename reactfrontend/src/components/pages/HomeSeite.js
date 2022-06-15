@@ -62,6 +62,15 @@ import SignUp from './SignUp';
           this.setState({ showPersonForm: true });
       }
   }
+    getPersonbyID = () => {
+        var api = TimetrackerAPI.getAPI();
+            api.getPersonbyID(13).then((personBO) => {
+                this.setState({
+                person: personBO,
+              });
+              console.log("funktion")
+            });
+          }
 
 //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
