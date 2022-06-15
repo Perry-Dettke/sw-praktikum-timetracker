@@ -17,7 +17,6 @@ class AktivitaetBearbeiten extends Component {
 
         let bz = "", kap = "";
         if (props.aktivitaet) {
-            console.log(props.aktivitaet)
             bz = props.aktivitaet.getBezeichnung();
             kap = props.aktivitaet.getKapazitaet();
         }
@@ -61,7 +60,7 @@ class AktivitaetBearbeiten extends Component {
     }
 
     render() {
-        const { show, projekt } = this.props
+        const { show, projekt, aktivitaet } = this.props
         const { bezeichnung, kapazitaet } = this.state
 
         let title = 'Aktivität bearbeiten';
@@ -86,6 +85,7 @@ class AktivitaetBearbeiten extends Component {
                                         variant="outlined"
                                         size="small"
                                         value={bezeichnung}
+                                        defaultValue={aktivitaet.getBezeichnung()}
                                         onChange={this.textFieldValueChange}
                                         autocomplete='off'
 
@@ -99,6 +99,7 @@ class AktivitaetBearbeiten extends Component {
                                         variant="outlined"
                                         size="small"
                                         value={kapazitaet}
+                                        defaultValue={aktivitaet.getKapazitaet()}
                                         onChange={this.textFieldValueChange}
                                         autocomplete='off'
 
