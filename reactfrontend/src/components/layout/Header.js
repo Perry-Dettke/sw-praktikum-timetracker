@@ -31,11 +31,11 @@ class Header extends Component {
 
   /** Renders the component */
   render() {
-    const{ user } = this.props;
+    const{ currentUser } = this.props;
 
     return (
       <Paper variant='outlined' >
-        <ProfileDropDown user={user} />
+        <ProfileDropDown currentUser={currentUser} />
         <Typography variant='h3' component='h1' align='center' color='#323748' fontFamily='Verdana'>
           TIME
         </Typography>
@@ -46,7 +46,7 @@ class Header extends Component {
           Zeiterfassungssystem
         </Typography>
         {
-          user ?
+          currentUser ?
           <Tabs indicatorColor='primary' textColor='primary' centered value={this.state.tabindex} onChange={this.handleTabChange} >
             <Tab label='Home' component={RouterLink} to={`/home`} />
             <Tab label='Projekt Übersicht' component={RouterLink} to={`/projekt_uebersicht`} />     

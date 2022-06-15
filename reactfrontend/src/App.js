@@ -15,8 +15,8 @@ import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged } f
 import firebaseConfig from './firebaseconfig';
 import SignIn from './components/pages/SignIn';
 import Theme from './components/layout/Theme';
-
 import AuswertungPerson from './components/pages/AuswertungPersonListe';
+
 
 import TimetrackerAPI from './api/TimetrackerAPI';
 
@@ -133,9 +133,10 @@ class App extends React.Component {
 										<SignIn onSignIn={this.handleSignIn} />
 								} />
 								<Route path={process.env.PUBLIC_URL + '/home'} element={<Home  currentUser={currentUser} /> }/>
-								<Route path={process.env.PUBLIC_URL + '/projekt'} element={<Secured currentUser={currentUser}><Projekt_uebersicht /></Secured>} />
-								<Route path={process.env.PUBLIC_URL + '/buchung'} element={<Secured currentUser={currentUser}> <BuchungListe /></Secured>} />
-								<Route path={process.env.PUBLIC_URL + '/auswertung'} element={<Secured currentUser={currentUser}><Auswertung/></Secured>} />
+								<Route path={process.env.PUBLIC_URL + '/projekt_uebersicht'} element={<Projekt_uebersicht currentUser={currentUser}/>} />
+								<Route path={process.env.PUBLIC_URL + '/buchung'} element={<BuchungListe currentUser={currentUser} />} />
+								<Route path={process.env.PUBLIC_URL + '/auswertung'} element={<Auswertung currentUser={currentUser}/>} />
+								<Route path={process.env.PUBLIC_URL + '/auswertung_person'} element={<AuswertungPerson currentUser={currentUser}/>} />
 							</Route>
 						</Routes>
 					</Container>
