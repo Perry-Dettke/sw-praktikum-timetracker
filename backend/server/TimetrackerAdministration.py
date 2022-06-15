@@ -365,22 +365,19 @@ class TimetrackerAdministration (object):
 
 
         with AktivitaetMapper() as mapper:
-            aktivitaetliste = mapper.find_by_projekt_id(projekt_id)
-
+            aktivitaetliste = mapper.find_by_projekt_id_id(projekt_id)
 
         with BuchungMapper() as mapper:
             for per in personen_list:
-                for a in aktivitaetliste:
-                    
-
-                    buchungliste = mapper.find_by_person_id_and_datum(per.get_id(), a.get_id(), start, ende)
-                    stunden = 0
-                    for bu in buchungliste:
+                buchungliste = mapper.find_by_person_id_and_datum(per.get_id(), start, ende)
+                stunden = 0
+                for bu in buchungliste:
+                    if bu.get_aktivitaet_id() in aktivitaetliste:
                         stunden += bu.get_stunden()
-
                     per.set_stunden(stunden)
 
-                return personen_list
+            return personen_list
+
 
 
     """
