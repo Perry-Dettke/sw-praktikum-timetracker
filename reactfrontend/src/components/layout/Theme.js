@@ -1,29 +1,25 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-import { colors } from '@material-ui/core';
+import { createTheme } from '@mui/material/styles';
+import { colors } from '@mui/material';
 
-const white = '#f0f5f9';
+const white = '#FFFFFF';
 const black = '#000000';
-const blue = '#8ee5ee';
-const white_paper = '#393e46';
-const text_white ='#eeeeee';
 
 // A custom theme for this app
-const theme = createMuiTheme({
+const theme = createTheme ({
   palette: {
     black,
     white,
-    blue,
     primary: {
-      contrastText: black,
-      dark: colors.blue[200],
-      main: colors.blue[600],
-      light: colors.blue[500]
+      contrastText: white,
+      dark: colors.indigo[900],
+      main: colors.indigo[500],
+      light: colors.indigo[100]
     },
     secondary: {
-      contrastText: black,
-      dark: colors.red[500],
-      main: colors.blue[600],
-      light: colors.blue[500]
+      contrastText: white,
+      dark: colors.blue[900],
+      main: colors.blue['A400'],
+      light: colors.blue['A400']
     },
     success: {
       contrastText: white,
@@ -50,17 +46,36 @@ const theme = createMuiTheme({
       light: colors.red[400]
     },
     text: {
-      primary: text_white,
-      secondary: text_white,
-      link: text_white,
+      primary: colors.blueGrey[800],
+      secondary: colors.blueGrey[600],
+      link: colors.blue[600]
     },
     background: {
-      default: '#232931',
-      paper: white_paper
+      default: '#F4F6F8',
+      paper: white
     },
     icon: colors.blueGrey[600],
     divider: colors.grey[200]
   }, 
 });
+
+// A custom theme for this app
+// const theme = createTheme({
+//   palette: {
+//     primary: {
+//       main: '#556cd6',
+//     },
+//     secondary: {
+//       main: '#19857b',
+//     },
+//     error: {
+//       main: red.A400,
+//     },
+//     background: {
+//       default: '#fff',
+//     },
+//   },
+// });
+
 
 export default theme;
