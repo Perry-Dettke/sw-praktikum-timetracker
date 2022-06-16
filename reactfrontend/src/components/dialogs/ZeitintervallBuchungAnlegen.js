@@ -61,15 +61,17 @@ class ZeitintervallBuchungAnlegen extends Component {
   addBuchung = () => {
     let newBuchung = new BuchungBO()
     newBuchung.setID(0) // bekommt im Backend die max id
-    newBuchung.setDatum("2000-01-01")
+    newBuchung.setDatum("2000-01-01") // bekommt im Backend das aktuelle Datum
     newBuchung.setStunden(this.msToTime((this.state.ende.getTime() - this.state.start.getTime())))
     newBuchung.setEreignisbuchung(0)
     newBuchung.setPerson_id(3) // muss id vom current user rein
-    newBuchung.setAktivitaet_id(1)
+    newBuchung.setAktivitaet_id(this.state.aktivitaet_id)
     TimetrackerAPI.getAPI().addBuchung(newBuchung).then(buchung => {
       console.log(newBuchung)
       this.setState(this.initialState);
       this.props.onClose(buchung);
+      this.props.getBuchungbyPersonID();
+      this.getProjektByPerson()
     })
   }
 
@@ -100,7 +102,7 @@ class ZeitintervallBuchungAnlegen extends Component {
   }
 
   msToTime = (duration) => {
-    var minutes = Math.floor(duration / (1000 * 60)),
+    var minutes = Math.floor(duration / (1000 * 60) % 60),
       hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
 
     hours = (hours < 10) ? "0" + hours : hours;

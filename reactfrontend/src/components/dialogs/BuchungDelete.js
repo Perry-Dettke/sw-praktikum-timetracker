@@ -23,7 +23,6 @@ class BuchungDeleteDialog extends Component {
     TimetrackerAPI.getAPI().deleteBuchung(this.state.buchung)
       .then(() => {
           console.log("geklickt")
-
         this.props.onClose(null);
       });
   }
