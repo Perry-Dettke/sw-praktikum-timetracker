@@ -33,12 +33,10 @@ class Projekt_uebersicht extends Component {
 
     /** Fetches all ProjektBOs from the backend */
     getProjekt = () => {
-        TimetrackerAPI.getAPI().getProjektbyPersonID(2).then((projektBOs) => {
-    //  TimetrackerAPI.getAPI().getProjektbyPersonID(this.props.person.getID()).then((projektBOs) => {
+        TimetrackerAPI.getAPI().getProjekt().then((projektBOs) => {
               this.setState({
                 projekt: projektBOs,
               });
-              console.log("wird ausgeführt")
             });
     }
      
@@ -100,7 +98,7 @@ class Projekt_uebersicht extends Component {
                         <List>
                             {
                                 projekt.map(projekt =>
-                                    <ProjektUebersichtEintrag key={projekt[projekt.id]} projekt={projekt} getProjekt={this.getProjekt} show={this.props.show} />)
+                                    <ProjektUebersichtEintrag key={projekt[projekt.id]} projekt={projekt} show={this.props.show} />)
                             }
                         </List>
                     </Grid>

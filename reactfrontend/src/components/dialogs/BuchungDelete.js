@@ -4,7 +4,7 @@ import {Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogAct
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 
-class BuchungLöschenDialog extends Component {
+class BuchungDeleteDialog extends Component {
 
   constructor(props) {
     super(props);
@@ -62,4 +62,4 @@ class BuchungLöschenDialog extends Component {
 
 
 
-export default BuchungLöschenDialog;
+export default BuchungDeleteDialog;
