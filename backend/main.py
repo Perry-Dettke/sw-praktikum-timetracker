@@ -695,6 +695,7 @@ class ProjektOperations(Resource):
         liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
         zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
         """
+        print(api.payload)
         adm = TimetrackerAdministration()
         proposal = Projekt.from_dict(api.payload)
 
@@ -772,6 +773,61 @@ class ProjektbyProjekterstellerIDOperations(Resource):
             return pro
         else:
             return '', 500 
+
+#Projekt-Person Beziehung
+@timetracker.route('/projekt_person/<int:projekt_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('projekt_id', 'Die ID des Projekt-Objekts.')
+class ProjektPersonOperations(Resource):
+    @timetracker.marshal_list_with(person, code=200)
+    #@secured
+    def get(self, projekt_id):
+        """Auslesen aller Teilnehmer eines Projekts
+        """
+        adm = TimetrackerAdministration()
+        pro = adm.get_person_in_projekt(projekt_id)
+        return pro
+
+#Person-Projekt Beziehung
+@timetracker.route('/projektbypersonid/<int:person_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('person_id', 'Die ID des Person-Objekts.')
+class ProjektPersonOperations(Resource):
+    @timetracker.marshal_list_with(projekt, code=200)
+    #@secured
+    def get(self, person_id):
+        """Auslesen aller Projekte einer Person.
+        """
+        adm = TimetrackerAdministration()
+        pro = adm.get_projekt_by_person(person_id)
+        return pro
+
+
+    @timetracker.marshal_list_with(projekt, code=200)
+    #@secured
+    def post(self, person_id):
+        """Anlegen eines neuen Projekt-Person-Objekts.
+        """
+        if api.payload:
+            adm = TimetrackerAdministration()
+            response = adm.create_person_in_projekt(api.payload['projekt_id'], api.payload['person_id_list'])
+            return response , 200
+        else:
+            return '' , 500
+
+
+    def delete(self, projekt_id):
+        """Löschen eines bestimmten Projekt-Person-Objekts.
+        Das zu löschende Objekt wird durch die ```projekt_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        if id is not None:
+            adm.delete_person_projekt(projekt_id)
+            return '', 200
+        else:
+            '''Wenn unter projekt_id kein Projekt existiert.'''
+            return '', 500
+
 
 
 #Zeitintervall related

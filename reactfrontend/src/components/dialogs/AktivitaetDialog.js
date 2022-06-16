@@ -72,7 +72,7 @@ class AktivitaetDialog extends Component {
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                <b>{/*projekt.bezeichnung - wie geht das?*/}</b>
+                                <b>{projekt.getBezeichnung()}</b>
                             </DialogContentText>
                             <div>
                                 <TextField

@@ -1,59 +1,41 @@
 import React, { Component } from 'react';
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Typography, TextField, IconButton, OutlinedInput, Box, Chip } from '@mui/material';
+import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Box, Chip } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import InputLabel from "@mui/material/InputLabel";
 
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuItem } from '@mui/material';
-
+import ProjektBO from '../../api/AktivitaetBO';
 import TimetrackerAPI from '../../api/TimetrackerAPI';
-import ProjektBO from '../../api/ProjektBO';
 
 
-
-class ProjektAnlegen extends Component {
+class ProjektBearbeiten extends Component {
 
     constructor(props) {
         super(props);
 
-        //gebe einen leeren status
+        let bz = "", ag = "";
+        if (props.projekt) {
+            bz = props.projekt.getBezeichnung();
+            ag = props.projekt.getAuftraggeber();
+        }
         this.state = {
-            allePersonen: [],
-            personen: [],
-            projektBezeichnung: null,
-            auftraggeber: null,
+            bezeichnung: bz,
+            auftraggeber: ag,
         };
+
+        this.baseState = this.state;
     }
 
-    // Fetches all PersonBOs from the backend
-    getPersonen = () => {
-        TimetrackerAPI.getAPI().getPerson().then((personenBOs) => {
-            this.setState({
-                allePersonen: personenBOs,
-            });
-        });
-    }
-
-    // Projekt hinzufügen
-    addProjekt = () => {
-        let newProjekt = new ProjektBO()
-        newProjekt.setID(0)
-        newProjekt.setBezeichnung(this.state.projektBezeichnung)
-        newProjekt.setAuftraggeber(this.state.auftraggeber)
-        newProjekt.setProjekterstellerID(2)
-        //newProjekt.setProjekterstellerID(this.props.person.getID())
-        TimetrackerAPI.getAPI().addProjekt(newProjekt).then(projekt => {
-            this.addPersonInProjekt(projekt)
+    //Projekt bearbeiten
+    updateProjekt = () => {
+        let projekt = this.props.projekt;
+        projekt.setBezeichnung(this.state.bezeichnung)
+        projekt.setAuftraggeber(this.state.auftraggeber)
+        TimetrackerAPI.getAPI().updateProjekt(projekt).then(projekt => {
+            this.props.onClose(projekt);
         })
-    }
-
-    // Person in Projekt hinzufügen
-    addPersonInProjekt = (projekt) => {
-        TimetrackerAPI.getAPI().addPersonInProjekt(projekt.getID(),this.state.personen).then(projekt => {
-            this.props.onClose(projekt)
-        })
-
     }
 
     // Textfelder ändern
@@ -70,76 +52,17 @@ class ProjektAnlegen extends Component {
         });
     }
 
-    // Multiselect ändern
-    handleChange = (event) => {
-        this.setState({
-            personen: event.target.value,
-        });
-    }
-
-
-    renderBranch = () => {
-        const { values } = this.state
-        return (
-            <>
-                <div>
-                    <TextField
-                        label="Aktivität"
-                        variant="outlined"
-                        name="name"
-                        size="small" 
-                        autocomplete='off'  
-                    />
-                    &emsp;
-                    <TextField
-                        label="Kapazität in Stunden"
-                        variant="outlined"
-                        multiline
-                        name="name"
-                        size="small"
-                        autocomplete='off'
-                    />
-                    
-                </div>
-                <br/>
-          </>
-        )
-    }
-
-    renderBranches = () => {
-        const { counter } = this.state
-        const result = []
-        for (let i = 0; i <= counter; i++) {
-          result.push(this.renderBranch(i))
-        }
-        return result
-    }  
-
-    appendDiv = () => {
-        this.setState({
-          counter: this.state.counter + 1,
-          values: [
-            ...this.state.values,
-          ]
-        })
-    }
-
-
-    //Dialog schließen
+    // Dialog schließen
     handleClose = () => {
         this.setState(this.baseState);
         this.props.onClose(null);
     }
 
-    componentDidMount() {
-        this.getPersonen();
-    }
-
     render() {
-        const { show } = this.props
-        const { allePersonen, personen, projektBezeichnung, auftraggeber } = this.state
+        const { show, projekt, allePersonen, personen } = this.props
+        const { bezeichnung, auftraggeber } = this.state
 
-        let title = 'Neues Projekt';
+        let title = 'Projekt bearbeiten';
 
         return (
             show ?
@@ -156,11 +79,11 @@ class ProjektAnlegen extends Component {
                                 <FormControl fullWidth>
                                     <TextField
                                         label="Projektname"
-                                        id="projektBezeichnung"
+                                        id="bezeichnung"
                                         variant="outlined"
                                         name="name"
                                         size="small"
-                                        value={projektBezeichnung}
+                                        value={bezeichnung}
                                         onChange={this.textFieldValueChange}
                                         autocomplete='off'
                                     />
@@ -221,7 +144,7 @@ class ProjektAnlegen extends Component {
                             <Button color='secondary' onClick={this.handleClose}>
                                 Abbrechen
                             </Button>
-                            <Button variant='contained' color='primary' onClick={this.addProjekt}>
+                            <Button variant='contained' color='primary' onClick={this.updateProjekt}>
                                 Bestätigen
                             </Button>
                         </DialogActions>
@@ -233,4 +156,4 @@ class ProjektAnlegen extends Component {
 }
 
 
-export default ProjektAnlegen;
+export default ProjektBearbeiten;

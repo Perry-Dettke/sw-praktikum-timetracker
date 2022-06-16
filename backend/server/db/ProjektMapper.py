@@ -176,6 +176,78 @@ class ProjektMapper (Mapper):
 
 
 
+    def find_person_in_projekt(self, projekt_id):
+        """Auslesen aller Teilnehmer eines Projekts."""
+
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT person_id FROM projekt_person WHERE projekt_id={}".format(projekt_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            for (person_id) in tuples:
+                result.append(person_id[0])
+
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            result = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
+    def find_projekt_by_person(self, person_id):
+        """Auslesen aller Projekte einer Person."""
+
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT projekt_id FROM projekt_person WHERE person_id={}".format(person_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            for (projekt_id) in tuples:
+                result.append(projekt_id[0])
+
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            result = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
+    def insert_person_in_projekt(self, projekt_id, person_id):
+        """Einfügen eines Projekt-Person-Objekts in die Datenbank.
+        """
+        cursor = self._cnx.cursor()
+
+        command = f"INSERT INTO projekt_person (person_id, projekt_id ) VALUES ({person_id},{projekt_id})"
+
+        cursor.execute(command)
+        self._cnx.commit()
+        cursor.close()
+
+        return True
+
+    def delete_person_in_projekt(self, projekt_id):
+        """Löschen der Daten eines Projekt-Person-Objekts aus der Datenbank.
+
+        :param projekt das aus der DB zu löschende "Objekt"
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM projekt_person WHERE projekt_id={}".format(projekt_id)
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+
 
 
 """Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
