@@ -1,5 +1,6 @@
 from server.bo.Buchung import Buchung
 from server.db.Mapper import Mapper
+import datetime
 
 class BuchungMapper(Mapper):
     """
@@ -112,36 +113,67 @@ class BuchungMapper(Mapper):
 
         return result
 
-    # def find_by_datum(self, aktivitaet_id, start, ende):
-    #     """Auslesen aller Buchungen anhand der Arbeitszeitkonto ID."""
+    def find_by_aktivitaet_id_and_datum(self, aktivitaet_id, start, ende):
+        """Auslesen aller Buchungen anhand der Arbeitszeitkonto ID."""
 
-    #     result = []
-    #     cursor = self._cnx.cursor()
-    #     command = "SELECT * FROM buchung WHERE aktivitaet_id={aktivitaet_id} AND datum BETWEEN start={start} AND ende={ende}"
-    #     cursor.execute(command)
-    #     tuples = cursor.fetchall()
+        result = []
+        cursor = self._cnx.cursor()
+        command = f"SELECT * FROM buchung WHERE aktivitaet_id={aktivitaet_id} AND datum BETWEEN '{start}' AND '{ende}'"
+        cursor.execute(command)
+        tuples = cursor.fetchall()
 
-    #     try:
-    #         for (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id ) in tuples:
-    #             buchung = Buchung()
-    #             buchung.set_id(id)
-    #             buchung.set_letzte_aenderung(letzte_aenderung)
-    #             buchung.set_datum(datum)
-    #             buchung.set_stunden(stunden)
-    #             buchung.set_ereignisbuchung(ereignisbuchung)
-    #             buchung.set_person_id(person_id)
-    #             buchung.set_aktivitaet_id(aktivitaet_id)
-    #             result.append(buchung)
+        try:
+            for (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id ) in tuples:
+                buchung = Buchung()
+                buchung.set_id(id)
+                buchung.set_letzte_aenderung(letzte_aenderung)
+                buchung.set_datum(datum)
+                buchung.set_stunden(stunden)
+                buchung.set_ereignisbuchung(ereignisbuchung)
+                buchung.set_person_id(person_id)
+                buchung.set_aktivitaet_id(aktivitaet_id)
+                result.append(buchung)
 
-    #     except IndexError:
-    #         """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
-    #         keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-    #         buchung = None
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            buchung = None
 
-    #     self._cnx.commit()
-    #     cursor.close()
+        self._cnx.commit()
+        cursor.close()
 
-    #     return result
+        return result
+
+    def find_by_person_id_and_datum(self, person_id, start, ende):
+        """Auslesen aller Buchungen anhand der Arbeitszeitkonto ID."""
+
+        result = []
+        cursor = self._cnx.cursor()
+        command = f"SELECT * FROM buchung WHERE person_id={person_id} AND datum BETWEEN '{start}' AND '{ende}'"
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            for (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id ) in tuples:
+                buchung = Buchung()
+                buchung.set_id(id)
+                buchung.set_letzte_aenderung(letzte_aenderung)
+                buchung.set_datum(datum)
+                buchung.set_stunden(stunden)
+                buchung.set_ereignisbuchung(ereignisbuchung)
+                buchung.set_person_id(person_id)
+                buchung.set_aktivitaet_id(aktivitaet_id)
+                result.append(buchung)
+
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            buchung = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
 
     def find_by_aktivitaet_id(self, aktivitaet_id):
         """Auslesen aller Buchungen anhand der Arbeitszeitkonto ID."""
@@ -192,6 +224,8 @@ class BuchungMapper(Mapper):
 
             else:
                 Buchung.set_id(1)
+
+        Buchung.set_datum(datetime.date.today())
 
         command = "INSERT INTO buchung (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id) VALUES (%s,%s,%s,%s,%s,%s,%s)"
         data = (Buchung.get_id(),

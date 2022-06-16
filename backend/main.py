@@ -51,7 +51,9 @@ aktivitaet = api.inherit('Aktivitaet', bo, {
     'projekt_id': fields.Integer(attribute='_projekt_id',                               
                                 description='Zugehörige Projekt ID der Aktivitaet'),     
     'stunden': fields.Float(attribute='_stunden',                               
-                                description='Stunden der Aktivitaet'),                            
+                                description='Stunden der Aktivitaet'),    
+    'allstunden': fields.Float(attribute='_allstunden',                               
+                                description='Stunden der Aktivitaet'),                                                    
 })
 
 arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {
@@ -200,16 +202,16 @@ class AktivitaetIDOperations(Resource):
 
 
 
-@timetracker.route('/akitvitaetbyprojektid/<int:projekt_id>')
+@timetracker.route('/akitvitaetbyprojektid/<int:projekt_id>/<string:start>/<string:ende>')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class AktivitaetbyProjektOperations(Resource):
     @timetracker.marshal_with(aktivitaet)
-    def get(self, projekt_id):
+    def get(self, projekt_id, start, ende):
         """Auslesen eines bestimmten Aktivitaets-Objekts aufgrund seiner Projekt ID.
         Das auszulesende Objekt wird durch die ```projekt_id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        akt = adm.get_aktivitaet_by_projekt_id(projekt_id)
+        akt = adm.get_aktivitaet_by_projekt_id(projekt_id, start, ende)
 
         if akt is not None:
             return akt
@@ -441,16 +443,16 @@ class BuchungByAktivitaetIDOperations(Resource):
         else:
             return '', 500 
 
-# @timetracker.route('/buchungbyaktiviaet_idanddatum/<int:aktivitaet_id>/<int:start>/<int:ende>')
+# @timetracker.route('/buchungbyaktiviaet_idanddatum/<int:aktivitaet_id>')
 # @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 # class BuchungByAktivitaetIDOperations(Resource):
 #     @timetracker.marshal_with(buchung)
-#     def get(self, aktivitaet_id, start, ende):
+#     def get(self, aktivitaet_id):
 #         """Auslesen eines bestimmten Buchung-Objekts aufgrund seiner Arbeitszeitkonto ID.
 #         Das auszulesende Objekt wird durch die ```aktivitaet_id``` in dem URI bestimmt.
 #         """
 #         adm = TimetrackerAdministration()
-#         bu = adm.get_buchung_by_datum(aktivitaet_id, start, ende)
+#         bu = adm.get_buchung_by_datum(aktivitaet_id)
 
 #         if bu is not None:
 #             return bu
@@ -630,16 +632,16 @@ class PersonIDOperations(Resource):
             return '', 500 
 
 
-@timetracker.route('/personbyaktivitaet/<int:aktivitaet_id>')
+@timetracker.route('/personbyaktivitaet/<int:aktivitaet_id>/<string:start>/<string:ende>')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class PersonbyAktivitaetOperations(Resource):
     @timetracker.marshal_with(person)
-    def get(self, aktivitaet_id):
+    def get(self, aktivitaet_id, start, ende):
         """Auslesen eines bestimmten Aktivitaets-Objekts aufgrund seiner Projekt ID.
         Das auszulesende Objekt wird durch die ```aktivitaet_id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        per = adm.get_person_by_aktivitaet_id(aktivitaet_id)
+        per = adm.get_person_by_aktivitaet_id(aktivitaet_id, start, ende)
 
         if per is not None:
             return per
@@ -837,6 +839,35 @@ class PersonenInProjektOperations(Resource):
         else:
             '''Wenn unter projekt_id kein Projekt existiert.'''
             return '', 500
+
+
+@timetracker.route('/projekt_person_datum/<int:projekt_id>/<string:start>/<string:ende>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('projekt_id', 'Die ID des Projekt-Objekts.')
+class ProjektPersonOperations(Resource):
+    @timetracker.marshal_list_with(person, code=200)
+    #@secured
+    def get(self, projekt_id, start, ende):
+        """Auslesen aller Teilnehmer eines Projekts
+        """
+        adm = TimetrackerAdministration()
+        pro = adm.get_person_in_projekt_stunden(projekt_id, start, ende)
+        return pro
+
+@timetracker.route('/projektbyperson/<int:person_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjektByPersonOperations(Resource):
+    @timetracker.marshal_list_with(projekt, code=200)
+    #@secured
+    def get(self, person_id):
+        """Auslesen aller Projekte einer Person
+        """
+        adm = TimetrackerAdministration()
+        pro = adm.get_projekt_by_person_id(person_id)
+        return pro
+    
+
+
 
 
 

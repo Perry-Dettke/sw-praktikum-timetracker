@@ -4,6 +4,7 @@ import {Paper, Box, Button, TableBody, TableCell, TableContainer, TableHead, Tab
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import EditIcon from '@mui/icons-material/Edit';
 import PersonForm from '../dialogs/PersonForm';
+import PersonDelete from '../dialogs/PersonDelete';
 
 
 
@@ -14,16 +15,18 @@ import PersonForm from '../dialogs/PersonForm';
     
         this.state = {
           person: null,
-          showPersonForm: false
+          showPersonForm: false,
+          showPersonDelete: false
         }
     }
 
     getPersonbyID = () => {
         var api = TimetrackerAPI.getAPI();
-            api.getPersonbyID(2).then((personBO) => {
+            api.getPersonbyID(3).then((personBO) => {
                 this.setState({
                 person: personBO,
               });
+              console.log("funktion")
             });
           }
 
@@ -50,15 +53,32 @@ import PersonForm from '../dialogs/PersonForm';
   }
 
 
+     //Öffnet das Dialog-Fenster PersonDeleteDialog, wenn der Button geklickt wurde
+     deleteButtonClicked =  event => {
+        event.stopPropagation();
+        this.setState({
+          showPersonDelete: true
+        });
+      }
+    
+      //Wird aufgerufen, wenn das Dialog-Fenster PorjektDeleteDialog geschlossen wird
+      personDeleteClosed = () => {
+          this.setState({
+            showPersonDelete: false,
+            person: null
+          });
+
+      }
+
 
 componentDidMount() {
-  this.getPersonbyID(); //name frei wählbar (sollte Sinn ergeben)
+  this.getPersonbyID();
 }
 
 
     render(){
 
-        const { person, showPersonForm } = this.state;
+        const { person, showPersonForm, showPersonDelete } = this.state;
 
           
         return(
@@ -100,8 +120,8 @@ componentDidMount() {
 
                         <br/>
                         <p> 
-                            <Button variant="contained">Logout</Button>
-                            <Button variant="contained">Profil löschen</Button>
+
+                            <Button variant="contained"  onClick={this.deleteButtonClicked}>Profil löschen</Button>
                         </p>
                     </div>
                 </Paper>
@@ -111,8 +131,9 @@ componentDidMount() {
                 </Box>
 
                 <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
+                <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPersonbyID}/>
             </div> 
-            : null
+            : <p> Du scheinst noch kein Profil zu haben</p>
         );
     }
 }

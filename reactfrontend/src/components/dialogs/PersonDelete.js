@@ -6,7 +6,7 @@ import Snackbar from '@mui/material/Snackbar';
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 
-class PersonLöschenDialog extends Component {
+class PersonDelete extends Component {
 
   constructor(props) {
     super(props);
@@ -29,19 +29,18 @@ class PersonLöschenDialog extends Component {
 
 
   handleClose = () => {
-    this.props.onClose(null);
+    console.log("Test")
+    this.props.onClose();
+    this.props.getPersonbyID();
   }
 
   deletePerson = () => {
-    TimetrackerAPI.getAPI().deletePerson(this.state.person.id)
+    TimetrackerAPI.getAPI().deletePerson(this.state.person)
       .then(() => {
-        this.props.getPerson();
+          console.log("geklickt")
+
         this.props.onClose(null);
-      }).catch(e => {
-        this.setState({
-          showSnackbar: true
-        })
-      })
+      });
   }
 
   render() {
@@ -70,11 +69,7 @@ class PersonLöschenDialog extends Component {
                   </Button>
           </DialogActions>
         </Dialog>
-        <Snackbar open={showSnackbar} autoHideDuration={6000} onClose={this.closeSnackbar}>
-          <Alert onClose={this.closeSnackbar} severity="error">
-            Diese Person kann nicht gelöscht werden
-                </Alert>
-        </Snackbar>
+
       </div>
     );
   }
@@ -84,4 +79,4 @@ class PersonLöschenDialog extends Component {
 
 
 
-export default PersonLöschenDialog;
+export default PersonDelete;
