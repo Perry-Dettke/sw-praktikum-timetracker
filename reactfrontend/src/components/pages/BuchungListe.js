@@ -127,6 +127,8 @@ class BuchungListe extends Component {
 
             <BuchungDialog show={showBuchungDialog} onClose={this.buchungDialogClosed} />
           </Grid>
+          <ZeitintervallBuchungAnlegen show={showZeitintervallBuchungAnlegen} onClose={this.zeitintervallBuchungAnlegenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
+          <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} onClose={this.ereignisBuchungAnlegenClosed}/>
         </div>
         : null
     );
