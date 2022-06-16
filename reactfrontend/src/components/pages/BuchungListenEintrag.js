@@ -152,7 +152,7 @@ class BuchungListenEintrag extends Component {
                                 </TableCell>
                                 <TableCell>
                                     <Tooltip title='Löschen' placement="bottom">
-                                        <IconButton variant="contained" onClick={this.buchungLöschenButtonClicked}><DeleteIcon /></IconButton>
+                                        <IconButton variant="contained" onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
                                     </Tooltip>
                                 </TableCell>
                             </TableRow>

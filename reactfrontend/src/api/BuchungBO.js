@@ -5,7 +5,7 @@ export default class BuchungBO extends BusinessObject {
 
     constructor(datum, stunden, ereignisbuchung, person_id, aktivitaet_id){
         super();
-        this.datum = new Date();
+        this.datum = datum;
         this.stunden = stunden;
         this.ereignisbuchung = ereignisbuchung;
         this.person_id = person_id;

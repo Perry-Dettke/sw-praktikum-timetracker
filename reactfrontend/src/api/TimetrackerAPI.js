@@ -312,6 +312,7 @@ export default class TimetrackerAPI {
 
   addBuchung(buchungBO) {
     // Person neu anlegen
+    console.log(buchungBO)
     return this.#fetchAdvanced(this.#addBuchungURL(), {
       method: 'POST',
       headers: {
