@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { Button, Stack, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from "@mui/material/InputLabel";
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DateTimePicker from '@mui/lab/DateTimePicker';
 
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -15,7 +18,7 @@ import BuchungBO from "../../api/BuchungBO";
 
 
 
-class EreignisBuchungAnlegen extends Component {
+class ZeitintervallBuchungAnlegen extends Component {
 
 
 
@@ -26,8 +29,9 @@ class EreignisBuchungAnlegen extends Component {
       projektliste: [],
       projekt: null,
       aktivitaetliste: [],
-      stunden: null,
-      aktivitaet_id: 0
+      aktivitaet_id: 0,
+      start: new Date,
+      ende: new Date,
 
     };
 
@@ -57,17 +61,18 @@ class EreignisBuchungAnlegen extends Component {
   addBuchung = () => {
     let newBuchung = new BuchungBO()
     newBuchung.setID(0) // bekommt im Backend die max id
-    newBuchung.setDatum(0) // bekommt im Backend das aktuelle Datum
-    newBuchung.setStunden(0)
+    // newBuchung.setDatum(0) // bekommt im Backend das aktuelle Datum
+    // newBuchung.setStunden(this.msToTime((this.state.ende.getTime() - this.state.start.getTime())))
+    newBuchung.setStunden(2)
+    newBuchung.setEreignisbuchung()
     newBuchung.setPerson_id(3) // muss id vom current user rein
-    newBuchung.setAktivitaet_id(0)
-    newBuchung.setEreignisbuchung(1)
+    newBuchung.setAktivitaet_id(1)
     TimetrackerAPI.getAPI().addBuchung(newBuchung).then(buchung => {
-        console.log(buchung)
-        this.setState(this.initialState);
-        this.props.onClose(buchung); 
+      console.log(buchung)
+      this.setState(this.initialState);
+      this.props.onClose(buchung);
     })
-}
+  }
 
   // Dialog schließen
   handleClose = () => {
@@ -87,6 +92,33 @@ class EreignisBuchungAnlegen extends Component {
     this.setState({ aktivitaet_id: e.target.value });
   }
 
+  handleChangeStart = (e) => {
+    this.setState({ start: e });
+  }
+
+  handleChangeEnde = (e) => {
+    this.setState({ ende: e });
+  }
+
+  msToTime = (duration) => {
+    var minutes = Math.floor((duration / (1000 * 60)) % 60),
+      hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+
+    return hours + ":" + minutes
+  }
+
+  // stundenBerechnen = () => {
+  // let stunden = this.msToTime((this.state.ende.getTime() - this.state.start.getTime()));
+  // console.log(stunden)
+  // return stunden
+  // }
+
+
+
+
   // Textfelder ändern
   textFieldValueChange = (event) => {
     const value = event.target.value;
@@ -102,6 +134,7 @@ class EreignisBuchungAnlegen extends Component {
   }
 
 
+
   componentDidMount() {
     this.getProjektByPerson();
   }
@@ -109,14 +142,17 @@ class EreignisBuchungAnlegen extends Component {
   render() {
 
     const { show } = this.props;
-    const { projektliste, projekt, aktivitaetliste, stunden } = this.state;
+    const { projektliste, projekt, aktivitaetliste, start, ende } = this.state;
     console.log(aktivitaetliste)
-    console.log(projekt)
 
-    let title = 'Neue Ereignisbuchung';
+
+
+
+    let title = 'Neue Zeitintervallbuchung';
     let title2 = "Wählen Sie das Projekt auf das Sie buchen möchten."
-    let title3 = "Wählen Sie die Aktivität auf das Sie buchen möchten."
-    let title4 = "Wählen Anzahl der Stunden die Sie buchen möchten."
+    let title3 = "Wählen Sie die Aktivität auf die Sie buchen möchten."
+    let title4 = "Wählen den Startzeitpunkt für ihre Zeitintervallbuchung."
+    let title5 = "Wählen den Endzeitpunkt für ihre Zeitintervallbuchung."
     return (
       show ?
         <div>
@@ -127,8 +163,6 @@ class EreignisBuchungAnlegen extends Component {
             <DialogContent>
               <DialogContentText>
                 {title2}
-
-
               </DialogContentText>
               <div>
                 <FormControl fullWidth>
@@ -141,7 +175,6 @@ class EreignisBuchungAnlegen extends Component {
                     autoWidth
                     onChange={this.handleChange}
                   >
-
                     {projektliste.map((projekt) => (
                       <MenuItem
                         key={projekt.getID()}
@@ -153,7 +186,7 @@ class EreignisBuchungAnlegen extends Component {
                   </Select>
                 </FormControl>
               </div>
-
+              <br></br>
               {aktivitaetliste.length != 0 ?
 
                 <FormControl fullWidth>
@@ -179,26 +212,39 @@ class EreignisBuchungAnlegen extends Component {
                       </MenuItem>
                     ))}
                   </Select>
-
+                  <br></br>
                   <DialogContentText>
                     {title4}
                   </DialogContentText>
-                  <TextField
-                    label="Stunden"
-                    variant="outlined"
-                    name="stunden"
-                    size="small"
-                    value={stunden}
-                    onChange={this.textFieldValueChange}
-                    autocomplete='off'
-                  />
-                </FormControl>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <Stack spacing={3}>
 
+                      <DateTimePicker
+                        label="start"
+                        value={start}
+                        onChange={this.handleChangeStart}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </Stack>
+                  </LocalizationProvider>
+                  <br></br>
+                  <DialogContentText>
+                    {title5}
+                  </DialogContentText>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <Stack spacing={3}>
+
+                      <DateTimePicker
+                        label="ende"
+                        value={ende}
+                        onChange={this.handleChangeEnde}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </Stack>
+                  </LocalizationProvider>
+                </FormControl>
                 : null
               }
-
-
-
             </DialogContent>
             <DialogActions>
               <Button color='secondary' onClick={this.handleClose}>
@@ -215,4 +261,4 @@ class EreignisBuchungAnlegen extends Component {
   }
 }
 
-export default EreignisBuchungAnlegen;
+export default ZeitintervallBuchungAnlegen;

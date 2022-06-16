@@ -370,17 +370,17 @@ class TimetrackerAdministration (object):
 
         with BuchungMapper() as mapper:
             for per in personen_list:
-                for a in aktivitaetliste:
+
                     
 
-                    buchungliste = mapper.find_by_person_id_and_datum(per.get_id(), a.get_id(), start, ende)
-                    stunden = 0
-                    for bu in buchungliste:
-                        stunden += bu.get_stunden()
+                buchungliste = mapper.find_by_person_id_and_datum(per.get_id(), start, ende)
+                stunden = 0
+                for bu in buchungliste:
+                    stunden += bu.get_stunden()
 
-                    per.set_stunden(stunden)
+                per.set_stunden(stunden)
 
-                return personen_list
+            return personen_list
 
 
     """

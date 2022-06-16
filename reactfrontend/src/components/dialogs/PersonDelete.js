@@ -30,7 +30,8 @@ class PersonDelete extends Component {
 
   handleClose = () => {
     console.log("Test")
-    this.props.onClose(null);
+    this.props.onClose();
+    this.props.getPersonbyID();
   }
 
   deletePerson = () => {

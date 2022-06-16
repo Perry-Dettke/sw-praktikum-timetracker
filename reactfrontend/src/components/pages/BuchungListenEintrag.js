@@ -61,7 +61,7 @@ class BuchungListenEintrag extends Component {
                 });
             });
         }
-            , 1000);
+            , 2000);
     }
 
 
@@ -74,7 +74,7 @@ class BuchungListenEintrag extends Component {
                 });
             });
         }
-            , 1000);
+            , 2000);
     }
 
 

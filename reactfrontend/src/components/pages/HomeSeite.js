@@ -22,7 +22,7 @@ import PersonDelete from '../dialogs/PersonDelete';
 
     getPersonbyID = () => {
         var api = TimetrackerAPI.getAPI();
-            api.getPersonbyID(13).then((personBO) => {
+            api.getPersonbyID(3).then((personBO) => {
                 this.setState({
                 person: personBO,
               });
@@ -131,7 +131,7 @@ componentDidMount() {
                 </Box>
 
                 <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
-                <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed}/>
+                <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPersonbyID}/>
             </div> 
             : <p> Du scheinst noch kein Profil zu haben</p>
         );

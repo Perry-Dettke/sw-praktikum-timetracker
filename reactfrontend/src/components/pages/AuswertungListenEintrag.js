@@ -34,6 +34,7 @@ class AuswertungListenEintrag extends Component {
                 aktivitaetliste: aktivitaetBOs,
             });
         });
+        
     }
 
     zeitraumClicked = () => {
@@ -175,9 +176,9 @@ class AuswertungListenEintrag extends Component {
                                                                         <strong>Person die bereits auf die Aktivität gebucht haben:</strong>
                                                                     </TableHead>
                                                                     <TableBody>
-                                                                        <AuswertungListenEintragPerson key={(aktivitaet)[aktivitaet.id]} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} ref={instance => { this.child = instance; }} />
-                                                                    </TableBody>
-                                                                </Table>
+                                                                    <AuswertungListenEintragPerson key={(aktivitaet)[aktivitaet.id]} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} start={start} ende={ende} ref={instance => { this.child = instance; }} />
+                                                                </TableBody>
+                                                            </Table>
 
 
                                                             </AccordionDetails>
