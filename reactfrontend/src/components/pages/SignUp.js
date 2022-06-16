@@ -45,7 +45,6 @@ class SignUp extends Component {
         const { classes, currentUser } = this.props;
         const { person, showPersonForm} = this.state;
         console.log(currentUser)
-        console.log("Testtttt")
         return (
             <div>
                 { <div>
