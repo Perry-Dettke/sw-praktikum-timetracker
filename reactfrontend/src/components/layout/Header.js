@@ -1,9 +1,8 @@
 import React from 'react';
 import { Component } from 'react'
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import { Paper, Typography, Tabs, Tab } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import ProfileDropDown from '../dialogs/ProfileDropDown';
 
 /**
  * Shows the header with the main navigation Tabs within a Paper.
@@ -21,21 +20,16 @@ class Header extends Component {
 
   /** Handles onChange events of the Tabs component */
   handleTabChange = (e, newIndex) => {
-
+    // console.log(newValue)
     this.setState({
       tabindex: newIndex
     })
   };
 
-  
-
   /** Renders the component */
   render() {
-    const{ currentUser } = this.props;
-
     return (
       <Paper variant='outlined' >
-        <ProfileDropDown currentUser={currentUser} />
         <Typography variant='h3' component='h1' align='center' color='#323748' fontFamily='Verdana'>
           TIME
         </Typography>
@@ -45,27 +39,21 @@ class Header extends Component {
         <Typography variant='h4' component='h2' align='center' >
           Zeiterfassungssystem
         </Typography>
-        {
-          currentUser ?
           <Tabs indicatorColor='primary' textColor='primary' centered value={this.state.tabindex} onChange={this.handleTabChange} >
             <Tab label='Home' component={RouterLink} to={`/home`} />
             <Tab label='Projekt Übersicht' component={RouterLink} to={`/projekt_uebersicht`} />     
             <Tab label='Buchung' component={RouterLink} to={`/buchung`} />
-            <Tab label='Auswertung Aktivität' component={RouterLink} to={`/auswertung`} />
-            <Tab label='Auswertung Person' component={RouterLink} to={`/auswertung_person`} />
-          
+            <Tab label='Auswertung' component={RouterLink} to={`/auswertung`} />
           </Tabs>
-          : null
-        }
       </Paper>
     )
   }
 }
 
-/** PropTypes */
+/** PropTypes 
 Header.propTypes = {
-  /**The logged in firesbase user*/
-  currentUser: PropTypes.object,
+  The logged in firesbase user
+  user: PropTypes.object,
 }
-
+*/
 export default Header;

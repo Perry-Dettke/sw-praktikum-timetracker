@@ -40,22 +40,22 @@ class AktivitaetMapper (Mapper):
 
     def find_by_id(self, id):
         """Auslesen aller Aktivitäten anhand der ID."""
+        
 
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id FROM aktivitaet WHERE id={}".format(
-            id)
+        command = "SELECT id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id FROM aktivitaet WHERE id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, bezeichnung,
-             kapazitaet, projekt_id) = tuples[0]
+            (id, letzte_aenderung, bezeichnung, kapazitaet, projekt_id) = tuples[0]
             aktivitaet = Aktivitaet()
             aktivitaet.set_id(id)
             aktivitaet.set_letzte_aenderung(letzte_aenderung)
             aktivitaet.set_bezeichnung(bezeichnung)
             aktivitaet.set_kapazitaet(kapazitaet)
             aktivitaet.set_projekt_id(projekt_id)
+
 
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
@@ -72,8 +72,7 @@ class AktivitaetMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT * FROM aktivitaet WHERE projekt_id={}".format(
-            projekt_id)
+        command = "SELECT * FROM aktivitaet WHERE projekt_id={}".format(projekt_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -97,32 +96,7 @@ class AktivitaetMapper (Mapper):
 
         return result
 
-
-    def find_by_projekt_id_id(self, projekt_id):
-        """Auslesen aller Aktivitäten anhand der Projekt ID."""
-
-        result = []
-        cursor = self._cnx.cursor()
-        command = "SELECT id FROM aktivitaet WHERE projekt_id={}".format(
-            projekt_id)
-        cursor.execute(command)
-        tuples = cursor.fetchall()
-
-        try:
-            for (id) in tuples:
-                result.append(id)
-
-        except IndexError:
-            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
-            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            aktivitaet = None
-
-        self._cnx.commit()
-        cursor.close()
-
-        return result
-
-
+        
     def insert(self, aktivitaet):
 
         """Einfügen eines Aktivitaet-Objekts in die Datenbank.

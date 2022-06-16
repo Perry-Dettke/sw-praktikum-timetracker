@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
-import { Typography, IconButton, Grid, Tooltip, ListItem, Divider, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
+import{Typography, IconButton, Grid, Tooltip, ListItem, Divider, Table, TableHead, TableBody, TableRow, TableCell, Paper} from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
-import BuchungDelete from '../dialogs/BuchungDelete';
+import BuchungLöschen from '../dialogs/BuchungLöschen';
 import BuchungBearbeiten from '../dialogs/BuchungBearbeiten';
 
 
@@ -22,9 +22,8 @@ class BuchungListenEintrag extends Component {
             aktivitaet: null,
             projekt: null,
             showBuchungBearbeiten: false,
-            showBuchungDelete: false,
+            showBuchungLöschen: false,
             aktivitaetliste: [],
-            tablehead: null,
         };
     }
 
@@ -35,12 +34,11 @@ class BuchungListenEintrag extends Component {
 
     ereignisbuchungCheck = () => {
         if (this.props.buchung.getEreignisbuchung() === true) {
-            return "Ereignisbuchung"
-        }
+            return "Ereignisbuchung"}
         else {
             return "Zetintervallbuchung"
         }
-
+        
     }
 
     getAktivitaet = () => {
@@ -55,27 +53,29 @@ class BuchungListenEintrag extends Component {
 
     getProjekt = () => {
         this.timer = setTimeout(() => {
-            TimetrackerAPI.getAPI().getProjektbyID(this.state.aktivitaet.getProjektID()).then((projektBOs) => {
-                this.setState({
-                    projekt: projektBOs,
-                });
+        TimetrackerAPI.getAPI().getProjektbyID(this.state.aktivitaet.getProjektID()).then((projektBOs) => {
+            this.setState({
+                projekt: projektBOs,
             });
-        }
-            , 2000);
+        });
+    }
+    , 1000);
     }
 
 
     getAktivitaetbyProjektID = () => {
-        this.timer = setTimeout(() => {
+        this.timer = setTimeout(() => 
+        {
 
             TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.state.aktivitaet.getProjektID()).then((aktivitaetBOs) => {
                 this.setState({
                     aktivitaetliste: aktivitaetBOs,
                 });
+                console.log(this.state.aktivitaet.getProjektID())
             });
         }
-            , 2000);
-    }
+        , 1000);
+      }
 
 
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
@@ -100,73 +100,73 @@ class BuchungListenEintrag extends Component {
         }
     }
 
-    //Öffnet das Dialog-Fenster BuchungDeleteDialog, wenn der Button geklickt wurde
-    buchungDeleteButtonClicked = event => {
+     //Öffnet das Dialog-Fenster BuchungDeleteDialog, wenn der Button geklickt wurde
+     buchungLöschenButtonClicked =  event => {
         event.stopPropagation();
         this.setState({
-            showBuchungDelete: true
+          showBuchungLöschen: true
         });
-    }
-
-    //Wird aufgerufen, wenn das Dialog-Fenster PorjektDeleteDialog geschlossen wird
-    buchungDeleteClosed = () => {
-        this.setState({
-            showBuchungDelete: false
-        });
-        this.props.getBuchung()
-    }
+      }
+    
+      //Wird aufgerufen, wenn das Dialog-Fenster PorjektDeleteDialog geschlossen wird
+      buchungLöschenClosed = () => {
+          this.setState({
+            showBuchungLöschen: false
+          });
+          this.props.getBuchung()
+      }
 
     componentDidMount() {
         this.getAktivitaet();
         this.getProjekt();
         this.getAktivitaetbyProjektID()
-
+        
     }
 
 
-
+ 
 
     //Renders the component
     render() {
-        const { buchung } = this.props;
-        const { aktivitaet, projekt, showBuchungBearbeiten, showBuchungDelete, aktivitaetliste, tablehead } = this.state;
-        // console.log(projekt)
+        const {buchung} = this.props;
+        const {aktivitaet, projekt, showBuchungBearbeiten, showBuchungLöschen, aktivitaetliste} = this.state;
+        console.log(projekt)
         // console.log(this.state.aktivitaet.getProjektID())
 
         return (
             aktivitaet && projekt ?
-                <div>
+            <div>
 
-                        
-                        <TableBody>
-                            <TableRow key={buchung.getID()}>
-                                <TableCell>{buchung.getDatum()}</TableCell>
-                                <TableCell>{projekt.getBezeichnung()}</TableCell>
-                                <TableCell>{aktivitaet.getBezeichnung()}</TableCell>
-                                <TableCell>{this.ereignisbuchungCheck()}</TableCell>
-                                <TableCell>{buchung.getStunden()}</TableCell>
-                                <TableCell>
-                                    <Tooltip title='Bearbeiten' placement="bottom">
-                                        <IconButton variant='contained' onClick={this.bearbeitenButtonClicked}><EditIcon /></IconButton>
-                                    </Tooltip>
-                                </TableCell>
-                                <TableCell>
-                                    <Tooltip title='Löschen' placement="bottom">
-                                        <IconButton variant="contained" onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
-                                    </Tooltip>
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                   
-                 
-    
+
+
+
+ 
+                <TableRow key={buchung.getID()}>
+                    <TableCell>{buchung.getDatum()}</TableCell>
+                    <TableCell>{projekt.getBezeichnung()}</TableCell>
+                    <TableCell>{aktivitaet.getBezeichnung()}</TableCell>
+                    <TableCell>{this.ereignisbuchungCheck()}</TableCell>
+                    <TableCell>{buchung.getStunden()}</TableCell>
+                    <TableCell>                
+                        <Tooltip title='Bearbeiten' placement="bottom">
+                            <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}><EditIcon /></IconButton>
+                        </Tooltip>
+                    </TableCell>
+                    <TableCell>
+                        <Tooltip title='Löschen' placement="bottom">
+                            <IconButton variant="contained"  onClick={this.buchungLöschenButtonClicked}><DeleteIcon /></IconButton>
+                        </Tooltip>
+                    </TableCell>
+                </TableRow>
+
+
+
 
                     <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
                     <BuchungDelete show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchungbyPersonID={this.props.getBuchungbyPersonID}/>
 
-                </div>
-                    
-                : null
+            </div>
+            : null
         );
     }
 }

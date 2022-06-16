@@ -48,11 +48,11 @@ class Buchung(bo.BusinessObjekt):
         self._person_id = person_id
 
     def get_aktivitaet_id(self):
-        # Ausgeben der Aktivität ID
+        # Ausgeben der Person ID
         return self._aktivitaet_id
     
     def set_aktivitaet_id(self, aktivitaet_id):
-        # Setzen der Aktivität ID
+        # Setzen der Arbeitszeitkonto ID
         self._aktivitaet_id = aktivitaet_id
 
 
