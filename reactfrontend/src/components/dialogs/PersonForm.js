@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {Button, IconButton, Dialog, DialogContent, DialogContentText,DialogTitle, DialogActions, TextField} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { withStyles } from '@mui/styles';
 
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
@@ -12,20 +14,18 @@ class PersonForm extends Component {
     constructor(props) {
         super(props);
 
-        let vn = "", nn = "", em = "", bn = "", ui = "";
+        let vn = "", nn = "", em = "", bn = "";
         if (props.person) {
             vn = props.person.vor_name;
             nn = props.person.nach_name;
             em = props.person.email;
             bn = props.person.benutzer_name;
-            ui = props.person.google_user_id
         }
         this.state = {
             vor_name : vn,
             nach_name : nn,
             email : em,
             benutzer_name : bn,
-            google_user_id: ui,
         };
 
         this.initialState = this.state;
@@ -38,9 +38,8 @@ class PersonForm extends Component {
         newPerson.setNach_name(this.state.nach_name)
         newPerson.setEmail(this.state.email)
         newPerson.setBenutzer_name(this.state.benutzer_name)
-        newPerson.setGoogle_user_id(this.props.currentUser.uid)
         TimetrackerAPI.getAPI().addPerson(newPerson).then(person => {
-            console.log(this.props.currentUser.uid)
+            console.log(person)
             this.setState(this.initialState);
             this.props.onClose(person); //Aufrufen parent in backend
         })
@@ -96,10 +95,8 @@ class PersonForm extends Component {
 
 
     render() {
-        const { classes, show, person, currentUser } = this.props;
+        const { classes, show, person } = this.props;
         const {vor_name, nach_name, benutzer_name, email } = this.state;
-        console.log(currentUser)
-        console.log("Form")
         let title = '';
         let header = '';
 

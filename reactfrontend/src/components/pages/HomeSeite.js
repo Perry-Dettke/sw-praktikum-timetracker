@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Component } from 'react';
-import {Paper, Box, Button, Tooltip, IconButton} from '@mui/material';
+import {Paper, Box, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Grid, IconButton} from '@mui/material';
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import EditIcon from '@mui/icons-material/Edit';
 import PersonForm from '../dialogs/PersonForm';
-import SignUp from './SignUp';
+import PersonDelete from '../dialogs/PersonDelete';
 
 
 
@@ -13,55 +13,22 @@ import SignUp from './SignUp';
     constructor(props) {
         super(props);
     
-        this.state = {  
-          currentUser: props.currentUser,  
+        this.state = {
           person: null,
-          showPersonForm: false
+          showPersonForm: false,
+          showPersonDelete: false
         }
     }
 
-
-
-    // getPersonbyID = () => {
-    //     var api = TimetrackerAPI.getAPI();
-    //         api.getPersonbyID(1000).then((personBO) => {
-    //             this.setState({
-    //             person: personBO,
-    //           });
-    //         });
-    // }
-
-    getPerson = () => {
-        TimetrackerAPI.getAPI().getPersonByGoogle(this.state.currentUser.uid).then((person) =>
-            this.setState({
-              person: person,
-            })
-          ).catch((e) =>
-            this.setState({
-              person: null,
-            })
-          );
-      }; 
-
-    
-
-
-
-
-
-    // SignUp anzeigen
-  closeSignup = (person) => {
-    this.setState({
-      currentUser: person.getID(),
-      person: person,
-    });
-  }
-
-  showPersonForm = () => {
-      if(!this.state.person) {
-          this.setState({ showPersonForm: true });
-      }
-  }
+    getPersonbyID = () => {
+        var api = TimetrackerAPI.getAPI();
+            api.getPersonbyID(3).then((personBO) => {
+                this.setState({
+                person: personBO,
+              });
+              console.log("funktion")
+            });
+          }
 
 //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
@@ -70,11 +37,9 @@ import SignUp from './SignUp';
             showPersonForm: true
         });
     }
-    
-
 
     //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
-    ClosePersonForm = (person) => {
+    personFormClosed = (person) => {
       if (person) {
           this.setState({
               person: person,
@@ -88,17 +53,34 @@ import SignUp from './SignUp';
   }
 
 
+     //Öffnet das Dialog-Fenster PersonDeleteDialog, wenn der Button geklickt wurde
+     deleteButtonClicked =  event => {
+        event.stopPropagation();
+        this.setState({
+          showPersonDelete: true
+        });
+      }
+    
+      //Wird aufgerufen, wenn das Dialog-Fenster PorjektDeleteDialog geschlossen wird
+      personDeleteClosed = () => {
+          this.setState({
+            showPersonDelete: false,
+            person: null
+          });
+
+      }
 
 
 componentDidMount() {
-  this.getPerson(); //name frei wählbar (sollte Sinn ergeben)
-  
+  this.getPersonbyID();
 }
 
 
     render(){
-        const { person, showPersonForm, currentUser } = this.state;
-        
+
+        const { person, showPersonForm, showPersonDelete } = this.state;
+
+          
         return(
             person ?
             <div>
@@ -120,15 +102,15 @@ componentDidMount() {
                         <h2>
                            Mein Profil                
                         </h2>
-                    <Tooltip title='Bearbeiten' placement="right">
-                    <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}>
-                      <EditIcon />
-                    </IconButton>
-                     </Tooltip>
+                        <Tooltip title='Bearbeiten' placement="right">
+                      <IconButton   variant='contained' onClick={this.bearbeitenButtonClicked}>
+                          <EditIcon />
+                      </IconButton>
+                      </Tooltip>
                         <p>
-                        <strong>Name:</strong> {person.getVor_name()} {person.getNach_name()}
+                            <strong>Name:</strong> {person.getVor_name()} {person.getNach_name()}
                         </p>
-
+                      
                         <p>
                         <strong>Email:</strong> {person.getEmail()}
                         </p>
@@ -138,20 +120,20 @@ componentDidMount() {
 
                         <br/>
                         <p> 
-                            <Button variant="contained">Logout</Button>
-                            <Button variant="contained">Profil löschen</Button>
-                            
+
+                            <Button variant="contained"  onClick={this.deleteButtonClicked}>Profil löschen</Button>
                         </p>
                     </div>
-                    
                 </Paper>
                 <Paper>
 
                 </Paper>
                 </Box>
+
+                <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
+                <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPersonbyID}/>
             </div> 
-            : <SignUp onClose={this.closePersonForm}  />
-            
+            : <p> Du scheinst noch kein Profil zu haben</p>
         );
     }
 }

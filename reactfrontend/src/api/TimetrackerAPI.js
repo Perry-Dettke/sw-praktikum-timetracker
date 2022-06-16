@@ -51,9 +51,11 @@ export default class TimetrackerAPI {
   #updatePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
   #deletePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
   #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
-  #addPersonGoogleURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
   #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
   #getPersonbyAktivitaetIDURL = (aktivitaet_id, start, ende) => `${this.#ServerBaseURL}/personbyaktivitaet/${aktivitaet_id}/${start}/${ende}`;
+
+
+
 
   // *** Projekt realted *** //
   #addProjektURL = () => `${this.#ServerBaseURL}/projekt`;
@@ -64,14 +66,10 @@ export default class TimetrackerAPI {
   #deleteProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
 
   // *** PersonProjekt realted *** //  
-  #getPersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projektbypersonid/${projekt_id}`;
-  #addPersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projektbypersonid/${projekt_id}`;
-  #updatePersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projektbypersonid/${projekt_id}`;
-  #getProjektbyPersonIDURL = (person_id) => `${this.#ServerBaseURL}/projekt_person/${person_id}`;
   // #addPersonProjektURL = () => `${this.#ServerBaseURL}/personprojekt`;
   #getPersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projekt_person/${projekt_id}`;
   #getPersonInProjektStundenURL = (projekt_id, start, ende) => `${this.#ServerBaseURL}/projekt_person_datum/${projekt_id}/${start}/${ende}`;
-  
+  #getProjektByPersonURL = (person_id) => `${this.#ServerBaseURL}/projektbyperson/${person_id}`;
   // #updatePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // #deletePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // linkPersonProjektURL = () => `${this.#ServerBaseURL}/link`;
@@ -123,7 +121,7 @@ export default class TimetrackerAPI {
       responseJSON.map(item => {
         let aktivitaet = AktivitaetBO.fromJSON(item);
         aktivitaetliste.push(aktivitaet);
-        console.log(responseJSON)
+
       })
 
       return new Promise(function (resolve) {
@@ -313,7 +311,8 @@ export default class TimetrackerAPI {
   // }
 
   addBuchung(buchungBO) {
-    // Buchung neu anlegen
+    // Person neu anlegen
+    console.log(buchungBO)
     return this.#fetchAdvanced(this.#addBuchungURL(), {
       method: 'POST',
       headers: {
@@ -328,6 +327,7 @@ export default class TimetrackerAPI {
       })
     })
   }
+
 
 
   updateBuchung(buchungBO) {
@@ -478,17 +478,17 @@ export default class TimetrackerAPI {
     })
   }
 
-  addPersonGoogle(personID, googleid) {
-    // Person einer GoogleID zuweisen
-    return this.#fetchAdvanced(this.#addPersonGoogleURL(googleid), {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({ 'personID': personID, 'googleid': googleid })
-    })
-  }
+  /* addPersonGoogle(personID, googleid) {
+       // Person einer GoogleID zuweisen
+       return this.#fetchAdvanced(this.#addPersonGoogleURL(googleid), {
+         method: 'POST',
+         headers: {
+           'Accept': 'application/json, text/plain',
+           'Content-type': 'application/json',
+         },
+         body: JSON.stringify({ 'personID': personID, 'googleid': googleid })
+       })
+     }*/
 
   updatePerson(personBO) {
     // Person updaten
@@ -527,7 +527,6 @@ export default class TimetrackerAPI {
 
   deletePerson(personBO) {
     // Projekt löschen
-    console.log(personBO)
     return this.#fetchAdvanced(this.#deletePersonURL(personBO.getID()), {
       method: 'DELETE',
       headers: {
@@ -563,6 +562,19 @@ export default class TimetrackerAPI {
     })
   }
 
+  getProjekt() {
+    // Projekt abfragen
+    return this.#fetchAdvanced(this.#getProjektURL()).then((responseJSON) => {
+      let projektList = [];
+      responseJSON.map(item => {
+        let projekt = ProjektBO.fromJSON(item);
+        projektList.push(projekt);
+      })
+      return new Promise(function (resolve) {
+        resolve(projektList);
+      })
+    })
+  }
 
 
 
@@ -629,52 +641,11 @@ export default class TimetrackerAPI {
     })
   }
 
-  addPersonInProjekt(projekt_id, personen) {
-    // Person in Projekt neu anlegen
-    let person_id_list = [];
-    personen.map(person => {
-      person_id_list.push(person.getID())
-    })
-    return this.#fetchAdvanced(this.#addPersonInProjektURL(projekt_id), {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({ 'projekt_id': projekt_id, 'person_id_list': person_id_list })
-    }).then((responseJSON) => {
-      let responseProjektBO = ProjektBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(responseProjektBO);
-      })
-    })
-  }
 
-  updatePersonInProjekt(projekt_id, personen) {
-    // Person in Projekt bearbeiten
-    let person_id_list = [];
-    personen.map(person => {
-      person_id_list.push(person.getID())
-    })
-    return this.#fetchAdvanced(this.#updatePersonInProjektURL(projekt_id), {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({ 'projekt_id': projekt_id, 'person_id_list': person_id_list })
-    }).then((responseJSON) => {
-      let responseProjektBO = ProjektBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(responseProjektBO);
-      })
-    })
-  }
-
-  // *** Projekt related *** //
-  getProjektbyPersonID(person_id) {
-    // alle Projekte der angemeldeten Person abfragen
-    return this.#fetchAdvanced(this.#getProjektbyPersonIDURL(person_id)).then((responseJSON) => {
+  getProjektByPerson(person_id) {
+    // Teilnehmer eines Projekt abfragen
+    return this.#fetchAdvanced(this.#getProjektByPersonURL(person_id)).then((responseJSON) => {
+      console.log(responseJSON)
       let projektliste = [];
       responseJSON.map(item => {
         let projekt = ProjektBO.fromJSON(item);
@@ -685,6 +656,7 @@ export default class TimetrackerAPI {
       })
     })
   }
+
   getPersonInProjektStunden(projekt_id, start, ende) {
     // Teilnehmer eines Projekt abfragen
     return this.#fetchAdvanced(this.#getPersonInProjektStundenURL(projekt_id, start, ende)).then((responseJSON) => {
@@ -702,22 +674,21 @@ export default class TimetrackerAPI {
 
 
 
-  /*link_person_profile(personID, projektID) {
-
+  /* link_person_profile(personID, projektID) {
        // Person mit einem Projekt verknüpfen
-    return this.#fetchAdvanced(this.#LinkURL(), {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({ 'personID': personID, 'projektID': projektID })
-    }).then((responseJSON) => {
-      return new Promise(function (resolve) {
-        resolve(responseJSON);
-      })
-    })
-  }*/
+       return this.#fetchAdvanced(this.#LinkURL(), {
+         method: 'PUT',
+         headers: {
+           'Accept': 'application/json, text/plain',
+           'Content-type': 'application/json',
+         },
+         body: JSON.stringify({ 'personID': personID, 'projektID': projektID })
+       }).then((responseJSON) => {
+         return new Promise(function (resolve) {
+           resolve(responseJSON);
+         })
+       })
+     }*/
 
   // Zeitintervall realted
 

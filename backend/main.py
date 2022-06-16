@@ -648,28 +648,28 @@ class PersonbyAktivitaetOperations(Resource):
         else:
             return '', 500 
 
+# Brauchen wir die Funktion üverhaupt?
 
+# @timetracker.route('/personbygoogle/<string:google_user_id>')     
+# @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+# class PersonGoogleOperations(Resource):
+#     @timetracker.marshal_with(person)
+#     def get(self, google_user_id):
+#         """Auslesen eines bestimmten Person-Objekts.
+#         Das auszulesende Objekt wird durch die ```google_id``` in dem URI bestimmt.
+#         """
+#         adm = TimetrackerAdministration()
+#         pe = adm.get_person_by_google_user_id(google_user_id)
+#         if pe is not None:
+#             return pe
+#         else:
+#             return '', 500 
 
-@timetracker.route('/firebase/<string:google_user_id>')     
-@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-class PersonGoogleOperations(Resource):
-    @timetracker.marshal_with(person)
-    def get(self, google_user_id):
-        """Auslesen eines bestimmten Person-Objekts.
-        Das auszulesende Objekt wird durch die ```google_id``` in dem URI bestimmt.
-        """
-        adm = TimetrackerAdministration()
-        pe = adm.get_person_by_google_user_id(google_user_id)
-        if pe is not None:
-            return pe
-        else:
-            return '', 500 
-
-    def post(self, google_user_id):
-        ''' Person das erste mal anlegen '''
-        adm = TimetrackerAdministration()
-        adm.add_person_google_user_id(google_user_id)
-        return '', 200
+#     def post(self, google_user_id):
+#         ''' Person das erste mal anlegen '''
+#         adm = TimetrackerAdministration()
+#         adm.add_person_google_user_id(google_user_id)
+#         return '', 200
 
 
 
@@ -697,7 +697,6 @@ class ProjektOperations(Resource):
         liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
         zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
         """
-        print(api.payload)
         adm = TimetrackerAdministration()
         proposal = Projekt.from_dict(api.payload)
 
@@ -777,67 +776,42 @@ class ProjektbyProjekterstellerIDOperations(Resource):
             return '', 500 
 
 #Projekt-Person Beziehung
-@timetracker.route('/projekt_person/<int:person_id>')
+@timetracker.route('/projekt_person/<int:projekt_id>')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @timetracker.param('projekt_id', 'Die ID des Projekt-Objekts.')
 class ProjektPersonOperations(Resource):
-    @timetracker.marshal_list_with(projekt, code=200)
-    #@secured
-    def get(self, person_id):
-        """Auslesen aller Projekte einer Person.
-        """
-        adm = TimetrackerAdministration()
-        pro = adm.get_projekt_by_person(person_id)
-        return pro
-
-#Person-Projekt Beziehung
-@timetracker.route('/projektbypersonid/<int:projekt_id>')
-@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@timetracker.param('person_id', 'Die ID des Person-Objekts.')
-class PersonenInProjektOperations(Resource):
     @timetracker.marshal_list_with(person, code=200)
     #@secured
     def get(self, projekt_id):
         """Auslesen aller Teilnehmer eines Projekts
         """
         adm = TimetrackerAdministration()
-        personenliste = adm.get_person_in_projekt(projekt_id)
-        return personenliste  
+        pro = adm.get_person_in_projekt(projekt_id)
+        return pro
 
     @timetracker.marshal_list_with(projekt, code=200)
+    @timetracker.expect(projekt)
     #@secured
-    def post(self, projekt_id):
-        """Anlegen eines neuen Projekt-Person-Objekts.
-        """
-        if api.payload:
-            adm = TimetrackerAdministration()
-            response = adm.create_person_in_projekt(api.payload['projekt_id'], api.payload['person_id_list'])
-            return response, 200
-        else:
-            return '' , 500
-
-    @timetracker.marshal_list_with(projekt, code=200)
-    #@secured
-    def put(self, projekt_id):
-        """Bearbeiten eines Projekt-Person-Objekts.
-        """
-        if api.payload:
-            adm = TimetrackerAdministration()
-            response = adm.update_person_in_projekt(api.payload['projekt_id'], api.payload['person_id_list'])
-            return response, 200
-        else:
-            return '' , 500
-
-    def delete(self, projekt_id):
-        """Löschen eines bestimmten Projekt-Person-Objekts.
-        Das zu löschende Objekt wird durch die ```projekt_id``` in dem URI bestimmt.
+    def post(self):
+        """Anlegen eines neuen Projekt-Objekts.
+        **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
+        So ist zum Beispiel die Vergabe der ID nicht Aufgabe des Clients.
+        Selbst wenn der Client eine ID in dem Proposal vergeben sollte, so
+        liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
+        zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
         """
         adm = TimetrackerAdministration()
-        if id is not None:
-            adm.delete_person_projekt(projekt_id)
-            return '', 200
+        proposal = Projekt.from_dict(api.payload)
+
+        """RATSCHLAG: Prüfen Sie stets die Referenzen auf valide Werte, bevor Sie diese verwenden!"""
+        if proposal is not None:
+            """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
+            wird auch dem Client zurückgegeben. 
+            """
+            a = adm.create_projekt(proposal)
+            return a, 200
         else:
-            '''Wenn unter projekt_id kein Projekt existiert.'''
+            '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
             return '', 500
 
 

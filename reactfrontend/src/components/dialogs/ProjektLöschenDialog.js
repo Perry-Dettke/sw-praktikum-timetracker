@@ -4,10 +4,15 @@ import {Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogAct
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 
-class ProjektLoeschen extends Component {
+class ProjektLöschenDialog extends Component {
 
   constructor(props) {
     super(props);
+
+    // Status initalisieren
+    this.state = {
+      projekt: props.projekt,
+    };
   }
 
   handleClose = () => {
@@ -15,15 +20,16 @@ class ProjektLoeschen extends Component {
   }
 
   deleteProjekt = () => {
-    TimetrackerAPI.getAPI().deleteProjekt(this.props.projekt)
+    TimetrackerAPI.getAPI().deleteProjekt(this.state.projekt.id)
       .then(() => {
-        this.props.onClose(this.props.projekt);
+        this.props.getProjekt();
+        this.props.onClose(null);
       });
   }
 
   render() {
 
-    const { show, projekt } = this.props;
+    const { show } = this.props;
     
     return (
       <div>
@@ -35,7 +41,7 @@ class ProjektLoeschen extends Component {
           <DialogTitle>{"Sind Sie sich sicher?"}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Wenn Sie das Projekt {projekt.getBezeichnung()} wirklich löschen möchten, drücken Sie auf "JA".
+              Wenn Sie das Projekt wirklich löschen möchten, drücken Sie auf "JA".
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -56,4 +62,4 @@ class ProjektLoeschen extends Component {
 
 
 
-export default ProjektLoeschen;
+export default ProjektLöschenDialog;
