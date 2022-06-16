@@ -199,8 +199,8 @@ class ProjektMapper (Mapper):
 
         return result
 
-    def find_projekt_by_person_id(self, person_id):
-        """Auslesen aller Teilnehmer eines Projekts."""
+    def find_projekt_by_person(self, person_id):
+        """Auslesen aller Projekte einer Person."""
 
         result = []
         cursor = self._cnx.cursor()

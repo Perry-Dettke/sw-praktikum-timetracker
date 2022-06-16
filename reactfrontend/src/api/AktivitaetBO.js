@@ -9,7 +9,6 @@ export default class AktivitaetBO extends BusinessObject {
         this.kapazitaet = kapazitaet;
         this.projekt_id = projekt_id;
         this.stunden = 0.0;
-        this.allstunden = 0.0;
     }
 
     // Bezeichnung setzen 
@@ -45,14 +44,7 @@ export default class AktivitaetBO extends BusinessObject {
     getStunden() {
     return this.stunden;
     }
-    // Stunden  setzen
-    setAllStunden(allstunden) {
-    this.allstunden = allstunden;
-    }
-    // Stunden auslesen 
-    getAllStunden() {
-    return this.allstunden;
-    }
+
     static fromJSON(aktivitaet) {
     // Objekt anhand einer JSON-Struktur erstellen
     let p = Object.setPrototypeOf(aktivitaet, AktivitaetBO.prototype);

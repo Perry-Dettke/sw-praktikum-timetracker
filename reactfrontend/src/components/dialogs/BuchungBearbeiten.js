@@ -95,7 +95,7 @@ class BuchungBearbeiten extends Component {
     render() {
         const { show, aktivitaet, aktivitaetliste } = this.props;
         const {stunden, aktivitaet_id } = this.state;
-        // console.log(aktivitaet_id)
+        console.log(aktivitaet_id)
 
 
         return (

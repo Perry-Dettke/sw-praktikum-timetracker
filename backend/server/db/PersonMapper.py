@@ -109,9 +109,6 @@ class PersonMapper (Mapper):
 
         return person
 
-
-    
-
     def find_by_google_user_id(self, google_user_id):
         """Suchen eines Benutzers mit vorgegebener Google ID. Da diese eindeutig ist,
         wird genau ein Objekt zurückgegeben.
