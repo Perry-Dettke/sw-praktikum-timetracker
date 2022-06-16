@@ -357,6 +357,22 @@ class TimetrackerAdministration (object):
     def get_person_in_projekt_stunden(self, projekt_id, start, ende):
         """Die Teilnehmer eines Projekts auslesen."""
         with ProjektMapper() as mapper:
+            mapper.delete_person_in_projekt(projekt_id)
+                
+    def get_projekt_by_person_id(self, person_id):
+        with ProjektMapper() as mapper:
+            projekt_id_list = mapper.find_projekt_by_person_id(person_id)
+        projektliste = []
+        for id in projekt_id_list:
+            with ProjektMapper() as mapper:
+                projektliste.append(mapper.find_by_id(id))
+        return projektliste
+
+
+### Mit Stunden und Datum
+    def get_person_in_projekt_stunden(self, projekt_id, start, ende):
+        """Die Teilnehmer eines Projekts auslesen."""
+        with ProjektMapper() as mapper:
             id_list = mapper.find_person_in_projekt(projekt_id)
         personen_list = []
         for i in id_list:

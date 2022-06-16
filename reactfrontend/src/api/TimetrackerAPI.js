@@ -66,10 +66,13 @@ export default class TimetrackerAPI {
   #deleteProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
 
   // *** PersonProjekt realted *** //  
-  // #addPersonProjektURL = () => `${this.#ServerBaseURL}/personprojekt`;
-  #getPersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projekt_person/${projekt_id}`;
+  #getPersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projektbypersonid/${projekt_id}`;
+  #addPersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projektbypersonid/${projekt_id}`;
+  #updatePersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projektbypersonid/${projekt_id}`;
+  #getProjektbyPersonIDURL = (person_id) => `${this.#ServerBaseURL}/projekt_person/${person_id}`;
   #getPersonInProjektStundenURL = (projekt_id, start, ende) => `${this.#ServerBaseURL}/projekt_person_datum/${projekt_id}/${start}/${ende}`;
   #getProjektByPersonURL = (person_id) => `${this.#ServerBaseURL}/projektbyperson/${person_id}`;
+
   // #updatePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // #deletePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // linkPersonProjektURL = () => `${this.#ServerBaseURL}/link`;
