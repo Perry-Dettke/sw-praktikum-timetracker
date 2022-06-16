@@ -365,8 +365,7 @@ class TimetrackerAdministration (object):
 
 
         with AktivitaetMapper() as mapper:
-            aktivitaetliste = mapper.find_by_projekt_id(projekt_id)
-
+            aktivitaetliste = mapper.find_by_projekt_id_id(projekt_id)
 
         with BuchungMapper() as mapper:
             for per in personen_list:
