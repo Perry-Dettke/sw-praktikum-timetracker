@@ -248,11 +248,6 @@ class TimetrackerAdministration (object):
         with PersonMapper() as mapper:
             return mapper.insert(person)
 
-    def get_person_by_vor_name(self, vor_name):
-        """Alle Personen mit Vornamen name auslesen."""
-        with PersonMapper() as mapper:
-            return mapper.find_by_vor_name(vor_name)
-
     def get_person_by_id(self, id):
         """Den Personen mit der gegebenen ID auslesen."""
         with PersonMapper() as mapper:
@@ -296,7 +291,7 @@ class TimetrackerAdministration (object):
     Projekt-spezifische Methoden
     """
     def create_projekt(self, projekt): 
-        """Projekt anlegen"""
+        """Projekt anlegen."""
         with ProjektMapper() as mapper:
             return mapper.insert(projekt)
 
@@ -322,15 +317,16 @@ class TimetrackerAdministration (object):
 
     def delete_projekt(self, id):
         """Das gegebenene Projekt aus unserem System löschen."""
-        with ProjektMapper() as mapper:
-            mapper.delete(id)
         with AktivitaetMapper() as mapper:
             akitivitaetliste = mapper.find_by_projekt_id(id)
+        with BuchungMapper() as mapper:
             for i in akitivitaetliste:
-                with BuchungMapper() as mapper:
-                    mapper.delete_by_aktivitaet_id(i.get_id())
+                mapper.delete_by_aktivitaet_id(i.get_id())
         with AktivitaetMapper() as mapper:
             mapper.delete_by_projekt_id(id)
+        with ProjektMapper() as mapper:
+            mapper.delete_person_in_projekt(id)
+            mapper.delete(id)
 
     def get_person_in_projekt(self, projekt_id):
         """Die Teilnehmer eines Projekts auslesen."""

@@ -222,6 +222,33 @@ class ProjektMapper (Mapper):
 
         return result
 
+    def insert_person_in_projekt(self, projekt_id, person_id):
+        """Einfügen eines Projekt-Person-Objekts in die Datenbank.
+        """
+        cursor = self._cnx.cursor()
+
+        command = f"INSERT INTO projekt_person (person_id, projekt_id ) VALUES ({person_id},{projekt_id})"
+
+        cursor.execute(command)
+        self._cnx.commit()
+        cursor.close()
+
+        return True
+
+    def delete_person_in_projekt(self, projekt_id):
+        """Löschen der Daten eines Projekt-Person-Objekts aus der Datenbank.
+
+        :param projekt das aus der DB zu löschende "Objekt"
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM projekt_person WHERE projekt_id={}".format(projekt_id)
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+
+
 
 """Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
 um die grundsätzliche Funktion zu überprüfen.

@@ -6,11 +6,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
 
-import ProjektAnlegen from '../dialogs/ProjektAnlegen';
+import ProjektBearbeiten from '../dialogs/ProjektBearbeiten';
 import AktivitaetDialog from '../dialogs/AktivitaetDialog';
 import AktivitaetBearbeiten from '../dialogs/AktivitaetBearbeiten';
+import AktivitaetLoeschen from '../dialogs/AktivitaetLoeschen';
 import TimetrackerAPI from '../../api/TimetrackerAPI';
-import ProjektLöschenDialog from '../dialogs/ProjektLöschenDialog';
+import ProjektLoeschen from '../dialogs/ProjektLoeschen';
 
 
 
@@ -24,8 +25,9 @@ class ProjektUebersichtEintrag extends Component {
             aktivitaetliste: [],
             showAktivitaetDialog: false,
             showAktivitaetBearbeiten: false,
-            showProjektAnlegen: false,
-            showProjektLöschenDialog: false,
+            showAktivitaetLoeschen: false,
+            showProjektBearbeiten: false,
+            showProjektLoeschen: false,
             currentAktivitaet: null,
             ersteller: null,
             personenliste: [],
@@ -115,26 +117,79 @@ class ProjektUebersichtEintrag extends Component {
     }
 
 
-    //Wird aufgerufen, wenn der Delete Projekt Button geklickt wird
-    deleteProjektButtonClicked = () => {
+    //Wird aufgerufen, wenn der Aktivität Löschen Button geklickt wird
+    aktivitaetLoeschenClicked = (aktivitaet) => {
         this.setState({
-            showProjektLöschenDialog: !this.state.showProjektLöschenDialog
+            currentAktivitaet: aktivitaet,
+            showAktivitaetLoeschen: true,
         });
     }
 
-
-    projektAnlegenClosed = (projekt) => {
-        if (projekt) {
+    //Aktivität Löschen Dialog schließen
+    aktivitaetLoeschenClosed = (aktivitaet) => {
+        if (aktivitaet) {
             this.setState({
-                projekt: projekt,
-                showProjektAnlegen: false
-            });
+                showAktivitaetLoeschen: false,
+            },
+            () => this.getAktivitaetbyProjektID(),
+            () => this.getErstellerbyID(),
+            () => this.getPersonInProjekt()
+            );
+            
         } else {
             this.setState({
-                showProjektAnlegen: false
+                showAktivitaetLoeschen: false
             });
         }
     }
+
+    //Wird aufgerufen, wenn der Delete Projekt Button geklickt wird
+    projektLoeschenClicked = () => {
+        this.setState({
+            showProjektLoeschen: !this.state.showProjektLoeschen
+        });
+    }
+
+    //Projekt Löschen Dialog schließen
+    projektLoeschenClosed = (projekt) => {
+        if (projekt) {
+            this.setState({
+                showProjektLoeschen: false,
+            },
+            this.props.getProjekt()
+            );
+            
+        } else {
+            this.setState({
+                showProjektLoeschen: false
+            });
+        }
+    }
+
+
+    //Wird aufgerufen, wenn der Projekt Bearbeiten Button geklickt wird
+    projektBearbeitenClicked = (projekt) => {
+        this.setState({
+            showProjektBearbeiten: true,
+        }
+        );
+    }
+
+    //Projekt Bearbeiten Dialog schließen
+    projektBearbeitenClosed = (projekt) => {
+        if (projekt) {
+            this.setState({
+                showProjektBearbeiten: false
+            },
+            () => this.getPersonInProjekt()
+            );
+        } else {
+            this.setState({
+                showProjektBearbeiten: false
+            });
+        }
+    }
+
 
     componentDidMount() {
         this.getAktivitaetbyProjektID();
@@ -146,8 +201,8 @@ class ProjektUebersichtEintrag extends Component {
     //Renders the component
     render() {
         const { projekt } = this.props;
-        const { ersteller, showAktivitaetDialog, showAktivitaetBearbeiten, showProjektAnlegen, aktivitaetliste, 
-                showProjektLöschenDialog, currentAktivitaet, personenliste } = this.state;
+        const { ersteller, showAktivitaetDialog, showAktivitaetBearbeiten, showAktivitaetLoeschen, showProjektBearbeiten, aktivitaetliste,
+            showProjektLoeschen, currentAktivitaet, personenliste } = this.state;
 
         return (
             aktivitaetliste && personenliste ?
@@ -170,13 +225,13 @@ class ProjektUebersichtEintrag extends Component {
                                 }}>
                                     <Grid container spacing={2}>
                                         <Grid item xs={3}>
-                                            <Button variant='outlined' startIcon={<EditIcon />} onClick={this.bearbeitenButtonClicked}>
+                                            <Button variant='outlined' startIcon={<EditIcon />} onClick={() => this.projektBearbeitenClicked(projekt)}>
                                                 <Typography>Projekt bearbeiten</Typography>
                                             </Button>
                                         </Grid>
                                         <br />
                                         <Grid item xs={3}>
-                                            <Button variant='outlined' startIcon={<DeleteIcon />} onClick={this.deleteProjektButtonClicked}>
+                                            <Button variant='outlined' startIcon={<DeleteIcon />} onClick={() => this.projektLoeschenClicked(projekt)}>
                                                 <Typography>Projekt löschen</Typography>
                                             </Button>
                                         </Grid>
@@ -184,13 +239,13 @@ class ProjektUebersichtEintrag extends Component {
                                     <br />
                                     <Typography align='left'><b>Auftraggeber: </b>{projekt.getAuftraggeber()}<br /></Typography>
                                     {ersteller ?
-                                    <Typography align='left'><b>Ersteller: </b>{ersteller.getVor_name()} {ersteller.getNach_name()}<br /></Typography>
-                                    : null}
+                                        <Typography align='left'><b>Ersteller: </b>{ersteller.getVor_name()} {ersteller.getNach_name()}<br /></Typography>
+                                        : null}
                                     <Typography align='left'><b>Teilnehmer: </b></Typography>
                                     <ul>
-                                    {personenliste.map(person =>
-                                    <Typography align='left'><li>{person.getVor_name()} {person.getNach_name()} </li></Typography>
-                                    )}
+                                        {personenliste.map(person =>
+                                            <Typography align='left'><li>{person.getVor_name()} {person.getNach_name()} </li></Typography>
+                                        )}
                                     </ul><br />
                                     <Grid item xs={3}>
                                         <Button variant="contained" color="primary" aria-label="add" onClick={this.aktivitaetDialogButtonClicked} startIcon={<AddIcon />}>
@@ -221,7 +276,7 @@ class ProjektUebersichtEintrag extends Component {
                                                                     </IconButton>
                                                                 </Tooltip>
                                                                 <Tooltip title='Löschen' placement="bottom">
-                                                                    <IconButton variant="contained" onClick={this.deleteButtonClicked}><DeleteIcon /></IconButton>
+                                                                    <IconButton variant="contained" onClick={() => this.aktivitaetLoeschenClicked(aktivitaet)}><DeleteIcon /></IconButton>
                                                                 </Tooltip>
                                                             </Grid>
                                                         </TableCell>
@@ -236,14 +291,20 @@ class ProjektUebersichtEintrag extends Component {
                             </Accordion>
                         </Grid>
                     </Grid>
+                    <ProjektBearbeiten show={showProjektBearbeiten} projekt={projekt} onClose={this.projektBearbeitenClosed} />
+                    <ProjektLoeschen show={showProjektLoeschen} projekt={projekt} onClose={this.projektLoeschenClicked} />
                     <AktivitaetDialog show={showAktivitaetDialog} projekt={projekt} onClose={this.aktivitaetDialogClosed} />
-                    <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} />
-                    <ProjektLöschenDialog show={showProjektLöschenDialog} onClose={this.deleteProjektButtonClicked} />
                     {
                         currentAktivitaet ?
                             <AktivitaetBearbeiten show={showAktivitaetBearbeiten} projekt={projekt} aktivitaet={currentAktivitaet} onClose={this.aktivitaetBearbeitenClosed} />
                             : null
                     }
+                    {
+                        currentAktivitaet ?
+                            <AktivitaetLoeschen show={showAktivitaetLoeschen} projekt={projekt} aktivitaet={currentAktivitaet} onClose={this.aktivitaetLoeschenClosed} />
+                            : null
+                    }
+
                 </div >
                 : null
         );
