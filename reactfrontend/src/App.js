@@ -33,6 +33,7 @@ class App extends React.Component {
 			appError: null,
 			authError: null,
 			authLoading: false
+			
 		};
 	}
 
@@ -104,7 +105,7 @@ class App extends React.Component {
 
   /** Renders the whole app */
   render() {
-		const { currentUser, appError, authError, authLoading } = this.state;
+		const { currentUser, appError, authError, authLoading, profil} = this.state;
 		console.log(currentUser)
 
 		return (

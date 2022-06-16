@@ -60,14 +60,14 @@ class ProfileDropDown extends Component {
 
   /** Renders the profile drop down if a loggin user is given as a prop */
   render() {
-    const { user } = this.props;
+    const { currentUser } = this.props;
     const { open } = this.state;
 
     return (
-      user ?
+      currentUser ?
         <div>
           <IconButton sx={{ float: 'right' }} ref={this.#avatarButtonRef} onClick={this.handleAvatarButtonClick}>
-            <Avatar src={user.photoURL} />
+            <Avatar src={currentUser.photoURL} />
           </IconButton>
 
           <Popover open={open} anchorEl={this.#avatarButtonRef.current} onClose={this.handleClose}
@@ -83,8 +83,8 @@ class ProfileDropDown extends Component {
               <Paper sx={{ padding: 1, bgcolor: 'background.default' }}>
                 <Typography align='center'>Hello</Typography>
                 <Divider sx={{ margin: 1 }} />
-                <Typography align='center' variant='body2'>{user.displayName}</Typography>
-                <Typography align='center' variant='body2'>{user.email}</Typography>
+                <Typography align='center' variant='body2'>{currentUser.displayName}</Typography>
+                <Typography align='center' variant='body2'>{currentUser.email}</Typography>
                 <Divider sx={{ margin: 1 }} />
                 <Grid container justifyContent='center'>
                   <Grid item>
@@ -103,7 +103,7 @@ class ProfileDropDown extends Component {
 /** PropTypes */
 ProfileDropDown.propTypes = {
   /** The logged in firesbase user */
-  user: PropTypes.object,
+   currentUser: PropTypes.object,
 }
 
 export default ProfileDropDown;

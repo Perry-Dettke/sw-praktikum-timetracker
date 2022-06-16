@@ -53,6 +53,7 @@ class Header extends Component {
             <Tab label='Buchung' component={RouterLink} to={`/buchung`} />
             <Tab label='Auswertung Aktivität' component={RouterLink} to={`/auswertung`} />
             <Tab label='Auswertung Person' component={RouterLink} to={`/auswertung_person`} />
+          
           </Tabs>
           : null
         }
@@ -64,7 +65,7 @@ class Header extends Component {
 /** PropTypes */
 Header.propTypes = {
   /**The logged in firesbase user*/
-  user: PropTypes.object,
+  currentUser: PropTypes.object,
 }
 
 export default Header;
