@@ -228,11 +228,6 @@ class TimetrackerAdministration (object):
         with PersonMapper() as mapper:
             return mapper.insert(person)
 
-    def get_person_by_vor_name(self, vor_name):
-        """Alle Personen mit Vornamen name auslesen."""
-        with PersonMapper() as mapper:
-            return mapper.find_by_vor_name(vor_name)
-
     def get_person_by_id(self, id):
         """Den Personen mit der gegebenen ID auslesen."""
         with PersonMapper() as mapper:
@@ -335,6 +330,14 @@ class TimetrackerAdministration (object):
 
     def create_person_in_projekt(self, projekt_id, person_id_list): 
         """Person in Projekt anlegen."""
+        with ProjektMapper() as mapper:
+            for person_id in person_id_list:
+                mapper.insert_person_in_projekt(projekt_id, person_id)
+            return mapper.find_by_id(projekt_id)
+        
+    def update_person_in_projekt(self, projekt_id, person_id_list): 
+        """Person in Projekt bearbeiten."""
+        self.delete_person_projekt(projekt_id)
         with ProjektMapper() as mapper:
             for person_id in person_id_list:
                 mapper.insert_person_in_projekt(projekt_id, person_id)

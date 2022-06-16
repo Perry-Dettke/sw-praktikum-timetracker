@@ -54,9 +54,6 @@ export default class TimetrackerAPI {
   #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
   #getPersonbyAktivitaetIDURL = (aktivitaet_id) => `${this.#ServerBaseURL}/personbyaktivitaet/${aktivitaet_id}`;
 
-
-
-
   // *** Projekt realted *** //
   #addProjektURL = () => `${this.#ServerBaseURL}/projekt`;
   #getProjektbyIDURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
@@ -66,9 +63,10 @@ export default class TimetrackerAPI {
   #deleteProjektURL = (id) => `${this.#ServerBaseURL}/projekt/${id}`;
 
   // *** PersonProjekt realted *** //  
-  #getPersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projekt_person/${projekt_id}`;
+  #getPersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projektbypersonid/${projekt_id}`;
   #addPersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projektbypersonid/${projekt_id}`;
-  #getProjektbyPersonIDURL = (person_id) => `${this.#ServerBaseURL}/projektbypersonid/${person_id}`;
+  #updatePersonInProjektURL = (projekt_id) => `${this.#ServerBaseURL}/projektbypersonid/${projekt_id}`;
+  #getProjektbyPersonIDURL = (person_id) => `${this.#ServerBaseURL}/projekt_person/${person_id}`;
   // #updatePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // #deletePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // linkPersonProjektURL = () => `${this.#ServerBaseURL}/link`;
@@ -632,6 +630,27 @@ export default class TimetrackerAPI {
     })
     return this.#fetchAdvanced(this.#addPersonInProjektURL(projekt_id), {
       method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({ 'projekt_id': projekt_id, 'person_id_list': person_id_list })
+    }).then((responseJSON) => {
+      let responseProjektBO = ProjektBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(responseProjektBO);
+      })
+    })
+  }
+
+  updatePersonInProjekt(projekt_id, personen) {
+    // Person in Projekt bearbeiten
+    let person_id_list = [];
+    personen.map(person => {
+      person_id_list.push(person.getID())
+    })
+    return this.#fetchAdvanced(this.#updatePersonInProjektURL(projekt_id), {
+      method: 'PUT',
       headers: {
         'Accept': 'application/json, text/plain',
         'Content-type': 'application/json',

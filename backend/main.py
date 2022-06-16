@@ -775,23 +775,9 @@ class ProjektbyProjekterstellerIDOperations(Resource):
             return '', 500 
 
 #Projekt-Person Beziehung
-@timetracker.route('/projekt_person/<int:projekt_id>')
+@timetracker.route('/projekt_person/<int:person_id>')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @timetracker.param('projekt_id', 'Die ID des Projekt-Objekts.')
-class ProjektPersonOperations(Resource):
-    @timetracker.marshal_list_with(person, code=200)
-    #@secured
-    def get(self, projekt_id):
-        """Auslesen aller Teilnehmer eines Projekts
-        """
-        adm = TimetrackerAdministration()
-        pro = adm.get_person_in_projekt(projekt_id)
-        return pro
-
-#Person-Projekt Beziehung
-@timetracker.route('/projektbypersonid/<int:person_id>')
-@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@timetracker.param('person_id', 'Die ID des Person-Objekts.')
 class ProjektPersonOperations(Resource):
     @timetracker.marshal_list_with(projekt, code=200)
     #@secured
@@ -802,19 +788,43 @@ class ProjektPersonOperations(Resource):
         pro = adm.get_projekt_by_person(person_id)
         return pro
 
+#Person-Projekt Beziehung
+@timetracker.route('/projektbypersonid/<int:projekt_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('person_id', 'Die ID des Person-Objekts.')
+class PersonenInProjektOperations(Resource):
+    @timetracker.marshal_list_with(person, code=200)
+    #@secured
+    def get(self, projekt_id):
+        """Auslesen aller Teilnehmer eines Projekts
+        """
+        adm = TimetrackerAdministration()
+        personenliste = adm.get_person_in_projekt(projekt_id)
+        return personenliste  
 
     @timetracker.marshal_list_with(projekt, code=200)
     #@secured
-    def post(self, person_id):
+    def post(self, projekt_id):
         """Anlegen eines neuen Projekt-Person-Objekts.
         """
         if api.payload:
             adm = TimetrackerAdministration()
             response = adm.create_person_in_projekt(api.payload['projekt_id'], api.payload['person_id_list'])
-            return response , 200
+            return response, 200
         else:
             return '' , 500
 
+    @timetracker.marshal_list_with(projekt, code=200)
+    #@secured
+    def put(self, projekt_id):
+        """Bearbeiten eines Projekt-Person-Objekts.
+        """
+        if api.payload:
+            adm = TimetrackerAdministration()
+            response = adm.update_person_in_projekt(api.payload['projekt_id'], api.payload['person_id_list'])
+            return response, 200
+        else:
+            return '' , 500
 
     def delete(self, projekt_id):
         """Löschen eines bestimmten Projekt-Person-Objekts.

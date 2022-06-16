@@ -23,6 +23,8 @@ class ProjektBearbeiten extends Component {
         this.state = {
             bezeichnung: bz,
             auftraggeber: ag,
+            allePersonen: [],
+            selectedPersonen: [],
         };
 
         this.baseState = this.state;
@@ -34,7 +36,22 @@ class ProjektBearbeiten extends Component {
         projekt.setBezeichnung(this.state.bezeichnung)
         projekt.setAuftraggeber(this.state.auftraggeber)
         TimetrackerAPI.getAPI().updateProjekt(projekt).then(projekt => {
-            this.props.onClose(projekt);
+            this.updatePersonInProjekt(projekt);
+        })
+    }
+
+    getPersonen = () => {
+        TimetrackerAPI.getAPI().getPerson().then((personenBOs) => {
+            this.setState({
+                allePersonen: personenBOs,
+            });
+        });
+    }
+
+    // Person in Projekt bearbeiten
+    updatePersonInProjekt = (projekt) => {
+        TimetrackerAPI.getAPI().updatePersonInProjekt(this.props.projekt.getID(), this.state.selectedPersonen).then(projekt => {
+            this.props.onClose(projekt)
         })
     }
 
@@ -52,6 +69,17 @@ class ProjektBearbeiten extends Component {
         });
     }
 
+    componentDidMount() {
+        this.getPersonen();
+    }
+
+    // Multiselect ändern
+    handleChange = (event) => {
+        this.setState({
+            selectedPersonen: event.target.value,
+        });
+    }
+
     // Dialog schließen
     handleClose = () => {
         this.setState(this.baseState);
@@ -59,13 +87,14 @@ class ProjektBearbeiten extends Component {
     }
 
     render() {
-        const { show, projekt, allePersonen, personen } = this.props
-        const { bezeichnung, auftraggeber } = this.state
-
+        const { show, projekt, personen } = this.props
+        const { bezeichnung, auftraggeber, allePersonen, selectedPersonen } = this.state
+        
+        
+        
         let title = 'Projekt bearbeiten';
-
         return (
-            show ?
+            show && allePersonen ?
                 <div>
                     <Dialog open={show} onClose={this.handleClose} maxWidth='sm' fullWidth>
                         <DialogTitle>
@@ -103,7 +132,6 @@ class ProjektBearbeiten extends Component {
                                 </FormControl>
                                 <br /><br />
                                 {/* Personen die im System hinterlegt sind anzeigen lassen und mehrere zum Projekt hinzufügen*/}
-                                {allePersonen ?
                                     <div>
                                         <FormControl fullWidth>
                                             <InputLabel id="person">Personen</InputLabel>
@@ -113,7 +141,7 @@ class ProjektBearbeiten extends Component {
                                                 multiple
                                                 size="medium"
                                                 label="Person"
-                                                value={personen}
+                                                value={selectedPersonen}
                                                 autoWidth
                                                 onChange={this.handleChange}
                                                 renderValue={(selected) => (
@@ -136,7 +164,7 @@ class ProjektBearbeiten extends Component {
                                             </Select>
                                         </FormControl>
                                     </div>
-                                    : null}
+                                
                                 <br />
                             </DialogContentText>
                         </DialogContent>

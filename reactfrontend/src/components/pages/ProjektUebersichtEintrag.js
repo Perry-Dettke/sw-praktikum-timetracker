@@ -180,7 +180,9 @@ class ProjektUebersichtEintrag extends Component {
         if (projekt) {
             this.setState({
                 showProjektBearbeiten: false
-            });
+            },
+            () => this.getPersonInProjekt()
+            );
         } else {
             this.setState({
                 showProjektBearbeiten: false
