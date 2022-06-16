@@ -359,12 +359,19 @@ class TimetrackerAdministration (object):
         with ProjektMapper() as mapper:
             id_list = mapper.find_person_in_projekt(projekt_id)
         personen_list = []
-        for id in id_list:
+        for i in id_list:
             with PersonMapper() as mapper:
-                personen_list.append(mapper.find_by_id(id))
+                personen_list.append(mapper.find_by_id(i))
+
+
+        with AktivitaetMapper() as mapper:
+            aktivitaetliste = mapper.find_by_projekt_id_id(projekt_id)
 
         with BuchungMapper() as mapper:
             for per in personen_list:
+
+                    
+
                 buchungliste = mapper.find_by_person_id_and_datum(per.get_id(), start, ende)
                 stunden = 0
                 for bu in buchungliste:

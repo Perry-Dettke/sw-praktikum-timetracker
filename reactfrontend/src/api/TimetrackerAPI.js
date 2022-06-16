@@ -310,7 +310,7 @@ getAktivitaetbyID(id) {
   // }
 
   addBuchung(buchungBO) {
-    // Buchung neu anlegen
+    // Person neu anlegen
     console.log(buchungBO)
     return this.#fetchAdvanced(this.#addBuchungURL(), {
       method: 'POST',

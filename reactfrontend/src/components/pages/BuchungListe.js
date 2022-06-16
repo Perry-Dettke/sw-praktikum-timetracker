@@ -5,8 +5,8 @@ import AddIcon from '@mui/icons-material/Add';
 import BuchungListenEintrag from './BuchungListenEintrag.js'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 
+import ZeitintervallBuchungAnlegen from '../dialogs/ZeitintervallBuchungAnlegen.js';
 import EreignisBuchungAnlegen from '../dialogs/EreignisBuchungAnlegen.js';
-
 
 
 
@@ -19,6 +19,7 @@ class BuchungListe extends Component {
     this.state = {
       buchung: [],
       buchungliste: [],
+      showZeitintervallBuchungAnlegen: false,
       showEreignisBuchungAnlegen: false,
     };
   }
@@ -32,7 +33,33 @@ class BuchungListe extends Component {
   }
 
 
+  // Zeitintervallbuchung Erstellen Dialog anzeigen
+  zeitintervallBuchungAnlegenButtonClicked = event => {
+    event.stopPropagation();
+    this.setState({
+      showZeitintervallBuchungAnlegen: true,
+    });
+  }
 
+  /// Zeitintervallbuchung Erstellen Dialog schließen
+  zeitintervallBuchungAnlegenClosed = buchung => {
+    this.getBuchungbyPersonID();
+
+    if (buchung) {
+      const newBuchungList = [...this.state.buchung, buchung];
+      this.setState({
+        buchung: newBuchungList,
+        showZeitintervallBuchungAnlegen: false
+      });
+    } else {
+      this.setState({
+        showZeitintervallBuchungAnlegen: false
+      });
+    }
+  }
+
+  
+// Ereignisbuchung Erstellen Dialog anzeigen
   ereignisBuchungAnlegenButtonClicked = event => {
     event.stopPropagation();
     this.setState({
@@ -40,7 +67,7 @@ class BuchungListe extends Component {
     });
   }
 
-  //ProjektDialog schließen
+  //Ereignisbuchung Dialog schließen
   ereignisBuchungAnlegenClosed = buchung => {
     this.getBuchungbyPersonID();
 
@@ -67,14 +94,14 @@ class BuchungListe extends Component {
   /** Renders the component */
   render() {
 
-    const { buchung, showEreignisBuchungAnlegen, buchungliste } = this.state;
+    const { buchung, showZeitintervallBuchungAnlegen, showEreignisBuchungAnlegen, buchungliste } = this.state;
     // console.log(buchungliste)
 
 
     return (
       buchungliste ?
         <div>
-          <Box sx={{ bgcolor: 'success.main' }}>
+          <Box>
             <h2>Hier kannst du neue Buchungen erstellen.</h2>
             <h3>Zudem werden dir deine bereits erstellten Buchungen angezeigt und du kannst diese bearbeiten oder löschen.</h3>
           </Box>
@@ -89,9 +116,9 @@ class BuchungListe extends Component {
                       width: 350,
                       height: 50,
                       alignItems: 'center',
-                    }} variant="contained" color="primary" aria-label="add" onClick={this.ereignisBuchungAnlegenButtonClicked}>
+                    }} variant="contained" color="primary" aria-label="add" onClick={this.zeitintervallBuchungAnlegenButtonClicked}>
                     <AddIcon />
-                    &nbsp; Ereignis-Buchung erstellen
+                    &nbsp; Zeitintervall-Buchung erstellen
                   </Button>
                 </Grid>
                 <Grid item xs={6}>
@@ -101,9 +128,9 @@ class BuchungListe extends Component {
                       width: 350,
                       height: 50,
                       alignItems: 'center',
-                    }} variant="contained" color="primary" aria-label="add" onClick={this.buchungAnlegenButtonClicked}>
+                    }} variant="contained" color="primary" aria-label="add" onClick={this.ereignisBuchungAnlegenButtonClicked}>
                     <AddIcon />
-                    &nbsp; Zeitintervall-Buchung erstellen
+                    &nbsp; Ereignis-Buchung erstellen
                   </Button>
                 </Grid>
               </Grid>
@@ -134,6 +161,7 @@ class BuchungListe extends Component {
             </Table>
 
           </Grid>
+          <ZeitintervallBuchungAnlegen show={showZeitintervallBuchungAnlegen} onClose={this.zeitintervallBuchungAnlegenClosed} />
           <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} onClose={this.ereignisBuchungAnlegenClosed} />
         </div>
         : null

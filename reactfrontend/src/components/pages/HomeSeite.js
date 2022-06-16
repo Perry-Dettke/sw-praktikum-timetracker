@@ -14,7 +14,7 @@ import SignUp from './SignUp';
         super(props);
     
         this.state = {  
-
+          currentUser: props.currentUser,  
           person: null,
           showPersonForm: false
         }
@@ -32,7 +32,7 @@ import SignUp from './SignUp';
     // }
 
     getPerson = () => {
-        TimetrackerAPI.getAPI().getPersonByGoogle(this.props.currentUser.uid).then((person) =>
+        TimetrackerAPI.getAPI().getPersonByGoogle(this.state.currentUser.uid).then((person) =>
             this.setState({
               person: person,
             })
@@ -62,15 +62,6 @@ import SignUp from './SignUp';
           this.setState({ showPersonForm: true });
       }
   }
-    getPersonbyID = () => {
-        var api = TimetrackerAPI.getAPI();
-            api.getPersonbyID(13).then((personBO) => {
-                this.setState({
-                person: personBO,
-              });
-              console.log("funktion")
-            });
-          }
 
 //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
@@ -100,18 +91,13 @@ import SignUp from './SignUp';
 
 
 componentDidMount() {
-  this.getPerson(); 
-
+  this.getPerson(); //name frei wählbar (sollte Sinn ergeben)
   
 }
 
 
     render(){
-        const { currentUser } = this.props;
-        const { person, showPersonForm } = this.state;
-        console.log(currentUser)
-        console.log(person)
-        console.log()
+        const { person, showPersonForm, currentUser } = this.state;
         
         return(
             person ?
@@ -164,7 +150,7 @@ componentDidMount() {
                 </Paper>
                 </Box>
             </div> 
-            :  <SignUp onClose={this.closeSignup} currentUser={currentUser}  />
+            : <SignUp onClose={this.closePersonForm}  />
             
         );
     }

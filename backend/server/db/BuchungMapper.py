@@ -1,5 +1,6 @@
 from server.bo.Buchung import Buchung
 from server.db.Mapper import Mapper
+import datetime
 
 class BuchungMapper(Mapper):
     """
@@ -223,6 +224,8 @@ class BuchungMapper(Mapper):
 
             else:
                 Buchung.set_id(1)
+
+        Buchung.set_datum(datetime.date.today())
 
         command = "INSERT INTO buchung (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id) VALUES (%s,%s,%s,%s,%s,%s,%s)"
         data = (Buchung.get_id(),
