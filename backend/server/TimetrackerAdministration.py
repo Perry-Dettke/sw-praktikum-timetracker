@@ -164,7 +164,7 @@ class TimetrackerAdministration (object):
             stunden = arbeitszeitkonto.get_gesamtstunden() + buchung.get_stunden()
             arbeitszeitkonto.set_gesamtstunden(stunden)
             
-            return mapper.insert(arbbeitszeitskonto)
+            return mapper.update(arbeitszeitkonto)
         
 
     def get_buchung_by_id(self, id):
