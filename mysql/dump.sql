@@ -35,7 +35,7 @@ CREATE TABLE `aktivitaet` (
   `kapazitaet` float NOT NULL,
   `projekt_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `aktivitaet` (
 
 LOCK TABLES `aktivitaet` WRITE;
 /*!40000 ALTER TABLE `aktivitaet` DISABLE KEYS */;
-INSERT INTO `aktivitaet` VALUES (1,'2022-06-01 13:16:06','Lernen',10,0),(2,'2022-06-01 19:02:08','testtt',22,222),(3,'2022-05-17 20:00:00','Programmieren',200,1),(4,'2022-05-17 20:00:00','Filmen',10,2),(5,'2022-05-17 20:00:00','Rapid Miner',20,2);
+INSERT INTO `aktivitaet` VALUES (1,'2022-05-17 20:00:00','Lernen',300,1),(2,'2022-05-17 20:00:00','Pandas',20,3),(3,'2022-05-17 20:00:00','Programmieren',200,3),(4,'2022-05-17 20:00:00','Filmen',10,4),(5,'2022-05-17 20:00:00','Rapid Miner',20,5),(6,'2022-05-17 20:00:00','Nix',20,2),(7,'2022-06-17 11:31:40','Lernen2',100,1);
 /*!40000 ALTER TABLE `aktivitaet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,6 +59,8 @@ CREATE TABLE `arbeitszeitkonto` (
   `id` int NOT NULL AUTO_INCREMENT,
   `letzte_aenderung` datetime NOT NULL,
   `gesamtstunden` float DEFAULT NULL,
+  `urlaubstage` int DEFAULT NULL,
+  `krankheitstage` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -69,7 +71,7 @@ CREATE TABLE `arbeitszeitkonto` (
 
 LOCK TABLES `arbeitszeitkonto` WRITE;
 /*!40000 ALTER TABLE `arbeitszeitkonto` DISABLE KEYS */;
-INSERT INTO `arbeitszeitkonto` VALUES (1,'2022-06-01 17:43:54',100),(2,'2022-05-17 20:00:00',200),(3,'2022-05-17 20:00:00',300),(4,'2022-05-17 20:00:00',400),(5,'2022-05-17 20:00:00',NULL);
+INSERT INTO `arbeitszeitkonto` VALUES (2,'2022-05-17 20:00:00',0,30,0),(3,'2022-05-17 20:00:00',0,30,0),(4,'2022-05-17 20:00:00',0,30,0),(5,'2022-05-17 20:00:00',0,30,0),(6,'2022-05-17 20:00:00',0,30,0);
 /*!40000 ALTER TABLE `arbeitszeitkonto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +91,7 @@ CREATE TABLE `buchung` (
   `person_id` int DEFAULT NULL,
   `aktivitaet_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4325 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +100,7 @@ CREATE TABLE `buchung` (
 
 LOCK TABLES `buchung` WRITE;
 /*!40000 ALTER TABLE `buchung` DISABLE KEYS */;
-INSERT INTO `buchung` VALUES (1,'2022-06-02 16:46:39','2022-06-02',10,1,1,1),(2,'2022-06-02 17:46:39','2022-06-02',5,0,2,1),(3,'2022-06-02 16:46:39','2022-06-02',3,0,2,2),(4,'2022-06-02 16:46:39','2022-06-02',2,1,3,3),(5,'2022-06-02 16:46:39','2022-06-02',1,1,1,2),(6,'2022-06-02 16:46:39','2022-06-02',5,1,4,1),(7,'2022-06-02 16:46:39','2022-06-02',10,1,1,3);
+INSERT INTO `buchung` VALUES (1,'2022-06-16 19:14:11','2022-06-16',1,0,3,1),(2,'2022-06-16 19:17:12','2022-06-16',2,0,1,2),(3,'2022-06-16 19:17:53','2022-06-16',5,0,3,3),(4,'2022-06-17 11:25:20','2022-06-17',1,0,3,5),(5,'2022-06-17 11:30:56','2022-06-17',1,0,2,5),(6,'2022-06-17 11:30:56','2022-06-17',1,0,3,5),(7,'2022-06-17 11:30:56','2022-06-17',1,0,1,1),(8,'2022-06-17 11:30:56','2022-06-17',1,0,4,5),(9,'2022-06-17 11:30:56','2022-06-17',1,0,1,2);
 /*!40000 ALTER TABLE `buchung` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +146,7 @@ CREATE TABLE `person` (
   `google_user_id` varchar(45) DEFAULT NULL,
   `arbeitszeitkonto_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +155,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (1,'2022-06-02 10:54:32','Lisaaa','Mülleraa','MüllerMailaa','müüllleeeraa','dwqjnw8931u489',1),(2,'2022-06-02 20:59:36','Joshua','Bayer','Mail@mail.de','YOungJosh','2184u1hjbdwq',2),(3,'2022-05-17 20:00:00','Lisa','Singer','lisa.singer@web.de','Lischen','daaad221sh732814',3),(4,'2022-05-17 20:00:00','Ralf','Roller','ralf.roller@web.de','ralle44','diuh128231',4),(5,'2022-06-01 22:14:26','Peter','Panne','ppmail','pppi','kwuqie8714',NULL);
+INSERT INTO `person` VALUES (1,'2022-06-02 10:54:32','Lisaaa','Mülleraa','MüllerMailaa','müüllleeeraa','dwqjnw8931u489',1),(2,'2022-06-14 16:10:08','a','a','a','a','',2),(3,'2022-05-17 20:00:00','Lisa','Singer','lisa.singer@web.de','Lischen','daaad221sh732814',3),(4,'2022-05-17 20:00:00','Ralf','Roller','ralf.roller@web.de','ralle44','diuh128231',4),(5,'2022-06-01 22:14:26','Peter','Panne','ppmail','pppi','kwuqie8714',5),(6,'2022-06-13 21:33:29','Perry','Dettke','pp@mail-de','pdpdwa','',6),(7,'2022-06-13 21:35:47','a','a','a','a','',7);
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +173,7 @@ CREATE TABLE `projekt` (
   `auftraggeber` varchar(45) NOT NULL,
   `projektersteller_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -180,7 +182,7 @@ CREATE TABLE `projekt` (
 
 LOCK TABLES `projekt` WRITE;
 /*!40000 ALTER TABLE `projekt` DISABLE KEYS */;
-INSERT INTO `projekt` VALUES (1,'2022-05-11 11:33:33','Software-Praktikum','Thies',1),(2,'2022-06-01 18:56:42','string','string',1),(3,'2022-05-17 20:00:00','Pneumatik','Mildenberger',1),(4,'2022-05-17 20:00:00','Web-Technologien','Kunz',2),(5,'2022-05-17 20:00:00','Datenbanken','Lehmamn',2);
+INSERT INTO `projekt` VALUES (1,'2022-06-01 18:56:42','Mathe','Lehrer',1),(3,'2022-05-17 20:00:00','Pneumatik','Mildenberger',1),(4,'2022-05-17 20:00:00','Web-Technologien','Kunz',2),(5,'2022-05-17 20:00:00','Datenbanken','Lehmamn',2),(6,'2022-06-17 11:21:52','testt','testt',2);
 /*!40000 ALTER TABLE `projekt` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +198,7 @@ CREATE TABLE `projekt_person` (
   `person_id` int NOT NULL,
   `projekt_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +207,7 @@ CREATE TABLE `projekt_person` (
 
 LOCK TABLES `projekt_person` WRITE;
 /*!40000 ALTER TABLE `projekt_person` DISABLE KEYS */;
-INSERT INTO `projekt_person` VALUES (2,2,1),(3,3,4),(4,4,3),(5,5,5);
+INSERT INTO `projekt_person` VALUES (1,1,1),(2,3,1),(3,2,3),(4,2,1),(5,3,5);
 /*!40000 ALTER TABLE `projekt_person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,7 +233,7 @@ CREATE TABLE `zeitintervall` (
 
 LOCK TABLES `zeitintervall` WRITE;
 /*!40000 ALTER TABLE `zeitintervall` DISABLE KEYS */;
-INSERT INTO `zeitintervall` VALUES (1,'2022-05-17 20:00:00',9.00,17.00),(2,'2022-06-01 19:00:15',2.00,4.00),(3,'2022-05-17 20:00:00',12.00,20.00),(4,'2022-05-17 20:00:00',8.00,18.00),(5,'2022-05-17 20:00:00',22.00,6.00);
+INSERT INTO `zeitintervall` VALUES (1,'2022-05-17 20:00:00',1.00,1.00),(2,'2022-06-01 19:00:15',1.00,1.00),(3,'2022-05-17 20:00:00',1.00,1.00),(4,'2022-05-17 20:00:00',1.00,1.00),(5,'2022-05-17 20:00:00',1.00,1.00);
 /*!40000 ALTER TABLE `zeitintervall` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -244,4 +246,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-04 12:00:18
+-- Dump completed on 2022-06-17 15:24:21

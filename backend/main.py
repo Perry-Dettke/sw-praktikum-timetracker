@@ -58,7 +58,11 @@ aktivitaet = api.inherit('Aktivitaet', bo, {
 
 arbeitszeitkonto = api.inherit('Arbeitszeitkonto', bo, {
     'gesamtstunden': fields.Float(attribute='_gesamtstunden',
-                                description='Personen ID der das Arbeitszeitkonto gehört'),
+                                description='Gesamtstunden einer Person auf dem Arbeitszeitkonto gespeichert'),
+    'urlaubstage': fields.Integer(attribute='_urlaubstage',
+                                description='Urlaubstage einer Person gespeichert auf dem Arbeitszeitkonto gespeichert'),
+    'krankheitstage': fields.Integer(attribute='_krankheitstage',
+                                description='Krankheitstage einer Person auf dem Arbeitszeitkonto gespeichert'),
 })
 
 buchung = api.inherit('Buchung', bo, {
