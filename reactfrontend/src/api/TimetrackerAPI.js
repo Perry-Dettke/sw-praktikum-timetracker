@@ -73,6 +73,8 @@ export default class TimetrackerAPI {
   #getPersonInProjektStundenURL = (projekt_id, start, ende) => `${this.#ServerBaseURL}/projekt_person_datum/${projekt_id}/${start}/${ende}`;
   #getProjektByPersonURL = (person_id) => `${this.#ServerBaseURL}/projektbyperson/${person_id}`;
 
+
+
   // #updatePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // #deletePersonProjektURL = (id) => `${this.#ServerBaseURL}/personprojekt/${id}`;
   // linkPersonProjektURL = () => `${this.#ServerBaseURL}/link`;
@@ -674,6 +676,62 @@ export default class TimetrackerAPI {
     })
   }
   
+  addPersonInProjekt(projekt_id, personen) {
+    // Person in Projekt neu anlegen
+    let person_id_list = [];
+    personen.map(person => {
+      person_id_list.push(person.getID())
+    })
+    return this.#fetchAdvanced(this.#addPersonInProjektURL(projekt_id), {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({ 'projekt_id': projekt_id, 'person_id_list': person_id_list })
+    }).then((responseJSON) => {
+      let responseProjektBO = ProjektBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(responseProjektBO);
+      })
+    })
+  }
+
+  updatePersonInProjekt(projekt_id, personen) {
+    // Person in Projekt bearbeiten
+    let person_id_list = [];
+    personen.map(person => {
+      person_id_list.push(person.getID())
+    })
+    return this.#fetchAdvanced(this.#updatePersonInProjektURL(projekt_id), {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({ 'projekt_id': projekt_id, 'person_id_list': person_id_list })
+    }).then((responseJSON) => {
+      let responseProjektBO = ProjektBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(responseProjektBO);
+      })
+    })
+  }
+
+  // *** Projekt related *** //
+  getProjektbyPersonID(person_id) {
+    // alle Projekte der angemeldeten Person abfragen
+    return this.#fetchAdvanced(this.#getProjektbyPersonIDURL(person_id)).then((responseJSON) => {
+      let projektliste = [];
+      responseJSON.map(item => {
+        let projekt = ProjektBO.fromJSON(item);
+        projektliste.push(projekt);
+      })
+      return new Promise(function (resolve) {
+        resolve(projektliste)
+      })
+    })
+  }
 
 
 
