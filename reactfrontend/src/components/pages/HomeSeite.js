@@ -148,7 +148,7 @@ class Home extends Component {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align="right">Gesamt Stunden</TableCell>
-                                            <TableCell align="right">Verbleibende Stunden</TableCell>
+                                            <TableCell align="right">Gearbeitete Stunden</TableCell>
                                             <TableCell align="right">Urlaubstage</TableCell>
                                             <TableCell align="right">Krankheitstage</TableCell>
                                         </TableRow>
@@ -157,7 +157,7 @@ class Home extends Component {
                                         <TableRow>
                                             <TableCell align="right">Testdaten</TableCell>
                                             <TableCell align="right">Testdaten</TableCell>
-                                            <TableCell align="right">Testdaten</TableCell>
+                                            <TableCell align="right">30</TableCell>
                                             <TableCell align="right">Testdaten</TableCell>
                                         </TableRow>
                                     </TableBody>

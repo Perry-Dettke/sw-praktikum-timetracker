@@ -147,13 +147,25 @@ class TimetrackerAdministration (object):
         with ArbeitszeitkontoMapper() as mapper:
             return mapper.find_by_person_id(person_id)
 
+
     """
     Buchung-spezifische Methoden
     """
     def create_buchung(self, buchung): 
         """Buchung anlegen"""
-        with BuchungMapper() as mapper:
-            return mapper.insert(buchung)
+        # with BuchungMapper() as mapper:    
+        #     return mapper.insert(buchung)
+
+        with PersonMapper() as mapper:
+            person = mapper.find_by_id(buchung.get_person_id())            
+            
+        with ArbeitszeitkontoMapper() as mapper:
+            arbeitszeitkonto = mapper.find_by_id(person.get_arbeitszeitkonto_id())
+            stunden = arbeitszeitkonto.get_gesamtstunden() + buchung.get_stunden()
+            arbeitszeitkonto.set_gesamtstunden(stunden)
+            
+            return mapper.insert(arbbeitszeitskonto)
+        
 
     def get_buchung_by_id(self, id):
         """Die Buchung mit der gegebenen ID auslesen."""
