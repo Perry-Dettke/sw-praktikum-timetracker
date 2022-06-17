@@ -56,20 +56,6 @@ class TimetrackerAdministration (object):
 
                 i.set_stunden(stunden)
 
-
-
-        with BuchungMapper() as mapper:
-            
-            
-            for i in akitvitaetliste:
-
-                buchungliste = mapper.find_by_aktivitaet_id(i.get_id())
-                allstunden = 0
-                for a in buchungliste:
-                    allstunden += a.get_stunden()
-
-                i.set_allstunden(allstunden)
-
         return akitvitaetliste
 
  
@@ -381,6 +367,8 @@ class TimetrackerAdministration (object):
 ### Mit Stunden und Datum
     def get_person_in_projekt_stunden(self, projekt_id, start, ende):
         """Die Teilnehmer eines Projekts auslesen."""
+
+        # Alle Personen (BO) die in einem Projekt sind
         with ProjektMapper() as mapper:
             id_list = mapper.find_person_in_projekt(projekt_id)
         personen_list = []
@@ -388,23 +376,26 @@ class TimetrackerAdministration (object):
             with PersonMapper() as mapper:
                 personen_list.append(mapper.find_by_id(i))
 
-
+        # Alle Aktivitaeten (BO) die in einem Projekt sind            
         with AktivitaetMapper() as mapper:
             aktivitaetliste = mapper.find_by_projekt_id_id(projekt_id)
 
-        with BuchungMapper() as mapper:
-            for per in personen_list:
 
-                    
+        # Alle Buchungen (BO) nach der Person und Datum suchen (Aktivitaet muss noch dazu)
+        with BuchungMapper() as mapper:                
+                for per in personen_list:
+                    buchungliste = mapper.find_by_person_id_and_datum(per.get_id(), start, ende)
+                    stunden = 0
+                    for bu in buchungliste:
+                        stunden += bu.get_stunden()
 
-                buchungliste = mapper.find_by_person_id_and_datum(per.get_id(), start, ende)
-                stunden = 0
-                for bu in buchungliste:
-                    stunden += bu.get_stunden()
+                    per.set_stunden(stunden)
 
-                per.set_stunden(stunden)
 
-            return personen_list
+
+                return personen_list
+
+
 
     """
     Zeitintervall-spezifische Methoden
