@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Component } from "react";
-import {Paper, Box,Button,TableBody,TableCell,TableContainer,TableHead,TableRow,Tooltip,Table,IconButton,} from "@mui/material";
+import { Paper, Box, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Table, IconButton, } from "@mui/material";
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonForm from "../dialogs/PersonForm";
@@ -16,6 +16,7 @@ class Home extends Component {
             person: null,
             showPersonForm: false,
             showPersonDelete: false,
+            zeitintervall: null,
         };
     }
 
@@ -83,122 +84,130 @@ class Home extends Component {
         newZeitintervall.setDauer(0.0) // wird beim update angepasst
         newZeitintervall.setPerson_id(2) //current User
         TimetrackerAPI.getAPI().addZeitintervall(newZeitintervall).then(zeitintervall => {
-            let date =  new Date()
+            let date = new Date()
             window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " eingstempelt")
             console.log(zeitintervall)
+            this.getZeitintervall()
             this.setState(this.initialState);
         })
     }
 
-
-
-
-
-
-
-    componentDidMount() {
-        this.getPersonbyID();
+    // muss current user ID rein
+    getZeitintervall = () => {
+        TimetrackerAPI.getAPI().getZeitintervallbyMaxIDandPersonID(2).then((zeitintervallBO) => {
+            this.setState({
+                zeitintervall: zeitintervallBO,
+            });
+        });
     }
 
-    render() {
-        const { person, showPersonForm, showPersonDelete } = this.state;
 
-        return person ? (
-            <div>
-                <Box
-                    sx={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        "& > :not(style)": {
-                            m: 2,
-                            width: 700,
-                            height: 300,
-                            alignItems: "center",
-                        },
-                    }}
-                >
-                    <Paper elevation={3}>
-                        <div>
-                            <h2>Mein Profil</h2>
-                            <Tooltip title="Bearbeiten" placement="right">
-                                <IconButton
-                                    variant="contained"
-                                    onClick={this.bearbeitenButtonClicked}
-                                >
-                                    <EditIcon />
-                                </IconButton>
-                            </Tooltip>
-                            <p>
-                                <strong>Name:</strong> {person.getVor_name()}{" "}
-                                {person.getNach_name()}
-                            </p>
 
-                            <p>
-                                <strong>Email:</strong> {person.getEmail()}
-                            </p>
-                            <p>
-                                <strong>Benutzername:</strong> {person.getBenutzer_name()}
-                            </p>
 
-                            <br />
-                            <p>
-                                <Button variant="contained" onClick={this.deleteButtonClicked}>
-                                    Profil löschen
-                                </Button>
-                            </p>
-                        </div>
-                    </Paper>
-                    <Paper elevation={3}>
-                        <div>
-                            <h1>Arbeitszeitkonto</h1>
-                            <TableContainer
-                                component={Paper}
-                                sx={{ maxWidth: 750, margin: "auto" }}
+componentDidMount() {
+    this.getPersonbyID();
+}
+
+render() {
+    const { person, showPersonForm, showPersonDelete, zeitintervall } = this.state;
+    console.log(zeitintervall)
+
+    return person ? (
+        <div>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    "& > :not(style)": {
+                        m: 2,
+                        width: 700,
+                        height: 300,
+                        alignItems: "center",
+                    },
+                }}
+            >
+                <Paper elevation={3}>
+                    <div>
+                        <h2>Mein Profil</h2>
+                        <Tooltip title="Bearbeiten" placement="right">
+                            <IconButton
+                                variant="contained"
+                                onClick={this.bearbeitenButtonClicked}
                             >
-                                <Table sx={{ minWidth: 180 }} aria-label="simple table">
-                                    <TableHead>
-                                        <Button variant="contained" onClick={this.addZeitintervall}>
-                                            Kommen
-                                        </Button>
-                                        <Button variant="contained">
-                                            Gehen
-                                        </Button>
-                                        <TableRow>
-                                            <TableCell align="right">Gesamt Stunden</TableCell>
-                                            <TableCell align="right">Gearbeitete Stunden</TableCell>
-                                            <TableCell align="right">Urlaubstage</TableCell>
-                                            <TableCell align="right">Krankheitstage</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell align="right">Testdaten</TableCell>
-                                            <TableCell align="right">Testdaten</TableCell>
-                                            <TableCell align="right">30</TableCell>
-                                            <TableCell align="right">Testdaten</TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </div>
-                    </Paper>
-                </Box>
-                <PersonForm
-                    show={showPersonForm}
-                    person={person}
-                    onClose={this.personFormClosed}
-                />
-                <PersonDelete
-                    show={showPersonDelete}
-                    person={person}
-                    onClose={this.personDeleteClosed}
-                    getPersonbyID={this.getPersonbyID}
-                />
-            </div>
-        ) : (
-            <p> Du scheinst noch kein Profil zu haben</p>
-        );
-    }
+                                <EditIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <p>
+                            <strong>Name:</strong> {person.getVor_name()}{" "}
+                            {person.getNach_name()}
+                        </p>
+
+                        <p>
+                            <strong>Email:</strong> {person.getEmail()}
+                        </p>
+                        <p>
+                            <strong>Benutzername:</strong> {person.getBenutzer_name()}
+                        </p>
+
+                        <br />
+                        <p>
+                            <Button variant="contained" onClick={this.deleteButtonClicked}>
+                                Profil löschen
+                            </Button>
+                        </p>
+                    </div>
+                </Paper>
+                <Paper elevation={3}>
+                    <div>
+                        <h1>Arbeitszeitkonto</h1>
+                        <TableContainer
+                            component={Paper}
+                            sx={{ maxWidth: 750, margin: "auto" }}
+                        >
+                            <Table sx={{ minWidth: 180 }} aria-label="simple table">
+                                <TableHead>
+                                    <Button variant="contained" onClick={this.addZeitintervall}>
+                                        Kommen
+                                    </Button>
+                                    <Button variant="contained">
+                                        Gehen
+                                    </Button>
+                                    <TableRow>
+                                        <TableCell align="right">Gesamt Stunden</TableCell>
+                                        <TableCell align="right">Gearbeitete Stunden</TableCell>
+                                        <TableCell align="right">Urlaubstage</TableCell>
+                                        <TableCell align="right">Krankheitstage</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell align="right">Testdaten</TableCell>
+                                        <TableCell align="right">Testdaten</TableCell>
+                                        <TableCell align="right">30</TableCell>
+                                        <TableCell align="right">Testdaten</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </div>
+                </Paper>
+            </Box>
+            <PersonForm
+                show={showPersonForm}
+                person={person}
+                onClose={this.personFormClosed}
+            />
+            <PersonDelete
+                show={showPersonDelete}
+                person={person}
+                onClose={this.personDeleteClosed}
+                getPersonbyID={this.getPersonbyID}
+            />
+        </div>
+    ) : (
+        <p> Du scheinst noch kein Profil zu haben</p>
+    );
+}
 }
 
 export default Home;

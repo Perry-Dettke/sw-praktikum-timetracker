@@ -966,37 +966,23 @@ class ZeitintervallIDOperations(Resource):
         else:
             return '', 500 
 
-
-#Gehen related
-@timetracker.route('/gehen')
+@timetracker.route('/zeitintervallbymaxid/<int:person_id>')
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-class GehenOperations(Resource):
-    @timetracker.marshal_list_with(gehen, code=200)
-    @timetracker.expect(gehen)
-    #@secured
-    def post(self):
-        """Anlegen eines neuen Zeitintervall-Objekts.
-        **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
-        So ist zum Beispiel die Vergabe der ID nicht Aufgabe des Clients.
-        Selbst wenn der Client eine ID in dem Proposal vergeben sollte, so
-        liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
-        zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
+@timetracker.param('id', 'Die ID des Zeitintervall-Objekts.')
+class ZeitintervallMaxIDOperations(Resource):
+
+    @timetracker.marshal_with(zeitintervall)
+    def get(self, person_id):
+        """Auslesen eines bestimmten Zeitintervall-Objekts mit der Max ID und der Personen ID.
+        Das auszulesende Objekt wird durch die ```person_id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        proposal = Gehen.from_dict(api.payload)
+        zi = adm.get_zeitintervall_by_max_id_and_peron_id(person_id)
 
-        """RATSCHLAG: Prüfen Sie stets die Referenzen auf valide Werte, bevor Sie diese verwenden!"""
-        if proposal is not None:
-            """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
-            wird auch dem Client zurückgegeben. 
-            """
-            geh = adm.create_gehen(proposal)
-            return geh, 200
+        if zi is not None:
+            return zi
         else:
-            '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
-            return '', 500
-
-
+            return '', 500 
 
 
 if __name__ == '__main__':

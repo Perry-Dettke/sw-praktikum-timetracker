@@ -84,7 +84,7 @@ export default class TimetrackerAPI {
   #getZeitintervallURL = (id) => `${this.#ServerBaseURL}/zeitintervall/${id}`;
   #updateZeitintervallURL = (id) => `${this.#ServerBaseURL}/zeitintervall/${id}`;
   #deleteZeitintervallURL = (id) => `${this.#ServerBaseURL}/zeitintervall/${id}`;
-
+  #getZeitintervallbyMaxIDandPersonIDURL = (person_id) => `${this.#ServerBaseURL}/zeitintervallbymaxid/${person_id}`;
 
 
   static getAPI() {
@@ -810,6 +810,14 @@ export default class TimetrackerAPI {
     })
   }
 
-
+  getZeitintervallbyMaxIDandPersonID(person_id) {
+    // Aktivitaet abfragen
+    return this.#fetchAdvanced(this.#getZeitintervallbyMaxIDandPersonIDURL(person_id)).then((responseJSON) => {
+      let zeitintervall = ZeitintervallBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(zeitintervall)
+      })
+    })
+  }
 
 }

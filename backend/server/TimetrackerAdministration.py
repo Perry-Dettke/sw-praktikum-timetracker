@@ -411,6 +411,11 @@ class TimetrackerAdministration (object):
         """Das Zeitintervall mit der gegebenen ID auslesen."""
         with ZeitintervallMapper() as mapper:
             return mapper.find_by_id(id)
+
+    def get_zeitintervall_by_max_id_and_peron_id(self, person_id):
+        """Das Zeitintervall mit der gegebenen ID auslesen."""
+        with ZeitintervallMapper() as mapper:
+            return mapper.find_by_max_id_and_peron_id(person_id)
    
     def get_all_zeitintervall(self):
         """Alle Zeitintervalle auslesen."""
