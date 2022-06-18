@@ -16,14 +16,15 @@ from .db.ZeitintervallMapper import ZeitintervallMapper
 
 
 class TimetrackerAdministration (object):
-   
+
     def __init__(self):
         pass
 
     """
     Aktivitaet-spezifische Methoden
     """
-    def create_aktivitaet(self, aktivitaet): 
+
+    def create_aktivitaet(self, aktivitaet):
         """Aktivitaet anlegen"""
         with AktivitaetMapper() as mapper:
             return mapper.insert(aktivitaet)
@@ -38,18 +39,18 @@ class TimetrackerAdministration (object):
     #     with AktivitaetMapper() as mapper:
     #         return mapper.find_by_projekt_id(projekt_id)
 
-### Stunden
+# Stunden
     def get_aktivitaet_by_projekt_id(self, projekt_id, start, ende):
         """Die Aktivitaet mit der gegebenen Projekt ID auslesen."""
 
         with AktivitaetMapper() as mapper:
             akitvitaetliste = mapper.find_by_projekt_id(projekt_id)
         with BuchungMapper() as mapper:
-            
-            
+
             for i in akitvitaetliste:
 
-                buchungliste = mapper.find_by_aktivitaet_id_and_datum(i.get_id(), start, ende)
+                buchungliste = mapper.find_by_aktivitaet_id_and_datum(
+                    i.get_id(), start, ende)
                 stunden = 0
                 for a in buchungliste:
                     stunden += a.get_stunden()
@@ -57,13 +58,6 @@ class TimetrackerAdministration (object):
                 i.set_stunden(stunden)
 
         return akitvitaetliste
-
- 
-
-
-
-
-
 
     def get_person_by_aktivitaet_id(self, aktivitaet_id, start, ende):
         person_id_liste = []
@@ -74,16 +68,15 @@ class TimetrackerAdministration (object):
             if i.get_person_id() not in person_id_liste:
                 person_id_liste.append(i.get_person_id())
 
-
         with PersonMapper() as mapper:
             personliste = []
 
             for id in person_id_liste:
                 personliste.append(mapper.find_by_id(id))
-                
-            
+
         with BuchungMapper() as mapper:
-            buchungliste2 = mapper.find_by_aktivitaet_id_and_datum(aktivitaet_id, start, ende)
+            buchungliste2 = mapper.find_by_aktivitaet_id_and_datum(
+                aktivitaet_id, start, ende)
             for pe in personliste:
                 stunden = 0
                 for bu in buchungliste2:
@@ -93,13 +86,6 @@ class TimetrackerAdministration (object):
                     pe.set_stunden(stunden)
 
         return personliste
-
-
-
-
-
-
-
 
     def save_aktivitaet(self, aktivitaet):
         """Die gegebenen Aktivitaet speichern."""
@@ -113,11 +99,11 @@ class TimetrackerAdministration (object):
         with BuchungMapper() as mapper:
             mapper.delete_by_aktivitaet_id(aktivitaet)
 
-
     """
     Arbeitszeitkonto-spezifische Methoden
     """
-    def create_arbeitszeitkonto(self, arbeitszeitkonto): 
+
+    def create_arbeitszeitkonto(self, arbeitszeitkonto):
         """Arbeitszeitkonto anlegen"""
         with ArbeitszeitkontoMapper() as mapper:
             return mapper.insert(arbeitszeitkonto)
@@ -147,24 +133,28 @@ class TimetrackerAdministration (object):
         with ArbeitszeitkontoMapper() as mapper:
             return mapper.find_by_person_id(person_id)
 
-
     """
     Buchung-spezifische Methoden
     """
-    def create_buchung(self, buchung): 
-        """Buchung anlegen"""
-        # with BuchungMapper() as mapper:    
-        #     return mapper.insert(buchung)
 
+    def create_buchung(self, buchung):
+        """Buchung anlegen"""
+        update_arbeitszeitkonto(self, buchung)
+        with BuchungMapper() as mapper:
+            return mapper.insert(buchung)
+
+
+    def update_arbeitszeitkonto(self, buchung):
         with PersonMapper() as mapper:
-            person = mapper.find_by_id(buchung.get_person_id())            
-            
+            person = mapper.find_by_id(buchung.get_person_id())
+
         with ArbeitszeitkontoMapper() as mapper:
             arbeitszeitkonto = mapper.find_by_id(person.get_arbeitszeitkonto_id())
             stunden = arbeitszeitkonto.get_gesamtstunden() + buchung.get_stunden()
             arbeitszeitkonto.set_gesamtstunden(stunden)
             
-            return mapper.update(arbeitszeitkonto)
+            return mapper.insert(arbeitszeitkonto)
+
         
 
     def get_buchung_by_id(self, id):
@@ -220,7 +210,7 @@ class TimetrackerAdministration (object):
         """Das Ereignis mit dem gegebenen Erstellungszeitpunkt auslesen."""
         with EreignisMapper() as mapper:
             return mapper.find_by_erstellungs_zeitpunkt(erstellungs_zeitpunkt)     #muss noch im Mapper geschrieben werden
-                                                                                    #falls benötigt wird
+                                                                                    # falls benötigt wird
 
     def get_all_ereignis(self):
         """Alle Ereignise auslesen."""
@@ -376,7 +366,7 @@ class TimetrackerAdministration (object):
         return projektliste
 
 
-### Mit Stunden und Datum
+# Mit Stunden und Datum
     def get_person_in_projekt_stunden(self, projekt_id, start, ende):
         """Die Teilnehmer eines Projekts auslesen."""
 
