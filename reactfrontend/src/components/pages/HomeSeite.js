@@ -101,6 +101,17 @@ class Home extends Component {
         });
     }
 
+   updateZeitintervall = () => {
+    console.log("geklickt")
+    console.log(this.state.zeitintervall)
+        let zeitintervall = this.state.zeitintervall;
+        zeitintervall.setEnde(0) // wird im Backend gesetzt
+        TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall) 
+        let date = new Date()
+        window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " ausgestempelt")
+            this.setState(this.initialState);
+        }
+    
 
 
 
@@ -169,7 +180,7 @@ render() {
                                     <Button variant="contained" onClick={this.addZeitintervall}>
                                         Kommen
                                     </Button>
-                                    <Button variant="contained">
+                                    <Button variant="contained" onClick={this.updateZeitintervall}>
                                         Gehen
                                     </Button>
                                     <TableRow>

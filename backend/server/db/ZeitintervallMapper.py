@@ -162,7 +162,7 @@ class ZeitintervallMapper (Mapper):
             zeitintervall.get_letzte_aenderung(),
             zeitintervall.get_start(),
             zeitintervall.get_ende(),
-            zeitintervall.get_dauert(),
+            zeitintervall.get_dauer(),
             zeitintervall.get_person_id(),
             zeitintervall.get_id())
         cursor.execute(command, data)
