@@ -16,6 +16,8 @@ from server.bo.Ereignis import Ereignis
 from server.bo.Person import Person
 from server.bo.Projekt import Projekt
 from server.bo.Zeitintervall import Zeitintervall
+from server.bo.Gehen import Gehen
+from server.bo.Kommen import Kommen
 
 '''Außerdem nutzen wir einen selbstgeschriebenen Decorator, der die Authentifikation übernimmt'''
 #from SecurityDecorator import secured
@@ -39,8 +41,7 @@ timetracker = api.namespace('timetracker', description="Funktionen der App")
 
 bo = api.model('BusinessObject', {
     'id': fields.Integer(attribute='_id',
-                         description='Der Unique Identifier eines Business Object')                         
-    
+                         description='Der Unique Identifier eines Business Object')                  
 })
 
 aktivitaet = api.inherit('Aktivitaet', bo, {
@@ -111,13 +112,18 @@ projekt = api.inherit('Projekt', bo, {
 })
 
 zeitintervall = api.inherit('Zeitintervall', bo, {
-    'start': fields.Float(attribute='_start',                             
-                            description='Start eines Zeitintervall'),
-    'ende': fields.Float(attribute='_ende',                                
-                            description='Ende eines Zeitintervall'),
+    'dauer': fields.Float(attribute='_dauer',                             
+                            description='Dauer eines Zeitintervall'),
+    'person_id': fields.Integer(attribute='_person_id',                                
+                            description='Person ID die das Zeitintervall erstellt hat'),
 })
 
 
+kommen = api.inherit('Kommen', ereignis, {
+})
+
+gehen = api.inherit('Gehen', ereignis, {
+})
 
 
 #Aktivitaet related
@@ -959,6 +965,39 @@ class ZeitintervallIDOperations(Resource):
             return zi
         else:
             return '', 500 
+
+
+#Gehen related
+@timetracker.route('/gehen')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class GehenOperations(Resource):
+    @timetracker.marshal_list_with(gehen, code=200)
+    @timetracker.expect(gehen)
+    #@secured
+    def post(self):
+        """Anlegen eines neuen Zeitintervall-Objekts.
+        **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
+        So ist zum Beispiel die Vergabe der ID nicht Aufgabe des Clients.
+        Selbst wenn der Client eine ID in dem Proposal vergeben sollte, so
+        liegt es an der ProjektAdministration (Businesslogik), eine korrekte ID
+        zu vergeben. *Das korrigierte Objekt wird schließlich zurückgegeben.*
+        """
+        adm = TimetrackerAdministration()
+        proposal = Gehen.from_dict(api.payload)
+
+        """RATSCHLAG: Prüfen Sie stets die Referenzen auf valide Werte, bevor Sie diese verwenden!"""
+        if proposal is not None:
+            """ Das serverseitig erzeugte Objekt ist das maßgebliche und 
+            wird auch dem Client zurückgegeben. 
+            """
+            geh = adm.create_gehen(proposal)
+            return geh, 200
+        else:
+            '''Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.'''
+            return '', 500
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

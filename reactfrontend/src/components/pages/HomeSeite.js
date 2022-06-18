@@ -1,22 +1,12 @@
 import * as React from "react";
 import { Component } from "react";
-import {
-    Paper,
-    Box,
-    Button,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Tooltip,
-    Table,
-    IconButton,
-} from "@mui/material";
+import {Paper, Box,Button,TableBody,TableCell,TableContainer,TableHead,TableRow,Tooltip,Table,IconButton,} from "@mui/material";
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonForm from "../dialogs/PersonForm";
 import PersonDelete from "../dialogs/PersonDelete";
+
+import ZeitintervallBO from "../../api/ZeitintervallBO";
 
 class Home extends Component {
     constructor(props) {
@@ -85,6 +75,27 @@ class Home extends Component {
         });
     };
 
+    // Kommen Zeitpunkt adden
+    addZeitintervall = () => {
+        let newZeitintervall = new ZeitintervallBO()
+        newZeitintervall.setID(0) // wird im Backend gesetzt
+        newZeitintervall.setStart(0)
+        newZeitintervall.setDauer(0.0) // wird beim update angepasst
+        newZeitintervall.setPerson_id(2) //current User
+        TimetrackerAPI.getAPI().addZeitintervall(newZeitintervall).then(zeitintervall => {
+            let date =  new Date()
+            window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " eingstempelt")
+            console.log(zeitintervall)
+            this.setState(this.initialState);
+        })
+    }
+
+
+
+
+
+
+
     componentDidMount() {
         this.getPersonbyID();
     }
@@ -100,7 +111,7 @@ class Home extends Component {
                         flexWrap: "wrap",
                         "& > :not(style)": {
                             m: 2,
-                            width: 800,
+                            width: 700,
                             height: 300,
                             alignItems: "center",
                         },
@@ -146,6 +157,12 @@ class Home extends Component {
                             >
                                 <Table sx={{ minWidth: 180 }} aria-label="simple table">
                                     <TableHead>
+                                        <Button variant="contained" onClick={this.addZeitintervall}>
+                                            Kommen
+                                        </Button>
+                                        <Button variant="contained">
+                                            Gehen
+                                        </Button>
                                         <TableRow>
                                             <TableCell align="right">Gesamt Stunden</TableCell>
                                             <TableCell align="right">Gearbeitete Stunden</TableCell>

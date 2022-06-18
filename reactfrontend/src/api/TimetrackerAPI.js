@@ -773,7 +773,7 @@ export default class TimetrackerAPI {
       },
       body: JSON.stringify(zeitintervallBO)
     }).then((responseJSON) => {
-      let responseZeitintervallBO = zeitintervallBO.fromJSON(responseJSON);
+      let responseZeitintervallBO = ZeitintervallBO.fromJSON(responseJSON);
       return new Promise(function (resolve) {
         resolve(responseZeitintervallBO);
       })

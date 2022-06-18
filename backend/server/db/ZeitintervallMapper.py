@@ -23,12 +23,14 @@ class ZeitintervallMapper (Mapper):
         cursor.execute("SELECT * from zeitintervall")
         tuples = cursor.fetchall()
 
-        for (id, letzte_aenderung, start, ende) in tuples:
+        for (id, letzte_aenderung, start, ende, dauer, person_id) in tuples:
             zeitintervall = Zeitintervall()
             zeitintervall.set_id(id)
             zeitintervall.set_letzte_aenderung(letzte_aenderung)
             zeitintervall.set_start(start)
             zeitintervall.set_ende(ende)
+            zeitintervall.set_dauer(dauer)
+            zeitintervall.set_person_id(person_id)
             result.append(zeitintervall)
 
         self._cnx.commit()
@@ -50,17 +52,19 @@ class ZeitintervallMapper (Mapper):
 
 
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, start, ende FROM zeitintervall WHERE id={}".format(id)
+        command = "SELECT * FROM zeitintervall WHERE id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, start, ende) = tuples[0]
+            (id, letzte_aenderung, start, ende, dauer, person_id) = tuples[0]
             zeitintervall = Zeitintervall()
             zeitintervall.set_id(id)
             zeitintervall.set_letzte_aenderung(letzte_aenderung)
             zeitintervall.set_start(start)
             zeitintervall.set_ende(ende)
+            zeitintervall.set_dauer(dauer)
+            zeitintervall.set_person_id(person_id)
 
 
         except IndexError:
@@ -92,13 +96,14 @@ class ZeitintervallMapper (Mapper):
                 davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
                 zeitintervall.set_id(1)
 
-        command = "INSERT INTO zeitintervall (id, letzte_aenderung, start, ende ) VALUES (%s,%s,%s,%s)"
+        command = "INSERT INTO zeitintervall (id, letzte_aenderung, start, dauer, person_id ) VALUES (%s,%s,%s,%s,%s)"
         data = (
 
             zeitintervall.get_id(),
             zeitintervall.get_letzte_aenderung(),
             zeitintervall.get_start(),
-            zeitintervall.get_ende(),
+            zeitintervall.get_dauer(),
+            zeitintervall.get_person_id(),
         )
 
         cursor.execute(command, data)
@@ -114,11 +119,13 @@ class ZeitintervallMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE zeitintervall " + "SET letzte_aenderung=%s, start=%s, ende=%s WHERE id=%s"
+        command = "UPDATE zeitintervall " + "SET letzte_aenderung=%s, start=%s, ende=%s, dauer=%s, person_id=%s WHERE id=%s"
         data = (
             zeitintervall.get_letzte_aenderung(),
             zeitintervall.get_start(),
             zeitintervall.get_ende(),
+            zeitintervall.get_dauert(),
+            zeitintervall.get_person_id(),
             zeitintervall.get_id())
         cursor.execute(command, data)
 
