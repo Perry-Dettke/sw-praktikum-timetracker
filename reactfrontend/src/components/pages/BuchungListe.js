@@ -102,8 +102,13 @@ class BuchungListe extends Component {
       buchungliste ?
         <div>
           <Box>
-            <h2>Hier kannst du neue Buchungen erstellen.</h2>
-            <h3>Zudem werden dir deine bereits erstellten Buchungen angezeigt und du kannst diese bearbeiten oder löschen.</h3>
+            <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+            Hier kannst du neue Buchungen erstellen.
+                    </Typography>
+                    <Typography variant='h9' component='h7' align='center' color='#323748' fontFamily='Verdana'>
+                    Zudem werden dir deine bereits erstellten Buchungen angezeigt und du kannst diese bearbeiten oder löschen.
+                    </Typography>
+            
           </Box>
           <Grid>
             {/* <Button variant="contained" sx={{width:250}} onClick={this.showBuchungDialog}> Neue Buchung Erstellen</Button> */}

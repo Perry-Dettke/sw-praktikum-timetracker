@@ -28,6 +28,11 @@
   color: #61dafb;
 }
 
+#aussen { display: flex; justify-content:center;}
+.b1{
+  float: center;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
