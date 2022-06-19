@@ -68,6 +68,12 @@ class AuswertungListenEintragPerson extends Component {
                 <Grid container spacing={4} alignItems="left">
  
                     <Grid item xs={12}>
+                    <Grid item xs={3}>
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start: (yyyy-mm-dd)' value={start} onChange={this.textFieldValueChange} />
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende: (yyyy-mm-dd)' value={ende} onChange={this.textFieldValueChange} />
+                            <Button variant="contained" color="primary" aria-label="add" onClick={this.zeitraumClicked} startIcon={<AccessTimeIcon />}>
+                                Zeitraum auswählen</Button>
+                        </Grid>
                         <List >
                             {
                                 personliste.map(person =>
