@@ -5,6 +5,7 @@ import TimetrackerAPI from "../../api/TimetrackerAPI";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonForm from "../dialogs/PersonForm";
 import PersonDelete from "../dialogs/PersonDelete";
+import EreignisBuchungAnlegen from "../dialogs/EreignisBuchungAnlegen.js"
 
 import ZeitintervallBO from "../../api/ZeitintervallBO";
 
@@ -16,6 +17,7 @@ class Home extends Component {
             person: null,
             showPersonForm: false,
             showPersonDelete: false,
+            showEreignisBuchungAnlegen: false,
             zeitintervall: null,
         };
     }
@@ -76,6 +78,35 @@ class Home extends Component {
         });
     };
 
+    // Ereignisbuchung Erstellen Dialog anzeigen
+    ereignisBuchungAnlegenButtonClicked = event => {
+        event.stopPropagation();
+        this.setState({
+        showEreignisBuchungAnlegen: true,
+        });
+    }
+
+    //Ereignisbuchung Dialog schließen
+    ereignisBuchungAnlegenClosed = buchung => {
+
+    }
+    //     this.getBuchungbyPersonID();
+
+    //     if (buchung) {
+    //     const newBuchungList = [...this.state.buchung, buchung];
+    //     this.setState({
+    //         buchung: newBuchungList,
+    //         showEreignisBuchungAnlegen: false
+    //     });
+    //     } else {
+    //     this.setState({
+    //         showEreignisBuchungAnlegen: false
+    //     });
+    //     }
+    // }
+
+
+
     // Kommen Zeitpunkt adden
     addZeitintervall = () => {
         let newZeitintervall = new ZeitintervallBO()
@@ -120,7 +151,7 @@ componentDidMount() {
 }
 
 render() {
-    const { person, showPersonForm, showPersonDelete, zeitintervall } = this.state;
+    const { person, showPersonForm, showPersonDelete, zeitintervall, showEreignisBuchungAnlegen } = this.state;
     console.log(zeitintervall)
 
     return person ? (
@@ -197,23 +228,18 @@ render() {
                                         <TableCell align="right">30</TableCell>
                                         <TableCell align="right">Testdaten</TableCell>
                                     </TableRow>
+                                    <Button variant="contained" onClick={this.ereignisBuchungAnlegenButtonClicked}>
+                                        Buchung
+                                    </Button>
                                 </TableBody>
                             </Table>
                         </TableContainer>
                     </div>
                 </Paper>
             </Box>
-            <PersonForm
-                show={showPersonForm}
-                person={person}
-                onClose={this.personFormClosed}
-            />
-            <PersonDelete
-                show={showPersonDelete}
-                person={person}
-                onClose={this.personDeleteClosed}
-                getPersonbyID={this.getPersonbyID}
-            />
+            <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed}/>
+            <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPersonbyID}/>
+            <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} onClose={this.ereignisBuchungAnlegenClosed} />
         </div>
     ) : (
         <p> Du scheinst noch kein Profil zu haben</p>
