@@ -156,18 +156,23 @@ class TimetrackerAdministration (object):
     """
     def create_buchung(self, buchung): 
         """Buchung anlegen"""
-        # with BuchungMapper() as mapper:    
-        #     return mapper.insert(buchung)
+        with BuchungMapper() as mapper:    
+            return mapper.insert(buchung)
 
-        with PersonMapper() as mapper:
-            person = mapper.find_by_id(buchung.get_person_id())            
+
+
+
+
+
+        # with PersonMapper() as mapper:
+        #     person = mapper.find_by_id(buchung.get_person_id())            
             
-        with ArbeitszeitkontoMapper() as mapper:
-            arbeitszeitkonto = mapper.find_by_id(person.get_arbeitszeitkonto_id())
-            stunden = arbeitszeitkonto.get_gesamtstunden() + buchung.get_stunden()
-            arbeitszeitkonto.set_gesamtstunden(stunden)
+        # with ArbeitszeitkontoMapper() as mapper:
+        #     arbeitszeitkonto = mapper.find_by_id(person.get_arbeitszeitkonto_id())
+        #     stunden = arbeitszeitkonto.get_gesamtstunden() + buchung.get_stunden()
+        #     arbeitszeitkonto.set_gesamtstunden(stunden)
             
-            return mapper.update(arbeitszeitkonto)
+        #     return mapper.update(arbeitszeitkonto)
 
 
 
@@ -459,19 +464,44 @@ class TimetrackerAdministration (object):
         with ZeitintervallMapper() as mapper:
             return mapper.update(zeitintervall)
 
+
+    def save_zeitintervall_dauer(self, zeitintervall):
+        """Das gegebenen Zeitintervall speichern."""
+        self.save_zeitintervall(zeitintervall)
+        with ZeitintervallMapper() as mapper:
+            zi = mapper.find_by_max_id_and_peron_id(zeitintervall.get_person_id())
+
+            print(zi)
+            for i in zi:
+                i.set_dauer(1)
+            return  mapper.update(zeitintervall)
+
+
+
+
+             # with ZeitintervallMapper() as mapper:
+        #     Zeitintervallbo = mapper.find_by_max_id_and_peron_id(zeitintervall.get_person_id())
+        #     dauer = Zeitintervallbo.get_ende() - Zeitintervallbo.get_start()
+        #     Zeitintervallbo.set_dauer(dauer)
+        #     self.update(zeitintervallbo)
+        
+
+
+
+
+
     def delete_zeitintervall(self, zeitintervall):
         """Das gegebenene Zeitintervall aus unserem System löschen."""
         with ZeitintervallMapper() as mapper:
             return mapper.delete(zeitintervall)
 
 
+    def get_zeitintervall_by_max_id_and_peron_id(self, person_id):
+        """Das Zeitintervall mit der gegebenen ID auslesen."""
+        with ZeitintervallMapper() as mapper:
+            return mapper.find_by_max_id_and_peron_id(person_id)
 
 
-     # with ZeitintervallMapper() as mapper:
-        #     Zeitintervallbo = mapper.find_by_max_id_and_peron_id(zeitintervall.get_person_id())
-        #     dauer = Zeitintervallbo.get_ende() - Zeitintervallbo.get_start()
-        #     Zeitintervallbo.set_dauer(dauer)
-        #     self.update(zeitintervallbo)
 
 
 

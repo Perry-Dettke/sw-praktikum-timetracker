@@ -19,6 +19,8 @@ class Home extends Component {
             showPersonDelete: false,
             showEreignisBuchungAnlegen: false,
             zeitintervall: null,
+            start: null,
+            ende: null,
         };
     }
 
@@ -121,6 +123,9 @@ class Home extends Component {
             this.getZeitintervall()
             this.setState(this.initialState);
         })
+        this.setState({
+            start: new Date
+        })
     }
 
     // muss current user ID rein
@@ -132,11 +137,17 @@ class Home extends Component {
         });
     }
 
+    
+
    updateZeitintervall = () => {
     console.log("geklickt")
     console.log(this.state.zeitintervall)
         let zeitintervall = this.state.zeitintervall;
+        let ende = new Date;
+        let dauer = (parseFloat(ende.toLocaleTimeString())) - parseFloat(this.state.start.toLocaleTimeString())
         zeitintervall.setEnde(0) // wird im Backend gesetzt
+        zeitintervall.setDauer(dauer)
+
         TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall) 
         let date = new Date()
         window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " ausgestempelt")
@@ -144,15 +155,29 @@ class Home extends Component {
         }
     
 
+ uhrzeit = () => {
+    var timenow = new Date(),
+        h = timenow.getHours(),
+        m = timenow.getMinutes(),
+        s = timenow.getSeconds();
 
+    let stunden = String(h+m+s)
+    console.log(stunden)
+
+ }
+ 
+
+    
 
 componentDidMount() {
     this.getPersonbyID();
+    this.uhrzeit()
 }
 
 render() {
-    const { person, showPersonForm, showPersonDelete, zeitintervall, showEreignisBuchungAnlegen } = this.state;
+    const { person, showPersonForm, showPersonDelete, zeitintervall, showEreignisBuchungAnlegen, start } = this.state;
     console.log(zeitintervall)
+    console.log(start)
 
     return person ? (
         <div>
