@@ -1,25 +1,12 @@
 import React, { Component } from "react";
 
-import {
-  Typography,
-  Button,
-  IconButton,
-  Grid,
-  TextField,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Table,
-  TableCell,
-  TableHead,
-  TableRow,
-  TableBody,
-  Box,
-} from "@mui/material";
+import {Typography, Button, IconButton, Grid, TextField, Accordion, AccordionSummary, AccordionDetails, Table, TableCell, TableHead, TableRow, TableBody, Box} from "@mui/material";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-import { StayCurrentLandscapeTwoTone } from "@mui/icons-material";
+import { BorderAllOutlined, BorderColor, StayCurrentLandscapeTwoTone } from "@mui/icons-material";
 import AuswertungListenEintragPerson from "./AuswertungListenEintragPerson";
 
 class AuswertungListenEintrag extends Component {
@@ -139,30 +126,38 @@ class AuswertungListenEintrag extends Component {
                 }}
               >
                 <Grid container alignItems="center" spacing={2}>
-                  <Grid item xs={3}>
+                  <Grid item xs={4}>
                     <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start: (yyyy-mm-dd)' value={start} onChange={this.textFieldValueChange} />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={4}>
                     <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende: (yyyy-mm-dd)' value={ende} onChange={this.textFieldValueChange} />
                   </Grid>
-                  <Grid item xs={6}/>
-                  <Grid item xs={3}>
+                  <Grid item xs={3} 
+                        sx={{
+                            height: 75,
+                            marginTop: 2,
+                        }}>
                     <Button
                       variant="contained"
                       color="primary"
                       aria-label="add"
+                      fullWidth
                       onClick={this.zeitraumClicked}
                       startIcon={<AccessTimeIcon />}
+                      sx={{
+                        height: 50,
+                        width: 250,
+                        }}
                     >
-                      Zeitraum auswählen
+                      Zeitraum suchen
                     </Button>
                   </Grid>
                 </Grid>
-                <br/><br/>
+                <br/>
                 <Table>
                   <TableHead
                     sx={{
-                      backgroundColor: "#dedede",
+                      backgroundColor: "#B4B4B4",
                     }}
                   >
                     <TableRow>
@@ -195,17 +190,7 @@ class AuswertungListenEintrag extends Component {
                                 backgroundColor: "#eeeeee",
                               }}
                             >
-                              <Table>
-                                <TableHead sx={{}}>
-                                  <strong>
-                                    Person die bereits auf die Aktivität gebucht
-                                    haben:
-                                  </strong>
-                                </TableHead>
-                                <TableBody>
-                                    <AuswertungListenEintragPerson key={(aktivitaet)[aktivitaet.id]} aktivitaet={aktivitaet} start={start} ende={ende} />
-                                </TableBody>
-                              </Table>
+                               <AuswertungListenEintragPerson key={(aktivitaet)[aktivitaet.id]} aktivitaet={aktivitaet} start={start} ende={ende} />
                             </AccordionDetails>
                           </Accordion>
                         </TableCell>
@@ -215,7 +200,6 @@ class AuswertungListenEintrag extends Component {
                         <TableCell>
                           <Typography> {aktivitaet.getStunden()}</Typography>
                         </TableCell>
-
                         <TableCell>
                           <Typography>
                             {" "}
