@@ -125,33 +125,36 @@ class AuswertungListenEintrag extends Component {
                   backgroundColor: "#eeeeee",
                 }}
               >
-                <Grid container alignItems="center" spacing={2}>
-                  <Grid item xs={4}>
-                    <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start: (yyyy-mm-dd)' value={start} onChange={this.textFieldValueChange} />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende: (yyyy-mm-dd)' value={ende} onChange={this.textFieldValueChange} />
-                  </Grid>
-                  <Grid item xs={3} 
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography align="left">Um nach einem bestimmten Zeitraum zu suchen, füllen Sie die Such-Felder aus und klicken sie den Button. Dies führt zu einer Aktualisierung der Ist-Stunden und der Restkapazität.</Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start: (yyyy-mm-dd)' value={start} onChange={this.textFieldValueChange} />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende: (yyyy-mm-dd)' value={ende} onChange={this.textFieldValueChange} />
+                    </Grid>
+                    <Grid item xs={3} 
                         sx={{
                             height: 75,
                             marginTop: 2,
                         }}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      aria-label="add"
-                      fullWidth
-                      onClick={this.zeitraumClicked}
-                      startIcon={<AccessTimeIcon />}
-                      sx={{
-                        height: 50,
-                        width: 250,
-                        }}
-                    >
-                      Zeitraum suchen
-                    </Button>
-                  </Grid>
+                        <Button
+                        variant="contained"
+                        color="primary"
+                        aria-label="add"
+                        fullWidth
+                        onClick={this.zeitraumClicked}
+                        startIcon={<AccessTimeIcon />}
+                        sx={{
+                            height: 50,
+                            width: 250,
+                            }}
+                        >
+                        Zeitraum suchen
+                        </Button>
+                    </Grid>
                 </Grid>
                 <br/>
                 <Table>
