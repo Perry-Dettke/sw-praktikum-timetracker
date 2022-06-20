@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Button, TextField, InputAdornment, IconButton, Grid, Typography, List, Box, Fab, TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import { Button, Tooltip, TextField, InputAdornment, IconButton, Grid, Typography, List, Box, Fab, TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 import BuchungListenEintrag from './BuchungListenEintrag.js'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-
 import ZeitintervallBuchungAnlegen from '../dialogs/ZeitintervallBuchungAnlegen.js';
 import EreignisBuchungAnlegen from '../dialogs/EreignisBuchungAnlegen.js';
 
@@ -135,31 +137,37 @@ class BuchungListe extends Component {
                 </Grid>
               </Grid>
             </Box>
-
-            <Table style={{ width: 1400 }}>
-
-              
-   
-                        <TableHead sx={{
+            <Grid container alignItems="center" xs={12} sx={{
                 backgroundColor: '#dedede'
               }}>
-                <TableRow>
-                  <TableCell>Datum</TableCell>
-                  <TableCell>Projekt</TableCell>
-                  <TableCell>Aktivität</TableCell>
-                  <TableCell>Art der Buchung (Zeitintervall/Ereignis)</TableCell>
-                  <TableCell>Stunden die gebucht wurden</TableCell>
-                  <TableCell>Bearbeiten</TableCell>
-                  <TableCell>Löschen</TableCell>
-                </TableRow>
-              </TableHead>
-
-              {
-                buchungliste.map(buchung =>
-                  <TableRow>  <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID} /></TableRow>)
-              }
-            </Table>
-
+              <Grid item xs={2}>
+                <Typography>Datum</Typography>
+              </Grid>
+              <Grid item xs={2}>
+                <Typography>Projekt</Typography>
+              </Grid>
+              <Grid item xs={2}>
+                <Typography>Aktivität</Typography>
+              </Grid>
+              <Grid item xs={2}>
+                <Typography>Art der Buchung (Zeitintervall/Ereignis)</Typography>
+              </Grid>
+              <Grid item xs={2}>
+                <Typography>Stunden, die gebucht wurden</Typography>
+              </Grid>
+              <Grid item xs={1}>
+                <Typography>Bearbeiten</Typography>
+              </Grid>
+              <Grid item xs={1}>
+                <Typography>Löschen</Typography>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+                  {
+                    buchungliste.map(buchung =>
+                        <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID} />)
+                  }
+            </Grid>
           </Grid>
           <ZeitintervallBuchungAnlegen show={showZeitintervallBuchungAnlegen} onClose={this.zeitintervallBuchungAnlegenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
           <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} onClose={this.ereignisBuchungAnlegenClosed}/>
