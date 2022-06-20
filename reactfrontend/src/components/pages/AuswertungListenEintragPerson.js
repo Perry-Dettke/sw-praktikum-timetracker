@@ -15,8 +15,6 @@ class AuswertungListenEintragPerson extends Component {
         //gebe einen leeren status
         this.state = {
             personliste: [],
-            start: null,
-            ende: null,
         };
     }
 
@@ -32,7 +30,7 @@ class AuswertungListenEintragPerson extends Component {
     }
 
     zeitraumClicked = () => {
-        this.getPersonbyAktivitaetID(this.state.start, this.state.ende);
+        this.getPersonbyAktivitaetID(this.props.start, this.props.ende);
       }
 
 
@@ -58,8 +56,8 @@ class AuswertungListenEintragPerson extends Component {
     }
 
     render() {
-        const { } = this.props;
-        const { personliste, start, ende } = this.state;
+        const { start, ende} = this.props;
+        const { personliste } = this.state;
         console.log(personliste)
 
 
@@ -69,8 +67,8 @@ class AuswertungListenEintragPerson extends Component {
  
                     <Grid item xs={12}>
                     <Grid item xs={3}>
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start: (yyyy-mm-dd)' value={start} onChange={this.textFieldValueChange} />
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende: (yyyy-mm-dd)' value={ende} onChange={this.textFieldValueChange} />
+                    <TextField autoFocus disabled type='text' required fullWidth margin='normal' id='start'  value={start} onChange={this.textFieldValueChange} />
+                        <TextField autoFocus disabled type='text' required fullWidth margin='normal' id='ende' value={ende} onChange={this.textFieldValueChange} />
                             <Button variant="contained" color="primary" aria-label="add" onClick={this.zeitraumClicked} startIcon={<AccessTimeIcon />}>
                                 Zeitraum auswählen</Button>
                         </Grid>

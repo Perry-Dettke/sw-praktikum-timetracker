@@ -54,7 +54,6 @@ class AuswertungListenEintrag extends Component {
 
   zeitraumClicked = () => {
     this.getAktivitaetbyProjektID(this.state.start, this.state.ende);
-    this.child.getPersonbyAktivitaetID(this.state.start, this.state.ende);
   };
 
   // Textfelder ändern
@@ -113,7 +112,7 @@ class AuswertungListenEintrag extends Component {
   //Renders the component
   render() {
     const { projekt } = this.props;
-    const { aktivitaetliste, buchungliste, start, ende } = this.state;
+    const { aktivitaetliste, buchungliste, personliste, start, ende } = this.state;
     // console.log("Akti", aktivitaetliste)
     console.log(aktivitaetliste, "Test");
 
@@ -141,30 +140,10 @@ class AuswertungListenEintrag extends Component {
               >
                 <Grid container alignItems="center" spacing={2}>
                   <Grid item xs={3}>
-                    <TextField
-                      autoFocus
-                      type="text"
-                      required
-                      fullWidth
-                      margin="normal"
-                      id="start"
-                      label="Start:"
-                      value={start}
-                      onChange={this.textFieldValueChange}
-                    />
+                    <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start: (yyyy-mm-dd)' value={start} onChange={this.textFieldValueChange} />
                   </Grid>
                   <Grid item xs={3}>
-                    <TextField
-                      autoFocus
-                      type="text"
-                      required
-                      fullWidth
-                      margin="normal"
-                      id="ende"
-                      label="Ende:"
-                      value={ende}
-                      onChange={this.textFieldValueChange}
-                    />
+                    <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende: (yyyy-mm-dd)' value={ende} onChange={this.textFieldValueChange} />
                   </Grid>
                   <Grid item xs={6}/>
                   <Grid item xs={3}>
@@ -224,16 +203,7 @@ class AuswertungListenEintrag extends Component {
                                   </strong>
                                 </TableHead>
                                 <TableBody>
-                                  <AuswertungListenEintragPerson
-                                    key={aktivitaet[aktivitaet.id]}
-                                    aktivitaet={aktivitaet}
-                                    aktivitaetliste={aktivitaetliste}
-                                    start={start}
-                                    ende={ende}
-                                    ref={(instance) => {
-                                      this.child = instance;
-                                    }}
-                                  />
+                                    <AuswertungListenEintragPerson key={(aktivitaet)[aktivitaet.id]} aktivitaet={aktivitaet} start={start} ende={ende} />
                                 </TableBody>
                               </Table>
                             </AccordionDetails>
@@ -249,8 +219,7 @@ class AuswertungListenEintrag extends Component {
                         <TableCell>
                           <Typography>
                             {" "}
-                            {aktivitaet.getKapazitaet() -
-                              aktivitaet.getAllStunden()}
+                            {aktivitaet.getKapazitaet() - aktivitaet.getStunden()}
                           </Typography>
                         </TableCell>
                       </TableRow>
