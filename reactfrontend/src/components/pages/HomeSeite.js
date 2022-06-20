@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Component } from "react";
-import { Paper, Box, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Table, IconButton, } from "@mui/material";
+import { Paper, Box, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Table, IconButton, Grid, Typography } from "@mui/material";
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonForm from "../dialogs/PersonForm";
@@ -124,7 +124,7 @@ class Home extends Component {
         newZeitintervall.setPerson_id(2) //current User
         TimetrackerAPI.getAPI().addZeitintervall(newZeitintervall).then(zeitintervall => {
             let date = new Date()
-            window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " eingstempelt")
+            window.alert("Hallo " + this.state.person.getVor_name() + "! Schön, dass du da bist." + "\nDu hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " eingstempelt!\nEinen schönen Arbeitstag!.")
             this.getZeitintervall()
             this.setState(this.initialState);
             this.getZeitintervallbyPersonID()
@@ -156,9 +156,9 @@ class Home extends Component {
         let hours = String(dateliste[11] + dateliste[12])
         let min = String(dateliste[14] + dateliste[15])
         let sek = String(dateliste[17] + dateliste[18])
-        console.log("Y",year,"M",month,"D",day,"TIME", hours, min, sek)
-        return  new Date(year,month -1, day, hours, min, sek)
-    }      
+        console.log("Y", year, "M", month, "D", day, "TIME", hours, min, sek)
+        return new Date(year, month - 1, day, hours, min, sek)
+    }
 
     // muss current user ID rein
     getZeitintervall = () => {
@@ -181,6 +181,7 @@ class Home extends Component {
 
 
     updateZeitintervall = () => {
+
         let ende = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
         let start = new Date(this.startDatumSplitten())
         let endefront = new Date()
@@ -190,7 +191,7 @@ class Home extends Component {
         zeitintervall.setDauer(this.msToTime(dauer))
         TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall)
         let date = new Date
-        window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " ausgestempelt")
+        window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " ausgestempelt!\nDu hast heute " + this.msToTime(dauer) + " Stunden gearbeitet!\nAuf Wiedersehen!")
         this.setState(this.initialState);
         this.getZeitintervallbyPersonID()
     }
@@ -201,16 +202,27 @@ class Home extends Component {
 
     // Millisekunden in Stunden und Minuten
     // Wird zu Berechnung der Dauer zwischen 2 Datetimes benötigt
-    msToTime = (duration) => {
-        var minutes = Math.floor(duration / (1000 * 60) % 60),
-            hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-            
-        hours = (hours < 10) ? "0" + hours : hours;
-        minutes = (minutes < 61) ? "0" + minutes : minutes;
-        return parseFloat(hours + "." + ((minutes)/6) * 10)
-      }
+    // msToTime = (duration) => {
+    //     var minutes = Math.floor(duration / (1000 * 60) % 60),
+    //       hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
 
+    //     hours = (hours < 10) ? "0" + hours : hours;
+    //     minutes = (minutes < 10) ? "0" + minutes : minutes;
+    //     return parseFloat(hours + "." + ((minutes)/6) * 10)
+    //   }
 
+    msToTime = (s) => {
+        let ms = (s % 1000) / 60
+        s = (s - ms) / 1000
+        let secs = (s % 60) / 60
+        console.log('secs', secs)
+        s = (s - secs) / 60
+        let mins = (s % 60) / 60
+        console.log('minuten', mins)
+        let hrs = (s - mins) / 60
+
+        return parseFloat(hrs + '.' + mins + secs)
+    }
 
     componentDidMount() {
         this.getPersonbyID();
@@ -322,15 +334,13 @@ class Home extends Component {
                         </TableHead>
 
                         <TableBody>
+
                             {
                                 zeitintervallliste.map(zeitintervall =>
                                     <TableRow>  <ZeitintervallEintrag key={zeitintervall[zeitintervall.id]} zeitintervall={zeitintervall} show={this.props.show} getZeitintervall={this.getZeitintervall} /></TableRow>)
                             }
                         </TableBody>
-
                     </Table>
-
-
                 </Box>
                 <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
                 <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPersonbyID} />
