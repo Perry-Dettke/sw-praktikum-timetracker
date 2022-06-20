@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Box, Chip } from '@mui/material';
+import { Typography, Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Box, Chip } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import InputLabel from "@mui/material/InputLabel";
 
@@ -109,9 +109,6 @@ class ProjektBearbeiten extends Component {
                     <Dialog open={show} onClose={this.handleClose} maxWidth='sm' fullWidth>
                         <DialogTitle>
                             {title}
-                            <IconButton onClick={this.handleClose}>
-                                <CloseIcon />
-                            </IconButton>
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
@@ -141,7 +138,7 @@ class ProjektBearbeiten extends Component {
                                     />
                                 </FormControl>
                                 <br /><br />
-                                {/* Personen die im System hinterlegt sind anzeigen lassen und mehrere zum Projekt hinzufügen*/}
+                                <Typography>Füge alle Personen hinzu, die in dem Projekt teilnehmen sollen.</Typography>
                                     <div>
                                         <FormControl fullWidth>
                                             <InputLabel id="person">Personen</InputLabel>

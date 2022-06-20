@@ -154,9 +154,6 @@ class ProjektAnlegen extends Component {
                     <Dialog open={show} onClose={this.handleClose} maxWidth='sm' fullWidth>
                         <DialogTitle>
                             {title}
-                            <IconButton onClick={this.handleClose}>
-                                <CloseIcon />
-                            </IconButton>
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
@@ -186,7 +183,6 @@ class ProjektAnlegen extends Component {
                                     />
                                 </FormControl>
                                 <br /><br />
-                                {/* Personen die im System hinterlegt sind anzeigen lassen und mehrere zum Projekt hinzufügen*/}
                                 {allePersonen ?
                                     <div>
                                         <FormControl fullWidth>
@@ -221,7 +217,8 @@ class ProjektAnlegen extends Component {
                                         </FormControl>
                                     </div>
                                     : null}
-                                <br />
+                                <br/>
+                                <Typography>Die einzelnen Aktivitäten für ein Projekt können in der Projekt Übersicht angelegt werden, nachdem das Projekt erstellt wurde. </Typography>
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>

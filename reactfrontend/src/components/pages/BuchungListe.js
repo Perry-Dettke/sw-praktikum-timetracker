@@ -137,7 +137,8 @@ class BuchungListe extends Component {
                 </Grid>
               </Grid>
             </Box>
-            <Grid container alignItems="center" xs={12} sx={{
+            <br/><br/>
+            <Grid container alignItems="center" spacing={3} xs={12} sx={{
                 backgroundColor: '#dedede'
               }}>
               <Grid item xs={2}>
@@ -163,10 +164,10 @@ class BuchungListe extends Component {
               </Grid>
             </Grid>
             <Grid item xs={12}>
-                  {
-                    buchungliste.map(buchung =>
-                        <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID} />)
-                  }
+              {
+                buchungliste.map(buchung =>
+                    <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID} />)
+              }
             </Grid>
           </Grid>
           <ZeitintervallBuchungAnlegen show={showZeitintervallBuchungAnlegen} onClose={this.zeitintervallBuchungAnlegenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
