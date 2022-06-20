@@ -33,7 +33,7 @@ class Projekt_uebersicht extends Component {
 
     /** Fetches all ProjektBOs from the backend */
     getProjekt = () => {
-        TimetrackerAPI.getAPI().getProjektbyPersonID(2).then((projektBOs) => {
+        TimetrackerAPI.getAPI().getProjektbyPersonID(3).then((projektBOs) => {
     //  TimetrackerAPI.getAPI().getProjektbyPersonID(this.props.person.getID()).then((projektBOs) => {
               this.setState({
                 projekt: projektBOs,

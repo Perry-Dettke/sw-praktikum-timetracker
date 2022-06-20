@@ -41,7 +41,7 @@ class ProjektAnlegen extends Component {
         newProjekt.setID(0)
         newProjekt.setBezeichnung(this.state.projektBezeichnung)
         newProjekt.setAuftraggeber(this.state.auftraggeber)
-        newProjekt.setProjekterstellerID(2)
+        newProjekt.setProjekterstellerID(3)
         //newProjekt.setProjekterstellerID(this.props.person.getID())
         TimetrackerAPI.getAPI().addProjekt(newProjekt).then(projekt => {
             this.addPersonInProjekt(projekt)
