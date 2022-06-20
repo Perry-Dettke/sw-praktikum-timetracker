@@ -144,10 +144,11 @@ class Home extends Component {
     console.log(this.state.zeitintervall)
         let zeitintervall = this.state.zeitintervall;
         let ende = new Date;
-        let dauer = (parseFloat(ende.toLocaleTimeString())) - parseFloat(this.state.start.toLocaleTimeString())
-        zeitintervall.setEnde(0) // wird im Backend gesetzt
-        zeitintervall.setDauer(dauer)
+        // let dauer = (parseFloat(ende.toLocaleTimeString())) - parseFloat(this.state.start.toLocaleTimeString())
 
+        zeitintervall.setEnde(0) // wird im Backend gesetzt
+        zeitintervall.setDauer(this.msToTime((ende.getTime() - this.state.start.getTime())))
+        console.log(this.msToTime((ende.getTime() - this.state.start.getTime())))
         TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall) 
         let date = new Date()
         window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " ausgestempelt")
@@ -155,29 +156,28 @@ class Home extends Component {
         }
     
 
- uhrzeit = () => {
-    var timenow = new Date(),
-        h = timenow.getHours(),
-        m = timenow.getMinutes(),
-        s = timenow.getSeconds();
+    msToTime = (duration) => {
+        var minutes = Math.floor(duration / (1000 * 60) % 60),
+            hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+            
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 61) ? "0" + minutes : minutes;
+        console.log(minutes, "miins")
+        return parseFloat(hours + "." + ((minutes)/6) * 10)
+      }
 
-    let stunden = String(h+m+s)
-    console.log(stunden)
-
- }
+ 
  
 
     
 
 componentDidMount() {
     this.getPersonbyID();
-    this.uhrzeit()
 }
 
 render() {
-    const { person, showPersonForm, showPersonDelete, zeitintervall, showEreignisBuchungAnlegen, start } = this.state;
+    const { person, showPersonForm, showPersonDelete, zeitintervall, showEreignisBuchungAnlegen, start, ende } = this.state;
     console.log(zeitintervall)
-    console.log(start)
 
     return person ? (
         <div>
