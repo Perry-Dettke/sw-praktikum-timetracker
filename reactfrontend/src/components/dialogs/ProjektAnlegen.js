@@ -29,8 +29,15 @@ class ProjektAnlegen extends Component {
     // Fetches all PersonBOs from the backend
     getPersonen = () => {
         TimetrackerAPI.getAPI().getPerson().then((personenBOs) => {
+            let allePersonen = []
+            personenBOs.map(person =>{
+                if (person.getID() != 3){
+                //if (person.getID() != this.props.person.getID()){
+                    allePersonen.push(person)
+                }
+            })
             this.setState({
-                allePersonen: personenBOs,
+                allePersonen: allePersonen,
             });
         });
     }

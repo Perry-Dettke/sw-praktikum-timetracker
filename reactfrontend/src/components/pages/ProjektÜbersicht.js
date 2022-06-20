@@ -105,7 +105,7 @@ class Projekt_uebersicht extends Component {
                         </List>
                     </Grid>
                 </Grid>
-                <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} />
+                <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} /> {/*person= {person}*/}
             </div>
         );
     }

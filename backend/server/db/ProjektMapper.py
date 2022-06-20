@@ -1,3 +1,4 @@
+from pickle import NONE
 from server.bo.Projekt import Projekt
 from server.db.Mapper import Mapper
 
@@ -258,14 +259,18 @@ class ProjektMapper (Mapper):
 
         return True
 
-    def delete_person_in_projekt(self, projekt_id):
+    def delete_person_in_projekt(self, projekt_id, person_id=None):
         """Löschen der Daten eines Projekt-Person-Objekts aus der Datenbank.
 
         :param projekt das aus der DB zu löschende "Objekt"
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM projekt_person WHERE projekt_id={}".format(projekt_id)
+        """Bei Projekt bearbeiten soll die Person ID des Projekterstellers nicht gelöscht werden."""
+        if person_id:
+            command = "DELETE FROM projekt_person WHERE projekt_id={} AND person_id<>{}".format(projekt_id, person_id)
+        else:
+            command = "DELETE FROM projekt_person WHERE projekt_id={}".format(projekt_id)
         cursor.execute(command)
 
         self._cnx.commit()
