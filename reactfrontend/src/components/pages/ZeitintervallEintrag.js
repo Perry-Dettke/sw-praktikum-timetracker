@@ -122,34 +122,36 @@ class ZeitintervallEintrag extends Component {
 
         return (
             zeitintervall ?
-                <div>
+            <Grid container alignItems="center" xs={12}>
 
-                        
-  
-                            <TableRow key={zeitintervall.getID()}>
-                                <TableCell>{zeitintervall.getStart()}</TableCell>
-                                <TableCell>{zeitintervall.getEnde()}</TableCell>
-                                <TableCell>{zeitintervall.getDauer()}</TableCell>
-                                <TableCell>
-                                    <Tooltip title='Bearbeiten' placement="bottom">
-                                        <IconButton variant='contained' onClick={this.bearbeitenButtonClicked}><EditIcon /></IconButton>
-                                    </Tooltip>
-                                </TableCell>
-                                <TableCell>
-                                    <Tooltip title='Löschen' placement="bottom">
-                                        <IconButton variant="contained" onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
-                                    </Tooltip>
-                                </TableCell>
-                            </TableRow>
-       
-                   
-                 
-    
+            <Grid item xs={2}>
+                <Typography>{zeitintervall.getStart()}</Typography>
+            </Grid>
+
+            <Grid item xs={2}>
+                <Typography>{zeitintervall.getEnde()}</Typography>
+            </Grid>
+
+            <Grid item xs={2}>
+                <Typography>{zeitintervall.getDauer()}</Typography>
+            </Grid>
+
+            <Grid item xs={1}>
+                <Tooltip title='Bearbeiten' placement="bottom">
+                    <IconButton variant='contained' onClick={this.bearbeitenButtonClicked}><EditIcon /></IconButton>
+                </Tooltip>
+            </Grid>
+
+            <Grid item xs={1}>
+                <Tooltip title='Löschen' placement="bottom">
+                    <IconButton variant="contained" onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
+                </Tooltip>
+            </Grid>    
 
                     {/* <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
                     <BuchungDelete show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchungbyPersonID={this.props.getBuchungbyPersonID}/> */}
 
-                </div>
+                </Grid>
                     
                 : null
         );

@@ -319,29 +319,41 @@ class Home extends Component {
                         </div>
                     </Paper>
                 </Box>
-                <Box>
+    
 
-                    <Table>
+                    <Grid container alignItems="center" xs={22} sx={{
+                        backgroundColor: '#dedede'
+                    }}>
+                        <Grid item xs={2}>
+                            <Typography>Kommen</Typography>
+                        </Grid>
 
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="right">Kommen</TableCell>
-                                <TableCell align="right">Gehen</TableCell>
-                                <TableCell align="right">Stunden</TableCell>
-                                <TableCell align="right">Bearbeiten</TableCell>
-                                <TableCell align="right">Löschen</TableCell>
-                            </TableRow>
-                        </TableHead>
+                        <Grid item xs={2}>
+                            <Typography>Gehen</Typography>
+                        </Grid>
 
-                        <TableBody>
+                        <Grid item xs={2}>
+                            <Typography>Stunden</Typography>
+                        </Grid>
 
-                            {
-                                zeitintervallliste.map(zeitintervall =>
-                                    <TableRow>  <ZeitintervallEintrag key={zeitintervall[zeitintervall.id]} zeitintervall={zeitintervall} show={this.props.show} getZeitintervall={this.getZeitintervall} /></TableRow>)
-                            }
-                        </TableBody>
-                    </Table>
-                </Box>
+                        <Grid item xs={1}>
+                            <Typography>Bearbeiten</Typography>
+                        </Grid>
+
+                        <Grid item xs={1}>
+                            <Typography>Löschen</Typography>
+                        </Grid>
+
+                    </Grid>
+                    <Grid item xs={12}>
+
+                        {
+                            zeitintervallliste.map(zeitintervall =>
+                                <ZeitintervallEintrag key={zeitintervall[zeitintervall.id]} zeitintervall={zeitintervall} show={this.props.show} getZeitintervall={this.getZeitintervall} />)
+                        }
+                    </Grid>
+
+  
                 <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
                 <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPersonbyID} />
                 <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} onClose={this.ereignisBuchungAnlegenClosed} />
