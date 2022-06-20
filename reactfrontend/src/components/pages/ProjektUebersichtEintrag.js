@@ -263,7 +263,8 @@ class ProjektUebersichtEintrag extends Component {
                                             <TableRow>
                                                 <TableCell>Aktivität</TableCell>
                                                 <TableCell>Kapazität</TableCell>
-                                                <TableCell></TableCell>
+                                                <TableCell>Bearbeiten</TableCell>
+                                                <TableCell>Löschen</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -273,18 +274,17 @@ class ProjektUebersichtEintrag extends Component {
                                                         <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
                                                         <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
                                                         <TableCell>
-                                                            <Grid item>
-                                                                <Tooltip title='Bearbeiten' placement="bottom">
-                                                                    <IconButton variant='contained' onClick={() => this.aktivitaetBearbeitenClicked(aktivitaet)}>
-                                                                        <EditIcon />
-                                                                    </IconButton>
-                                                                </Tooltip>
-                                                                <Tooltip title='Löschen' placement="bottom">
-                                                                    <IconButton variant="contained" onClick={() => this.aktivitaetLoeschenClicked(aktivitaet)}><DeleteIcon /></IconButton>
-                                                                </Tooltip>
-                                                            </Grid>
+                                                            <Tooltip title='Bearbeiten' placement="bottom">
+                                                                <IconButton variant='contained' onClick={() => this.aktivitaetBearbeitenClicked(aktivitaet)}>
+                                                                    <EditIcon />
+                                                                </IconButton>
+                                                            </Tooltip>
                                                         </TableCell>
-
+                                                        <TableCell>
+                                                            <Tooltip title='Löschen' placement="bottom">
+                                                                <IconButton variant="contained" onClick={() => this.aktivitaetLoeschenClicked(aktivitaet)}><DeleteIcon /></IconButton>
+                                                            </Tooltip>
+                                                        </TableCell>
                                                     </TableRow>
                                                 )}
                                         </TableBody>

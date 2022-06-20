@@ -83,7 +83,11 @@ class Projekt_uebersicht extends Component {
 
         return (
             <div>
-                <Grid container spacing={4}  alignItems="left">
+                <Grid container spacing={1}  alignItems="left">
+                    <Grid item xs={12}>
+                        <Typography><h3>Hier werden alle Projekte in denen du Teilnehmer bist angezeigt (Der Ersteller ist immer auch Teilnehmer)</h3></Typography>
+                        <Typography><h4>Nur der Ersteller eines Projekts kann ein Projekt bearbeiten und löschen oder Aktivitäten hinzufügen und löschen.</h4></Typography>
+                    </Grid>
                     <Grid item xs={12}>
                         <Button 
                             sx={{
