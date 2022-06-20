@@ -7,8 +7,8 @@ import EditIcon from '@mui/icons-material/Edit';
 
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
-import BuchungDelete from '../dialogs/BuchungDelete';
-import BuchungBearbeiten from '../dialogs/BuchungBearbeiten';
+import ZeitintervallLoeschen from '../dialogs/ZeitintervallLoeschen.js';
+import ZeitintervallBearbeiten from '../dialogs/ZeitintervallBearbeiten';
 
 
 
@@ -19,53 +19,14 @@ class ZeitintervallEintrag extends Component {
 
         //gebe einen leeren status
         this.state = {
-            aktivitaet: null,
-            projekt: null,
-            showBuchungBearbeiten: false,
-            showBuchungDelete: false,
-            aktivitaetliste: [],
-            tablehead: null,
+            showZeitintervallBearbeiten: false,
+            showZeitintervallLoeschen: false,
         };
     }
 
-    //Gibt die aktuellen Buchungen zurück
-    getBuchungbyPersonID = () => {
-        this.props.getBuchungbyPersonID();
-    }
-
-
-    getAktivitaet = () => {
-        TimetrackerAPI.getAPI().getAktivitaetbyID(this.props.buchung.getAktivitaet_id()).then((aktivitaetBOs) => {
-            this.setState({
-                aktivitaet: aktivitaetBOs,
-            });
-        });
-    }
-
-
-
-    getProjekt = () => {
-        this.timer = setTimeout(() => {
-            TimetrackerAPI.getAPI().getProjektbyID(this.state.aktivitaet.getProjektID()).then((projektBOs) => {
-                this.setState({
-                    projekt: projektBOs,
-                });
-            });
-        }
-            , 2000);
-    }
-
-
-    getAktivitaetbyProjektID = () => {
-        this.timer = setTimeout(() => {
-
-            TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.state.aktivitaet.getProjektID()).then((aktivitaetBOs) => {
-                this.setState({
-                    aktivitaetliste: aktivitaetBOs,
-                });
-            });
-        }
-            , 2000);
+    //Gibt die aktuellen Zeitintervalle zurück
+    getZeitintervallbyPersonID = () => {
+        this.props.getZeitintervallbyPersonID();
     }
 
 
@@ -73,38 +34,37 @@ class ZeitintervallEintrag extends Component {
     bearbeitenButtonClicked = event => {
         event.stopPropagation();
         this.setState({
-            showBuchungBearbeiten: true
+            showZeitintervallBearbeiten: true
         });
     }
 
     //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
-    buchungBearbeitenClosed = (buchung) => {
-        if (buchung) {
+    zeitintervallBearbeitenClosed = (zeitintervall) => {
+        if (zeitintervall) {
             this.setState({
-                showBuchungBearbeiten: false
+                showZeitintervallBearbeiten: false
             });
-            this.getAktivitaet()
         } else {
             this.setState({
-                showBuchungBearbeiten: false
+                showZeitintervallBearbeiten: false
             });
         }
     }
 
-    //Öffnet das Dialog-Fenster BuchungDeleteDialog, wenn der Button geklickt wurde
-    buchungDeleteButtonClicked = event => {
+    //Öffnet das Dialog-Fenster ZeitintervallLoeschenDialog, wenn der Button geklickt wurde
+    zeitintervallLoeschenButtonClicked = event => {
         event.stopPropagation();
         this.setState({
-            showBuchungDelete: true
+            showZeitintervallLoeschen: true
         });
     }
 
-    //Wird aufgerufen, wenn das Dialog-Fenster PorjektDeleteDialog geschlossen wird
-    buchungDeleteClosed = () => {
+    //Wird aufgerufen, wenn das Dialog-Fenster PorjektLoeschenDialog geschlossen wird
+    zeitintervallLoeschenClosed = () => {
         this.setState({
-            showBuchungDelete: false
+            showZeitintervallLoeschen: false
         });
-        this.props.getBuchung()
+        this.props.getZeitintervallbyPersonID()
     }
 
     componentDidMount() {
@@ -116,9 +76,8 @@ class ZeitintervallEintrag extends Component {
     //Renders the component
     render() {
         const { zeitintervall } = this.props;
-        const { showBuchungBearbeiten, showBuchungDelete } = this.state;
-        // console.log(projekt)
-        // console.log(this.state.aktivitaet.getProjektID())
+        const { showZeitintervallBearbeiten, showZeitintervallLoeschen } = this.state;
+        // console.log()
 
         return (
             zeitintervall ?
@@ -144,12 +103,12 @@ class ZeitintervallEintrag extends Component {
 
             <Grid item xs={1}>
                 <Tooltip title='Löschen' placement="bottom">
-                    <IconButton variant="contained" onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
+                    <IconButton variant="contained" onClick={this.zeitintervallLoeschenButtonClicked}><DeleteIcon /></IconButton>
                 </Tooltip>
             </Grid>    
 
-                    {/* <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
-                    <BuchungDelete show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchungbyPersonID={this.props.getBuchungbyPersonID}/> */}
+                    <ZeitintervallBearbeiten show={showZeitintervallBearbeiten} zeitintervall={zeitintervall} onClose={this.zeitintervallBearbeitenClosed} getZeitintervallbyPersonID={this.getZeitintervallbyPersonID} />
+                    <ZeitintervallLoeschen show={showZeitintervallLoeschen} zeitintervall={zeitintervall} onClose={this.zeitintervallLoeschenClosed} getZeitintervallbyPersonID={this.props.getZeitintervallbyPersonID}/>
 
                 </Grid>
                     

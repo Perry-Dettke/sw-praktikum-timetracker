@@ -26,6 +26,7 @@ class Home extends Component {
             ende: null,
         };
     }
+// **********MEIN PROFIL FUNKTIONEN**********\\
 
     getPersonbyID = () => {
         var api = TimetrackerAPI.getAPI();
@@ -35,15 +36,8 @@ class Home extends Component {
             });
         });
     };
-    // currentuser.getArbeitszeitkontoID()
-    getArbeitszeitkonto = () => {
-        TimetrackerAPI.getAPI().getArbeitszeitkonto().then((arbeitszeitkontoBO) => {
-            this.setState({
-                arbeitszeitkonto: arbeitszeitkontoBO,
-            });
-        });
-    }
 
+    //Person bearbeiten
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = (event) => {
         event.stopPropagation();
@@ -52,6 +46,7 @@ class Home extends Component {
         });
     };
 
+    //Person Form
     //Wird aufgerufen, wenn Speichern oder Abbrechen im Dialog gedrückt wird
     personFormClosed = (person) => {
         if (person) {
@@ -66,6 +61,7 @@ class Home extends Component {
         }
     };
 
+    //Person Loeschen
     //Öffnet das Dialog-Fenster PersonDeleteDialog, wenn der Button geklickt wurde
     deleteButtonClicked = (event) => {
         event.stopPropagation();
@@ -81,6 +77,35 @@ class Home extends Component {
             person: null,
         });
     };
+
+    // currentuser.getArbeitszeitkontoID() in die Klammer statt 1
+    getArbeitszeitkonto = () => {
+        TimetrackerAPI.getAPI().getArbeitszeitkonto(1).then((arbeitszeitkontoBO) => {
+            this.setState({
+                arbeitszeitkonto: arbeitszeitkontoBO,
+            });
+        });
+    }
+
+        // muss current user ID rein
+    getZeitintervall = () => {
+        TimetrackerAPI.getAPI().getZeitintervallbyMaxIDandPersonID(2).then((zeitintervallBO) => {
+            this.setState({
+                zeitintervall: zeitintervallBO,
+            });
+        });
+    }
+
+    // muss current user ID rein
+    getZeitintervallbyPersonID = () => {
+        TimetrackerAPI.getAPI().getZeitintervallbyPersonID(2).then((zeitintervallBOs) => {
+            this.setState({
+                zeitintervallliste: zeitintervallBOs,
+            });
+        });
+    }
+
+// ********** EREIGNISBUCHUNG FUNKTIONEN **********\\
 
     // Ereignisbuchung Erstellen Dialog anzeigen
     ereignisBuchungAnlegenButtonClicked = event => {
@@ -109,11 +134,11 @@ class Home extends Component {
     //     }
     // }
 
-    // 20.6.2022 14:13:17
 
-    // str.split([separator[, limit]])
+// ********** ZEITINTERVALL FUNKTIONEN **********\\
 
-    // Kommen Zeitpunkt adden
+    // Kommen Zeitpunkt und person ID adden
+    // Rest wird vorerst auf 0 gesetzt 
     addZeitintervall = () => {
         let newZeitintervall = new ZeitintervallBO()
         let start = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
@@ -134,52 +159,6 @@ class Home extends Component {
         })
     }
 
-    //Datum und Zeit vom Frontend wird das richtige Backend Format umgewandelt
-    dateSplit = () => {
-        let newDate = new Date()
-        let date = newDate.toLocaleDateString() + " " + newDate.toLocaleTimeString()
-        let dateliste = date.split('')
-        let day = String(dateliste[0] + dateliste[1])
-        let month = "0" + String(dateliste[3])
-        let year = String(dateliste[5] + dateliste[6] + dateliste[7] + dateliste[8])
-        let time = String(dateliste[10] + dateliste[11] + dateliste[12] + dateliste[13] + dateliste[14] + dateliste[15] + dateliste[16] + dateliste[17])
-        return year + "-" + month + "-" + day + " " + time
-    }
-
-
-    startDatumSplitten = () => {
-        let date = this.state.zeitintervall.getStart()
-        let dateliste = date.split('')
-        let year = String(dateliste[0] + dateliste[1] + dateliste[2] + dateliste[3])
-        let month = String(dateliste[6])
-        let day = String(dateliste[8] + dateliste[9])
-        let hours = String(dateliste[11] + dateliste[12])
-        let min = String(dateliste[14] + dateliste[15])
-        let sek = String(dateliste[17] + dateliste[18])
-        console.log("Y", year, "M", month, "D", day, "TIME", hours, min, sek)
-        return new Date(year, month - 1, day, hours, min, sek)
-    }
-
-    // muss current user ID rein
-    getZeitintervall = () => {
-        TimetrackerAPI.getAPI().getZeitintervallbyMaxIDandPersonID(2).then((zeitintervallBO) => {
-            this.setState({
-                zeitintervall: zeitintervallBO,
-            });
-        });
-    }
-
-    // muss current user ID rein
-    getZeitintervallbyPersonID = () => {
-        TimetrackerAPI.getAPI().getZeitintervallbyPersonID(2).then((zeitintervallBOs) => {
-            this.setState({
-                zeitintervallliste: zeitintervallBOs,
-            });
-        });
-    }
-
-
-
     updateZeitintervall = () => {
 
         let ende = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
@@ -196,21 +175,34 @@ class Home extends Component {
         this.getZeitintervallbyPersonID()
     }
 
+    //Datum und Zeit vom Frontend wird das richtige Backend Format umgewandelt
+    dateSplit = () => {
+        let newDate = new Date()
+        let date = newDate.toLocaleDateString() + " " + newDate.toLocaleTimeString()
+        let dateliste = date.split('')
+        let day = String(dateliste[0] + dateliste[1])
+        let month = "0" + String(dateliste[3])
+        let year = String(dateliste[5] + dateliste[6] + dateliste[7] + dateliste[8])
+        let time = String(dateliste[10] + dateliste[11] + dateliste[12] + dateliste[13] + dateliste[14] + dateliste[15] + dateliste[16] + dateliste[17])
+        return year + "-" + month + "-" + day + " " + time
+    }
 
-
+    startDatumSplitten = () => {
+        let date = this.state.zeitintervall.getStart()
+        let dateliste = date.split('')
+        let year = String(dateliste[0] + dateliste[1] + dateliste[2] + dateliste[3])
+        let month = String(dateliste[6])
+        let day = String(dateliste[8] + dateliste[9])
+        let hours = String(dateliste[11] + dateliste[12])
+        let min = String(dateliste[14] + dateliste[15])
+        let sek = String(dateliste[17] + dateliste[18])
+        console.log("Y", year, "M", month, "D", day, "TIME", hours, min, sek)
+        return new Date(year, month - 1, day, hours, min, sek)
+    }
 
 
     // Millisekunden in Stunden und Minuten
     // Wird zu Berechnung der Dauer zwischen 2 Datetimes benötigt
-    // msToTime = (duration) => {
-    //     var minutes = Math.floor(duration / (1000 * 60) % 60),
-    //       hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-
-    //     hours = (hours < 10) ? "0" + hours : hours;
-    //     minutes = (minutes < 10) ? "0" + minutes : minutes;
-    //     return parseFloat(hours + "." + ((minutes)/6) * 10)
-    //   }
-
     msToTime = (s) => {
         let ms = (s % 1000) / 60
         s = (s - ms) / 1000
@@ -349,7 +341,7 @@ class Home extends Component {
 
                         {
                             zeitintervallliste.map(zeitintervall =>
-                                <ZeitintervallEintrag key={zeitintervall[zeitintervall.id]} zeitintervall={zeitintervall} show={this.props.show} getZeitintervall={this.getZeitintervall} />)
+                                <ZeitintervallEintrag key={zeitintervall[zeitintervall.id]} zeitintervall={zeitintervall} show={this.props.show} getZeitintervallbyPersonID={this.getZeitintervallbyPersonID} />)
                         }
                     </Grid>
 
