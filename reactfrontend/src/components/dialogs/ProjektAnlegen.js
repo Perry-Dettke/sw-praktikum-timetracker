@@ -29,8 +29,15 @@ class ProjektAnlegen extends Component {
     // Fetches all PersonBOs from the backend
     getPersonen = () => {
         TimetrackerAPI.getAPI().getPerson().then((personenBOs) => {
+            let allePersonen = []
+            personenBOs.map(person =>{
+                if (person.getID() != 3){
+                //if (person.getID() != this.props.person.getID()){
+                    allePersonen.push(person)
+                }
+            })
             this.setState({
-                allePersonen: personenBOs,
+                allePersonen: allePersonen,
             });
         });
     }
@@ -41,7 +48,7 @@ class ProjektAnlegen extends Component {
         newProjekt.setID(0)
         newProjekt.setBezeichnung(this.state.projektBezeichnung)
         newProjekt.setAuftraggeber(this.state.auftraggeber)
-        newProjekt.setProjekterstellerID(2)
+        newProjekt.setProjekterstellerID(3)
         //newProjekt.setProjekterstellerID(this.props.person.getID())
         TimetrackerAPI.getAPI().addProjekt(newProjekt).then(projekt => {
             this.addPersonInProjekt(projekt)
@@ -147,9 +154,6 @@ class ProjektAnlegen extends Component {
                     <Dialog open={show} onClose={this.handleClose} maxWidth='sm' fullWidth>
                         <DialogTitle>
                             {title}
-                            <IconButton onClick={this.handleClose}>
-                                <CloseIcon />
-                            </IconButton>
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
@@ -179,7 +183,6 @@ class ProjektAnlegen extends Component {
                                     />
                                 </FormControl>
                                 <br /><br />
-                                {/* Personen die im System hinterlegt sind anzeigen lassen und mehrere zum Projekt hinzufügen*/}
                                 {allePersonen ?
                                     <div>
                                         <FormControl fullWidth>
@@ -214,7 +217,8 @@ class ProjektAnlegen extends Component {
                                         </FormControl>
                                     </div>
                                     : null}
-                                <br />
+                                <br/>
+                                <Typography>Die einzelnen Aktivitäten für ein Projekt können in der Projekt Übersicht angelegt werden, nachdem das Projekt erstellt wurde. </Typography>
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>

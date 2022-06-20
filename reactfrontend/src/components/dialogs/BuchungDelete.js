@@ -38,10 +38,10 @@ class BuchungDeleteDialog extends Component {
           onClose={this.handleClose}
           maxWidth='xs'
         >
-          <DialogTitle>{"Sind Sie sich sicher?"}</DialogTitle>
+          <DialogTitle>{"Bist du dir sicher?"}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Wenn Sie die Buchung wirklich löschen möchten, drücken Sie auf "JA".
+              Diese Buchung wirklich löschen?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -58,8 +58,6 @@ class BuchungDeleteDialog extends Component {
   }
 
 }
-
-
 
 
 export default BuchungDeleteDialog;

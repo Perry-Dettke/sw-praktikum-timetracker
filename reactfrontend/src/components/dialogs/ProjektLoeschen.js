@@ -32,10 +32,10 @@ class ProjektLoeschen extends Component {
           onClose={this.handleClose}
           maxWidth='xs'
         >
-          <DialogTitle>{"Sind Sie sich sicher?"}</DialogTitle>
+          <DialogTitle>{"Bist du dir sicher?"}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Wenn Sie das Projekt {projekt.getBezeichnung()} wirklich löschen möchten, drücken Sie auf "JA".
+              Das Projekt {projekt.getBezeichnung()} wirklich löschen?
             </DialogContentText>
           </DialogContent>
           <DialogActions>

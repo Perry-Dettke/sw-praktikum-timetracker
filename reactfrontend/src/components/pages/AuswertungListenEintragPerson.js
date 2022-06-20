@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 
-import { TextField, Button, IconButton, Grid, Tooltip, Accordion, AccordionSummary, AccordionDetails, Table, TableCell, TableHead, TableRow, TableBody, List } from '@mui/material';
+import { Typography, TextField, Button, IconButton, Grid, Tooltip, Accordion, AccordionSummary, AccordionDetails, Table, TableCell, TableHead, TableRow, TableBody, List } from '@mui/material';
+
+import PersonIcon from '@mui/icons-material/Person';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 
 
@@ -15,8 +18,6 @@ class AuswertungListenEintragPerson extends Component {
         //gebe einen leeren status
         this.state = {
             personliste: [],
-            start: null,
-            ende: null,
         };
     }
 
@@ -32,7 +33,7 @@ class AuswertungListenEintragPerson extends Component {
     }
 
     zeitraumClicked = () => {
-        this.getPersonbyAktivitaetID(this.state.start, this.state.ende);
+        this.getPersonbyAktivitaetID(this.props.start, this.props.ende);
       }
 
 
@@ -58,35 +59,47 @@ class AuswertungListenEintragPerson extends Component {
     }
 
     render() {
-        const { } = this.props;
-        const { personliste, start, ende } = this.state;
+        const { start, ende} = this.props;
+        const { personliste } = this.state;
         console.log(personliste)
 
-
         return (
-            <div>
-                <Grid container spacing={4} alignItems="left">
- 
-                    <Grid item xs={12}>
-                    <Grid item xs={3}>
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start: (yyyy-mm-dd)' value={start} onChange={this.textFieldValueChange} />
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende: (yyyy-mm-dd)' value={ende} onChange={this.textFieldValueChange} />
-                            <Button variant="contained" color="primary" aria-label="add" onClick={this.zeitraumClicked} startIcon={<AccessTimeIcon />}>
-                                Zeitraum auswählen</Button>
-                        </Grid>
-                        <List >
-                            {
-                                personliste.map(person =>
-                                    <TableRow>
-                                        <TableCell>{person.getVor_name()} {person.getNach_name()}  </TableCell>
-                                        <TableCell>{person.getStunden()} Stunden</TableCell>
-                                    </TableRow>
-                                )
-                            }
-                        </List>
-                    </Grid>
+            <Grid container spacing={1} alignItems="center">
+                <Grid item xs={12}>
+                    <Typography> Personen, die bereits auf diese Aktivität gebucht haben: </Typography>
                 </Grid>
-            </div>
+                <Grid item xs={12}>
+                    <List >
+                        {
+                            personliste.map(person =>
+                                <TableRow>
+                                    <TableCell> <PersonIcon/> </TableCell>
+                                    <TableCell>{person.getVor_name()} {person.getNach_name()}  </TableCell>
+                                    <TableCell>{person.getStunden()} Stunden</TableCell>
+                                </TableRow>
+                            )
+                        }
+                    </List>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography>Um die Stunden der einzelnen Personen in dieser Aktivität in dem oben ausgewählten Zeitraum zu suchen bitte den folgenden Button drücken.</Typography>
+                </Grid>
+                <Grid item xs={4}>
+                    <TextField autoFocus disabled type='text' required fullWidth margin='normal' id='start'  value={start} onChange={this.textFieldValueChange} />
+                </Grid>
+                <Grid item xs={4}>
+                    <TextField autoFocus disabled type='text' required fullWidth margin='normal' id='ende' value={ende} onChange={this.textFieldValueChange} />
+                </Grid>
+                <Grid item xs={4}>
+                    <Button variant="contained" color="primary" aria-label="add" onClick={this.zeitraumClicked} startIcon={<AccessTimeIcon />} 
+                        sx={{
+                            height: 50,
+                            width: 250,
+                        }}>
+                        Zeitraum suchen
+                    </Button>
+                </Grid>
+            </Grid>
         );
     }
 }
