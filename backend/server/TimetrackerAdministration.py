@@ -469,7 +469,7 @@ class TimetrackerAdministration (object):
         """Das gegebenen Zeitintervall speichern."""
         self.save_zeitintervall(zeitintervall)
         with ZeitintervallMapper() as mapper:
-            zi = mapper.find_by_max_id_and_peron_id(zeitintervall.get_person_id())
+            zi = mapper.find_by_max_id_and_person_id(zeitintervall.get_person_id())
 
             print(zi)
             for i in zi:
@@ -480,7 +480,7 @@ class TimetrackerAdministration (object):
 
 
              # with ZeitintervallMapper() as mapper:
-        #     Zeitintervallbo = mapper.find_by_max_id_and_peron_id(zeitintervall.get_person_id())
+        #     Zeitintervallbo = mapper.find_by_max_id_and_person_id(zeitintervall.get_person_id())
         #     dauer = Zeitintervallbo.get_ende() - Zeitintervallbo.get_start()
         #     Zeitintervallbo.set_dauer(dauer)
         #     self.update(zeitintervallbo)
@@ -496,10 +496,15 @@ class TimetrackerAdministration (object):
             return mapper.delete(zeitintervall)
 
 
-    def get_zeitintervall_by_max_id_and_peron_id(self, person_id):
+    def get_zeitintervall_by_max_id_and_person_id(self, person_id):
         """Das Zeitintervall mit der gegebenen ID auslesen."""
         with ZeitintervallMapper() as mapper:
-            return mapper.find_by_max_id_and_peron_id(person_id)
+            return mapper.find_by_max_id_and_person_id(person_id)
+
+    def get_zeitintervall_by_person_id(self, person_id):
+        """Das Zeitintervall mit der gegebenen ID auslesen."""
+        with ZeitintervallMapper() as mapper:
+            return mapper.find_by_person_id(person_id)
 
 
 

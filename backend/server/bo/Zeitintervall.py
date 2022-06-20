@@ -7,8 +7,8 @@ class Zeitintervall(bo.BusinessObjekt):
     def __init__(self):
         """ Definieren der Attribute, der Klasse Ereignis. """
         super().__init__()
-        self._start = datetime.datetime.now()
-        self._ende = datetime.datetime.now()
+        self._start = ""
+        self._ende = ""
         self._dauer = 0.0
         self._person_id = 0
         
@@ -52,6 +52,8 @@ class Zeitintervall(bo.BusinessObjekt):
     def from_dict(dictionary=dict()):
         """ Umwandeln eines Python dict() in ein Zeitintervall(). """
         obj = Zeitintervall()
+        obj.set_start(dictionary["start"])
+        obj.set_ende(dictionary["ende"])
         obj.set_dauer(dictionary["dauer"])
         obj.set_person_id(dictionary["person_id"])
         return obj

@@ -77,8 +77,47 @@ class ZeitintervallMapper (Mapper):
 
         return zeitintervall
 
+    def find_by_person_id(self, person_id):
+        """Suchen eines Benutzers mit vorgegebener Zeitintervall ID. Da diese eindeutig ist,
+        wird genau ein Objekt zurückgegeben.
 
-    def find_by_max_id_and_peron_id(self, person_id):
+        :param id Primärschlüsselattribut (->DB)
+        :return Zeitintervall-Objekt, das dem übergebenen Schlüssel entspricht, None bei
+            nicht vorhandenem DB-Tupel.
+        """
+
+
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT * FROM zeitintervall WHERE person_id={}".format(person_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            for (id, letzte_aenderung, start, ende, dauer, person_id) in tuples:
+                zeitintervall = Zeitintervall()
+                zeitintervall.set_id(id)
+                zeitintervall.set_letzte_aenderung(letzte_aenderung)
+                zeitintervall.set_start(start)
+                zeitintervall.set_ende(ende)
+                zeitintervall.set_dauer(dauer)
+                zeitintervall.set_person_id(person_id)
+                result.append(zeitintervall)
+
+
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            zeitintervall = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
+
+
+    def find_by_max_id_and_person_id(self, person_id):
         """Suchen eines Benutzers mit vorgegebener Zeitintervall ID. Da diese eindeutig ist,
         wird genau ein Objekt zurückgegeben.
 

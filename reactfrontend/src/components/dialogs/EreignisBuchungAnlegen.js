@@ -71,8 +71,8 @@ class EreignisBuchungAnlegen extends Component {
 
     const { show } = this.props;
     const { ereignis, anzahl } = this.state;
-    console.log(ereignis)
-    console.log(anzahl)
+    // console.log(ereignis)
+    // console.log(anzahl)
 
 
 

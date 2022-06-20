@@ -112,6 +112,10 @@ projekt = api.inherit('Projekt', bo, {
 })
 
 zeitintervall = api.inherit('Zeitintervall', bo, {
+    'start': fields.String(attribute='_start',                             
+                            description='Start eines Zeitintervall'),
+    'ende': fields.String(attribute='_ende',                                
+                            description='Ende eines Zeitintervall'),
     'dauer': fields.Float(attribute='_dauer',                             
                             description='Dauer eines Zeitintervall'),
     'person_id': fields.Integer(attribute='_person_id',                                
@@ -977,12 +981,32 @@ class ZeitintervallMaxIDOperations(Resource):
         Das auszulesende Objekt wird durch die ```person_id``` in dem URI bestimmt.
         """
         adm = TimetrackerAdministration()
-        zi = adm.get_zeitintervall_by_max_id_and_peron_id(person_id)
+        zi = adm.get_zeitintervall_by_max_id_and_person_id(person_id)
 
         if zi is not None:
             return zi
         else:
             return '', 500 
+
+@timetracker.route('/zeitintervallbypersonid/<int:person_id>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('id', 'Die ID des Zeitintervall-Objekts.')
+class ZeitintervallPersonIDOperations(Resource):
+
+    @timetracker.marshal_with(zeitintervall)
+    def get(self, person_id):
+        """Auslesen eines bestimmten Zeitintervall-Objekts mit der Personen ID.
+        Das auszulesende Objekt wird durch die ```person_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        zi = adm.get_zeitintervall_by_person_id(person_id)
+
+        if zi is not None:
+            return zi
+        else:
+            return '', 500 
+
+
 
 
 if __name__ == '__main__':
