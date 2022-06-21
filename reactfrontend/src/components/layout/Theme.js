@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import { colors } from '@material-ui/core';
 
 const white = '#f0f5f9';
@@ -8,7 +8,7 @@ const white_paper = '#393e46';
 const text_white ='#eeeeee';
 
 // A custom theme for this app
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     black,
     white,
