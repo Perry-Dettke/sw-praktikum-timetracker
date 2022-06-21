@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Stack} from '@mui/material';
+import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogActions} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@material-ui/core/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DateTimePicker from '@mui/lab/DateTimePicker';
 
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
@@ -101,7 +98,6 @@ class ZeitintervallBearbeiten extends Component {
         const {dauer, start, ende } = this.state;
         let title = 'Kommen';
         let title2 = "Gehen"
-        console.log(new Date(start))
         return (
             show ?
                 <Dialog open={show}  onClose={this.handleClose} maxWidth='xs' fullWidth>
