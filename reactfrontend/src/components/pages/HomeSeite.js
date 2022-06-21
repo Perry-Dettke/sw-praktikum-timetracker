@@ -107,24 +107,18 @@ class Home extends Component {
         });
     }
 
-    //Ereignisbuchung Dialog schließen
-    ereignisBuchungAnlegenClosed = buchung => {
-
+    ereignisBuchungAnlegenClosed = (arbeitszeitkonto) => {
+        if (arbeitszeitkonto) {
+            this.setState({
+                showEreignisBuchungAnlegen: false
+            });
+            this.getArbeitszeitkonto()
+        } else {
+            this.setState({
+                showEreignisBuchungAnlegen: false
+            });
+        }
     }
-    //     this.getBuchungbyPersonID();
-
-    //     if (buchung) {
-    //     const newBuchungList = [...this.state.buchung, buchung];
-    //     this.setState({
-    //         buchung: newBuchungList,
-    //         showEreignisBuchungAnlegen: false
-    //     });
-    //     } else {
-    //     this.setState({
-    //         showEreignisBuchungAnlegen: false
-    //     });
-    //     }
-    // }
 
 
     // ********** ARBEITSZEITKONTO FUNKTIONEN **********\\
@@ -307,25 +301,25 @@ class Home extends Component {
                             >
                                 <Table sx={{ minWidth: 180 }} aria-label="simple table">
                                     <TableHead>
-                                        <Button variant="contained" onClick={this.addZeitintervall}>
+                                        <Button variant="contained"  onClick={this.addZeitintervall}>
                                             Kommen
                                         </Button>
                                         <Button variant="contained" onClick={this.updateZeitintervall}>
                                             Gehen
                                         </Button>
                                         <TableRow>
-                                            <TableCell align="right">Gesamt Stunden</TableCell>
-                                            <TableCell align="right">Gearbeitete Stunden</TableCell>
-                                            <TableCell align="right">Urlaubstage</TableCell>
-                                            <TableCell align="right">Krankheitstage</TableCell>
+                                            <TableCell align="right">Gesamt Stunden {new Date().getFullYear()}</TableCell>
+                                            <TableCell align="right">Gearbeitete Stunden {new Date().getFullYear()}</TableCell>
+                                            <TableCell align="right">Urlaubstage {new Date().getFullYear()}</TableCell>
+                                            <TableCell align="right">Krankheitstage {new Date().getFullYear()}</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell align="right">1680</TableCell>
-                                            <TableCell align="right">{arbeitszeitkonto.getGesamtstunden().toFixed(3)}</TableCell>
-                                            <TableCell align="right">30</TableCell>
-                                            <TableCell align="right">Testdaten</TableCell>
+                                            <TableCell align="center">1680</TableCell>
+                                            <TableCell align="center">{arbeitszeitkonto.getGesamtstunden().toFixed(3)}</TableCell>
+                                            <TableCell align="center">{arbeitszeitkonto.getUrlaubstage()}</TableCell>
+                                            <TableCell align="center">{arbeitszeitkonto.getKrankheitstage()}</TableCell>
                                         </TableRow>
                                         <Button variant="contained" onClick={this.ereignisBuchungAnlegenButtonClicked}>
                                             Buchung
@@ -376,7 +370,7 @@ class Home extends Component {
 
                 <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
                 <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPersonbyID} />
-                <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} onClose={this.ereignisBuchungAnlegenClosed} />
+                <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} arbeitszeitkonto={arbeitszeitkonto} onClose={this.ereignisBuchungAnlegenClosed} getArbeitszeitkonto={this.getArbeitszeitkonto} />
             </div>
             : (
                 <p> Du scheinst noch kein Profil zu haben</p>

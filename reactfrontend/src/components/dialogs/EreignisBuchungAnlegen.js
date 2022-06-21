@@ -24,63 +24,73 @@ class EreignisBuchungAnlegen extends Component {
     super(props);
 
     this.state = {
-      ereignisliste: [],
+      tage: 0,
       ereignis: null,
-      anzahl: 0,
-
-
     };
 
     this.initialState = this.state;
   }
 
+  handleChangeText = (e) => {
+    this.setState({ tage: e.target.value });
+  }
+
   handleChange = (e) => {
     this.setState({ ereignis: e.target.value });
   }
-
-  handleChange2 = (e) => {
-    this.setState({ anzahl: e.target.value });
-  }
-
-  //Gibt alle Ereignisse zurück
-  getEreignis = () => {
-    TimetrackerAPI.getAPI().getEreignis().then((ereignisBOs) => {
-      this.setState({
-        ereignisliste: ereignisBOs,
-      });
-    });
-  }
-
-
   // Dialog schließen
   handleClose = () => {
     this.setState(this.initialState);
     this.props.onClose();
   }
 
+  updateArbeitszeitkontoUrlaubstage = () => {
+    let arbeitszeitkonto = this.props.arbeitszeitkonto;
+    if (arbeitszeitkonto.getUrlaubstage() < parseInt(this.state.tage)){
+    window.alert("Du hast leider nur noch " + arbeitszeitkonto.getUrlaubstage() + " Tage Urlaub!")}
+    else{
+    let neuetage = arbeitszeitkonto.getUrlaubstage() - parseInt(this.state.tage)
+    arbeitszeitkonto.setUrlaubstage(neuetage)
+    TimetrackerAPI.getAPI().updateArbeitszeitkonto(arbeitszeitkonto).then(arbeitszeitkonto => {
+      this.props.getArbeitszeitkonto();
+      this.setState(this.initialState);
+      this.props.onClose(arbeitszeitkonto); //Aufrufen parent in backend
+    })
+    this.props.onClose(arbeitszeitkonto)
+    window.alert("Einen schönen Urlaub, erhol dich gut!")
+  }}
 
-  handleChange = (e) => {
-    this.setState({ ereignis: e.target.value });
+  updateArbeitszeitkontoKrankheitstage = () => {
+    let arbeitszeitkonto = this.props.arbeitszeitkonto;
+    let neuetage = arbeitszeitkonto.getKrankheitstage() + parseInt(this.state.tage)
+    arbeitszeitkonto.setKrankheitstage(neuetage)
+
+    TimetrackerAPI.getAPI().updateArbeitszeitkonto(arbeitszeitkonto).then(arbeitszeitkonto => {
+      this.props.getArbeitszeitkonto();
+      this.setState(this.initialState);
+      this.props.onClose(arbeitszeitkonto); //Aufrufen parent in backend
+    })
+    this.props.onClose(arbeitszeitkonto)
+    window.alert("Gute Besserung!")
   }
-  
-  // componentDidMount() {
-  //   this.getEreignis();
-  // }
+
+
+  ereignisCheck = () => {
+    console.log("Check")
+    if (this.state.ereignis == "Urlaub")
+      this.updateArbeitszeitkontoUrlaubstage()
+    else 
+      this.updateArbeitszeitkontoKrankheitstage()
+  }
 
   render() {
 
     const { show } = this.props;
-    const { ereignis, anzahl } = this.state;
-    // console.log(ereignis)
-    // console.log(anzahl)
-
-
-
-
+    const { tage } = this.state;
 
     let title = 'Neue Ereignisbuchung';
     let title2 = "Wählen Sie ein Ereignis aus"
-    let title3 = "Wählen Sie die Anzahl wie oft sie das Ereignis buchen möchten"
+    let title3 = "Wählen Sie die Anzahl an Tagen"
     return (
       show ?
         <div>
@@ -103,49 +113,19 @@ class EreignisBuchungAnlegen extends Component {
                     autoWidth
                     onChange={this.handleChange}
                   >
-                      <MenuItem value={"Urlaub"}>Urlaub</MenuItem>
-                      <MenuItem value={"Kranktage"}>Kranktage</MenuItem>
-
-                    
+                    <MenuItem value={"Urlaub"}>Urlaub</MenuItem>
+                    <MenuItem value={"Krankheitstage"}>Krankheitstage</MenuItem>
                   </Select>
                 </FormControl>
               </div>
               <br></br>
-
-
               <FormControl fullWidth>
                 <DialogContentText>
                   {title3}
                 </DialogContentText>
-                <InputLabel id="anzahl">Anzahl</InputLabel>
-                <Select
-                  labelId="Anzahl"
-                  name="anzahl"
-                  size="medium"
-                  label="Anzahl"
-                  autoWidth
-                  onChange={this.handleChange2}
-                >
-
-                  <MenuItem value='1'>1</MenuItem>
-                  <MenuItem value='2'>2</MenuItem>
-                  <MenuItem value='3'>3</MenuItem>
-                  <MenuItem value='4'>4</MenuItem>
-                  <MenuItem value='5'>5</MenuItem>
-                  <MenuItem value='6'>6</MenuItem>
-                  <MenuItem value='7'>7</MenuItem>
-                  <MenuItem value='8'>8</MenuItem>
-                  <MenuItem value='9'>9</MenuItem>
-                  <MenuItem value='10'>10</MenuItem>
-                  <MenuItem value='11'>11</MenuItem>
-                  <MenuItem value='12'>12</MenuItem>
-                  <MenuItem value='12'>13</MenuItem>
-                  <MenuItem value='12'>14</MenuItem>
-                  <MenuItem value='12'>15</MenuItem>
+                <TextField inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} autoFocus type='number' required fullWidth margin='normal' id='tage' label='Tage:' value={tage} onChange={this.handleChangeText} />
 
 
-
-                </Select>
               </FormControl>
 
 
@@ -154,7 +134,7 @@ class EreignisBuchungAnlegen extends Component {
               <Button color='secondary' onClick={this.handleClose}>
                 Abbrechen
               </Button>
-              <Button variant='contained' color='primary' onClick={this.addBuchung}>
+              <Button variant='contained' color='primary' onClick={this.ereignisCheck}>
                 Bestätigen
               </Button>
             </DialogActions>
