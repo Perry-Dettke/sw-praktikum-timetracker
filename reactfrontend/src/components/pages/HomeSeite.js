@@ -155,7 +155,7 @@ class Home extends Component {
         newZeitintervall.setPerson_id(2) //current User
         TimetrackerAPI.getAPI().addZeitintervall(newZeitintervall).then(zeitintervall => {
             let date = new Date()
-            window.alert("Hallo " + this.state.person.getVor_name() + "! Schön, dass du da bist." + "\nDu hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " eingstempelt!\nEinen schönen Arbeitstag!.")
+            window.alert("Hallo " + this.state.person.getVor_name() + "! Schön, dass du da bist." + "\nDu hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " eingstempelt!\nEinen schönen Arbeitstag!")
             this.getZeitintervall()
             this.setState(this.initialState);
             this.getZeitintervallbyPersonID()
@@ -305,7 +305,7 @@ class Home extends Component {
                                     </TableHead>
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell align="right">1.680</TableCell>
+                                            <TableCell align="right">1680</TableCell>
                                             <TableCell align="right">{arbeitszeitkonto.getGesamtstunden().toFixed(3)}</TableCell>
                                             <TableCell align="right">30</TableCell>
                                             <TableCell align="right">Testdaten</TableCell>
