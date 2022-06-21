@@ -49,7 +49,7 @@ class ArbeitszeitkontoMapper (Mapper):
 
 
         cursor = self._cnx.cursor()
-        command = "SELECT * WHERE id={}".format(id)
+        command = "SELECT * FROM arbeitszeitkonto WHERE id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -60,7 +60,7 @@ class ArbeitszeitkontoMapper (Mapper):
             arbeitszeitkonto.set_letzte_aenderung(letzte_aenderung)
             arbeitszeitkonto.set_gesamtstunden(gesamtstunden)
             arbeitszeitkonto.set_urlaubstage(urlaubstage)
-            arbeitszeitkonto.set_krankeitstage(krankheitstage)
+            arbeitszeitkonto.set_krankheitstage(krankheitstage)
 
 
         except IndexError:
@@ -113,10 +113,12 @@ class ArbeitszeitkontoMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE arbeitszeitkonto " + "SET letzte_aenderung=%s, gesamtstunden=%s WHERE id=%s"
+        command = "UPDATE arbeitszeitkonto " + "SET letzte_aenderung=%s, gesamtstunden=%s, urlaubstage=%s, krankheitstage=%s WHERE id=%s"
         data = (arbeitszeitkonto.get_letzte_aenderung(),
                 arbeitszeitkonto.get_gesamtstunden(),
-                arbeitszeitkonto.get_id())
+                arbeitszeitkonto.get_urlaubstage(),
+                arbeitszeitkonto.get_krankheitstage(),
+                arbeitszeitkonto.get_id(),)
         cursor.execute(command, data)
 
         self._cnx.commit()

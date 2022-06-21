@@ -23,12 +23,14 @@ class ZeitintervallMapper (Mapper):
         cursor.execute("SELECT * from zeitintervall")
         tuples = cursor.fetchall()
 
-        for (id, letzte_aenderung, start, ende) in tuples:
+        for (id, letzte_aenderung, start, ende, dauer, person_id) in tuples:
             zeitintervall = Zeitintervall()
             zeitintervall.set_id(id)
             zeitintervall.set_letzte_aenderung(letzte_aenderung)
             zeitintervall.set_start(start)
             zeitintervall.set_ende(ende)
+            zeitintervall.set_dauer(dauer)
+            zeitintervall.set_person_id(person_id)
             result.append(zeitintervall)
 
         self._cnx.commit()
@@ -50,17 +52,96 @@ class ZeitintervallMapper (Mapper):
 
 
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, start, ende FROM zeitintervall WHERE id={}".format(id)
+        command = "SELECT * FROM zeitintervall WHERE id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, start, ende) = tuples[0]
+            (id, letzte_aenderung, start, ende, dauer, person_id) = tuples[0]
             zeitintervall = Zeitintervall()
             zeitintervall.set_id(id)
             zeitintervall.set_letzte_aenderung(letzte_aenderung)
             zeitintervall.set_start(start)
             zeitintervall.set_ende(ende)
+            zeitintervall.set_dauer(dauer)
+            zeitintervall.set_person_id(person_id)
+
+
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            zeitintervall = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return zeitintervall
+
+    def find_by_person_id(self, person_id):
+        """Suchen eines Benutzers mit vorgegebener Zeitintervall ID. Da diese eindeutig ist,
+        wird genau ein Objekt zurückgegeben.
+
+        :param id Primärschlüsselattribut (->DB)
+        :return Zeitintervall-Objekt, das dem übergebenen Schlüssel entspricht, None bei
+            nicht vorhandenem DB-Tupel.
+        """
+
+
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT * FROM zeitintervall WHERE person_id={}".format(person_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            for (id, letzte_aenderung, start, ende, dauer, person_id) in tuples:
+                zeitintervall = Zeitintervall()
+                zeitintervall.set_id(id)
+                zeitintervall.set_letzte_aenderung(letzte_aenderung)
+                zeitintervall.set_start(start)
+                zeitintervall.set_ende(ende)
+                zeitintervall.set_dauer(dauer)
+                zeitintervall.set_person_id(person_id)
+                result.append(zeitintervall)
+
+
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            zeitintervall = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
+
+
+    def find_by_max_id_and_person_id(self, person_id):
+        """Suchen eines Benutzers mit vorgegebener Zeitintervall ID. Da diese eindeutig ist,
+        wird genau ein Objekt zurückgegeben.
+
+        :param id Primärschlüsselattribut (->DB)
+        :return Zeitintervall-Objekt, das dem übergebenen Schlüssel entspricht, None bei
+            nicht vorhandenem DB-Tupel.
+        """
+
+
+
+        cursor = self._cnx.cursor()
+        command = "SELECT * FROM zeitintervall WHERE person_id={} AND id=(SELECT MAX(id) FROM zeitintervall)".format(person_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            (id, letzte_aenderung, start, ende, dauer, person_id) = tuples[0]
+            zeitintervall = Zeitintervall()
+            zeitintervall.set_id(id)
+            zeitintervall.set_letzte_aenderung(letzte_aenderung)
+            zeitintervall.set_start(start)
+            zeitintervall.set_ende(ende)
+            zeitintervall.set_dauer(dauer)
+            zeitintervall.set_person_id(person_id)
 
 
         except IndexError:
@@ -92,13 +173,14 @@ class ZeitintervallMapper (Mapper):
                 davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
                 zeitintervall.set_id(1)
 
-        command = "INSERT INTO zeitintervall (id, letzte_aenderung, start, ende ) VALUES (%s,%s,%s,%s)"
+        command = "INSERT INTO zeitintervall (id, letzte_aenderung, start, dauer, person_id ) VALUES (%s,%s,%s,%s,%s)"
         data = (
 
             zeitintervall.get_id(),
             zeitintervall.get_letzte_aenderung(),
             zeitintervall.get_start(),
-            zeitintervall.get_ende(),
+            zeitintervall.get_dauer(),
+            zeitintervall.get_person_id(),
         )
 
         cursor.execute(command, data)
@@ -114,11 +196,13 @@ class ZeitintervallMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE zeitintervall " + "SET letzte_aenderung=%s, start=%s, ende=%s WHERE id=%s"
+        command = "UPDATE zeitintervall " + "SET letzte_aenderung=%s, start=%s, ende=%s, dauer=%s, person_id=%s WHERE id=%s"
         data = (
             zeitintervall.get_letzte_aenderung(),
             zeitintervall.get_start(),
             zeitintervall.get_ende(),
+            zeitintervall.get_dauer(),
+            zeitintervall.get_person_id(),
             zeitintervall.get_id())
         cursor.execute(command, data)
 

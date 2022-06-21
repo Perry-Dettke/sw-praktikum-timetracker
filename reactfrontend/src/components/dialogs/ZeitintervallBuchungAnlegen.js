@@ -144,7 +144,7 @@ class ZeitintervallBuchungAnlegen extends Component {
 
     const { show } = this.props;
     const { projektliste, projekt, aktivitaetliste, start, ende } = this.state;
-    console.log(aktivitaetliste)
+    console.log(start, ende)
 
 
 

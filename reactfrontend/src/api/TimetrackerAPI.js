@@ -84,7 +84,8 @@ export default class TimetrackerAPI {
   #getZeitintervallURL = (id) => `${this.#ServerBaseURL}/zeitintervall/${id}`;
   #updateZeitintervallURL = (id) => `${this.#ServerBaseURL}/zeitintervall/${id}`;
   #deleteZeitintervallURL = (id) => `${this.#ServerBaseURL}/zeitintervall/${id}`;
-
+  #getZeitintervallbyMaxIDandPersonIDURL = (person_id) => `${this.#ServerBaseURL}/zeitintervallbymaxid/${person_id}`;
+  #getZeitintervallbyPersonIDURL = (person_id) => `${this.#ServerBaseURL}/zeitintervallbypersonid/${person_id}`;
 
 
   static getAPI() {
@@ -765,6 +766,7 @@ export default class TimetrackerAPI {
 
   addZeitintervall(zeitintervallBO) {
     // Zeitintervall neu anlegen
+    console.log(zeitintervallBO)
     return this.#fetchAdvanced(this.#addZeitintervallURL(), {
       method: 'POST',
       headers: {
@@ -773,7 +775,7 @@ export default class TimetrackerAPI {
       },
       body: JSON.stringify(zeitintervallBO)
     }).then((responseJSON) => {
-      let responseZeitintervallBO = zeitintervallBO.fromJSON(responseJSON);
+      let responseZeitintervallBO = ZeitintervallBO.fromJSON(responseJSON);
       return new Promise(function (resolve) {
         resolve(responseZeitintervallBO);
       })
@@ -791,7 +793,7 @@ export default class TimetrackerAPI {
       },
       body: JSON.stringify(zeitintervallBO)
     }).then((responseJSON) => {
-      let responseZeitintervallBO = zeitintervallBO.fromJSON(responseJSON);
+      let responseZeitintervallBO = ZeitintervallBO.fromJSON(responseJSON);
       return new Promise(function (resolve) {
         resolve(responseZeitintervallBO);
       })
@@ -810,6 +812,30 @@ export default class TimetrackerAPI {
     })
   }
 
+  getZeitintervallbyMaxIDandPersonID(person_id) {
+    // Aktivitaet abfragen
+    return this.#fetchAdvanced(this.#getZeitintervallbyMaxIDandPersonIDURL(person_id)).then((responseJSON) => {
+      let zeitintervall = ZeitintervallBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(zeitintervall)
+      })
+    })
+  }
 
+
+
+getZeitintervallbyPersonID(person_id) {
+  // Aktivitaet abfragen
+  return this.#fetchAdvanced(this.#getZeitintervallbyPersonIDURL(person_id)).then((responseJSON) => {
+    let zeitintervallliste = [];
+    responseJSON.map(item => {
+      let zeitintervall = ZeitintervallBO.fromJSON(item);
+      zeitintervallliste.push(zeitintervall);
+    })
+    return new Promise(function (resolve) {
+      resolve(zeitintervallliste)
+    })
+  })
+}
 
 }

@@ -8,7 +8,7 @@ class Arbeitszeitkonto(bo.BusinessObjekt):
         super().__init__()
         self._gesamtstunden = 0.0
         self._urlaubstage = 0
-        self._krankeitstage = 0
+        self._krankheitstage = 0
 
 
     def get_gesamtstunden(self):
@@ -27,19 +27,19 @@ class Arbeitszeitkonto(bo.BusinessObjekt):
         # Setzen der Gesamtstunden
         self._urlaubstage = urlaubstage
 
-    def get_krankeitstage(self):
+    def get_krankheitstage(self):
         # Ausgeben der Uralubstage
-        return self._krankeitstage
+        return self._krankheitstage
     
-    def set_krankeitstage(self, krankheitstage):
+    def set_krankheitstage(self, krankheitstage):
         # Setzen der Gesamtstunden
-        self._krankeitstage = krankheitstage
+        self._krankheitstage = krankheitstage
 
 
         
     def __str__(self):
         #Erzeugen einer einfachen textuellen Darstellung der jeweiligen Instanz
-        return f'Arbeitszeitkonto: {self.get_gesamtstunden()}, {self.get_urlaubstage()}, {self.get_krankeitstage()}'
+        return f'Arbeitszeitkonto: {self.get_gesamtstunden()}, {self.get_urlaubstage()}, {self.get_krankheitstage()}'
     
     @staticmethod
     def from_dict(dictionary=dict()):
@@ -47,5 +47,5 @@ class Arbeitszeitkonto(bo.BusinessObjekt):
         obj = Arbeitszeitkonto()
         obj.set_gesamtstunden(dictionary["gesamtstunden"])
         obj.set_urlaubstage(dictionary["urlaubstage"])
-        obj.set_krankeitstage(dictionary["krankheitstage"])
+        obj.set_krankheitstage(dictionary["krankheitstage"])
         return obj

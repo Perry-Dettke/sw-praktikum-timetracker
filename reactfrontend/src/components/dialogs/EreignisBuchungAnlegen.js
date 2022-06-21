@@ -34,6 +34,13 @@ class EreignisBuchungAnlegen extends Component {
     this.initialState = this.state;
   }
 
+  handleChange = (e) => {
+    this.setState({ ereignis: e.target.value });
+  }
+
+  handleChange2 = (e) => {
+    this.setState({ anzahl: e.target.value });
+  }
 
   //Gibt alle Ereignisse zurück
   getEreignis = () => {
@@ -63,7 +70,9 @@ class EreignisBuchungAnlegen extends Component {
   render() {
 
     const { show } = this.props;
-    const { ereignisliste } = this.state;
+    const { ereignis, anzahl } = this.state;
+    // console.log(ereignis)
+    // console.log(anzahl)
 
 
 
@@ -94,14 +103,10 @@ class EreignisBuchungAnlegen extends Component {
                     autoWidth
                     onChange={this.handleChange}
                   >
-                    {ereignisliste.map((ereignis) => (
-                      <MenuItem
-                        key={ereignis.getID()}
-                        value={ereignis}
-                      >
-                        {ereignis.getBezeichnung()}
-                      </MenuItem>
-                    ))}
+                      <MenuItem value={"Urlaub"}>Urlaub</MenuItem>
+                      <MenuItem value={"Kranktage"}>Kranktage</MenuItem>
+
+                    
                   </Select>
                 </FormControl>
               </div>
@@ -134,6 +139,11 @@ class EreignisBuchungAnlegen extends Component {
                   <MenuItem value='10'>10</MenuItem>
                   <MenuItem value='11'>11</MenuItem>
                   <MenuItem value='12'>12</MenuItem>
+                  <MenuItem value='12'>13</MenuItem>
+                  <MenuItem value='12'>14</MenuItem>
+                  <MenuItem value='12'>15</MenuItem>
+
+
 
                 </Select>
               </FormControl>
