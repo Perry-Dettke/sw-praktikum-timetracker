@@ -26,11 +26,11 @@ class Home extends Component {
             ende: null,
         };
     }
-// **********MEIN PROFIL FUNKTIONEN**********\\
+    // **********MEIN PROFIL FUNKTIONEN**********\\
 
     getPersonbyID = () => {
         var api = TimetrackerAPI.getAPI();
-        api.getPersonbyID(3).then((personBO) => {
+        api.getPersonbyID(2).then((personBO) => {
             this.setState({
                 person: personBO,
             });
@@ -78,21 +78,13 @@ class Home extends Component {
         });
     };
 
-    // currentuser.getArbeitszeitkontoID() in die Klammer statt 1
-    getArbeitszeitkonto = () => {
-        TimetrackerAPI.getAPI().getArbeitszeitkonto(1).then((arbeitszeitkontoBO) => {
-            this.setState({
-                arbeitszeitkonto: arbeitszeitkontoBO,
-            });
-        });
-    }
-
-        // muss current user ID rein
+    // muss current user ID rein
     getZeitintervall = () => {
         TimetrackerAPI.getAPI().getZeitintervallbyMaxIDandPersonID(2).then((zeitintervallBO) => {
-            this.setState({
-                zeitintervall: zeitintervallBO,
-            });
+            if (zeitintervallBO)
+                this.setState({
+                    zeitintervall: zeitintervallBO,
+                });
         });
     }
 
@@ -105,7 +97,7 @@ class Home extends Component {
         });
     }
 
-// ********** EREIGNISBUCHUNG FUNKTIONEN **********\\
+    // ********** EREIGNISBUCHUNG FUNKTIONEN **********\\
 
     // Ereignisbuchung Erstellen Dialog anzeigen
     ereignisBuchungAnlegenButtonClicked = event => {
@@ -135,7 +127,21 @@ class Home extends Component {
     // }
 
 
-// ********** ZEITINTERVALL FUNKTIONEN **********\\
+    // ********** ARBEITSZEITKONTO FUNKTIONEN **********\\
+
+    // currentuser.getArbeitszeitkontoID() in die Klammer statt 1
+    getArbeitszeitkonto = () => {
+        TimetrackerAPI.getAPI().getArbeitszeitkonto(2).then((arbeitszeitkontoBO) => {
+            this.setState({
+                arbeitszeitkonto: arbeitszeitkontoBO,
+            });
+        });
+    }
+
+
+
+
+    // ********** ZEITINTERVALL FUNKTIONEN **********\\
 
     // Kommen Zeitpunkt und person ID adden
     // Rest wird vorerst auf 0 gesetzt 
@@ -160,19 +166,19 @@ class Home extends Component {
     }
 
     updateZeitintervall = () => {
-
         let ende = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
         let start = new Date(this.startDatumSplitten())
         let endefront = new Date()
         let dauer = endefront.getTime() - start.getTime()
         let zeitintervall = this.state.zeitintervall;
         zeitintervall.setEnde(ende)
-        zeitintervall.setDauer(this.msToTime(dauer))
+        zeitintervall.setDauer(this.msToTime(dauer).toFixed(3))
         TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall)
         let date = new Date
-        window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " ausgestempelt!\nDu hast heute " + this.msToTime(dauer) + " Stunden gearbeitet!\nAuf Wiedersehen!")
+        window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " ausgestempelt!\nDu hast heute " + this.msToTime(dauer).toFixed(3) + " Stunden gearbeitet!\nAuf Wiedersehen!")
         this.setState(this.initialState);
-        this.getZeitintervallbyPersonID()
+        this.getZeitintervallbyPersonID();
+        this.getArbeitszeitkonto();
     }
 
     //Datum und Zeit vom Frontend wird das richtige Backend Format umgewandelt
@@ -219,16 +225,18 @@ class Home extends Component {
     componentDidMount() {
         this.getPersonbyID();
         this.getZeitintervallbyPersonID();
-
+        this.getZeitintervall();
+        this.getArbeitszeitkonto();
     }
 
     render() {
-        const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, start } = this.state;
+        const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto } = this.state;
         // console.log(zeitintervall)
         // console.log(start)
         // console.log(zeitintervallliste)
+        console.log(arbeitszeitkonto)
 
-        return person ? (
+        return person && arbeitszeitkonto ?
             <div>
                 <Box
                     sx={{
@@ -297,8 +305,8 @@ class Home extends Component {
                                     </TableHead>
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell align="right">Testdaten</TableCell>
-                                            <TableCell align="right">Testdaten</TableCell>
+                                            <TableCell align="right">1.680</TableCell>
+                                            <TableCell align="right">{arbeitszeitkonto.getGesamtstunden().toFixed(3)}</TableCell>
                                             <TableCell align="right">30</TableCell>
                                             <TableCell align="right">Testdaten</TableCell>
                                         </TableRow>
@@ -311,48 +319,51 @@ class Home extends Component {
                         </div>
                     </Paper>
                 </Box>
-    
 
-                    <Grid container alignItems="center" xs={22} sx={{
-                        backgroundColor: '#dedede'
-                    }}>
-                        <Grid item xs={2}>
-                            <Typography>Kommen</Typography>
+                        <Grid container alignItems="center" xs={22} sx={{
+                            backgroundColor: '#dedede'
+                        }}>
+
+                            <Grid item xs={2}>
+                                <Typography></Typography>
+                            </Grid>
+
+                            <Grid item xs={2}>
+                                <Typography>Kommen</Typography>
+                            </Grid>
+
+                            <Grid item xs={2}>
+                                <Typography>Gehen</Typography>
+                            </Grid>
+
+                            <Grid item xs={2}>
+                                <Typography>Stunden</Typography>
+                            </Grid>
+
+                            <Grid item xs={1}>
+                                <Typography>Bearbeiten</Typography>
+                            </Grid>
+
+                            <Grid item xs={1}>
+                                <Typography>Löschen</Typography>
+                            </Grid>
+
+                        </Grid>
+                        <Grid item xs={12}>
+
+                            {   
+                                zeitintervallliste.map(zeitintervall =>
+                                    <ZeitintervallEintrag key={zeitintervall[zeitintervall.id]} zeitintervall={zeitintervall} getArbeitszeitkonto={this.getArbeitszeitkonto} show={this.props.show} getZeitintervallbyPersonID={this.getZeitintervallbyPersonID}/>)
+                            }
                         </Grid>
 
-                        <Grid item xs={2}>
-                            <Typography>Gehen</Typography>
-                        </Grid>
-
-                        <Grid item xs={2}>
-                            <Typography>Stunden</Typography>
-                        </Grid>
-
-                        <Grid item xs={1}>
-                            <Typography>Bearbeiten</Typography>
-                        </Grid>
-
-                        <Grid item xs={1}>
-                            <Typography>Löschen</Typography>
-                        </Grid>
-
-                    </Grid>
-                    <Grid item xs={12}>
-
-                        {
-                            zeitintervallliste.map(zeitintervall =>
-                                <ZeitintervallEintrag key={zeitintervall[zeitintervall.id]} zeitintervall={zeitintervall} show={this.props.show} getZeitintervallbyPersonID={this.getZeitintervallbyPersonID} />)
-                        }
-                    </Grid>
-
-  
                 <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
                 <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPersonbyID} />
                 <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} onClose={this.ereignisBuchungAnlegenClosed} />
             </div>
-        ) : (
-            <p> Du scheinst noch kein Profil zu haben</p>
-        );
+            : (
+                <p> Du scheinst noch kein Profil zu haben</p>
+            );
     }
 }
 

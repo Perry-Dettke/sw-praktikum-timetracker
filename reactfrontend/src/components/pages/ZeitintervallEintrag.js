@@ -24,10 +24,7 @@ class ZeitintervallEintrag extends Component {
         };
     }
 
-    //Gibt die aktuellen Zeitintervalle zurück
-    getZeitintervallbyPersonID = () => {
-        this.props.getZeitintervallbyPersonID();
-    }
+
 
 
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
@@ -44,6 +41,8 @@ class ZeitintervallEintrag extends Component {
             this.setState({
                 showZeitintervallBearbeiten: false
             });
+            this.props.getZeitintervallbyPersonID()
+            this.props.getArbeitszeitkonto()
         } else {
             this.setState({
                 showZeitintervallBearbeiten: false
@@ -65,6 +64,7 @@ class ZeitintervallEintrag extends Component {
             showZeitintervallLoeschen: false
         });
         this.props.getZeitintervallbyPersonID()
+        this.props.getArbeitszeitkonto()
     }
 
     componentDidMount() {
@@ -81,37 +81,41 @@ class ZeitintervallEintrag extends Component {
 
         return (
             zeitintervall ?
-            <Grid container alignItems="center" xs={12}>
+                <Grid container alignItems="center" xs={12}>
 
-            <Grid item xs={2}>
-                <Typography>{zeitintervall.getStart()}</Typography>
-            </Grid>
+                    <Grid item xs={2}>
+                        <Typography></Typography>
+                    </Grid>
 
-            <Grid item xs={2}>
-                <Typography>{zeitintervall.getEnde()}</Typography>
-            </Grid>
+                    <Grid item xs={2}>
+                        <Typography>{zeitintervall.getStart()}</Typography>
+                    </Grid>
 
-            <Grid item xs={2}>
-                <Typography>{zeitintervall.getDauer()}</Typography>
-            </Grid>
+                    <Grid item xs={2}>
+                        <Typography>{zeitintervall.getEnde()}</Typography>
+                    </Grid>
 
-            <Grid item xs={1}>
-                <Tooltip title='Bearbeiten' placement="bottom">
-                    <IconButton variant='contained' onClick={this.bearbeitenButtonClicked}><EditIcon /></IconButton>
-                </Tooltip>
-            </Grid>
+                    <Grid item xs={2}>
+                        <Typography>{zeitintervall.getDauer()}</Typography>
+                    </Grid>
 
-            <Grid item xs={1}>
-                <Tooltip title='Löschen' placement="bottom">
-                    <IconButton variant="contained" onClick={this.zeitintervallLoeschenButtonClicked}><DeleteIcon /></IconButton>
-                </Tooltip>
-            </Grid>    
+                    <Grid item xs={1}>
+                        <Tooltip title='Bearbeiten' placement="bottom">
+                            <IconButton variant='contained' onClick={this.bearbeitenButtonClicked}><EditIcon /></IconButton>
+                        </Tooltip>
+                    </Grid>
+
+                    <Grid item xs={1}>
+                        <Tooltip title='Löschen' placement="bottom">
+                            <IconButton variant="contained" onClick={this.zeitintervallLoeschenButtonClicked}><DeleteIcon /></IconButton>
+                        </Tooltip>
+                    </Grid>
 
                     <ZeitintervallBearbeiten show={showZeitintervallBearbeiten} zeitintervall={zeitintervall} onClose={this.zeitintervallBearbeitenClosed} getZeitintervallbyPersonID={this.getZeitintervallbyPersonID} />
-                    <ZeitintervallLoeschen show={showZeitintervallLoeschen} zeitintervall={zeitintervall} onClose={this.zeitintervallLoeschenClosed} getZeitintervallbyPersonID={this.props.getZeitintervallbyPersonID}/>
+                    <ZeitintervallLoeschen show={showZeitintervallLoeschen} zeitintervall={zeitintervall} onClose={this.zeitintervallLoeschenClosed} getZeitintervallbyPersonID={this.props.getZeitintervallbyPersonID} />
 
                 </Grid>
-                    
+
                 : null
         );
     }

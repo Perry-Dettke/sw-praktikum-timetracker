@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from '@mui/material';
+import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Stack} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@material-ui/core/TextField';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DateTimePicker from '@mui/lab/DateTimePicker';
+
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 
@@ -37,12 +41,13 @@ class ZeitintervallBearbeiten extends Component {
 
     updateZeitintervall = () => {
         let zeitintervall = this.props.zeitintervall;
-        // zeitintervall.setStart(this.state.start)
-        // zeitintervall.setEnde(this.state.ende)
-        console.log(this.state.dauer)
-        zeitintervall.setDauer(this.state.dauer)
+        zeitintervall.setStart(this.state.start)
+        zeitintervall.setEnde(this.state.ende)
+        let dauer = new Date(this.state.ende).getTime() - new Date(this.state.start).getTime()
+        console.log(this.msToTime(dauer))
+        zeitintervall.setDauer(this.msToTime(dauer))
         TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall).then(zeitintervall => {
-            // this.props.getZeitintervall() /// Fehlt evtl. noch
+            // this.props.getZeitintervallbyPersonID()
             this.setState(this.initialState);
             this.props.onClose(zeitintervall); //Aufrufen parent in backend
         })
@@ -50,16 +55,25 @@ class ZeitintervallBearbeiten extends Component {
 
     textFieldValueChange = (event) => {
         const value = event.target.value;
-    
+
         let error = false;
         if (value.trim().length === 0) {
-          error = true;
+            error = true;
         }
-    
+
         this.setState({
-          [event.target.id]: event.target.value,
+            [event.target.id]: event.target.value,
         });
-      }
+        }
+
+    handleChangeStart = (e) => {
+        this.setState({ start: e });
+    }
+
+    handleChangeEnde = (e) => {
+        this.setState({ ende: e });
+    }
+
 
     // Dialog schließen
     handleClose = () => {
@@ -67,16 +81,27 @@ class ZeitintervallBearbeiten extends Component {
         this.props.onClose();
     }
 
+    msToTime = (s) => {
+        let ms = (s % 1000) / 60
+        s = (s - ms) / 1000
+        let secs = (s % 60) / 60
+        console.log('secs', secs)
+        s = (s - secs) / 60
+        let mins = (s % 60) / 60
+        console.log('minuten', mins)
+        let hrs = (s - mins) / 60
 
+        return parseFloat(hrs + '.' + mins + secs)
+    }
 
 
 
     render() {
         const { show } = this.props;
         const {dauer, start, ende } = this.state;
-        // console.log()
-
-
+        let title = 'Kommen';
+        let title2 = "Gehen"
+        console.log(new Date(start))
         return (
             show ?
                 <Dialog open={show}  onClose={this.handleClose} maxWidth='xs' fullWidth>
@@ -86,15 +111,10 @@ class ZeitintervallBearbeiten extends Component {
                         </IconButton>
                     </DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            Geben Sie die neue Stundenanzahl.
-                        </DialogContentText>
 
                         <form  noValidate autoComplete='off'>
-
-                        {/* Textfeld für die Stunden */}
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='dauer' label='Stunden:' value={dauer} onChange={this.textFieldValueChange} />
-
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start:' value={start} onChange={this.textFieldValueChange} />
+                        <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende:' value={ende} onChange={this.textFieldValueChange} />
                         </form>
 
                     </DialogContent>

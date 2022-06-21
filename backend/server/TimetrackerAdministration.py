@@ -125,7 +125,19 @@ class TimetrackerAdministration (object):
     def get_arbeitszeitkonto_by_id(self, id):
         """Das Arbeitszeitkonto mit der gegebenen ID auslesen."""
         with ArbeitszeitkontoMapper() as mapper:
-            return mapper.find_by_id(id)
+            azt = mapper.find_by_id(id)
+
+        with ZeitintervallMapper() as mapper:
+            zeitintervallliste = mapper.find_by_person_id(id)
+
+            stunden = 0
+            for i in zeitintervallliste:
+                stunden += i.get_dauer()
+            
+            azt.set_gesamtstunden(stunden)
+
+        return azt
+
 
     def get_all_arbeitszeitkonto(self):
         """Alle Arbeitszeitkonto auslesen."""
