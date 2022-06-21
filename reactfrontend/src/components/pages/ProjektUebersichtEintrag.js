@@ -200,7 +200,7 @@ class ProjektUebersichtEintrag extends Component {
 
     //Renders the component
     render() {
-        const { projekt } = this.props;
+        const { projekt, person } = this.props;
         const { ersteller, showAktivitaetDialog, showAktivitaetBearbeiten, showAktivitaetLoeschen, showProjektBearbeiten, aktivitaetliste,
             showProjektLoeschen, currentAktivitaet, personenliste } = this.state;
 
@@ -218,24 +218,28 @@ class ProjektUebersichtEintrag extends Component {
                                         backgroundColor: "#dedede",
                                     }}
                                 >
-                                    <Typography><b>{projekt.bezeichnung}</b></Typography>
+                                    <Typography><b>{projekt.getBezeichnung()}</b></Typography>
                                 </AccordionSummary>
                                 <AccordionDetails sx={{
                                     backgroundColor: "#eeeeee",
                                 }}>
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={3}>
-                                            <Button variant='outlined' startIcon={<EditIcon />} onClick={() => this.projektBearbeitenClicked(projekt)}>
-                                                <Typography>Projekt bearbeiten</Typography>
-                                            </Button>
+                                    {/*{person.getID() == projekt.getProjekterstellerID() ?*/}
+                                    <div>
+                                        <Grid container spacing={2}>
+                                            <Grid item xs={3}>
+                                                <Button variant='outlined' startIcon={<EditIcon />} onClick={() => this.projektBearbeitenClicked(projekt)}>
+                                                    <Typography>Projekt bearbeiten</Typography>
+                                                </Button>
+                                            </Grid>
+                                            <br />
+                                            <Grid item xs={3}>
+                                                <Button variant='outlined' startIcon={<DeleteIcon />} onClick={() => this.projektLoeschenClicked(projekt)}>
+                                                    <Typography>Projekt löschen</Typography>
+                                                </Button>
+                                            </Grid>
                                         </Grid>
-                                        <br />
-                                        <Grid item xs={3}>
-                                            <Button variant='outlined' startIcon={<DeleteIcon />} onClick={() => this.projektLoeschenClicked(projekt)}>
-                                                <Typography>Projekt löschen</Typography>
-                                            </Button>
-                                        </Grid>
-                                    </Grid>
+                                    </div>
+                                    {/*: null}*/}
                                     <br />
                                     <Typography align='left'><b>Auftraggeber: </b>{projekt.getAuftraggeber()}<br /></Typography>
                                     {ersteller ?
@@ -259,7 +263,8 @@ class ProjektUebersichtEintrag extends Component {
                                             <TableRow>
                                                 <TableCell>Aktivität</TableCell>
                                                 <TableCell>Kapazität</TableCell>
-                                                <TableCell></TableCell>
+                                                <TableCell>Bearbeiten</TableCell>
+                                                <TableCell>Löschen</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -269,18 +274,17 @@ class ProjektUebersichtEintrag extends Component {
                                                         <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
                                                         <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
                                                         <TableCell>
-                                                            <Grid item>
-                                                                <Tooltip title='Bearbeiten' placement="bottom">
-                                                                    <IconButton variant='contained' onClick={() => this.aktivitaetBearbeitenClicked(aktivitaet)}>
-                                                                        <EditIcon />
-                                                                    </IconButton>
-                                                                </Tooltip>
-                                                                <Tooltip title='Löschen' placement="bottom">
-                                                                    <IconButton variant="contained" onClick={() => this.aktivitaetLoeschenClicked(aktivitaet)}><DeleteIcon /></IconButton>
-                                                                </Tooltip>
-                                                            </Grid>
+                                                            <Tooltip title='Bearbeiten' placement="bottom">
+                                                                <IconButton variant='contained' onClick={() => this.aktivitaetBearbeitenClicked(aktivitaet)}>
+                                                                    <EditIcon />
+                                                                </IconButton>
+                                                            </Tooltip>
                                                         </TableCell>
-
+                                                        <TableCell>
+                                                            <Tooltip title='Löschen' placement="bottom">
+                                                                <IconButton variant="contained" onClick={() => this.aktivitaetLoeschenClicked(aktivitaet)}><DeleteIcon /></IconButton>
+                                                            </Tooltip>
+                                                        </TableCell>
                                                     </TableRow>
                                                 )}
                                         </TableBody>
@@ -291,7 +295,7 @@ class ProjektUebersichtEintrag extends Component {
                             </Accordion>
                         </Grid>
                     </Grid>
-                    <ProjektBearbeiten show={showProjektBearbeiten} projekt={projekt} onClose={this.projektBearbeitenClosed} />
+                    <ProjektBearbeiten show={showProjektBearbeiten} projekt={projekt} onClose={this.projektBearbeitenClosed} />  {/*person={person}*/}
                     <ProjektLoeschen show={showProjektLoeschen} projekt={projekt} onClose={this.projektLoeschenClicked} />
                     <AktivitaetDialog show={showAktivitaetDialog} projekt={projekt} onClose={this.aktivitaetDialogClosed} />
                     {

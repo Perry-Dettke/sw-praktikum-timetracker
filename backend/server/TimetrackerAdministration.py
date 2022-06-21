@@ -335,7 +335,8 @@ class TimetrackerAdministration (object):
     def create_projekt(self, projekt): 
         """Projekt anlegen."""
         with ProjektMapper() as mapper:
-            return mapper.insert(projekt)
+             projekt = mapper.insert(projekt)
+        return self.create_person_in_projekt(projekt.get_id(), [projekt.get_projektersteller_id()])
 
     def get_projekt_by_id(self, id):
         """Das Projekt mit der gegebenen ID auslesen."""
@@ -399,16 +400,17 @@ class TimetrackerAdministration (object):
         
     def update_person_in_projekt(self, projekt_id, person_id_list): 
         """Person in Projekt bearbeiten."""
-        self.delete_person_projekt(projekt_id)
         with ProjektMapper() as mapper:
+            projekt = mapper.find_by_id(projekt_id)
+            self.delete_person_projekt(projekt_id, projekt.get_projektersteller_id())
             for person_id in person_id_list:
                 mapper.insert_person_in_projekt(projekt_id, person_id)
-            return mapper.find_by_id(projekt_id)
+            return projekt
 
-    def delete_person_projekt(self, projekt_id):
+    def delete_person_projekt(self, projekt_id, person_id=None):
         """Eine Person aus dem gegebenenen Projekt aus unserem System löschen."""
         with ProjektMapper() as mapper:
-            mapper.delete_person_in_projekt(projekt_id)
+            mapper.delete_person_in_projekt(projekt_id, person_id)
                 
     def get_projekt_by_person_id(self, person_id):
         with ProjektMapper() as mapper:

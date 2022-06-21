@@ -34,10 +34,10 @@ class AktivitaetLoeschen extends Component {
                     onClose={this.handleClose}
                     maxWidth='xs'
                 >
-                    <DialogTitle>{"Sind Sie sich sicher?"}</DialogTitle>
+                    <DialogTitle>{"Bist du dir sicher?"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Wenn Sie die Aktivität {aktivitaet.getBezeichnung()} löschen möchten, drücken Sie auf "JA".
+                            Die Aktivität {aktivitaet.getBezeichnung()} wirklich löschen?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

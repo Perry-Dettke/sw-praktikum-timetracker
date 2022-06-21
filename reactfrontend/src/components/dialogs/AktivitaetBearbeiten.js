@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField } from '@mui/material';
+import { Button, Grid, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import InputLabel from "@mui/material/InputLabel";
 
@@ -69,42 +69,45 @@ class AktivitaetBearbeiten extends Component {
             show ?
                     <div>
                         <Dialog open={show} onClose={this.handleClose} maxWidth='xl'>
-                            <DialogTitle id='form-dialog-title'>{title}
-                                <IconButton onClick={this.handleClose}>
-                                    <CloseIcon />
-                                </IconButton>
+                            <DialogTitle id='form-dialog-title'>
+                                {title}
                             </DialogTitle>
                             <DialogContent>
-                                <DialogContentText>
-                                    <b>{projekt.getBezeichnung()}</b>
-                                </DialogContentText>
-                                <div>
-                                    <TextField
-                                        id="bezeichnung"
-                                        label='Bezeichnung:'
-                                        variant="outlined"
-                                        size="small"
-                                        value={bezeichnung}
-                                        defaultValue={aktivitaet.getBezeichnung()}
-                                        onChange={this.textFieldValueChange}
-                                        autocomplete='off'
-
-                                    ></TextField>
-                                </div>
-                                <div>
-                                    {/* Kapazität auswählen */}
-                                    <TextField
-                                        id="kapazitaet"
-                                        label='Kapazität in Stunden:'
-                                        variant="outlined"
-                                        size="small"
-                                        value={kapazitaet}
-                                        defaultValue={aktivitaet.getKapazitaet()}
-                                        onChange={this.textFieldValueChange}
-                                        autocomplete='off'
-
-                                    ></TextField>
-                                </div>
+                                <Grid container spacing={1}>
+                                    <Grid item xs={12}>
+                                        <DialogContentText>
+                                            <b>{projekt.getBezeichnung()}</b>
+                                        </DialogContentText>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        {/* Bezeichnung auswählen */}
+                                        <TextField
+                                            id="bezeichnung"
+                                            label='Bezeichnung:'
+                                            variant="outlined"
+                                            size="medium"
+                                            value={bezeichnung}
+                                            defaultValue={aktivitaet.getBezeichnung()}
+                                            onChange={this.textFieldValueChange}
+                                            autocomplete='off'
+                                            fullWidth
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        {/* Kapazität auswählen */}
+                                        <TextField
+                                            id="kapazitaet"
+                                            label='Kapazität in Stunden:'
+                                            variant="outlined"
+                                            size="medium"
+                                            value={kapazitaet}
+                                            defaultValue={aktivitaet.getKapazitaet()}
+                                            onChange={this.textFieldValueChange}
+                                            autocomplete='off'
+                                            fullWidth
+                                        />
+                                    </Grid>
+                                </Grid>
                             </DialogContent>
                             <DialogActions>
                                 <Button color='secondary' onClick={this.handleClose}>

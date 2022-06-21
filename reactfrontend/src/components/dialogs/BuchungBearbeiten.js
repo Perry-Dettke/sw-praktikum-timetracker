@@ -97,54 +97,49 @@ class BuchungBearbeiten extends Component {
         const {stunden, aktivitaet_id } = this.state;
         // console.log(aktivitaet_id)
 
-
         return (
             show ?
                 <Dialog open={show}  onClose={this.handleClose} maxWidth='xs' fullWidth>
-                    <DialogTitle > {"Buchung Bearbeiten"}
-                        <IconButton  onClick={this.handleClose} right>
-                            <CloseIcon />
-                        </IconButton>
+                    <DialogTitle > 
+                        {"Buchung Bearbeiten"}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Geben Sie die neue Stundenanzahl oder Aktivität an.
+                            Hier kannst du eine neue Stundenanzahl oder Aktivität angeben.
                         </DialogContentText>
-
                         <form  noValidate autoComplete='off'>
-
-                        {/* Textfeld für die Stunden */}
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='stunden' label='Stunden:' value={stunden} onChange={this.textFieldValueChange} />
-                        {/* Dropdown für Aktivitaet */}
-                        <FormControl fullWidth>
-                        <InputLabel id='aktivitaet-label'>Aktivität</InputLabel>
-                                <Select labelId='aktivitaet-label' id='aktivitaet' value={aktivitaet_id} defaultValue={aktivitaet.bezeichnung} onChange={this.handleChange}>
-
-                                    {aktivitaetliste.map((aktivitaet) => {
-                                                        return (
-                                                        <MenuItem
-                                                        value={aktivitaet.getID()}>
-                                                            {aktivitaet.getBezeichnung()}
-                                                        </MenuItem>
-                                                        );
-                                                    })
-                                                    }
+                            <br/>
+                            {/* Textfeld für die Stunden */}
+                            <TextField autoFocus type='text' required fullWidth size="large" margin='normal' id='stunden' label='Stunden:' value={stunden} onChange={this.textFieldValueChange} />
+                            <br/><br/>
+                            {/* Dropdown für Aktivitaet */}
+                            <FormControl fullWidth>
+                                <InputLabel id='aktivitaet-label'>Aktivität</InputLabel>
+                                <Select labelId='aktivitaet-label' id='aktivitaet' size="large" value={aktivitaet_id} defaultValue={aktivitaet.bezeichnung} onChange={this.handleChange}>
+                                    {
+                                    aktivitaetliste.map((aktivitaet) => {
+                                        return (
+                                            <MenuItem
+                                                value={aktivitaet.getID()}>
+                                                    {aktivitaet.getBezeichnung()}
+                                            </MenuItem>
+                                            )
+                                        })
+                                    }
                                 </Select>
-                        </FormControl>
+                            </FormControl>
                         </form>
-
                     </DialogContent>
                     <DialogActions>
-              <Button color='secondary' onClick={this.handleClose}>
-                Abbrechen
-              </Button>
-
-                <Button variant='contained' color='primary' onClick={this.updateBuchung}>
-                  Speichern
-                  </Button>
-            </DialogActions>
+                        <Button color='secondary' onClick={this.handleClose}>
+                            Abbrechen
+                        </Button>
+                        <Button variant='contained' color='primary' onClick={this.updateBuchung}>
+                            Speichern
+                        </Button>
+                    </DialogActions>
                 </Dialog>
-                : null
+            : null
         );
     }
 }

@@ -135,36 +135,35 @@ class BuchungListenEintrag extends Component {
 
         return (
             aktivitaet && projekt ?
-                <div>
-
-                        
-                        <TableBody>
-                            <TableRow key={buchung.getID()}>
-                                <TableCell>{buchung.getDatum()}</TableCell>
-                                <TableCell>{projekt.getBezeichnung()}</TableCell>
-                                <TableCell>{aktivitaet.getBezeichnung()}</TableCell>
-                                <TableCell>{this.ereignisbuchungCheck()}</TableCell>
-                                <TableCell>{buchung.getStunden()}</TableCell>
-                                <TableCell>
-                                    <Tooltip title='Bearbeiten' placement="bottom">
-                                        <IconButton variant='contained' onClick={this.bearbeitenButtonClicked}><EditIcon /></IconButton>
-                                    </Tooltip>
-                                </TableCell>
-                                <TableCell>
-                                    <Tooltip title='Löschen' placement="bottom">
-                                        <IconButton variant="contained" onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
-                                    </Tooltip>
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                   
-                 
-    
-
+                <Grid container alignItems="center" xs={12}>
+                    <Grid item xs={2}>
+                        <Typography>{buchung.getDatum()}</Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Typography>{projekt.getBezeichnung()}</Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Typography>{aktivitaet.getBezeichnung()}</Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Typography>{this.ereignisbuchungCheck()}</Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Typography>{buchung.getStunden()}</Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Tooltip title='Bearbeiten' placement="bottom">
+                            <IconButton variant='contained' onClick={this.bearbeitenButtonClicked}><EditIcon /></IconButton>
+                        </Tooltip>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Tooltip title='Löschen' placement="bottom">
+                            <IconButton variant="contained" onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
+                        </Tooltip>
+                    </Grid>
                     <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
                     <BuchungDelete show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchungbyPersonID={this.props.getBuchungbyPersonID}/>
-
-                </div>
+                </Grid>
                     
                 : null
         );

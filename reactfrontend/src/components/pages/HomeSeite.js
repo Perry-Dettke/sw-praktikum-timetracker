@@ -240,11 +240,12 @@ class Home extends Component {
             <div>
                 <Box
                     sx={{
+                        float: "left",
                         display: "flex",
                         flexWrap: "wrap",
                         "& > :not(style)": {
                             m: 2,
-                            width: 700,
+                            width: 500,
                             height: 300,
                             alignItems: "center",
                         },
@@ -252,7 +253,9 @@ class Home extends Component {
                 >
                     <Paper elevation={3}>
                         <div>
-                            <h2>Mein Profil</h2>
+                        <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                        Mein Profil
+                         </Typography>
                             <Tooltip title="Bearbeiten" placement="right">
                                 <IconButton
                                     variant="contained"
@@ -281,9 +284,23 @@ class Home extends Component {
                             </p>
                         </div>
                     </Paper>
+                    </Box>
+                    <Box sx={{
+                        float: "right",
+                        display: "flex",
+                        flexWrap: "wrap",
+                        "& > :not(style)": {
+                            m: 2,
+                            width: 800,
+                            height: 300,
+                            alignItems: "center",
+                        },
+                    }}>
                     <Paper elevation={3}>
                         <div>
-                            <h1>Arbeitszeitkonto</h1>
+                        <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                        Mein Arbeitszeitkonto
+                         </Typography>
                             <TableContainer
                                 component={Paper}
                                 sx={{ maxWidth: 750, margin: "auto" }}

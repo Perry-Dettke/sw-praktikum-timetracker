@@ -25,7 +25,7 @@ class Auswertung extends Component {
     /** Fetches all PersonBOs from the backend */
     getProjektbyProjekterstellerID = () => {
         var pro = TimetrackerAPI.getAPI();
-        pro.getProjektbyProjekterstellerID(1).then((projektBOs) => {
+        pro.getProjektbyProjekterstellerID(3).then((projektBOs) => {
             this.setState({
                 projektliste: projektBOs,
             });
@@ -63,7 +63,9 @@ class Auswertung extends Component {
         return (
             projektliste.length != 0 ?
                 <div>
-                    <h2> Es werden dir nur die Projekte angezeigt, die du selbst erstellt hast!</h2>
+                    <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                    Es werden dir nur die Projekte angezeigt, die du selbst erstellt hast!
+                    </Typography>
                     <Grid container spacing={4} alignItems="left">
                         <Grid item xs={12}>
                         </Grid>
