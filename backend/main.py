@@ -16,8 +16,6 @@ from server.bo.Ereignis import Ereignis
 from server.bo.Person import Person
 from server.bo.Projekt import Projekt
 from server.bo.Zeitintervall import Zeitintervall
-from server.bo.Gehen import Gehen
-from server.bo.Kommen import Kommen
 
 '''Außerdem nutzen wir einen selbstgeschriebenen Decorator, der die Authentifikation übernimmt'''
 #from SecurityDecorator import secured
@@ -120,13 +118,6 @@ zeitintervall = api.inherit('Zeitintervall', bo, {
                             description='Dauer eines Zeitintervall'),
     'person_id': fields.Integer(attribute='_person_id',                                
                             description='Person ID die das Zeitintervall erstellt hat'),
-})
-
-
-kommen = api.inherit('Kommen', ereignis, {
-})
-
-gehen = api.inherit('Gehen', ereignis, {
 })
 
 

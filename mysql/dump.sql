@@ -71,7 +71,7 @@ CREATE TABLE `arbeitszeitkonto` (
 
 LOCK TABLES `arbeitszeitkonto` WRITE;
 /*!40000 ALTER TABLE `arbeitszeitkonto` DISABLE KEYS */;
-INSERT INTO `arbeitszeitkonto` VALUES (2,'2022-05-17 20:00:00',0,30,0),(3,'2022-06-17 16:58:46',20,20,20),(4,'2022-05-17 20:00:00',0,30,0),(5,'2022-05-17 20:00:00',0,30,0),(6,'2022-05-17 20:00:00',0,30,0),(7,'2022-05-17 20:00:00',32,30,0),(8,'2022-06-17 16:58:46',21,20,20);
+INSERT INTO `arbeitszeitkonto` VALUES (2,'2022-05-17 20:00:00',0,30,0),(4,'2022-05-17 20:00:00',0,30,0),(5,'2022-05-17 20:00:00',0,30,0),(6,'2022-05-17 20:00:00',0,30,0),(7,'2022-05-17 20:00:00',32,30,0),(8,'2022-06-17 16:58:46',21,20,20);
 /*!40000 ALTER TABLE `arbeitszeitkonto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,7 +100,7 @@ CREATE TABLE `buchung` (
 
 LOCK TABLES `buchung` WRITE;
 /*!40000 ALTER TABLE `buchung` DISABLE KEYS */;
-INSERT INTO `buchung` VALUES (1,'2022-06-16 19:14:11','2022-06-16',1,0,3,1),(2,'2022-06-16 19:17:12','2022-06-16',2,0,1,2),(3,'2022-06-16 19:17:53','2022-06-16',5,0,3,3),(4,'2022-06-17 11:25:20','2022-06-17',1,0,3,5),(5,'2022-06-17 11:30:56','2022-06-17',1,0,2,5),(6,'2022-06-17 11:30:56','2022-06-17',1,0,3,5),(7,'2022-06-17 11:30:56','2022-06-17',1,0,1,1),(8,'2022-06-17 11:30:56','2022-06-17',1,0,4,5),(9,'2022-06-17 11:30:56','2022-06-17',1,0,1,2);
+INSERT INTO `buchung` VALUES (2,'2022-06-16 19:17:12','2022-06-16',2,0,1,2),(5,'2022-06-17 11:30:56','2022-06-17',1,0,2,5),(7,'2022-06-17 11:30:56','2022-06-17',1,0,1,1),(8,'2022-06-17 11:30:56','2022-06-17',1,0,4,5),(9,'2022-06-17 11:30:56','2022-06-17',1,0,1,2),(10,'2022-06-21 11:49:57','2022-06-20',9,0,3,1),(11,'2022-06-21 17:36:32','2022-06-21',18,0,3,1);
 /*!40000 ALTER TABLE `buchung` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,54 +130,6 @@ INSERT INTO `ereignis` VALUES (1,'2022-06-02 17:17:06','2022-06-02 17:17:06'),(2
 UNLOCK TABLES;
 
 --
--- Table structure for table `gehen`
---
-
-DROP TABLE IF EXISTS `gehen`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gehen` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `letzte_aenderung` varchar(45) NOT NULL,
-  `erstellungs_zeitpunkt` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `gehen`
---
-
-LOCK TABLES `gehen` WRITE;
-/*!40000 ALTER TABLE `gehen` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gehen` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `kommen`
---
-
-DROP TABLE IF EXISTS `kommen`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `kommen` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `letzte_aenderung` varchar(45) NOT NULL,
-  `erstellungs_zeitpunkt` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `kommen`
---
-
-LOCK TABLES `kommen` WRITE;
-/*!40000 ALTER TABLE `kommen` DISABLE KEYS */;
-/*!40000 ALTER TABLE `kommen` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `person`
 --
 
@@ -203,7 +155,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (1,'2022-06-02 10:54:32','Lisaaa','Mülleraa','MüllerMailaa','müüllleeeraa','dwqjnw8931u489',1),(2,'2022-06-14 16:10:08','a','a','a','a','',2),(3,'2022-05-17 20:00:00','Lisa','Singer','lisa.singer@web.de','Lischen','daaad221sh732814',3),(4,'2022-05-17 20:00:00','Ralf','Roller','ralf.roller@web.de','ralle44','diuh128231',4),(5,'2022-06-01 22:14:26','Peter','Panne','ppmail','pppi','kwuqie8714',5),(6,'2022-06-13 21:33:29','Perry','Dettke','pp@mail-de','pdpdwa','',6),(7,'2022-06-13 21:35:47','a','a','a','a','',7);
+INSERT INTO `person` VALUES (1,'2022-06-02 10:54:32','Lisaaa','Mülleraa','MüllerMailaa','müüllleeeraa','dwqjnw8931u489',1),(2,'2022-06-14 16:10:08','a','a','a','a','',2),(3,'2022-06-20 23:55:39','Tom','string','string','string','kajsnfkjansfi3',0),(4,'2022-05-17 20:00:00','Ralf','Roller','ralf.roller@web.de','ralle44','diuh128231',4),(5,'2022-06-01 22:14:26','Peter','Panne','ppmail','pppi','kwuqie8714',5),(6,'2022-06-13 21:33:29','Perry','Dettke','pp@mail-de','pdpdwa','',6),(7,'2022-06-13 21:35:47','a','a','a','a','',7);
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,12 +221,12 @@ DROP TABLE IF EXISTS `zeitintervall`;
 CREATE TABLE `zeitintervall` (
   `id` int NOT NULL AUTO_INCREMENT,
   `letzte_aenderung` datetime NOT NULL,
-  `start` datetime NOT NULL,
-  `ende` datetime DEFAULT NULL,
+  `start` varchar(45) NOT NULL,
+  `ende` varchar(45) DEFAULT NULL,
   `dauer` float DEFAULT NULL,
   `person_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +235,7 @@ CREATE TABLE `zeitintervall` (
 
 LOCK TABLES `zeitintervall` WRITE;
 /*!40000 ALTER TABLE `zeitintervall` DISABLE KEYS */;
-INSERT INTO `zeitintervall` VALUES (1,'2022-06-18 17:19:19','2022-06-18 17:19:19','2022-06-18 17:19:19',0,0),(2,'2022-06-18 17:20:41','2022-06-18 17:20:41',NULL,0,0),(3,'2022-06-18 17:45:37','2022-06-18 17:45:37',NULL,0,2),(4,'2022-06-18 17:45:51','2022-06-18 17:45:51',NULL,0,2),(5,'2022-06-18 17:48:18','2022-06-18 17:48:18',NULL,0,2),(6,'2022-06-18 17:49:02','2022-06-18 17:49:02',NULL,0,2),(7,'2022-06-18 17:49:06','2022-06-18 17:49:06',NULL,0,2),(8,'2022-06-18 17:54:50','2022-06-18 17:54:50',NULL,0,2),(9,'2022-06-18 17:55:01','2022-06-18 17:55:01',NULL,0,2),(10,'2022-06-18 17:56:19','2022-06-18 17:56:19',NULL,0,2),(11,'2022-06-18 17:58:50','2022-06-18 17:58:50',NULL,0,2),(12,'2022-06-18 17:58:50','2022-06-18 17:58:50',NULL,0,2),(13,'2022-06-18 17:59:07','2022-06-18 17:59:07',NULL,0,2),(14,'2022-06-18 17:59:46','2022-06-18 17:59:46',NULL,0,2),(15,'2022-06-18 18:00:12','2022-06-18 18:00:12',NULL,0,2),(16,'2022-06-18 18:02:56','2022-06-18 18:02:56',NULL,0,2),(17,'2022-06-18 18:06:44','2022-06-18 18:06:44',NULL,0,2);
+INSERT INTO `zeitintervall` VALUES (3,'2022-06-21 17:24:29','2022-06-18 15:45:37','2022-06-18 18:45:37',3,2),(4,'2022-06-18 17:45:51','2022-06-18 17:45:51','2022-06-19 17:56:24',2.5,2),(8,'2022-06-21 12:33:18','2022-06-18 17:54:50','2022-06-18 18:54:50',1,2),(10,'2022-06-21 12:40:23','2022-06-21 12:40:21','2022-06-21 12:40:23',0.001,2),(11,'2022-06-21 12:42:03','2022-06-21 12:41:44','2022-06-21 12:42:02',0.005,2),(12,'2022-06-21 14:26:46','2022-06-21 14:26:39','2022-06-21 14:26:45',0.002,2),(13,'2022-06-21 16:48:10','2022-06-21 16:48:10',NULL,0,2),(14,'2022-06-21 17:21:30','2022-06-21 17:21:08','2022-06-21 17:21:30',0.006,2),(15,'2022-06-21 17:23:10','2022-06-21 17:22:38','2022-06-21 17:23:09',0.009,2),(16,'2022-06-21 17:31:35','2022-06-21 17:31:27','2022-06-21 17:31:34',0.002,2),(17,'2022-06-21 17:47:15','2022-06-21 17:47:14',NULL,0,2),(18,'2022-06-21 17:47:59','2022-06-21 17:47:29','2022-06-21 17:47:59',0.008,2);
 /*!40000 ALTER TABLE `zeitintervall` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -296,4 +248,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-18 19:11:36
+-- Dump completed on 2022-06-21 17:57:20
