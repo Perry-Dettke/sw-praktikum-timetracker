@@ -125,20 +125,11 @@ class BuchungListe extends Component {
                       alignItems: 'center',
                     }} variant="contained" color="primary" aria-label="add" onClick={this.zeitintervallBuchungAnlegenButtonClicked}>
                     <AddIcon />
-                    &nbsp; Zeitintervall-Buchung erstellen
+                    &nbsp; Projekt-Buchung erstellen
                   </Button>
                 </Grid>
                 <Grid item xs={6}>
-                  <Button
-                    sx={{
-                      m: 1,
-                      width: 350,
-                      height: 50,
-                      alignItems: 'center',
-                    }} variant="contained" color="primary" aria-label="add" onClick={this.ereignisBuchungAnlegenButtonClicked}>
-                    <AddIcon />
-                    &nbsp; Ereignis-Buchung erstellen
-                  </Button>
+
                 </Grid>
               </Grid>
             </Box>

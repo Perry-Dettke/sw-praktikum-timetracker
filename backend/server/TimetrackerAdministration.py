@@ -130,10 +130,14 @@ class TimetrackerAdministration (object):
         with ZeitintervallMapper() as mapper:
             zeitintervallliste = mapper.find_by_person_id(id)
 
+            dauer = 0
+            pause = 0
             stunden = 0
             for i in zeitintervallliste:
-                stunden += i.get_dauer()
-            
+                dauer += i.get_dauer()
+                pause += i.get_pausen_dauer()
+
+            stunden = dauer - pause
             azt.set_gesamtstunden(stunden)
 
         return azt

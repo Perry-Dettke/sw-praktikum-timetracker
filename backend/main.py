@@ -116,9 +116,16 @@ zeitintervall = api.inherit('Zeitintervall', bo, {
                             description='Ende eines Zeitintervall'),
     'dauer': fields.Float(attribute='_dauer',                             
                             description='Dauer eines Zeitintervall'),
+    'pausen_start': fields.String(attribute='_pausen_start',                             
+                            description='Start einer Pause'),
+    'pausen_ende': fields.String(attribute='_pausen_ende',                                
+                            description='Ende einer Pause'),
+    'pausen_dauer': fields.Float(attribute='_pausen_dauer',                             
+                            description='Dauer einer Pause'),
     'person_id': fields.Integer(attribute='_person_id',                                
                             description='Person ID die das Zeitintervall erstellt hat'),
 })
+
 
 
 #Aktivitaet related

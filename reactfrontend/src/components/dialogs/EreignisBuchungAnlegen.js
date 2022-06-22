@@ -88,8 +88,8 @@ class EreignisBuchungAnlegen extends Component {
     const { show } = this.props;
     const { tage } = this.state;
 
-    let title = 'Neue Ereignisbuchung';
-    let title2 = "Wählen Sie ein Ereignis aus"
+    let title = 'Neue Sonderbuchung';
+    let title2 = "Wählen Sie eine Art für Ihre Buchung aus"
     let title3 = "Wählen Sie die Anzahl an Tagen"
     return (
       show ?
@@ -104,12 +104,12 @@ class EreignisBuchungAnlegen extends Component {
               </DialogContentText>
               <div>
                 <FormControl fullWidth>
-                  <InputLabel id="ereignis">Ereignis</InputLabel>
+                  <InputLabel id="ereignis">Art</InputLabel>
                   <Select
                     labelId="Ereignis"
                     name="ereignis"
                     size="medium"
-                    label="Ereignis"
+                    label="Art"
                     autoWidth
                     onChange={this.handleChange}
                   >

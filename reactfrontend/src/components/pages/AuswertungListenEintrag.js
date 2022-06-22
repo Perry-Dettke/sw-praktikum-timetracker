@@ -206,7 +206,7 @@ class AuswertungListenEintrag extends Component {
                         <TableCell>
                           <Typography>
                             {" "}
-                            {aktivitaet.getKapazitaet() - aktivitaet.getStunden()}
+                            {(aktivitaet.getKapazitaet() - aktivitaet.getStunden()).toFixed(2)}
                           </Typography>
                         </TableCell>
                       </TableRow>
