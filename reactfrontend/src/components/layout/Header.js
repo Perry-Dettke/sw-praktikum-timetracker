@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react'
 import PropTypes from 'prop-types';
-import { Paper, Typography, Tabs, Tab } from '@mui/material';
+import { Grid, Paper, Typography, Tabs, Tab } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 import ProfileDropDown from '../dialogs/ProfileDropDown';
@@ -33,23 +33,35 @@ class Header extends Component {
     const { currentUser } = this.props;
     return (
       <Paper variant='outlined' >
-        <ProfileDropDown currentUser={currentUser} />
-        <img src="logo.png" align='center' width="180" height="165"></img>
-      <div id="aussen">
-      <div class="b1">
-          <Typography variant='h3' component='h1' color='#323748' fontFamily='Verdana'>
-            TIME
-          </Typography>
-          </div>
-          <div class="b1">
-        <Typography variant='h3' component='h1'  color='#0098da' fontFamily='Courier'>
-          TRACKER
-        </Typography>
-        </div> 
-        </div>
-        <Typography variant='h5' component='h2' align='center' color='#323748' fontFamily='Verdana' >
-          Zeiterfassungssystem
-        </Typography>
+        <Grid container justifyContent="center" alignItems="center" xs={12}>
+          <Grid item xs={2}/>
+          <Grid item xs={2}>
+            <img src="logo.png" align='center' width="180" height="165"></img>
+          </Grid>
+          <Grid item xs={2}>
+            <div id="aussen">
+              <div class="b1">
+                <Typography variant='h3' component='h1' color='#323748' fontFamily='Verdana'>
+                  TIME
+                </Typography>
+              </div>
+              <div class="b1">
+                <Typography variant='h3' component='h1'  color='#0098da' fontFamily='Courier'>
+                  TRACKER
+                </Typography>
+              </div> 
+            </div>
+            <Typography variant='h5' component='h2' align='center' color='#323748' fontFamily='Verdana' >
+              Zeiterfassungssystem
+            </Typography>
+          </Grid>
+          <Grid item xs={3}/>
+          <Grid item xs={1}>
+            <ProfileDropDown currentUser={currentUser} />
+          </Grid>
+        </Grid>
+        
+      
         {
             currentUser?
         

@@ -331,11 +331,11 @@ class Home extends Component {
                     </Paper>
                 </Box>
 
-                        <Grid container direction="row" justifyContent="center" alignItems="center" xs={12} spacing={2} sx={{
+                        <Grid container direction="row" justifyContent="center" alignItems="center" xs={12} spacing={3} sx={{
                             backgroundColor: '#dedede'
                         }}>
 
-                            <Grid item xs={2}>
+                            <Grid item xs={1}>
                                 <Typography></Typography>
                             </Grid>
 
@@ -347,7 +347,7 @@ class Home extends Component {
                                 <Typography>Gehen</Typography>
                             </Grid>
 
-                            <Grid item xs={2}>
+                            <Grid item xs={3}>
                                 <Typography>Stunden</Typography>
                             </Grid>
 

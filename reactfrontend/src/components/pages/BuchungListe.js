@@ -116,7 +116,7 @@ class BuchungListe extends Component {
             {/* <Button variant="contained" sx={{width:250}} onClick={this.showBuchungDialog}> Neue Buchung Erstellen</Button> */}
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={1}>
-                <Grid item xs={6} >
+                <Grid item xs={12} >
                   <Button
                     sx={{
                       m: 1,
@@ -125,25 +125,13 @@ class BuchungListe extends Component {
                       alignItems: 'center',
                     }} variant="contained" color="primary" aria-label="add" onClick={this.zeitintervallBuchungAnlegenButtonClicked}>
                     <AddIcon />
-                    &nbsp; Zeitintervall-Buchung erstellen
-                  </Button>
-                </Grid>
-                <Grid item xs={6}>
-                  <Button
-                    sx={{
-                      m: 1,
-                      width: 350,
-                      height: 50,
-                      alignItems: 'center',
-                    }} variant="contained" color="primary" aria-label="add" onClick={this.ereignisBuchungAnlegenButtonClicked}>
-                    <AddIcon />
-                    &nbsp; Ereignis-Buchung erstellen
+                    &nbsp; Projekt-Buchung erstellen
                   </Button>
                 </Grid>
               </Grid>
             </Box>
             <br/><br/>
-            <Grid container alignItems="center" spacing={3} xs={12} sx={{
+            <Grid container direction="row" justifyContent="center" alignItems="center" spacing={3} xs={12} sx={{
                 backgroundColor: '#dedede'
               }}>
               <Grid item xs={2}>

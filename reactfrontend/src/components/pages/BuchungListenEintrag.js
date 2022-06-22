@@ -135,7 +135,7 @@ class BuchungListenEintrag extends Component {
 
         return (
             aktivitaet && projekt ?
-                <Grid container alignItems="center" xs={12}>
+                <Grid container direction="row" justifyContent="center" alignItems="center" spacing={2} xs={12}>
                     <Grid item xs={2}>
                         <Typography>{buchung.getDatum()}</Typography>
                     </Grid>
