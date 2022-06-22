@@ -174,9 +174,10 @@ class Home extends Component {
         let start = new Date(this.startDatumSplitten())
         let endefront = new Date()
         let dauer = endefront.getTime() - start.getTime()
-        console.log(this.state.zeitintervall.getPausenDauer())
+        console.log(typeof(dauer))
+        console.log(typeof(dauer))
         zeitintervall.setEnde(ende)
-        zeitintervall.setDauer(this.msToTime(dauer - this.state.zeitintervall.getPausenDauer()).toFixed(3))
+        zeitintervall.setDauer(this.msToTime(dauer).toFixed(3))
         TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall)
         let date = new Date
         window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " ausgestempelt!\nDu hast heute " + this.msToTime(dauer).toFixed(3) +  " Stunden gearbeitet, und " + this.state.zeitintervall.getPausenDauer() + " Stunden Pause gemacht.\nAuf Wiedersehen!")
