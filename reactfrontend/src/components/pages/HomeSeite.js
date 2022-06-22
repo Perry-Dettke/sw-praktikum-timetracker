@@ -6,7 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import PersonForm from "../dialogs/PersonForm";
 import PersonDelete from "../dialogs/PersonDelete";
 import EreignisBuchungAnlegen from "../dialogs/EreignisBuchungAnlegen.js"
-
+import SignUp from './SignUp';
 import ZeitintervallBO from "../../api/ZeitintervallBO";
 import ZeitintervallEintrag from './ZeitintervallEintrag.js'
 import { CoPresent } from "@mui/icons-material";
@@ -16,6 +16,7 @@ class Home extends Component {
         super(props);
 
         this.state = {
+            currentUser: props.currentUser,
             person: null,
             showPersonForm: false,
             showPersonDelete: false,
@@ -28,14 +29,44 @@ class Home extends Component {
     }
     // **********MEIN PROFIL FUNKTIONEN**********\\
 
-    getPersonbyID = () => {
-        var api = TimetrackerAPI.getAPI();
-        api.getPersonbyID(2).then((personBO) => {
+    // getPersonbyID = () => {
+    //     var api = TimetrackerAPI.getAPI();
+    //     api.getPersonbyID(2).then((personBO) => {
+    //         this.setState({
+    //             person: personBO,
+    //         });
+    //     });
+    // };
+
+
+    getPerson = () => {
+        console.log(this.props.currentUser.uid)
+        TimetrackerAPI.getAPI().getPersonByGoogle(this.props.currentUser.uid).then((person) =>
             this.setState({
-                person: personBO,
-            });
-        });
-    };
+              person: person,
+            })
+          ).catch((e) =>
+            this.setState({
+              person: null,
+            })
+          );
+      }; 
+
+      // SignUp anzeigen
+  closeSignup = (person) => {
+    this.setState({
+      currentUser: person.getID(),
+      person: person,
+    });
+  }
+
+  showPersonForm = () => {
+      if(!this.state.person) {
+          this.setState({ showPersonForm: true });
+      }
+  }
+
+
 
     //Person bearbeiten
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
@@ -125,12 +156,20 @@ class Home extends Component {
 
     // currentuser.getArbeitszeitkontoID() in die Klammer statt 1
     getArbeitszeitkonto = () => {
-        TimetrackerAPI.getAPI().getArbeitszeitkonto(2).then((arbeitszeitkontoBO) => {
+        TimetrackerAPI.getAPI().getArbeitszeitkonto(4).then((arbeitszeitkontoBO) => {
             this.setState({
                 arbeitszeitkonto: arbeitszeitkontoBO,
             });
         });
     }
+
+    
+    reloadUser = () => {
+        console.log('reload')
+        this.getPerson()
+            this.getArbeitszeitkonto()
+    
+    };
 
 
 
@@ -217,13 +256,14 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        this.getPersonbyID();
+        this.getPerson();
         this.getZeitintervallbyPersonID();
         this.getZeitintervall();
         this.getArbeitszeitkonto();
     }
 
     render() {
+        const {currentUser} = this.props;
         const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto } = this.state;
         // console.log(zeitintervall)
         // console.log(start)
@@ -373,7 +413,7 @@ class Home extends Component {
                 <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} arbeitszeitkonto={arbeitszeitkonto} onClose={this.ereignisBuchungAnlegenClosed} getArbeitszeitkonto={this.getArbeitszeitkonto} />
             </div>
             : (
-                <p> Du scheinst noch kein Profil zu haben</p>
+                <SignUp onClose={this.closeSignup} currentUser={currentUser} reloadUser={this.reloadUser} />
             );
     }
 }
