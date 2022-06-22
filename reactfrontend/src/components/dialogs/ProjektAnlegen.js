@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Typography, TextField, IconButton, OutlinedInput, Box, Chip } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Typography, TextField, IconButton, OutlinedInput, Box, Chip, Stack } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import InputLabel from "@mui/material/InputLabel";
 
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuItem } from '@mui/material';
+
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import ProjektBO from '../../api/ProjektBO';
@@ -23,6 +27,8 @@ class ProjektAnlegen extends Component {
             personen: [],
             projektBezeichnung: null,
             auftraggeber: null,
+            startzeitraum: null,
+            endzeitraum: null,
         };
     }
 
@@ -30,9 +36,9 @@ class ProjektAnlegen extends Component {
     getPersonen = () => {
         TimetrackerAPI.getAPI().getPerson().then((personenBOs) => {
             let allePersonen = []
-            personenBOs.map(person =>{
-                if (person.getID() != 3){
-                //if (person.getID() != this.props.person.getID()){
+            personenBOs.map(person => {
+                if (person.getID() != 3) {
+                    //if (person.getID() != this.props.person.getID()){
                     allePersonen.push(person)
                 }
             })
@@ -48,6 +54,8 @@ class ProjektAnlegen extends Component {
         newProjekt.setID(0)
         newProjekt.setBezeichnung(this.state.projektBezeichnung)
         newProjekt.setAuftraggeber(this.state.auftraggeber)
+        newProjekt.setStartzeitraum(this.state.startzeitraum)
+        newProjekt.setEndzeitraum(this.state.endzeitraum)
         newProjekt.setProjekterstellerID(3)
         //newProjekt.setProjekterstellerID(this.props.person.getID())
         TimetrackerAPI.getAPI().addProjekt(newProjekt).then(projekt => {
@@ -57,7 +65,7 @@ class ProjektAnlegen extends Component {
 
     // Person in Projekt hinzufügen
     addPersonInProjekt = (projekt) => {
-        TimetrackerAPI.getAPI().addPersonInProjekt(projekt.getID(),this.state.personen).then(projekt => {
+        TimetrackerAPI.getAPI().addPersonInProjekt(projekt.getID(), this.state.personen).then(projekt => {
             this.props.onClose(projekt)
         })
 
@@ -94,8 +102,8 @@ class ProjektAnlegen extends Component {
                         label="Aktivität"
                         variant="outlined"
                         name="name"
-                        size="small" 
-                        autocomplete='off'  
+                        size="small"
+                        autocomplete='off'
                     />
                     &emsp;
                     <TextField
@@ -106,10 +114,10 @@ class ProjektAnlegen extends Component {
                         size="small"
                         autocomplete='off'
                     />
-                    
+
                 </div>
-                <br/>
-          </>
+                <br />
+            </>
         )
     }
 
@@ -117,20 +125,27 @@ class ProjektAnlegen extends Component {
         const { counter } = this.state
         const result = []
         for (let i = 0; i <= counter; i++) {
-          result.push(this.renderBranch(i))
+            result.push(this.renderBranch(i))
         }
         return result
-    }  
+    }
 
     appendDiv = () => {
         this.setState({
-          counter: this.state.counter + 1,
-          values: [
-            ...this.state.values,
-          ]
+            counter: this.state.counter + 1,
+            values: [
+                ...this.state.values,
+            ]
         })
     }
 
+    handleChangeStart = (e) => {
+        this.setState({ startzeitraum: e });
+      }
+    
+      handleChangeEnde = (e) => {
+        this.setState({ endzeitraum: e });
+      }
 
     //Dialog schließen
     handleClose = () => {
@@ -144,9 +159,11 @@ class ProjektAnlegen extends Component {
 
     render() {
         const { show } = this.props
-        const { allePersonen, personen, projektBezeichnung, auftraggeber } = this.state
+        const { allePersonen, personen, projektBezeichnung, auftraggeber, startzeitraum, endzeitraum } = this.state
 
         let title = 'Neues Projekt';
+        let title2 = "Wähle den Startzeitpunkt und Endzeitpunkt für die Laufzeit deines Projekts."
+        // let title3 = "Wählen den Endzeitpunkt für dein Projekt."
 
         return (
             show ?
@@ -214,10 +231,42 @@ class ProjektAnlegen extends Component {
                                                     </MenuItem>
                                                 ))}
                                             </Select>
+                                            <br></br>
+                                            <DialogContentText>
+                                                {title2}
+                                            </DialogContentText>
+                                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                                <Stack spacing={3}>
+                                                
+ 
+
+                                                    <DesktopDatePicker
+                                                        label="Startzeitraum"
+                                                        inputFormat="MM/dd/yyyy"
+                                                        value={startzeitraum}
+                                                        onChange={this.handleChangeStart}
+                                                        renderInput={(params) => <TextField {...params} />}
+                                                    />
+                                                </Stack>
+                                            </LocalizationProvider>
+                                            <br></br>
+
+                                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                                <Stack spacing={3}>
+
+                                                    <DesktopDatePicker
+                                                        label="Endzeitraum"
+                                                        inputFormat="MM/dd/yyyy"
+                                                        value={endzeitraum}
+                                                        onChange={this.handleChangeEnde}
+                                                        renderInput={(params) => <TextField {...params} />}
+                                                    />
+                                                </Stack>
+                                            </LocalizationProvider>
                                         </FormControl>
                                     </div>
                                     : null}
-                                <br/>
+                                <br />
                                 <Typography>Die einzelnen Aktivitäten für ein Projekt können in der Projekt Übersicht angelegt werden, nachdem das Projekt erstellt wurde. </Typography>
                             </DialogContentText>
                         </DialogContent>

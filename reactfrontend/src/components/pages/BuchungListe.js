@@ -147,9 +147,6 @@ class BuchungListe extends Component {
                 <Typography>Aktivität</Typography>
               </Grid>
               <Grid item xs={2}>
-                <Typography>Art der Buchung (Zeitintervall/Ereignis)</Typography>
-              </Grid>
-              <Grid item xs={2}>
                 <Typography>Stunden, die gebucht wurden</Typography>
               </Grid>
               <Grid item xs={1}>

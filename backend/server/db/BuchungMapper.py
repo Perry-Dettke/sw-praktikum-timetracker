@@ -20,18 +20,17 @@ class BuchungMapper(Mapper):
 
         cursor = self._cnx.cursor()
 
-        command = "SELECT id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id  FROM buchung"
+        command = "SELECT id, letzte_aenderung, datum, stunden, person_id, aktivitaet_id  FROM buchung"
 
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id) in tuples:
+        for (id, letzte_aenderung, datum, stunden, person_id, aktivitaet_id) in tuples:
             buchung = Buchung()
             buchung.set_id(id)
             buchung.set_letzte_aenderung(letzte_aenderung)
             buchung.set_datum(datum)
             buchung.set_stunden(stunden)
-            buchung.set_ereignisbuchung(ereignisbuchung)
             buchung.set_person_id(person_id)
             buchung.set_aktivitaet_id(aktivitaet_id)
 
@@ -53,18 +52,17 @@ class BuchungMapper(Mapper):
 
         result = None
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id FROM buchung WHERE id ='{}'".format(id)
+        command = "SELECT id, letzte_aenderung, datum, stunden, person_id, aktivitaet_id FROM buchung WHERE id ='{}'".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id) = tuples[0]
+            (id, letzte_aenderung, datum, stunden, person_id, aktivitaet_id) = tuples[0]
             buchung = Buchung()
             buchung.set_id(id)
             buchung.set_letzte_aenderung(letzte_aenderung)
             buchung.set_datum(datum)
             buchung.set_stunden(stunden)
-            buchung.set_ereignisbuchung(ereignisbuchung)
             buchung.set_person_id(person_id)
             buchung.set_aktivitaet_id(aktivitaet_id)
 
@@ -92,13 +90,12 @@ class BuchungMapper(Mapper):
         tuples = cursor.fetchall()
 
         try:
-            for (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id ) in tuples:
+            for (id, letzte_aenderung, datum, stunden, person_id, aktivitaet_id ) in tuples:
                 buchung = Buchung()
                 buchung.set_id(id)
                 buchung.set_letzte_aenderung(letzte_aenderung)
                 buchung.set_datum(datum)
                 buchung.set_stunden(stunden)
-                buchung.set_ereignisbuchung(ereignisbuchung)
                 buchung.set_person_id(person_id)
                 buchung.set_aktivitaet_id(aktivitaet_id)
                 result.append(buchung)
@@ -123,13 +120,12 @@ class BuchungMapper(Mapper):
         tuples = cursor.fetchall()
 
         try:
-            for (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id ) in tuples:
+            for (id, letzte_aenderung, datum, stunden, person_id, aktivitaet_id ) in tuples:
                 buchung = Buchung()
                 buchung.set_id(id)
                 buchung.set_letzte_aenderung(letzte_aenderung)
                 buchung.set_datum(datum)
                 buchung.set_stunden(stunden)
-                buchung.set_ereignisbuchung(ereignisbuchung)
                 buchung.set_person_id(person_id)
                 buchung.set_aktivitaet_id(aktivitaet_id)
                 result.append(buchung)
@@ -154,13 +150,12 @@ class BuchungMapper(Mapper):
         tuples = cursor.fetchall()
 
         try:
-            for (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id ) in tuples:
+            for (id, letzte_aenderung, datum, stunden, person_id, aktivitaet_id ) in tuples:
                 buchung = Buchung()
                 buchung.set_id(id)
                 buchung.set_letzte_aenderung(letzte_aenderung)
                 buchung.set_datum(datum)
                 buchung.set_stunden(stunden)
-                buchung.set_ereignisbuchung(ereignisbuchung)
                 buchung.set_person_id(person_id)
                 buchung.set_aktivitaet_id(aktivitaet_id)
                 result.append(buchung)
@@ -185,13 +180,12 @@ class BuchungMapper(Mapper):
         tuples = cursor.fetchall()
 
         try:
-            for (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id ) in tuples:
+            for (id, letzte_aenderung, datum, stunden, person_id, aktivitaet_id ) in tuples:
                 buchung = Buchung()
                 buchung.set_id(id)
                 buchung.set_letzte_aenderung(letzte_aenderung)
                 buchung.set_datum(datum)
                 buchung.set_stunden(stunden)
-                buchung.set_ereignisbuchung(ereignisbuchung)
                 buchung.set_person_id(person_id)
                 buchung.set_aktivitaet_id(aktivitaet_id)
                 result.append(buchung)
@@ -227,12 +221,11 @@ class BuchungMapper(Mapper):
 
         Buchung.set_datum(datetime.date.today())
 
-        command = "INSERT INTO buchung (id, letzte_aenderung, datum, stunden, ereignisbuchung, person_id, aktivitaet_id) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+        command = "INSERT INTO buchung (id, letzte_aenderung, datum, stunden, person_id, aktivitaet_id) VALUES (%s,%s,%s,%s,%s,%s)"
         data = (Buchung.get_id(),
                 Buchung.get_letzte_aenderung(),
                 Buchung.get_datum(),
                 Buchung.get_stunden(),
-                Buchung.get_ereignisbuchung(),
                 Buchung.get_person_id(),
                 Buchung.get_aktivitaet_id(),
 
@@ -253,11 +246,10 @@ class BuchungMapper(Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE buchung " + "SET letzte_aenderung=%s, stunden=%s, ereignisbuchung=%s, person_id=%s, aktivitaet_id=%s WHERE id=%s"
+        command = "UPDATE buchung " + "SET letzte_aenderung=%s, stunden=%s, person_id=%s, aktivitaet_id=%s WHERE id=%s"
         data = (
             Buchung.get_letzte_aenderung(),
             Buchung.get_stunden(),
-            Buchung.get_ereignisbuchung(),
             Buchung.get_person_id(),
             Buchung.get_aktivitaet_id(),
             Buchung.get_id(),
