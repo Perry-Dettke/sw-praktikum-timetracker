@@ -331,7 +331,7 @@ class Home extends Component {
                     </Paper>
                 </Box>
 
-                        <Grid container alignItems="center" xs={22} sx={{
+                        <Grid container direction="row" justifyContent="center" alignItems="center" xs={12} spacing={2} sx={{
                             backgroundColor: '#dedede'
                         }}>
 

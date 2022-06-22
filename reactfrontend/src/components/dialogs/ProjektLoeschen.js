@@ -37,6 +37,10 @@ class ProjektLoeschen extends Component {
             <DialogContentText>
               Das Projekt {projekt.getBezeichnung()} wirklich löschen?
             </DialogContentText>
+            <br/><br/>
+            <DialogContentText>
+              Nach dem Löschen bitte die Seite reloaden.
+            </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">

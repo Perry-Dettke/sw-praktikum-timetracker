@@ -127,7 +127,7 @@ class AuswertungListenEintrag extends Component {
               >
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <Typography align="left">Um nach einem bestimmten Zeitraum zu suchen, fülle die Such-Felder aus und klicke den Button. Dies führt zu einer Aktualisierung der Ist-Stunden und der Restkapazität.</Typography>
+                        <Typography align="left">Um nach einem bestimmten Zeitraum zu suchen, fülle die Such-Felder aus und klicke den Button. Dies führt zu einer Aktualisierung der Ist-Stunden und der Reststunden.</Typography>
                     </Grid>
                     <Grid item xs={4}>
                         <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start: (yyyy-mm-dd)' value={start} onChange={this.textFieldValueChange} />
