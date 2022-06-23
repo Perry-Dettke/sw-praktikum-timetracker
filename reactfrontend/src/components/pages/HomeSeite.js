@@ -259,7 +259,7 @@ class Home extends Component {
         let min = String(dateliste[14] + dateliste[15])
         let sek = String(dateliste[17] + dateliste[18])
         console.log("Y", year, "M", month, "D", day, "TIME", hours, min, sek)
-        return new Date(year, month - 1, day, hours, min, sek)
+        return new Date(year, month - 1, day, hours, min, sek) // month -1: Monate von [0-11]
     }
 
     pausenStartSplitten = () => {

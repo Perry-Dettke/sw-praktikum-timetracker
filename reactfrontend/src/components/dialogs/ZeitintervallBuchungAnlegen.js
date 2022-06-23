@@ -59,6 +59,7 @@ class ZeitintervallBuchungAnlegen extends Component {
 
 
   addBuchung = () => {
+    if( this.dateSplit() > this.state.projekt.getStartzeitraum() && this.dateSplit() < this.state.projekt.getEndzeitraum()){
     let newBuchung = new BuchungBO()
     newBuchung.setID(0) // bekommt im Backend die max id
     newBuchung.setDatum("2000-01-01") // bekommt im Backend das aktuelle Datum
@@ -71,8 +72,24 @@ class ZeitintervallBuchungAnlegen extends Component {
       this.props.onClose(buchung);
       this.props.getBuchungbyPersonID();
       this.getProjektByPerson()
-    })
+    })}
+    else{
+      window.alert("Buchung nicht möglich!\nDie Projektlaufzeit hat noch nicht begonnen oder ist breits abgelaufen.\nDie Projektlaufzeit ist vom "  + this.state.projekt.getStartzeitraum() + " - " + this.state.projekt.getEndzeitraum() +".")
+    }
   }
+
+
+  dateSplit = () => {
+    let newDate = new Date()
+    console.log(new Date())
+    let date = newDate.toLocaleDateString() + " " + newDate.toLocaleTimeString()
+    let dateliste = date.split('')
+    let day = String(dateliste[0] + dateliste[1])
+    let month = "0" + String(dateliste[3])
+    let year = String(dateliste[5] + dateliste[6] + dateliste[7] + dateliste[8])
+    let time = String(dateliste[10] + dateliste[11] + dateliste[12] + dateliste[13] + dateliste[14] + dateliste[15] + dateliste[16] + dateliste[17])
+    return year + "-" + month + "-" + day + " " + time
+}
 
   // Dialog schließen
   handleClose = () => {

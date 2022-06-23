@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 import { Button, Tooltip, TextField, InputAdornment, IconButton, Grid, Typography, List, Box, Fab, TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-
 import BuchungListenEintrag from './BuchungListenEintrag.js'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import ZeitintervallBuchungAnlegen from '../dialogs/ZeitintervallBuchungAnlegen.js';
-import EreignisBuchungAnlegen from '../dialogs/EreignisBuchungAnlegen.js';
 
 
 
@@ -61,31 +57,6 @@ class BuchungListe extends Component {
   }
 
   
-// Ereignisbuchung Erstellen Dialog anzeigen
-  ereignisBuchungAnlegenButtonClicked = event => {
-    event.stopPropagation();
-    this.setState({
-      showEreignisBuchungAnlegen: true,
-    });
-  }
-
-  //Ereignisbuchung Dialog schließen
-  ereignisBuchungAnlegenClosed = buchung => {
-    this.getBuchungbyPersonID();
-
-    if (buchung) {
-      const newBuchungList = [...this.state.buchung, buchung];
-      this.setState({
-        buchung: newBuchungList,
-        showEreignisBuchungAnlegen: false
-      });
-    } else {
-      this.setState({
-        showEreignisBuchungAnlegen: false
-      });
-    }
-  }
-
 
 
   componentDidMount() {
@@ -96,7 +67,7 @@ class BuchungListe extends Component {
   /** Renders the component */
   render() {
 
-    const { buchung, showZeitintervallBuchungAnlegen, showEreignisBuchungAnlegen, buchungliste } = this.state;
+    const { buchung, showZeitintervallBuchungAnlegen, buchungliste } = this.state;
     // console.log(buchungliste)
 
 
@@ -127,9 +98,6 @@ class BuchungListe extends Component {
                     <AddIcon />
                     &nbsp; Projekt-Buchung erstellen
                   </Button>
-                </Grid>
-                <Grid item xs={6}>
-
                 </Grid>
               </Grid>
             </Box>
@@ -164,7 +132,6 @@ class BuchungListe extends Component {
             </Grid>
           </Grid>
           <ZeitintervallBuchungAnlegen show={showZeitintervallBuchungAnlegen} onClose={this.zeitintervallBuchungAnlegenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
-          <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} onClose={this.ereignisBuchungAnlegenClosed}/>
         </div>
         : null
     );
