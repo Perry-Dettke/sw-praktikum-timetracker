@@ -247,7 +247,7 @@ class ProjektUebersichtEintrag extends Component {
                                     {ersteller ?
                                         <Typography align='left'><b>Ersteller: </b>{ersteller.getVor_name()} {ersteller.getNach_name()}<br /></Typography>
                                         : null}
-                                        <Typography align='left'><b>Zeitraum: </b>{projekt.getEndzeitraum()} - {projekt.getStartzeitraum()}<br /></Typography>
+                                        <Typography align='left'><b>Zeitraum: </b>{projekt.getStartzeitraum()} - {projekt.getEndzeitraum()}<br /></Typography>
                                     <Typography align='left'><b>Teilnehmer: </b></Typography>
                                     <ul>
                                         {personenliste.map(person =>

@@ -54,13 +54,23 @@ class ProjektAnlegen extends Component {
         newProjekt.setID(0)
         newProjekt.setBezeichnung(this.state.projektBezeichnung)
         newProjekt.setAuftraggeber(this.state.auftraggeber)
-        newProjekt.setStartzeitraum(this.state.startzeitraum)
-        newProjekt.setEndzeitraum(this.state.endzeitraum)
+        newProjekt.setStartzeitraum(this.dateSplit(this.state.startzeitraum))
+        newProjekt.setEndzeitraum(this.dateSplit(this.state.endzeitraum))
         newProjekt.setProjekterstellerID(3)
         //newProjekt.setProjekterstellerID(this.props.person.getID())
         TimetrackerAPI.getAPI().addProjekt(newProjekt).then(projekt => {
             this.addPersonInProjekt(projekt)
         })
+    }
+
+    //Datum und Zeit vom Frontend wird das richtige Backend Format umgewandelt
+    dateSplit = (date) => {
+        let newDate = date.toLocaleDateString() + " " + date.toLocaleTimeString()
+        let dateliste = newDate.split('')
+        let day = String(dateliste[0] + dateliste[1])
+        let month = "0" + String(dateliste[3])
+        let year = String(dateliste[5] + dateliste[6] + dateliste[7] + dateliste[8])
+        return year + "-" + month + "-" + day
     }
 
     // Person in Projekt hinzufügen
