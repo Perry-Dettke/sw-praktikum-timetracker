@@ -7,7 +7,6 @@ import Home from './components/pages/HomeSeite';
 import BuchungListe from './components/pages/BuchungListe';
 import Projekt_uebersicht from './components/pages/ProjektÜbersicht';
 import Auswertung from './components/pages/AuswertungListe';
-import AuswertungPerson from './components/pages/AuswertungPersonListe';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import firebaseConfig from './firebaseconfig';
@@ -156,7 +155,6 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 									<Route path={process.env.PUBLIC_URL + '/projekt_uebersicht'} element={<Secured user={currentUser}><Projekt_uebersicht /> </Secured>} />
 									<Route path={process.env.PUBLIC_URL + '/buchung'} element={<Secured user={currentUser}><BuchungListe /></Secured>} />
 									<Route path={process.env.PUBLIC_URL + '/auswertung'} element={<Secured user={currentUser}> <Auswertung/></Secured>} />
-									<Route path={process.env.PUBLIC_URL + '/auswertung_person'} element={<Secured user={currentUser}><AuswertungPerson/></Secured>} />
 								</Route>
 							</Routes>
 							<LoadingProgress show={authLoading} />

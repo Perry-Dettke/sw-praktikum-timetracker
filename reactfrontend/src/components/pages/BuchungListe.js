@@ -9,6 +9,7 @@ import BuchungListenEintrag from './BuchungListenEintrag.js'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import ZeitintervallBuchungAnlegen from '../dialogs/ZeitintervallBuchungAnlegen.js';
 import EreignisBuchungAnlegen from '../dialogs/EreignisBuchungAnlegen.js';
+import LoadingProgress from '../dialogs/LoadingProgress'
 
 
 
@@ -23,6 +24,7 @@ class BuchungListe extends Component {
       buchungliste: [],
       showZeitintervallBuchungAnlegen: false,
       showEreignisBuchungAnlegen: false,
+      authLoading: false,
     };
   }
 
@@ -30,7 +32,12 @@ class BuchungListe extends Component {
     TimetrackerAPI.getAPI().getBuchungbyPersonID(3).then((buchungBOs) => {
       this.setState({
         buchungliste: buchungBOs,
+        authLoading: false,
       });
+    });
+    // set loading to true
+    this.setState({
+      authLoading: true,
     });
   }
 
@@ -45,17 +52,15 @@ class BuchungListe extends Component {
 
   /// Zeitintervallbuchung Erstellen Dialog schließen
   zeitintervallBuchungAnlegenClosed = buchung => {
-    this.getBuchungbyPersonID();
-
     if (buchung) {
       const newBuchungList = [...this.state.buchung, buchung];
       this.setState({
         buchung: newBuchungList,
-        showZeitintervallBuchungAnlegen: false
+        showZeitintervallBuchungAnlegen: false,
       });
     } else {
       this.setState({
-        showZeitintervallBuchungAnlegen: false
+        showZeitintervallBuchungAnlegen: false,
       });
     }
   }
@@ -63,7 +68,6 @@ class BuchungListe extends Component {
   
 // Ereignisbuchung Erstellen Dialog anzeigen
   ereignisBuchungAnlegenButtonClicked = event => {
-    event.stopPropagation();
     this.setState({
       showEreignisBuchungAnlegen: true,
     });
@@ -71,17 +75,15 @@ class BuchungListe extends Component {
 
   //Ereignisbuchung Dialog schließen
   ereignisBuchungAnlegenClosed = buchung => {
-    this.getBuchungbyPersonID();
-
     if (buchung) {
       const newBuchungList = [...this.state.buchung, buchung];
       this.setState({
         buchung: newBuchungList,
-        showEreignisBuchungAnlegen: false
+        showEreignisBuchungAnlegen: false,
       });
     } else {
       this.setState({
-        showEreignisBuchungAnlegen: false
+        showEreignisBuchungAnlegen: false,
       });
     }
   }
@@ -96,7 +98,7 @@ class BuchungListe extends Component {
   /** Renders the component */
   render() {
 
-    const { buchung, showZeitintervallBuchungAnlegen, showEreignisBuchungAnlegen, buchungliste } = this.state;
+    const { buchung, showZeitintervallBuchungAnlegen, showEreignisBuchungAnlegen, buchungliste, authLoading } = this.state;
     // console.log(buchungliste)
 
 
@@ -177,8 +179,9 @@ class BuchungListe extends Component {
           </Grid>
           <ZeitintervallBuchungAnlegen show={showZeitintervallBuchungAnlegen} onClose={this.zeitintervallBuchungAnlegenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
           <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} onClose={this.ereignisBuchungAnlegenClosed}/>
+          <LoadingProgress show={authLoading} />
         </div>
-        : null
+      : null
     );
   }
 }
