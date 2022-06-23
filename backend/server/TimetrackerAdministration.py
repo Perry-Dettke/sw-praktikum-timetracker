@@ -464,8 +464,10 @@ class TimetrackerAdministration (object):
     """
     def create_zeitintervall(self, zeitintervall): 
         """Zeitintervall anlegen"""
+        self.save_arbeitszeitkonto
         with ZeitintervallMapper() as mapper:
             return mapper.insert(zeitintervall)
+
 
     def get_zeitintervall_by_id(self, id):
         """Das Zeitintervall mit der gegebenen ID auslesen."""

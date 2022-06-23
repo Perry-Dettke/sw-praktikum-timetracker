@@ -156,7 +156,8 @@ class Home extends Component {
             window.alert("Hallo " + this.state.person.getVor_name() + "! Schön, dass du da bist." + "\nDu hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " eingstempelt!\nEinen schönen Arbeitstag!")
             this.getZeitintervall()
             this.setState(this.initialState);
-            this.getZeitintervallbyPersonID()
+            this.getZeitintervallbyPersonID();
+            // this.getArbeitszeitkonto();
         })
         this.setState({
             start: new Date
@@ -167,6 +168,17 @@ class Home extends Component {
     }
     }
 
+    updateArbeitszeitkonto = () => {
+    let arbeitszeitkonto = this.state.arbeitszeitkonto
+    let start = new Date(this.startDatumSplitten())
+    let endefront = new Date()
+    let dauer = endefront.getTime() - start.getTime()
+    let gesamtstunden = arbeitszeitkonto.getGesamtstunden() + this.msToTime(dauer)
+    arbeitszeitkonto.setGesamtstunden(gesamtstunden)
+    TimetrackerAPI.getAPI().updateArbeitszeitkonto(arbeitszeitkonto).then(arbeitszeitkonto => {
+
+      })}
+
     updateZeitintervall = () => {
         let zeitintervall = this.state.zeitintervall;
         if (this.state.zeitintervall != null){
@@ -174,8 +186,6 @@ class Home extends Component {
         let start = new Date(this.startDatumSplitten())
         let endefront = new Date()
         let dauer = endefront.getTime() - start.getTime()
-        console.log(typeof(dauer))
-        console.log(typeof(dauer))
         zeitintervall.setEnde(ende)
         zeitintervall.setDauer(this.msToTime(dauer).toFixed(3))
         TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall)
@@ -184,6 +194,7 @@ class Home extends Component {
         this.setState(this.initialState);
         this.getZeitintervallbyPersonID();
         this.getArbeitszeitkonto();
+        this.updateArbeitszeitkonto();
         {
         this.setState({
             zeitintervall: null})}}
