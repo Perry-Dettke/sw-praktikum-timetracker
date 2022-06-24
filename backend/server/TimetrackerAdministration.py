@@ -117,7 +117,10 @@ class TimetrackerAdministration (object):
     """
     Arbeitszeitkonto-spezifische Methoden
     """
-    # Arbeitszeitkonto wird automatisch mit Person erstellt
+    def create_arbeitszeitkonto(self, arbeitszeitkonto): 
+        """Arbeitszeitkonto anlegen"""
+        with ArbeitszeitkontoMapper() as mapper:
+            return mapper.insert(arbeitszeitkonto)
 
     def get_arbeitszeitkonto_by_id(self, id):
         """Das Arbeitszeitkonto mit der gegebenen ID auslesen."""
@@ -284,10 +287,8 @@ class TimetrackerAdministration (object):
     """
     def create_person(self, person): 
         """Person anlegen"""
-        with ArbeitszeitkontoMapper() as mapper:
-            azk = mapper.insert()
         with PersonMapper() as mapper:
-            return mapper.insert(person, azk.get_id())
+            return mapper.insert(person)
 
     def get_person_by_id(self, id):
         """Den Personen mit der gegebenen ID auslesen."""

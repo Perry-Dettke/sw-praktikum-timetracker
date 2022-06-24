@@ -23,6 +23,7 @@ export default class TimetrackerAPI {
   #deleteAktivitaetURL = (id) => `${this.#ServerBaseURL}/aktivitaet/${id}`;
 
   // *** Arbeitszeitkonto realted *** //
+  #addArbeitszeitkontoURL = () => `${this.#ServerBaseURL}/arbeitszeitkonto`;
   #getArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
   #updateArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
   #deleteArbeitszeitkontoURL = (id) => `${this.#ServerBaseURL}/arbeitszeitkonto/${id}`;
@@ -192,6 +193,23 @@ export default class TimetrackerAPI {
       let arbeitszeitkonto = ArbeitszeitkontoBO.fromJSON(responseJSON);
       return new Promise(function (resolve) {
         resolve(arbeitszeitkonto)
+      })
+    })
+  }
+
+  addArbeitszeitkonto(arbeitszeitkontoBO) {
+    // Arbeitszeitkonto neu anlegen
+    return this.#fetchAdvanced(this.#addArbeitszeitkontoURL(), {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(arbeitszeitkontoBO)
+    }).then((responseJSON) => {
+      let responseArbeitszeitkontoBO = ArbeitszeitkontoBO.fromJSON(responseJSON);
+      return new Promise(function (resolve) {
+        resolve(responseArbeitszeitkontoBO);
       })
     })
   }

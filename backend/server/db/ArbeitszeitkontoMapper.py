@@ -76,7 +76,7 @@ class ArbeitszeitkontoMapper (Mapper):
 
 
 
-    def insert(self):
+    def insert(self, arbeitszeitkonto):
         """Einfügen eines Arbeitszeitkonto-Objekts in die Datenbank.
 
         Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
@@ -89,8 +89,6 @@ class ArbeitszeitkontoMapper (Mapper):
         cursor = self._cnx.cursor()
         cursor.execute("SELECT MAX(id) AS maxid FROM arbeitszeitkonto ")
         tuples = cursor.fetchall()
-
-        arbeitszeitkonto = Arbeitszeitkonto()
 
         for (maxid) in tuples:
             arbeitszeitkonto.set_id(maxid[0] + 1)

@@ -19,7 +19,7 @@ class LoadingProgress extends Component {
     return (
       show ?
         <div >
-          <LinearProgress sx={{width: '100%', marginTop: 2}} color='primary' />
+          <LinearProgress sx={{width: '100%', marginTop: 2}} color='secondary' />
         </div>
         : null
     );

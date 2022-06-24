@@ -3,11 +3,11 @@ import { Component } from 'react';
 
 import { Grid, Typography, TextField, Paper, List, Fab, Tooltip, Button } from '@mui/material';
 import TimetrackerAPI from '../../api/TimetrackerAPI';
-import AuswertungListenEintrag from './AuswertungListenEintrag';
+import AuswertungPersonListenEintrag from './AuswertungPersonListenEintrag';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 
-class Auswertung extends Component {
+class AuswertungPerson extends Component {
 
     constructor(props) {
         super(props);
@@ -17,7 +17,7 @@ class Auswertung extends Component {
             start: null,
             ende: null,
             projektliste: [],
-            aktivitaet: [],
+            personliste: [],
         };
 
     }
@@ -25,7 +25,7 @@ class Auswertung extends Component {
     /** Fetches all PersonBOs from the backend */
     getProjektbyProjekterstellerID = () => {
         var pro = TimetrackerAPI.getAPI();
-        pro.getProjektbyProjekterstellerID(3).then((projektBOs) => {
+        pro.getProjektbyProjekterstellerID(1).then((projektBOs) => {
             this.setState({
                 projektliste: projektBOs,
             });
@@ -75,7 +75,7 @@ class Auswertung extends Component {
                             <List >
                                 {
                                     projektliste.map(projekt =>
-                                        <AuswertungListenEintrag key={(projekt)[projekt.id]} projekt={projekt} ref={this.child} />)
+                                        <AuswertungPersonListenEintrag key={(projekt)[projekt.id]} projekt={projekt} ref={this.child} />)
                                 }
                             </List>
                         </Grid>
@@ -90,4 +90,4 @@ class Auswertung extends Component {
 
 
 
-export default Auswertung;
+export default AuswertungPerson;
