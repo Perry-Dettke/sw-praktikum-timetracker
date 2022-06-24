@@ -156,7 +156,6 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 									<Route path={process.env.PUBLIC_URL + '/projekt_uebersicht'} element={<Secured currentUser={currentUser}><Projekt_uebersicht/></Secured>} />
 									<Route path={process.env.PUBLIC_URL + '/buchung'} element={<Secured currentUser={currentUser}><BuchungListe /></Secured>}/>
 									<Route path={process.env.PUBLIC_URL + '/auswertung'} element={<Secured currentUser={currentUser}> <Auswertung/></Secured>}/>
-									<Route path={process.env.PUBLIC_URL + '/auswertung_person'} element={<Secured currentUser={currentUser}><AuswertungPerson/></Secured>} />
 								</Route>
 							</Routes>
 							<LoadingProgress show={authLoading} />

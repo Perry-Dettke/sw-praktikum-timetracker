@@ -70,15 +70,15 @@ class Home extends Component {
   }
 
 
-                person: personBO,
-                authLoading: false,
-            });
-        });
-        // set loading to true
-        this.setState({
-            authLoading: true,
-        });
-    };
+    //             person: personBO,
+    //             authLoading: false,
+    //         });
+    //     });
+    //     // set loading to true
+    //     this.setState({
+    //         authLoading: true,
+    //     });
+    // };
 
     //Person bearbeiten
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
@@ -519,11 +519,13 @@ class Home extends Component {
                 <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
                 <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPersonbyID} />
                 <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} arbeitszeitkonto={arbeitszeitkonto} onClose={this.ereignisBuchungAnlegenClosed} getArbeitszeitkonto={this.getArbeitszeitkonto} />
-            </div>
-            : (
+                </div>
+            : <div> 
                 <SignUp onClose={this.closeSignup} currentUser={currentUser} reloadUser={this.reloadUser} />
-            );
+                </div>}
+                </div>);
+            
     }
-}
 
+}
 export default Home;
