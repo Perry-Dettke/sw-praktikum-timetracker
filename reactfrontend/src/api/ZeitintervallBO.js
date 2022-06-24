@@ -3,11 +3,14 @@ import BusinessObject from './BusinessObject';
 
 export default class ZeitintervallBO extends BusinessObject {
 
-    constructor(start, ende, dauer, person_id){
+    constructor(start, ende, dauer, pausen_start, pausen_ende, pausen_dauer, person_id){
         super();
         this.start = start;
         this.ende = ende;
         this.dauer = dauer;
+        this.start = pausen_start;
+        this.ende = pausen_ende;
+        this.dauer = pausen_dauer;
         this.person_id = person_id;
     }
 
@@ -33,6 +36,30 @@ export default class ZeitintervallBO extends BusinessObject {
 
     getDauer() {
     return this.dauer;
+    }
+
+    setPausenStart(pausen_start) {
+    this.pausen_start = pausen_start;
+    }
+
+    getPausenStart() {
+    return this.pausen_start;
+    }
+
+    setPausenEnde(pausen_ende) {
+    this.pausen_ende = pausen_ende;
+    }
+
+    getPausenEnde() {
+    return this.pausen_ende;
+    }
+
+    setPausenDauer(pausen_dauer) {
+    this.pausen_dauer = pausen_dauer;
+    }
+
+    getPausenDauer() {
+    return this.pausen_dauer;
     }
 
     setPerson_id(person_id) {

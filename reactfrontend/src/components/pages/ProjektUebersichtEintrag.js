@@ -202,10 +202,12 @@ class ProjektUebersichtEintrag extends Component {
     render() {
         const { projekt, person } = this.props;
         const { ersteller, showAktivitaetDialog, showAktivitaetBearbeiten, showAktivitaetLoeschen, showProjektBearbeiten, aktivitaetliste,
-            showProjektLoeschen, currentAktivitaet, personenliste } = this.state;
+            showProjektLoeschen, currentAktivitaet, personenliste } = this.state; 
+
 
         return (
-            aktivitaetliste && personenliste ?
+
+            aktivitaetliste && personenliste && projekt ?
                 <div>
                     <Grid container spacing={4} alignItems="center">
                         <Grid item xs={12} textAlign="center">
@@ -245,6 +247,7 @@ class ProjektUebersichtEintrag extends Component {
                                     {ersteller ?
                                         <Typography align='left'><b>Ersteller: </b>{ersteller.getVor_name()} {ersteller.getNach_name()}<br /></Typography>
                                         : null}
+                                        <Typography align='left'><b>Zeitraum: </b>{projekt.getStartzeitraum()} - {projekt.getEndzeitraum()}<br /></Typography>
                                     <Typography align='left'><b>Teilnehmer: </b></Typography>
                                     <ul>
                                         {personenliste.map(person =>

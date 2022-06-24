@@ -24,12 +24,14 @@ class ProjektMapper (Mapper):
         cursor.execute("SELECT * from projekt")
         tuples = cursor.fetchall()
 
-        for (id, letzte_aenderung, bezeichnung, auftraggeber, projektersteller_id) in tuples:
+        for (id, letzte_aenderung, bezeichnung, auftraggeber, startzeitraum, endzeitraum, projektersteller_id) in tuples:
             projekt = Projekt()
             projekt.set_id(id)
             projekt.set_letzte_aenderung(letzte_aenderung)
             projekt.set_bezeichnung(bezeichnung)
             projekt.set_auftraggeber(auftraggeber)
+            projekt.set_startzeitraum(startzeitraum)
+            projekt.set_endzeitraum(endzeitraum)
             projekt.set_projektersteller_id(projektersteller_id)
             result.append(projekt)
 
@@ -48,17 +50,19 @@ class ProjektMapper (Mapper):
 
         result = None
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, bezeichnung, auftraggeber, projektersteller_id FROM projekt WHERE id ='{}'".format(id)
+        command = "SELECT id, letzte_aenderung, bezeichnung, auftraggeber, startzeitraum, endzeitraum, projektersteller_id FROM projekt WHERE id ='{}'".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, letzte_aenderung, bezeichnung, auftraggeber, projektersteller_id) = tuples[0]
+            (id, letzte_aenderung, bezeichnung, auftraggeber, startzeitraum, endzeitraum, projektersteller_id) = tuples[0]
             projekt = Projekt()
             projekt.set_id(id)
             projekt.set_letzte_aenderung(letzte_aenderung)
             projekt.set_bezeichnung(bezeichnung)
             projekt.set_auftraggeber(auftraggeber)
+            projekt.set_startzeitraum(startzeitraum)
+            projekt.set_endzeitraum(endzeitraum)
             projekt.set_projektersteller_id(projektersteller_id)
 
             result = projekt
@@ -83,12 +87,14 @@ class ProjektMapper (Mapper):
         tuples = cursor.fetchall()
 
         try:
-            for (id, letzte_aenderung, bezeichnung, auftraggeber, projektersteller_id) in tuples:
+            for (id, letzte_aenderung, bezeichnung, auftraggeber, startzeitraum, endzeitraum, projektersteller_id) in tuples:
                 projekt = Projekt()
                 projekt.set_id(id)
                 projekt.set_letzte_aenderung(letzte_aenderung)
                 projekt.set_bezeichnung(bezeichnung)
                 projekt.set_auftraggeber(auftraggeber)
+                projekt.set_startzeitraum(startzeitraum)
+                projekt.set_endzeitraum(endzeitraum)
                 projekt.set_projektersteller_id(projektersteller_id)
                 result.append(projekt)
 
@@ -127,13 +133,15 @@ class ProjektMapper (Mapper):
                 davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
                 projekt.set_id(1)
 
-        command = "INSERT INTO projekt (id, letzte_aenderung, bezeichnung, auftraggeber, projektersteller_id ) VALUES (%s,%s,%s,%s,%s)"
+        command = "INSERT INTO projekt (id, letzte_aenderung, bezeichnung, auftraggeber, startzeitraum, endzeitraum, projektersteller_id ) VALUES (%s,%s,%s,%s,%s,%s,%s)"
         data = (
 
             projekt.get_id(),
             projekt.get_letzte_aenderung(),
             projekt.get_bezeichnung(),
             projekt.get_auftraggeber(),
+            projekt.get_startzeitraum(),
+            projekt.get_endzeitraum(),
             projekt.get_projektersteller_id(),
         )
 
@@ -150,11 +158,13 @@ class ProjektMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE projekt " + "SET letzte_aenderung=%s, bezeichnung=%s, auftraggeber=%s, projektersteller_id=%s WHERE id=%s"
+        command = "UPDATE projekt " + "SET letzte_aenderung=%s, bezeichnung=%s, auftraggeber=%s, startzeitraum=%s, endzeitraum=%s, projektersteller_id=%s WHERE id=%s"
         data = (
             projekt.get_letzte_aenderung(),
             projekt.get_bezeichnung(),
             projekt.get_auftraggeber(),
+            projekt.get_startzeitraum(),
+            projekt.get_endzeitraum(),
             projekt.get_projektersteller_id(),
             projekt.get_id())
         cursor.execute(command, data)
