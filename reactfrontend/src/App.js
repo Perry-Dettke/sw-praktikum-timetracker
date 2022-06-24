@@ -7,7 +7,6 @@ import Home from './components/pages/HomeSeite';
 import BuchungListe from './components/pages/BuchungListe';
 import Projekt_uebersicht from './components/pages/ProjektÜbersicht';
 import Auswertung from './components/pages/AuswertungListe';
-import AuswertungPerson from './components/pages/AuswertungPersonListe';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import firebaseConfig from './firebaseconfig';

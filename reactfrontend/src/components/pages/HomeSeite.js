@@ -7,6 +7,8 @@ import PersonForm from "../dialogs/PersonForm";
 import PersonDelete from "../dialogs/PersonDelete";
 import EreignisBuchungAnlegen from "../dialogs/EreignisBuchungAnlegen.js"
 import SignUp from './SignUp';
+import LoadingProgress from '../dialogs/LoadingProgress'
+
 import ZeitintervallBO from "../../api/ZeitintervallBO";
 import ZeitintervallEintrag from './ZeitintervallEintrag.js'
 import { CoPresent } from "@mui/icons-material";
@@ -25,6 +27,7 @@ class Home extends Component {
             zeitintervallliste: [],
             start: null,
             ende: null,
+            authLoading: false,
         };
     }
     // **********MEIN PROFIL FUNKTIONEN**********\\
@@ -67,11 +70,19 @@ class Home extends Component {
   }
 
 
+                person: personBO,
+                authLoading: false,
+            });
+        });
+        // set loading to true
+        this.setState({
+            authLoading: true,
+        });
+    };
 
     //Person bearbeiten
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
-    bearbeitenButtonClicked = (event) => {
-        event.stopPropagation();
+    bearbeitenButtonClicked = () => {
         this.setState({
             showPersonForm: true,
         });
@@ -115,6 +126,7 @@ class Home extends Component {
             if (zeitintervallBO)
                 this.setState({
                     zeitintervall: zeitintervallBO,
+                    authLoading: true,
                 });
         });
     }
@@ -124,7 +136,12 @@ class Home extends Component {
         TimetrackerAPI.getAPI().getZeitintervallbyPersonID(2).then((zeitintervallBOs) => {
             this.setState({
                 zeitintervallliste: zeitintervallBOs,
+                authLoading: false,
             });
+        });
+        // set loading to true
+        this.setState({
+            authLoading: true,
         });
     }
 
@@ -141,12 +158,12 @@ class Home extends Component {
     ereignisBuchungAnlegenClosed = (arbeitszeitkonto) => {
         if (arbeitszeitkonto) {
             this.setState({
-                showEreignisBuchungAnlegen: false
+                showEreignisBuchungAnlegen: false,
             });
             this.getArbeitszeitkonto()
         } else {
             this.setState({
-                showEreignisBuchungAnlegen: false
+                showEreignisBuchungAnlegen: false,
             });
         }
     }
@@ -159,7 +176,12 @@ class Home extends Component {
         TimetrackerAPI.getAPI().getArbeitszeitkonto(4).then((arbeitszeitkontoBO) => {
             this.setState({
                 arbeitszeitkonto: arbeitszeitkontoBO,
+                authLoading: false,
             });
+        });
+        // set loading to true
+        this.setState({
+            authLoading: true,
         });
     }
 
@@ -194,7 +216,7 @@ class Home extends Component {
             this.getZeitintervallbyPersonID()
         })
         this.setState({
-            start: new Date
+            start: new Date,
         })
     }
 
@@ -264,13 +286,15 @@ class Home extends Component {
 
     render() {
         const {currentUser} = this.props;
-        const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto } = this.state;
+        const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto, authLoading } = this.state;
         // console.log(zeitintervall)
         // console.log(start)
         // console.log(zeitintervallliste)
         console.log(arbeitszeitkonto)
 
-        return person && arbeitszeitkonto ?
+        return (
+            <div><LoadingProgress show={authLoading} />
+            {person && arbeitszeitkonto ?
             <div>
                 <Box
                     sx={{
