@@ -6,6 +6,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import PersonForm from "../dialogs/PersonForm";
 import PersonDelete from "../dialogs/PersonDelete";
 import EreignisBuchungAnlegen from "../dialogs/EreignisBuchungAnlegen.js"
+import SignUp from './SignUp';
+import LoadingProgress from '../dialogs/LoadingProgress'
 
 import ZeitintervallBO from "../../api/ZeitintervallBO";
 import ZeitintervallEintrag from './ZeitintervallEintrag.js'
@@ -16,6 +18,7 @@ class Home extends Component {
         super(props);
 
         this.state = {
+            currentUser: props.currentUser,
             person: null,
             showPersonForm: false,
             showPersonDelete: false,
@@ -24,23 +27,62 @@ class Home extends Component {
             zeitintervallliste: [],
             start: null,
             ende: null,
+            authLoading: false,
         };
     }
     // **********MEIN PROFIL FUNKTIONEN**********\\
 
-    getPersonbyID = () => {
-        var api = TimetrackerAPI.getAPI();
-        api.getPersonbyID(2).then((personBO) => {
+    // getPersonbyID = () => {
+    //     var api = TimetrackerAPI.getAPI();
+    //     api.getPersonbyID(2).then((personBO) => {
+    //         this.setState({
+    //             person: personBO,
+    //         });
+    //     });
+    // };
+
+
+    getPerson = () => {
+        console.log(this.props.currentUser.uid)
+        TimetrackerAPI.getAPI().getPersonByGoogle(this.props.currentUser.uid).then((person) =>
             this.setState({
+              person: person,
+            })
+          ).catch((e) =>
+            this.setState({
+              person: null,
+            })
+          );
+      }; 
+
+      // SignUp anzeigen
+  closeSignup = (person) => {
+    this.setState({
+      currentUser: person.getID(),
+      person: person,
+    });
+  }
+
+  showPersonForm = () => {
+      if(!this.state.person) {
+          this.setState({ showPersonForm: true });
+      }
+  }
+
+
                 person: personBO,
+                authLoading: false,
             });
+        });
+        // set loading to true
+        this.setState({
+            authLoading: true,
         });
     };
 
     //Person bearbeiten
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
-    bearbeitenButtonClicked = (event) => {
-        event.stopPropagation();
+    bearbeitenButtonClicked = () => {
         this.setState({
             showPersonForm: true,
         });
@@ -84,6 +126,7 @@ class Home extends Component {
             if (zeitintervallBO) 
                 this.setState({
                     zeitintervall: zeitintervallBO,
+                    authLoading: true,
                 });
         });
     }
@@ -93,7 +136,12 @@ class Home extends Component {
         TimetrackerAPI.getAPI().getZeitintervallbyPersonID(2).then((zeitintervallBOs) => {
             this.setState({
                 zeitintervallliste: zeitintervallBOs,
+                authLoading: false,
             });
+        });
+        // set loading to true
+        this.setState({
+            authLoading: true,
         });
     }
 
@@ -110,12 +158,12 @@ class Home extends Component {
     ereignisBuchungAnlegenClosed = (arbeitszeitkonto) => {
         if (arbeitszeitkonto) {
             this.setState({
-                showEreignisBuchungAnlegen: false
+                showEreignisBuchungAnlegen: false,
             });
             this.getArbeitszeitkonto()
         } else {
             this.setState({
-                showEreignisBuchungAnlegen: false
+                showEreignisBuchungAnlegen: false,
             });
         }
     }
@@ -125,12 +173,25 @@ class Home extends Component {
 
     // currentuser.getArbeitszeitkontoID() in die Klammer statt 1
     getArbeitszeitkonto = () => {
-        TimetrackerAPI.getAPI().getArbeitszeitkonto(2).then((arbeitszeitkontoBO) => {
+        TimetrackerAPI.getAPI().getArbeitszeitkonto(4).then((arbeitszeitkontoBO) => {
             this.setState({
                 arbeitszeitkonto: arbeitszeitkontoBO,
+                authLoading: false,
             });
         });
+        // set loading to true
+        this.setState({
+            authLoading: true,
+        });
     }
+
+    
+    reloadUser = () => {
+        console.log('reload')
+        this.getPerson()
+            this.getArbeitszeitkonto()
+    
+    };
 
 
 
@@ -160,7 +221,7 @@ class Home extends Component {
             // this.getArbeitszeitkonto();
         })
         this.setState({
-            start: new Date
+            start: new Date,
         })
     }
     else{
@@ -292,20 +353,23 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        this.getPersonbyID();
+        this.getPerson();
         this.getZeitintervallbyPersonID();
         // this.getZeitintervall();
         this.getArbeitszeitkonto();
     }
 
     render() {
-        const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto } = this.state;
+        const {currentUser} = this.props;
+        const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto, authLoading } = this.state;
         // console.log(zeitintervall)
         // console.log(start)
         console.log(this.state.zeitintervall)
         console.log(arbeitszeitkonto)
 
-        return person && arbeitszeitkonto ?
+        return (
+            <div><LoadingProgress show={authLoading} />
+            {person && arbeitszeitkonto ?
             <div>
                 <Box
                     sx={{
@@ -457,7 +521,7 @@ class Home extends Component {
                 <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} arbeitszeitkonto={arbeitszeitkonto} onClose={this.ereignisBuchungAnlegenClosed} getArbeitszeitkonto={this.getArbeitszeitkonto} />
             </div>
             : (
-                <p> Du scheinst noch kein Profil zu haben</p>
+                <SignUp onClose={this.closeSignup} currentUser={currentUser} reloadUser={this.reloadUser} />
             );
     }
 }

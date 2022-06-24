@@ -147,7 +147,7 @@ class PersonMapper (Mapper):
 
         return person
 
-    def insert(self, person):
+    def insert(self, person, arbeitszeitkonto_id):
 
         """Einfügen eines Person-Objekts in die Datenbank.
 
@@ -165,6 +165,7 @@ class PersonMapper (Mapper):
         for (maxid) in tuples:
             person.set_id(maxid[0] + 1)
 
+
         command = "INSERT INTO person (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, arbeitszeitkonto_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
         data = (
 
@@ -175,7 +176,7 @@ class PersonMapper (Mapper):
             person.get_email(),
             person.get_benutzer_name(),
             person.get_google_user_id(),
-            person.get_arbeitszeitkonto_id(),
+            arbeitszeitkonto_id,
         )
         cursor.execute(command, data)
 

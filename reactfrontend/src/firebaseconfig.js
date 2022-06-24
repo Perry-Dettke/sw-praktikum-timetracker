@@ -10,9 +10,11 @@ const firebaseConfig = {
   projectId: "timetracker-72c63",
   storageBucket: "timetracker-72c63.appspot.com",
   messagingSenderId: "285158961633",
-  appId: "1:285158961633:web:e2919982cf8c403bd922a0"
+  appId: "1:285158961633:web:97b66347931b3ebdd922a0"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 export default firebaseConfig;
+

@@ -662,28 +662,27 @@ class PersonbyAktivitaetOperations(Resource):
         else:
             return '', 500 
 
-# Brauchen wir die Funktion üverhaupt?
 
-# @timetracker.route('/personbygoogle/<string:google_user_id>')     
-# @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-# class PersonGoogleOperations(Resource):
-#     @timetracker.marshal_with(person)
-#     def get(self, google_user_id):
-#         """Auslesen eines bestimmten Person-Objekts.
-#         Das auszulesende Objekt wird durch die ```google_id``` in dem URI bestimmt.
-#         """
-#         adm = TimetrackerAdministration()
-#         pe = adm.get_person_by_google_user_id(google_user_id)
-#         if pe is not None:
-#             return pe
-#         else:
-#             return '', 500 
+@timetracker.route('/personbygoogle/<string:google_user_id>')     
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class PersonGoogleOperations(Resource):
+    @timetracker.marshal_with(person)
+    def get(self, google_user_id):
+        """Auslesen eines bestimmten Person-Objekts.
+        Das auszulesende Objekt wird durch die ```google_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        pe = adm.get_person_by_google_user_id(google_user_id)
+        if pe is not None:
+            return pe
+        else:
+            return '', 500 
 
-#     def post(self, google_user_id):
-#         ''' Person das erste mal anlegen '''
-#         adm = TimetrackerAdministration()
-#         adm.add_person_google_user_id(google_user_id)
-#         return '', 200
+    def post(self, google_user_id):
+        ''' Person das erste mal anlegen '''
+        adm = TimetrackerAdministration()
+        adm.add_person_google_user_id(google_user_id)
+        return '', 200
 
 
 

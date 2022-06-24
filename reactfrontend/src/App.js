@@ -7,7 +7,6 @@ import Home from './components/pages/HomeSeite';
 import BuchungListe from './components/pages/BuchungListe';
 import Projekt_uebersicht from './components/pages/ProjektÜbersicht';
 import Auswertung from './components/pages/AuswertungListe';
-import AuswertungPerson from './components/pages/AuswertungPersonListe';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import firebaseConfig from './firebaseconfig';
@@ -151,12 +150,13 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 											<Navigate replace to={process.env.PUBLIC_URL + '/home'} />
 											:
 											<SignIn onSignIn={this.handleSignIn} />
+
 									} />
-									<Route path={process.env.PUBLIC_URL + '/home'} element={<Secured user={currentUser}><Home /></Secured>}/>
-									<Route path={process.env.PUBLIC_URL + '/projekt_uebersicht'} element={<Secured user={currentUser}><Projekt_uebersicht /> </Secured>} />
-									<Route path={process.env.PUBLIC_URL + '/buchung'} element={<Secured user={currentUser}><BuchungListe /></Secured>} />
-									<Route path={process.env.PUBLIC_URL + '/auswertung'} element={<Secured user={currentUser}> <Auswertung/></Secured>} />
-									<Route path={process.env.PUBLIC_URL + '/auswertung_person'} element={<Secured user={currentUser}><AuswertungPerson/></Secured>} />
+									<Route path={process.env.PUBLIC_URL + '/home'} element={<Home  currentUser={currentUser} /> }/>
+									<Route path={process.env.PUBLIC_URL + '/projekt_uebersicht'} element={<Secured currentUser={currentUser}><Projekt_uebersicht/></Secured>} />
+									<Route path={process.env.PUBLIC_URL + '/buchung'} element={<Secured currentUser={currentUser}><BuchungListe /></Secured>}/>
+									<Route path={process.env.PUBLIC_URL + '/auswertung'} element={<Secured currentUser={currentUser}> <Auswertung/></Secured>}/>
+									<Route path={process.env.PUBLIC_URL + '/auswertung_person'} element={<Secured currentUser={currentUser}><AuswertungPerson/></Secured>} />
 								</Route>
 							</Routes>
 							<LoadingProgress show={authLoading} />
@@ -182,7 +182,7 @@ export default App;
 function Secured(props) {
 	let location = useLocation();
 
-	if (!props.user) {
+	if (!props.currentUser) {
 		// Redirect them to the /login page, but save the current location they were
 		// trying to go to when they were redirected. This allows us to send them
 		// along to that page after they login, which is a nicer user experience
