@@ -50,7 +50,7 @@ export default class TimetrackerAPI {
   #updatePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
   #deletePersonURL = (id) => `${this.#ServerBaseURL}/person/${id}`;
   #getPersonByGoogleURL = (id) => `${this.#ServerBaseURL}/personbygoogle/${id}`;
-  #addPersonFirebaseURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
+  #addPersonGoogleURL = (id) => `${this.#ServerBaseURL}/firebase/${id}`;
   #getPersonbyAktivitaetIDURL = (aktivitaet_id, start, ende) => `${this.#ServerBaseURL}/personbyaktivitaet/${aktivitaet_id}/${start}/${ende}`;
 
 
@@ -457,6 +457,7 @@ export default class TimetrackerAPI {
   }
 
   getPersonByGoogle(googleid) {
+    console.log(googleid)
     // Person anhand der GoogleID auslesen
     return this.#fetchAdvanced(this.#getPersonByGoogleURL(googleid)).then((responseJSON) => {
       let person = PersonBO.fromJSON(responseJSON);
@@ -466,7 +467,7 @@ export default class TimetrackerAPI {
     })
   }
 
-  /* addPersonGoogle(personID, googleid) {
+   addPersonGoogle(personID, googleid) {
        // Person einer GoogleID zuweisen
        return this.#fetchAdvanced(this.#addPersonGoogleURL(googleid), {
          method: 'POST',
@@ -476,7 +477,7 @@ export default class TimetrackerAPI {
          },
          body: JSON.stringify({ 'personID': personID, 'googleid': googleid })
        })
-     }*/
+     }
 
   updatePerson(personBO) {
     // Person updaten
