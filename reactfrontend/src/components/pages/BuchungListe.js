@@ -82,7 +82,7 @@ class BuchungListe extends Component {
   render() {
 
     const { currentPerson, showZeitintervallBuchungAnlegen, buchungliste, authLoading } = this.state;
-
+    console.log(currentPerson)
 
     return (
       buchungliste ?

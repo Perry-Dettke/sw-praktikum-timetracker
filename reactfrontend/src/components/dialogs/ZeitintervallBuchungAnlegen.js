@@ -41,7 +41,7 @@ class ZeitintervallBuchungAnlegen extends Component {
 
   //Gibt Projekte der Person zurück
   getProjektByPerson = () => {
-    TimetrackerAPI.getAPI().getProjektByPerson(3).then((projektBOs) => {
+    TimetrackerAPI.getAPI().getProjektByPerson(this.props.currentPerson.getID()).then((projektBOs) => {
       this.setState({
         projektliste: projektBOs,
       });
