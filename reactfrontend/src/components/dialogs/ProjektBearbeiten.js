@@ -53,8 +53,7 @@ class ProjektBearbeiten extends Component {
         TimetrackerAPI.getAPI().getPerson().then((personenBOs) => {
             let allePersonen = []
             personenBOs.map(person => {
-                if (person.getID() != 3) {
-                    //if (person.getID() != this.props.person.getID()){
+                if (person.getID() != this.props.currentPerson.getID()){
                     allePersonen.push(person)
                 }
             })

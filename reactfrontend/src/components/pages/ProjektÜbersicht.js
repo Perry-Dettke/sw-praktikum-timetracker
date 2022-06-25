@@ -34,8 +34,7 @@ class Projekt_uebersicht extends Component {
 
     /** Fetches all ProjektBOs from the backend */
     getProjekt = () => {
-        TimetrackerAPI.getAPI().getProjektbyPersonID(3).then((projektBOs) => {
-            //  TimetrackerAPI.getAPI().getProjektbyPersonID(this.props.person.getID()).then((projektBOs) => {
+        TimetrackerAPI.getAPI().getProjektbyPersonID(this.props.currentPerson.getID()).then((projektBOs) => {
             this.setState({
                 projekt: projektBOs,
                 authLoading: false,
@@ -80,7 +79,7 @@ class Projekt_uebersicht extends Component {
 
     /** Renders the component */
     render() {
-        const { expandedState } = this.props;
+        const { expandedState, currentPerson } = this.props;
 
         const { projekt, showProjektAnlegen, authLoading } = this.state;
 
@@ -107,12 +106,12 @@ class Projekt_uebersicht extends Component {
                         <List>
                             {
                                 projekt.map(projekt =>
-                                    <ProjektUebersichtEintrag key={projekt[projekt.id]} projekt={projekt} getProjekt={this.getProjekt} show={this.props.show} />)
+                                    <ProjektUebersichtEintrag key={projekt[projekt.id]} projekt={projekt} getProjekt={this.getProjekt} currentPerson={currentPerson} show={this.props.show} />)
                             }
                         </List>
                     </Grid>
                 </Grid>
-                <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} /> {/*person= {person}*/}
+                <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} currentPerson={currentPerson}/>
                 <LoadingProgress show={authLoading} />
             </div>
         );

@@ -200,7 +200,7 @@ class ProjektUebersichtEintrag extends Component {
 
     //Renders the component
     render() {
-        const { projekt, person } = this.props;
+        const { projekt, currentPerson } = this.props;
         const { ersteller, showAktivitaetDialog, showAktivitaetBearbeiten, showAktivitaetLoeschen, showProjektBearbeiten, aktivitaetliste,
             showProjektLoeschen, currentAktivitaet, personenliste } = this.state; 
 
@@ -225,7 +225,7 @@ class ProjektUebersichtEintrag extends Component {
                                 <AccordionDetails sx={{
                                     backgroundColor: "#eeeeee",
                                 }}>
-                                    {/*{person.getID() == projekt.getProjekterstellerID() ?*/}
+                                {currentPerson.getID() == projekt.getProjekterstellerID() ?
                                     <div>
                                         <Grid container spacing={2}>
                                             <Grid item xs={3}>
@@ -241,7 +241,7 @@ class ProjektUebersichtEintrag extends Component {
                                             </Grid>
                                         </Grid>
                                     </div>
-                                    {/*: null}*/}
+                                    : null}
                                     <br />
                                     <Typography align='left'><b>Auftraggeber: </b>{projekt.getAuftraggeber()}<br /></Typography>
                                     {ersteller ?
@@ -277,16 +277,20 @@ class ProjektUebersichtEintrag extends Component {
                                                         <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
                                                         <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
                                                         <TableCell>
+                                                        {currentPerson.getID() == projekt.getProjekterstellerID() ?
                                                             <Tooltip title='Bearbeiten' placement="bottom">
                                                                 <IconButton variant='contained' onClick={() => this.aktivitaetBearbeitenClicked(aktivitaet)}>
                                                                     <EditIcon />
                                                                 </IconButton>
                                                             </Tooltip>
+                                                        : null}
                                                         </TableCell>
                                                         <TableCell>
+                                                        {currentPerson.getID() == projekt.getProjekterstellerID() ?
                                                             <Tooltip title='Löschen' placement="bottom">
                                                                 <IconButton variant="contained" onClick={() => this.aktivitaetLoeschenClicked(aktivitaet)}><DeleteIcon /></IconButton>
                                                             </Tooltip>
+                                                        : null}
                                                         </TableCell>
                                                     </TableRow>
                                                 )}
@@ -298,7 +302,7 @@ class ProjektUebersichtEintrag extends Component {
                             </Accordion>
                         </Grid>
                     </Grid>
-                    <ProjektBearbeiten show={showProjektBearbeiten} projekt={projekt} onClose={this.projektBearbeitenClosed} />  {/*person={person}*/}
+                    <ProjektBearbeiten show={showProjektBearbeiten} projekt={projekt} onClose={this.projektBearbeitenClosed} currentPerson={currentPerson} />
                     <ProjektLoeschen show={showProjektLoeschen} projekt={projekt} onClose={this.projektLoeschenClicked} />
                     <AktivitaetDialog show={showAktivitaetDialog} projekt={projekt} onClose={this.aktivitaetDialogClosed} />
                     {

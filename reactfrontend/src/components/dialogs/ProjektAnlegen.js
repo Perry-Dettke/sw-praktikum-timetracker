@@ -37,8 +37,7 @@ class ProjektAnlegen extends Component {
         TimetrackerAPI.getAPI().getPerson().then((personenBOs) => {
             let allePersonen = []
             personenBOs.map(person => {
-                if (person.getID() != 3) {
-                    //if (person.getID() != this.props.person.getID()){
+                if (person.getID() != this.props.currentPerson.getID()){
                     allePersonen.push(person)
                 }
             })
@@ -56,8 +55,7 @@ class ProjektAnlegen extends Component {
         newProjekt.setAuftraggeber(this.state.auftraggeber)
         newProjekt.setStartzeitraum(this.dateSplit(this.state.startzeitraum))
         newProjekt.setEndzeitraum(this.dateSplit(this.state.endzeitraum))
-        newProjekt.setProjekterstellerID(3)
-        //newProjekt.setProjekterstellerID(this.props.person.getID())
+        newProjekt.setProjekterstellerID(this.props.currentPerson.getID())
         TimetrackerAPI.getAPI().addProjekt(newProjekt).then(projekt => {
             this.addPersonInProjekt(projekt)
         })
@@ -173,7 +171,6 @@ class ProjektAnlegen extends Component {
 
         let title = 'Neues Projekt';
         let title2 = "Wähle den Startzeitpunkt und Endzeitpunkt für die Laufzeit deines Projekts."
-        // let title3 = "Wählen den Endzeitpunkt für dein Projekt."
 
         return (
             show ?
