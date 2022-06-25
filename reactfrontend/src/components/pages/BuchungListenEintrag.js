@@ -25,6 +25,7 @@ class BuchungListenEintrag extends Component {
             showBuchungDelete: false,
             aktivitaetliste: [],
             tablehead: null,
+            currentPerson: this.props.currentPerson
         };
     }
 
@@ -120,7 +121,7 @@ class BuchungListenEintrag extends Component {
 
     //Renders the component
     render() {
-        const { buchung } = this.props;
+        const { buchung, currentPerson } = this.props;
         const { aktivitaet, projekt, showBuchungBearbeiten, showBuchungDelete, aktivitaetliste, tablehead } = this.state;
         // console.log(projekt)
         // console.log(this.state.aktivitaet.getProjektID())
@@ -150,7 +151,7 @@ class BuchungListenEintrag extends Component {
                             <IconButton variant="contained" onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
                         </Tooltip>
                     </Grid>
-                    <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
+                    <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} currentPerson={currentPerson} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
                     <BuchungDelete show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchungbyPersonID={this.props.getBuchungbyPersonID}/>
                 </Grid>
                     

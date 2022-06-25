@@ -21,11 +21,20 @@ class BuchungListe extends Component {
       showZeitintervallBuchungAnlegen: false,
       showEreignisBuchungAnlegen: false,
       authLoading: false,
+      currentPerson: this.props.currentPerson,
+  
     };
   }
 
+ 
+
+
+
+  
+
   getBuchungbyPersonID = () => {
-    TimetrackerAPI.getAPI().getBuchungbyPersonID(3).then((buchungBOs) => {
+    console.log(this.props.currentPerson)
+    TimetrackerAPI.getAPI().getBuchungbyPersonID(this.props.currentPerson.getID()).then((buchungBOs) => {
       this.setState({
         buchungliste: buchungBOs,
         authLoading: false,
@@ -72,8 +81,7 @@ class BuchungListe extends Component {
   /** Renders the component */
   render() {
 
-    const { buchung, showZeitintervallBuchungAnlegen, buchungliste, authLoading } = this.state;
-    // console.log(buchungliste)
+    const { currentPerson, showZeitintervallBuchungAnlegen, buchungliste, authLoading } = this.state;
 
 
     return (
@@ -132,11 +140,11 @@ class BuchungListe extends Component {
             <Grid item xs={12}>
               {
                 buchungliste.map(buchung =>
-                    <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID} />)
+                    <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} currentPerson={currentPerson} getBuchung={this.getBuchungbyPersonID} />)
               }
             </Grid>
           </Grid>
-          <ZeitintervallBuchungAnlegen show={showZeitintervallBuchungAnlegen} onClose={this.zeitintervallBuchungAnlegenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
+          <ZeitintervallBuchungAnlegen show={showZeitintervallBuchungAnlegen} onClose={this.zeitintervallBuchungAnlegenClosed} currentPerson={currentPerson} getBuchungbyPersonID={this.getBuchungbyPersonID} />
           <LoadingProgress show={authLoading} />
         </div>
       : null
