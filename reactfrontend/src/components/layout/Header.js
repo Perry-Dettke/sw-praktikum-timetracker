@@ -55,9 +55,9 @@ class Header extends Component {
         
           <Tabs indicatorColor='primary' textColor='primary' centered value={this.state.tabindex} onChange={this.handleTabChange} >
             <Tab label='Home'component={RouterLink} to={process.env.PUBLIC_URL + '/home'} />
-            <Tab label='Projekt Übersicht' component={RouterLink} to={process.env.PUBLIC_URL + '/projekt_uebersicht'} />     
+            <Tab label='Projekte' component={RouterLink} to={process.env.PUBLIC_URL + '/projekt_uebersicht'} />     
             <Tab label='Buchung' component={RouterLink} to={process.env.PUBLIC_URL + '/buchung'} />
-            <Tab label='Auswertung Aktivität' component={RouterLink} to={process.env.PUBLIC_URL + '/auswertung'} />
+            <Tab label='Auswertung' component={RouterLink} to={process.env.PUBLIC_URL + '/auswertung'} />
           </Tabs>
           : null
         } 

@@ -27,7 +27,7 @@ class Auswertung extends Component {
     /** Fetches all PersonBOs from the backend */
     getProjektbyProjekterstellerID = () => {
         var pro = TimetrackerAPI.getAPI();
-        pro.getProjektbyProjekterstellerID(2).then((projektBOs) => {
+        pro.getProjektbyProjekterstellerID(this.props.currentPerson.getID()).then((projektBOs) => {
             this.setState({
                 projektliste: projektBOs,
                 authLoading: false,
