@@ -38,7 +38,8 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 			currentUser: null,
 			appError: null,
 			authError: null,
-			authLoading: false
+			authLoading: false,
+			currentPerson: null,
 		};
 	}
 
@@ -71,6 +72,19 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 		signInWithRedirect(auth, provider);
 	}
 
+	getPerson = () => {
+		this.timer = setTimeout(() => {
+		TimetrackerAPI.getAPI().getPersonByGoogle(this.state.currentUser.uid).then((person) =>
+			this.setState({
+			  currentPerson: person,
+			})
+		  ).catch((e) =>
+			this.setState({
+			  person: null,
+			})
+		  );
+		 } , 1000);
+	  }; 
 
 	/**
 	 * Lifecycle method, which is called when the component gets inserted into the browsers DOM.
@@ -79,6 +93,7 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 	 * @see See Googles [firebase init process](https://firebase.google.com/docs/web/setup)
 	 */
 	componentDidMount() {
+		this.getPerson();
 		const app = initializeApp(firebaseConfig);
 		const auth = getAuth(app);
 
@@ -125,9 +140,8 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 
 	/** Renders the whole app */
 	render() {
-		const { currentUser, appError, authError, authLoading } = this.state;
-		// console.log(currentUser)
-
+		const { currentUser, appError, authError, authLoading, currentPerson } = this.state;
+		console.log(currentPerson)
 		return (
 				<Router>
 					<div className='App'>
@@ -150,12 +164,12 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 											<Navigate replace to={process.env.PUBLIC_URL + '/home'} />
 											:
 											<SignIn onSignIn={this.handleSignIn} />
-
+											
 									} />
 									<Route path={process.env.PUBLIC_URL + '/home'} element={<Home  currentUser={currentUser} /> }/>
-									<Route path={process.env.PUBLIC_URL + '/projekt_uebersicht'} element={<Secured currentUser={currentUser}><Projekt_uebersicht/></Secured>} />
-									<Route path={process.env.PUBLIC_URL + '/buchung'} element={<Secured currentUser={currentUser}><BuchungListe /></Secured>}/>
-									<Route path={process.env.PUBLIC_URL + '/auswertung'} element={<Secured currentUser={currentUser}> <Auswertung/></Secured>}/>
+									<Route path={process.env.PUBLIC_URL + '/projekt_uebersicht'} element={<Projekt_uebersicht  currentPerson={currentPerson} /> }/>
+									<Route path={process.env.PUBLIC_URL + '/buchung'} element={<BuchungListe  currentPerson={currentPerson} /> }/>
+									<Route path={process.env.PUBLIC_URL + '/auswertung'} element={<Auswertung  currentPerson={currentPerson} /> }/>
 								</Route>
 							</Routes>
 							<LoadingProgress show={authLoading} />
