@@ -43,7 +43,6 @@ class BuchungBearbeiten extends Component {
 
     updateBuchung = () => {
         let buchung = this.props.buchung;
-        // buchung.setEreignisbuchung(this.state.ereignisbuchung)
         buchung.setStunden(this.state.stunden)
         buchung.setAktivitaet_id(this.state.aktivitaet_id)
         TimetrackerAPI.getAPI().updateBuchung(buchung).then(buchung => {

@@ -10,7 +10,6 @@ class Buchung(bo.BusinessObjekt):
         super().__init__()
         self._datum = datetime.date.today()
         self._stunden = 0.0
-        self._ereignisbuchung = 0
         self._person_id = 0
         self.aktivitaet_id = 0
 
@@ -30,14 +29,6 @@ class Buchung(bo.BusinessObjekt):
     def set_stunden(self, stunden):
         # Setzen der Stunden 
         self._stunden = stunden
-
-    def get_ereignisbuchung(self):
-        # Ausgeben ob Ereignisbuchung Ja oder Nein
-        return self._ereignisbuchung
-    
-    def set_ereignisbuchung(self, ereignisbuchung):
-        # Setzen der Ereignisbuchung Ja oder Nein
-        self._ereignisbuchung = ereignisbuchung
     
     def get_person_id(self):
         # Ausgeben der Person ID
@@ -59,7 +50,7 @@ class Buchung(bo.BusinessObjekt):
 
     def __str__(self):
         #Erzeugen einer einfachen textuellen Darstellung der jeweiligen Instanz
-        return f'Buchung: {self.get_datum()},{self.get_stunden()},{self.get_ereignisbuchung()}{self.get_person_id()}{self.get_aktivitaet_id()}'
+        return f'Buchung: {self.get_datum()},{self.get_stunden()},{self.get_person_id()}{self.get_aktivitaet_id()}'
     
     @staticmethod
     def from_dict(dictionary=dict()):
@@ -67,7 +58,7 @@ class Buchung(bo.BusinessObjekt):
         obj = Buchung()
         obj.set_datum(dictionary["datum"])
         obj.set_stunden(dictionary["stunden"])
-        obj.set_ereignisbuchung(dictionary["ereignisbuchung"])
+
         obj.set_person_id(dictionary["person_id"])
         obj.set_aktivitaet_id(dictionary["aktivitaet_id"])
         return obj

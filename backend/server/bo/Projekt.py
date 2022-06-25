@@ -8,6 +8,8 @@ class Projekt(bo.BusinessObjekt):
         super().__init__()
         self._bezeichnung = ""
         self._auftraggeber = ""
+        self.startzeitraum = ""
+        self.endzeitraum = ""
         self._projektersteller_id = 0
         
     def get_bezeichnung(self):
@@ -26,6 +28,22 @@ class Projekt(bo.BusinessObjekt):
         """ Setzen des Auftragebers. """
         self._auftraggeber = auftraggeber
 
+    def get_startzeitraum(self):
+        """ Ausgeben des Startzeitraum. """
+        return self._startzeitraum
+    
+    def set_startzeitraum(self, startzeitraum):
+        """ Setzen der Startzeitraum. """
+        self._startzeitraum = startzeitraum
+    
+    def get_endzeitraum(self):
+        """ Ausgeben des Endzeitraum. """
+        return self._endzeitraum
+    
+    def set_endzeitraum(self, endzeitraum):
+        """ Setzen des Auftragebers. """
+        self._endzeitraum = endzeitraum
+
     def get_projektersteller_id(self):
         """ Ausgeben der Projektersteller ID. """
         return self._projektersteller_id
@@ -40,7 +58,7 @@ class Projekt(bo.BusinessObjekt):
 
     def __str__(self):
         """ Erzeugen einer einfachen textuellen Darstellung der jeweiligen Instanz. """
-        return f'Projekt: {self.get_bezeichnung()}, {self.get_auftraggeber()}, {self.get_projektersteller_id()}'
+        return f'Projekt: {self.get_bezeichnung()}, {self.get_auftraggeber()}, {self.get_projektersteller_id()}, {self.get_startzeitraum()}, {self.get_endzeitraum()}'
     
     @staticmethod
     def from_dict(dictionary=dict()):
@@ -48,6 +66,8 @@ class Projekt(bo.BusinessObjekt):
         obj = Projekt()
         obj.set_bezeichnung(dictionary["bezeichnung"])
         obj.set_auftraggeber(dictionary["auftraggeber"])
+        obj.set_startzeitraum(dictionary["startzeitraum"])
+        obj.set_endzeitraum(dictionary["endzeitraum"])
         obj.set_projektersteller_id(dictionary["projektersteller_id"])
         return obj
 

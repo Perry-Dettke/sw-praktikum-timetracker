@@ -96,6 +96,10 @@ class ZeitintervallEintrag extends Component {
                     </Grid>
 
                     <Grid item xs={2}>
+                        <Typography>{zeitintervall.getPausenDauer()}</Typography>
+                    </Grid>
+
+                    <Grid item xs={2}>
                         <Typography>{zeitintervall.getDauer()}</Typography>
                     </Grid>
 

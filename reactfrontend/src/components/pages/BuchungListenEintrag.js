@@ -33,15 +33,7 @@ class BuchungListenEintrag extends Component {
         this.props.getBuchungbyPersonID();
     }
 
-    ereignisbuchungCheck = () => {
-        if (this.props.buchung.getEreignisbuchung() === true) {
-            return "Ereignisbuchung"
-        }
-        else {
-            return "Zetintervallbuchung"
-        }
 
-    }
 
     getAktivitaet = () => {
         TimetrackerAPI.getAPI().getAktivitaetbyID(this.props.buchung.getAktivitaet_id()).then((aktivitaetBOs) => {
@@ -144,9 +136,6 @@ class BuchungListenEintrag extends Component {
                     </Grid>
                     <Grid item xs={2}>
                         <Typography>{aktivitaet.getBezeichnung()}</Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Typography>{this.ereignisbuchungCheck()}</Typography>
                     </Grid>
                     <Grid item xs={2}>
                         <Typography>{buchung.getStunden()}</Typography>

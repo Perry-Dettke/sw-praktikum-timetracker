@@ -67,6 +67,15 @@ class Home extends Component {
   }
 
 
+    //             person: personBO,
+    //             authLoading: false,
+    //         });
+    //     });
+    //     // set loading to true
+    //     this.setState({
+    //         authLoading: true,
+    //     });
+    // };
 
     //Person bearbeiten
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
@@ -112,7 +121,7 @@ class Home extends Component {
     // muss current user ID rein
     getZeitintervall = () => {
         TimetrackerAPI.getAPI().getZeitintervallbyMaxIDandPersonID(2).then((zeitintervallBO) => {
-            if (zeitintervallBO)
+            if (zeitintervallBO) 
                 this.setState({
                     zeitintervall: zeitintervallBO,
                 });
@@ -179,44 +188,106 @@ class Home extends Component {
     // Kommen Zeitpunkt und person ID adden
     // Rest wird vorerst auf 0 gesetzt 
     addZeitintervall = () => {
+        if (this.state.zeitintervall === null){
         let newZeitintervall = new ZeitintervallBO()
         let start = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
         newZeitintervall.setID(0) // wird im Backend gesetzt
         newZeitintervall.setStart(start)
         newZeitintervall.setEnde("")
         newZeitintervall.setDauer(0.0) // wird beim update angepasst
+        newZeitintervall.setPausenStart("") 
+        newZeitintervall.setPausenEnde("")
+        newZeitintervall.setPausenDauer(0.0) // wird beim update angepasst
         newZeitintervall.setPerson_id(2) //current User
         TimetrackerAPI.getAPI().addZeitintervall(newZeitintervall).then(zeitintervall => {
             let date = new Date()
             window.alert("Hallo " + this.state.person.getVor_name() + "! Schön, dass du da bist." + "\nDu hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " eingstempelt!\nEinen schönen Arbeitstag!")
             this.getZeitintervall()
             this.setState(this.initialState);
-            this.getZeitintervallbyPersonID()
+            this.getZeitintervallbyPersonID();
+            // this.getArbeitszeitkonto();
         })
         this.setState({
             start: new Date
         })
     }
+    else{
+        window.alert("Du hast bereits eingestempelt")
+    }
+    }
+
+    updateArbeitszeitkonto = () => {
+    let arbeitszeitkonto = this.state.arbeitszeitkonto
+    let start = new Date(this.startDatumSplitten())
+    let endefront = new Date()
+    let dauer = endefront.getTime() - start.getTime()
+    let gesamtstunden = arbeitszeitkonto.getGesamtstunden() + this.msToTime(dauer)
+    arbeitszeitkonto.setGesamtstunden(gesamtstunden)
+    TimetrackerAPI.getAPI().updateArbeitszeitkonto(arbeitszeitkonto).then(arbeitszeitkonto => {
+
+      })}
 
     updateZeitintervall = () => {
+        let zeitintervall = this.state.zeitintervall;
+        if (this.state.zeitintervall != null){
         let ende = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
         let start = new Date(this.startDatumSplitten())
         let endefront = new Date()
         let dauer = endefront.getTime() - start.getTime()
-        let zeitintervall = this.state.zeitintervall;
         zeitintervall.setEnde(ende)
         zeitintervall.setDauer(this.msToTime(dauer).toFixed(3))
         TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall)
         let date = new Date
-        window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " ausgestempelt!\nDu hast heute " + this.msToTime(dauer).toFixed(3) + " Stunden gearbeitet!\nAuf Wiedersehen!")
+        window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " ausgestempelt!\nDu hast heute " + this.msToTime(dauer).toFixed(3) +  " Stunden gearbeitet, und " + this.state.zeitintervall.getPausenDauer() + " Stunden Pause gemacht.\nAuf Wiedersehen!")
         this.setState(this.initialState);
         this.getZeitintervallbyPersonID();
         this.getArbeitszeitkonto();
+        this.updateArbeitszeitkonto();
+        {
+        this.setState({
+            zeitintervall: null})}}
+
+            else{
+                window.alert("Du hast noch nicht eingestempelt!")
+            }
+    }
+ 
+    
+
+    // ********** PAUSEN FUNKTIONEN **********\\
+    addPause = () => {
+        let zeitintervall = this.state.zeitintervall;
+        let pausen_start = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
+        console.log(pausen_start)
+        zeitintervall.setPausenStart(pausen_start);
+        TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall);
+        let date = new Date;
+        window.alert("Deine Pause hat um "  + date.toLocaleTimeString() + " begonnen.\nSchöne Pause!");
+        this.getZeitintervall();
+        this.setState(this.initialState);
+        this.getZeitintervallbyPersonID();
     }
 
+
+    updatePause = () => {
+        let zeitintervall = this.state.zeitintervall;
+        let pausen_start = new Date(this.pausenStartSplitten())
+        let pausen_ende = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
+        let pausen_endefront = new Date();
+        let dauer = pausen_endefront.getTime() - pausen_start.getTime();
+        zeitintervall.setPausenEnde(pausen_ende);
+        zeitintervall.setPausenDauer(this.msToTime(dauer).toFixed(3));
+        TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall)
+        let date = new Date
+        window.alert("Du hast Pause "  + this.msToTime(dauer).toFixed(3) + " Stunden Pause gemacht.\nJetzt wird es wieder Zeit zu arbeiten!")
+    }
+
+
+    // ********** ZEITUMRECHNUNG FUNKTIONEN **********\\
     //Datum und Zeit vom Frontend wird das richtige Backend Format umgewandelt
     dateSplit = () => {
         let newDate = new Date()
+        console.log(new Date())
         let date = newDate.toLocaleDateString() + " " + newDate.toLocaleTimeString()
         let dateliste = date.split('')
         let day = String(dateliste[0] + dateliste[1])
@@ -236,9 +307,22 @@ class Home extends Component {
         let min = String(dateliste[14] + dateliste[15])
         let sek = String(dateliste[17] + dateliste[18])
         console.log("Y", year, "M", month, "D", day, "TIME", hours, min, sek)
-        return new Date(year, month - 1, day, hours, min, sek)
+        return new Date(year, month - 1, day, hours, min, sek) // month -1: Monate von [0-11]
     }
 
+    pausenStartSplitten = () => {
+        let date = this.state.zeitintervall.getPausenStart()
+        console.log("PAUSENSTART",this.state.zeitintervall.getPausenStart())
+        let dateliste = date.split('')
+        let year = String(dateliste[0] + dateliste[1] + dateliste[2] + dateliste[3])
+        let month = String(dateliste[6])
+        let day = String(dateliste[8] + dateliste[9])
+        let hours = String(dateliste[11] + dateliste[12])
+        let min = String(dateliste[14] + dateliste[15])
+        let sek = String(dateliste[17] + dateliste[18])
+        console.log("Y", year, "M", month, "D", day, "TIME", hours, min, sek)
+        return new Date(year, month - 1, day, hours, min, sek)
+    }
 
     // Millisekunden in Stunden und Minuten
     // Wird zu Berechnung der Dauer zwischen 2 Datetimes benötigt
@@ -258,7 +342,7 @@ class Home extends Component {
     componentDidMount() {
         this.getPerson();
         this.getZeitintervallbyPersonID();
-        this.getZeitintervall();
+        // this.getZeitintervall();
         this.getArbeitszeitkonto();
     }
 
@@ -267,7 +351,7 @@ class Home extends Component {
         const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto } = this.state;
         // console.log(zeitintervall)
         // console.log(start)
-        // console.log(zeitintervallliste)
+        console.log(this.state.zeitintervall)
         console.log(arbeitszeitkonto)
 
         return person && arbeitszeitkonto ?
@@ -344,6 +428,12 @@ class Home extends Component {
                                         <Button variant="contained"  onClick={this.addZeitintervall}>
                                             Kommen
                                         </Button>
+                                        <Button variant="contained" onClick={this.addPause}>
+                                            Pause
+                                        </Button>
+                                        <Button variant="contained"  onClick={this.updatePause}>
+                                            Pausen Beenden
+                                        </Button>
                                         <Button variant="contained" onClick={this.updateZeitintervall}>
                                             Gehen
                                         </Button>
@@ -362,7 +452,7 @@ class Home extends Component {
                                             <TableCell align="center">{arbeitszeitkonto.getKrankheitstage()}</TableCell>
                                         </TableRow>
                                         <Button variant="contained" onClick={this.ereignisBuchungAnlegenButtonClicked}>
-                                            Buchung
+                                            Sonderbuchung
                                         </Button>
                                     </TableBody>
                                 </Table>
@@ -388,9 +478,12 @@ class Home extends Component {
                             </Grid>
 
                             <Grid item xs={2}>
-                                <Typography>Stunden</Typography>
+                                <Typography>Pause</Typography>
                             </Grid>
 
+                            <Grid item xs={2}>
+                                <Typography>Stunden</Typography>
+                            </Grid>
                             <Grid item xs={1}>
                                 <Typography>Bearbeiten</Typography>
                             </Grid>
@@ -411,11 +504,13 @@ class Home extends Component {
                 <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
                 <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPersonbyID} />
                 <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} arbeitszeitkonto={arbeitszeitkonto} onClose={this.ereignisBuchungAnlegenClosed} getArbeitszeitkonto={this.getArbeitszeitkonto} />
-            </div>
-            : (
+                </div>
+            : <div> 
                 <SignUp onClose={this.closeSignup} currentUser={currentUser} reloadUser={this.reloadUser} />
-            );
+                </div>}
+                </div>);
+            
     }
-}
 
+}
 export default Home;

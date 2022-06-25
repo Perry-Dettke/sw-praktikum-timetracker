@@ -3,11 +3,10 @@ import BusinessObject from './BusinessObject';
 
 export default class BuchungBO extends BusinessObject {
 
-    constructor(datum, stunden, ereignisbuchung, person_id, aktivitaet_id){
+    constructor(datum, stunden, person_id, aktivitaet_id){
         super();
         this.datum = datum;
         this.stunden = stunden;
-        this.ereignisbuchung = ereignisbuchung;
         this.person_id = person_id;
         this.aktivitaet_id = aktivitaet_id;
     }
@@ -27,14 +26,6 @@ export default class BuchungBO extends BusinessObject {
     // Stunden auslesen 
     getStunden() {
     return this.stunden;
-    }
-    // Ereignisbuchung 0/1 setzen
-    setEreignisbuchung(ereignisbuchung) {
-    this.ereignisbuchung = ereignisbuchung;
-    }
-    // Ereignnisbuchung 0/1 lesen 
-    getEreignisbuchung() {
-    return this.ereignisbuchung;
     }
     // Person ID setzen
     setPerson_id(person_id) {
