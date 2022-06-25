@@ -58,7 +58,6 @@ class Header extends Component {
             <Tab label='Projekt Übersicht' component={RouterLink} to={process.env.PUBLIC_URL + '/projekt_uebersicht'} />     
             <Tab label='Buchung' component={RouterLink} to={process.env.PUBLIC_URL + '/buchung'} />
             <Tab label='Auswertung Aktivität' component={RouterLink} to={process.env.PUBLIC_URL + '/auswertung'} />
-            <Tab label='Auswertung Person' component={RouterLink} to={process.env.PUBLIC + '/auswertung_person'} />
           </Tabs>
           : null
         } 
