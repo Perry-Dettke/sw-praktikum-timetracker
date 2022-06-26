@@ -1,5 +1,6 @@
 #import BusinessObjekt as bo
 import server.bo.BusinessObjekt as bo
+import datetime
 
 class Arbeitszeitkonto(bo.BusinessObjekt):
     # Die Klasse BusinessObjekt dient als Basisklasse für alle Objekte in der Klasse Arbeitszeitkonto
@@ -7,7 +8,7 @@ class Arbeitszeitkonto(bo.BusinessObjekt):
         # Definieren der Attribute, der Klasse Arbeitszeitkonto
         super().__init__()
         self._gesamtstunden = 0.0
-        self._urlaubstage = 0
+        self._urlaubstage = round(((12- int(datetime.datetime.now().strftime("%m"))) * 2.5),0)
         self._krankheitstage = 0
 
 
