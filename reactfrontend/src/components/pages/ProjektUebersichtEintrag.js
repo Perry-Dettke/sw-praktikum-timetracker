@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { Typography, IconButton, Grid, Tooltip, Accordion, AccordionSummary, AccordionDetails, Table, TableHead, TableBody, TableRow, TableCell, Button } from '@mui/material';
 
-import { ListItem, Typography, IconButton, Grid, Tooltip, Divider, Accordion, AccordionSummary, AccordionDetails, Table, TableHead, TableBody, TableRow, TableCell, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -13,7 +13,9 @@ import AktivitaetLoeschen from '../dialogs/AktivitaetLoeschen';
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import ProjektLoeschen from '../dialogs/ProjektLoeschen';
 
-
+/*
+* Auf dieser Seite wird der Eintrag auf der Projektseite angezeigt. 
+*/
 
 class ProjektUebersichtEintrag extends Component {
 
@@ -84,7 +86,6 @@ class ProjektUebersichtEintrag extends Component {
         }
     }
 
-
     //Wird aufgerufen, wenn der Aktivität Bearbeiten Button geklickt wird
     aktivitaetBearbeitenClicked = (aktivitaet) => {
         console.log(aktivitaet);
@@ -115,7 +116,6 @@ class ProjektUebersichtEintrag extends Component {
             });
         }
     }
-
 
     //Wird aufgerufen, wenn der Aktivität Löschen Button geklickt wird
     aktivitaetLoeschenClicked = (aktivitaet) => {
@@ -166,7 +166,6 @@ class ProjektUebersichtEintrag extends Component {
         }
     }
 
-
     //Wird aufgerufen, wenn der Projekt Bearbeiten Button geklickt wird
     projektBearbeitenClicked = (projekt) => {
         this.setState({
@@ -190,13 +189,11 @@ class ProjektUebersichtEintrag extends Component {
         }
     }
 
-
     componentDidMount() {
         this.getAktivitaetbyProjektID();
         this.getErstellerbyID();
         this.getPersonInProjekt();
     }
-
 
     //Renders the component
     render() {
@@ -204,9 +201,7 @@ class ProjektUebersichtEintrag extends Component {
         const { ersteller, showAktivitaetDialog, showAktivitaetBearbeiten, showAktivitaetLoeschen, showProjektBearbeiten, aktivitaetliste,
             showProjektLoeschen, currentAktivitaet, personenliste } = this.state; 
 
-
         return (
-
             aktivitaetliste && personenliste && projekt ?
                 <div>
                     <Grid container spacing={4} alignItems="center">
@@ -296,8 +291,6 @@ class ProjektUebersichtEintrag extends Component {
                                                 )}
                                         </TableBody>
                                     </Table>
-
-
                                 </AccordionDetails>
                             </Accordion>
                         </Grid>
@@ -317,13 +310,9 @@ class ProjektUebersichtEintrag extends Component {
                     }
 
                 </div >
-                : null
+            : null
         );
     }
 }
 
-
-
 export default ProjektUebersichtEintrag;
-
-
