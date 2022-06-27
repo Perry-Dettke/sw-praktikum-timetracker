@@ -590,11 +590,6 @@ class Home extends Component {
                         <Grid container alignItems="center" xs={22} sx={{
                             backgroundColor: '#dedede'
                         }}>
-
-                            <Grid item xs={2}>
-                                <Typography></Typography>
-                            </Grid>
-
                             <Grid item xs={2}>
                                 <Typography>Kommen</Typography>
                             </Grid>
@@ -610,11 +605,11 @@ class Home extends Component {
                             <Grid item xs={2}>
                                 <Typography>Stunden</Typography>
                             </Grid>
-                            <Grid item xs={1}>
+                            <Grid item xs={2}>
                                 <Typography>Bearbeiten</Typography>
                             </Grid>
 
-                            <Grid item xs={1}>
+                            <Grid item xs={2}>
                                 <Typography>Löschen</Typography>
                             </Grid>
 

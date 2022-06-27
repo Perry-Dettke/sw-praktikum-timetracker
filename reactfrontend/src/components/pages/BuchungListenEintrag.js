@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, IconButton, Grid, Tooltip } from '@mui/material';
+import { Typography, IconButton, Grid, Tooltip, Divider } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -108,7 +108,6 @@ class BuchungListenEintrag extends Component {
         this.getAktivitaet();
         this.getProjekt();
         this.getAktivitaetbyProjektID()
-
     }
 
     //Renders the component
@@ -131,16 +130,20 @@ class BuchungListenEintrag extends Component {
                     <Grid item xs={2}>
                         <Typography>{buchung.getStunden()}</Typography>
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={2}>
                         <Tooltip title='Bearbeiten' placement="bottom">
                             <IconButton variant='contained' onClick={this.bearbeitenButtonClicked}><EditIcon /></IconButton>
                         </Tooltip>
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={2}>
                         <Tooltip title='Löschen' placement="bottom">
                             <IconButton variant="contained" onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
                         </Tooltip>
                     </Grid>
+                    <Grid item xs={12}>
+                        <Divider/>
+                    </Grid>
+
                     <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} currentPerson={currentPerson} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
                     <BuchungDelete show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchungbyPersonID={this.props.getBuchungbyPersonID}/>
                 </Grid>

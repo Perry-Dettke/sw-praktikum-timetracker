@@ -114,10 +114,10 @@ class BuchungListe extends Component {
               <Grid item xs={2}>
                 <Typography>Stunden, die gebucht wurden</Typography>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={2}>
                 <Typography>Bearbeiten</Typography>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={2}>
                 <Typography>Löschen</Typography>
               </Grid>
             </Grid>
