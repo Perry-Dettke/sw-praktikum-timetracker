@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-
-import { Typography, IconButton, Grid, Tooltip, ListItem, Divider, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
+import { Typography, IconButton, Grid, Tooltip } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import BuchungDelete from '../dialogs/BuchungDelete';
 import BuchungBearbeiten from '../dialogs/BuchungBearbeiten';
 
-
+/*
+* Auf dieser Seite wird der Eintrag auf der Buchungsseite angezeigt. 
+* Dies beinhaltet alle Projekt-Buchungen die der angemeldete User getätigt hat,
+*/
 
 class BuchungListenEintrag extends Component {
 
@@ -34,8 +35,6 @@ class BuchungListenEintrag extends Component {
         this.props.getBuchungbyPersonID();
     }
 
-
-
     getAktivitaet = () => {
         TimetrackerAPI.getAPI().getAktivitaetbyID(this.props.buchung.getAktivitaet_id()).then((aktivitaetBOs) => {
             this.setState({
@@ -43,8 +42,6 @@ class BuchungListenEintrag extends Component {
             });
         });
     }
-
-
 
     getProjekt = () => {
         this.timer = setTimeout(() => {
@@ -57,7 +54,6 @@ class BuchungListenEintrag extends Component {
             , 2000);
     }
 
-
     getAktivitaetbyProjektID = () => {
         this.timer = setTimeout(() => {
 
@@ -69,7 +65,6 @@ class BuchungListenEintrag extends Component {
         }
             , 2000);
     }
-
 
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
@@ -116,19 +111,14 @@ class BuchungListenEintrag extends Component {
 
     }
 
-
-
-
     //Renders the component
     render() {
         const { buchung, currentPerson } = this.props;
-        const { aktivitaet, projekt, showBuchungBearbeiten, showBuchungDelete, aktivitaetliste, tablehead } = this.state;
-        // console.log(projekt)
-        // console.log(this.state.aktivitaet.getProjektID())
+        const { aktivitaet, projekt, showBuchungBearbeiten, showBuchungDelete, aktivitaetliste } = this.state;
 
         return (
             aktivitaet && projekt ?
-                <Grid container alignItems="center" xs={12}>
+                <Grid container direction="row" justifyContent="center" alignItems="center" xs={12}>
                     <Grid item xs={2}>
                         <Typography>{buchung.getDatum()}</Typography>
                     </Grid>
@@ -160,8 +150,4 @@ class BuchungListenEintrag extends Component {
     }
 }
 
-
-
 export default BuchungListenEintrag;
-
-
