@@ -167,6 +167,38 @@ class ZeitintervallMapper (Mapper):
 
         return zeitintervall
 
+    def find_by_person_id_and_datum(self, person_id, start, ende):
+        """Auslesen aller Zeitintervalle einer Person im ausgewählten Zeitraum."""
+
+        result = []
+        cursor = self._cnx.cursor()
+        command = f"SELECT * FROM zeitintervall WHERE person_id={person_id} AND start BETWEEN '{start}' AND '{ende}'"
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            (id, letzte_aenderung, start, ende, dauer, pausen_start, pausen_ende, pausen_dauer, person_id) = tuples[0]
+            zeitintervall = Zeitintervall()
+            zeitintervall.set_id(id)
+            zeitintervall.set_letzte_aenderung(letzte_aenderung)
+            zeitintervall.set_start(start)
+            zeitintervall.set_ende(ende)
+            zeitintervall.set_dauer(dauer)
+            zeitintervall.set_pausen_start(pausen_start)
+            zeitintervall.set_pausen_ende(pausen_ende)
+            zeitintervall.set_pausen_dauer(pausen_dauer)
+            zeitintervall.set_person_id(person_id)
+
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            zeitintervall = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
 
 
     def insert(self, zeitintervall):

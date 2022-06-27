@@ -507,6 +507,12 @@ class TimetrackerAdministration (object):
         with ZeitintervallMapper() as mapper:
             return mapper.find_by_person_id(person_id)
 
+    def get_zeitintervall_by_person_id_time(self, person_id, start, ende):
+        """Das Zeitintervall in einem Zeitraum mit der gegebenen ID auslesen."""
+
+        with ZeitintervallMapper() as mapper:
+            return mapper.find_by_person_id_and_datum(person_id, start, ende)  
+
 
 
 

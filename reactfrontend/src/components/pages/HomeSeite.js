@@ -1,13 +1,14 @@
 import * as React from "react";
 import { Component } from "react";
-import { Paper, Box, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Table, IconButton, Grid, Typography } from "@mui/material";
+import { Paper, Box, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Table, IconButton, Grid, Typography, TextField } from "@mui/material";
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import EditIcon from "@mui/icons-material/Edit";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PersonForm from "../dialogs/PersonForm";
 import PersonDelete from "../dialogs/PersonDelete";
-import EreignisBuchungAnlegen from "../dialogs/EreignisBuchungAnlegen.js"
+import EreignisBuchungAnlegen from "../dialogs/EreignisBuchungAnlegen.js";
 import SignUp from './SignUp';
-import LoadingProgress from '../dialogs/LoadingProgress'
+import LoadingProgress from '../dialogs/LoadingProgress';
 
 import ZeitintervallBO from "../../api/ZeitintervallBO";
 import ZeitintervallEintrag from './ZeitintervallEintrag.js'
@@ -27,7 +28,10 @@ class Home extends Component {
             zeitintervallliste: [],
             start: null,
             ende: null,
+            zeitraum: null,
+            zeitraum_stunden: 0,
             authLoading: false,
+            zeitraumClicked: false,
             pausebutton: 0,
         };
     }
@@ -174,7 +178,7 @@ class Home extends Component {
 
     // currentuser.getArbeitszeitkontoID() in die Klammer statt 1
     getArbeitszeitkonto = () => {
-        TimetrackerAPI.getAPI().getArbeitszeitkonto(4).then((arbeitszeitkontoBO) => {
+        TimetrackerAPI.getAPI().getArbeitszeitkonto(2).then((arbeitszeitkontoBO) => {
             this.setState({
                 arbeitszeitkonto: arbeitszeitkontoBO,
                 authLoading: false,
@@ -371,7 +375,61 @@ class Home extends Component {
         return parseFloat(hrs + '.' + mins + secs)
     }
 
+    zeitraumClicked = () => {
+        this.zeitraumZeitintervall(this.state.zeitraum);
+    };
 
+
+    zeitraumZeitintervall = (zeitraum) => {
+        this.state.zeitraum_stunden = 0
+        this.state.zeitintervallliste.map(zeitintervall => {
+            if (zeitintervall.getStart().includes(zeitraum)) {
+                this.state.zeitraum_stunden += zeitintervall.getDauer();
+            }
+        },
+        )
+        this.zeitraumListe(zeitraum);
+        this.zeitraumZeitintervallState()
+    }
+
+    zeitraumZeitintervallState = () => {
+        this.setState({
+            zeitraumClicked: true
+        })
+    }
+
+    // Erstellt eine List emit Zeitintervalle in dem gegeben Monat
+    zeitraumListe = (zeitraum) => {
+        let liste = []
+        console.log(zeitraum)
+        this.state.zeitintervallliste.map(zeitintervall => {
+            if (zeitintervall.getStart().includes(zeitraum)) {
+                liste.push(zeitintervall)
+            }
+        })
+        this.zeitraumListeState(liste)
+    }
+    // State der zeitintervalliste wird neu gesetzt
+    zeitraumListeState = (liste) => {
+        this.setState({
+            zeitintervallliste: liste
+        })
+    }
+
+    // Textfelder ändern
+    textFieldValueChange = (event) => {
+        const value = event.target.value;
+
+        let error = false;
+        if (value.trim().length === 0) {
+            error = true;
+        }
+
+        this.setState({
+            [event.target.id]: event.target.value,
+        });
+        this.getZeitintervallbyPersonID()
+    };
 
     componentDidMount() {
         this.getPerson();
@@ -382,11 +440,8 @@ class Home extends Component {
 
     render() {
         const { currentUser } = this.props;
-        const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto, authLoading } = this.state;
-        // console.log(zeitintervall)
-        // console.log(start)
-        console.log(this.state.zeitintervall)
-        console.log(arbeitszeitkonto)
+        const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto, authLoading, zeitraum, zeitraum_stunden } = this.state;
+
 
         return (
             <div><LoadingProgress show={authLoading} />
@@ -446,54 +501,89 @@ class Home extends Component {
                             "& > :not(style)": {
                                 m: 2,
                                 width: 800,
-                                height: 300,
+                                height: "auto",
                                 alignItems: "center",
                             },
                         }}>
                             <Paper elevation={3}>
-                                <div>
-                                    <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
-                                        Mein Arbeitszeitkonto
-                                    </Typography>
-                                    <TableContainer
-                                        component={Paper}
-                                        sx={{ maxWidth: 750, margin: "auto" }}
-                                    >
-                                        <Table sx={{ minWidth: 180 }} aria-label="simple table">
-                                            <TableHead>
-                                                <Button variant="contained" onClick={this.addZeitintervall}>
-                                                    Kommen
-                                                </Button>
-                                                <Button variant="contained" onClick={this.addPause}>
-                                                    Pause
-                                                </Button>
-                                                <Button variant="contained" onClick={this.updatePause}>
-                                                    Pausen Beenden
-                                                </Button>
-                                                <Button variant="contained" onClick={this.updateZeitintervall}>
-                                                    Gehen
-                                                </Button>
-                                                <TableRow>
-                                                    <TableCell align="right">Gesamt Stunden {new Date().getFullYear()}</TableCell>
-                                                    <TableCell align="right">Gearbeitete Stunden {new Date().getFullYear()}</TableCell>
-                                                    <TableCell align="right">Urlaubstage {new Date().getFullYear()}</TableCell>
-                                                    <TableCell align="right">Krankheitstage {new Date().getFullYear()}</TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                <TableRow>
-                                                    <TableCell align="center">1680</TableCell>
-                                                    <TableCell align="center">{arbeitszeitkonto.getGesamtstunden().toFixed(3)}</TableCell>
-                                                    <TableCell align="center">{arbeitszeitkonto.getUrlaubstage()}</TableCell>
-                                                    <TableCell align="center">{arbeitszeitkonto.getKrankheitstage()}</TableCell>
-                                                </TableRow>
-                                                <Button variant="contained" onClick={this.ereignisBuchungAnlegenButtonClicked}>
-                                                    Sonderbuchung
-                                                </Button>
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
-                                </div>
+                                <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                                    Mein Arbeitszeitkonto
+                                </Typography>
+                                <TableContainer
+                                    component={Paper}
+                                    sx={{ maxWidth: 750, margin: "auto" }}
+                                >
+                                    <Table sx={{ minWidth: 180 }} aria-label="simple table">
+                                        <TableHead>
+                                            <Button variant="contained" onClick={this.addZeitintervall}>
+                                                Kommen
+                                            </Button>
+                                            <Button variant="contained" onClick={this.addPause}>
+                                                Pause
+                                            </Button>
+                                            <Button variant="contained" onClick={this.updatePause}>
+                                                Pausen Beenden
+                                            </Button>
+                                            <Button variant="contained" onClick={this.updateZeitintervall}>
+                                                Gehen
+                                            </Button>
+                                            <Button variant="contained" onClick={this.ereignisBuchungAnlegenButtonClicked}>
+                                                Sonderbuchung
+                                            </Button>
+                                            <TableRow>
+                                                <TableCell align="right">Gesamt Stunden {new Date().getFullYear()}</TableCell>
+                                                <TableCell align="right">Gearbeitete Stunden {new Date().getFullYear()}</TableCell>
+                                                <TableCell align="right">Urlaubstage {new Date().getFullYear()}</TableCell>
+                                                <TableCell align="right">Krankheitstage {new Date().getFullYear()}</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell align="center">1680</TableCell>
+                                                <TableCell align="center">{arbeitszeitkonto.getGesamtstunden().toFixed(3)}</TableCell>
+                                                <TableCell align="center">{arbeitszeitkonto.getUrlaubstage()}</TableCell>
+                                                <TableCell align="center">{arbeitszeitkonto.getKrankheitstage()}</TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                                <Grid>
+                                    <Grid item xs={12}>
+                                        <Typography align="left">Um nach einem bestimmten Zeitraum zu suchen, fülle die Such-Felder aus und klicke den Button. Dies führt zu einer Aktualisierung der Ist-Stunden und der Restkapazität.</Typography>
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        <TextField autoFocus type='text' required fullWidth margin='normal' id='zeitraum' label='Monat: (yyyy-mm)' value={zeitraum} onChange={this.textFieldValueChange} />
+                                    </Grid>
+
+                                    <Grid item xs={3}
+                                        sx={{
+                                            height: 75,
+                                            marginTop: 2,
+                                        }}>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            aria-label="add"
+                                            fullWidth
+                                            onClick={this.zeitraumClicked}
+                                            startIcon={<AccessTimeIcon />}
+                                            sx={{
+                                                height: 50,
+                                                width: 250,
+                                            }}
+                                        >
+                                            Zeitraum suchen
+                                        </Button>
+                                    </Grid>
+
+                                    <Grid item xs={12}>
+                                        <Typography align="left">Deine gearbeiteten Stunden im Monat {zeitraum}:</Typography>
+                                    </Grid>
+
+                                    <Grid item xs={12}>
+                                        <Typography align="left">{zeitraum_stunden.toFixed(3)}</Typography>
+                                    </Grid>
+                                </Grid>
                             </Paper>
                         </Box>
 
@@ -538,7 +628,7 @@ class Home extends Component {
                         </Grid>
 
                         <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
-                        <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPersonbyID} />
+                        <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPerson} />
                         <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} arbeitszeitkonto={arbeitszeitkonto} onClose={this.ereignisBuchungAnlegenClosed} getArbeitszeitkonto={this.getArbeitszeitkonto} />
                     </div>
                     : <div>
