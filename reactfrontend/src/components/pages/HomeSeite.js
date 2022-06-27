@@ -32,6 +32,7 @@ class Home extends Component {
             zeitraum_stunden: 0,
             authLoading: false,
             zeitraumClicked: false,
+            pausebutton: 0,
         };
     }
     // **********MEIN PROFIL FUNKTIONEN**********\\
@@ -277,18 +278,32 @@ class Home extends Component {
 
     // ********** PAUSEN FUNKTIONEN **********\\
     addPause = () => {
-        let zeitintervall = this.state.zeitintervall;
-        let pausen_start = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
-        console.log(pausen_start)
-        zeitintervall.setPausenStart(pausen_start);
-        TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall);
-        let date = new Date;
-        window.alert("Deine Pause hat um " + date.toLocaleTimeString() + " begonnen.\nSchöne Pause!");
-        this.getZeitintervall();
-        this.setState(this.initialState);
-        this.getZeitintervallbyPersonID();
-    }
+        console.log(this.state.zeitintervall.getPausenStart())
+        if (this.state.pausebutton === 1) {
+            window.alert("Deine Pause hat bereits!")
+        }
+        else {
+            if (this.state.zeitintervall != null) {
+                let zeitintervall = this.state.zeitintervall;
+                let pausen_start = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
+                console.log(pausen_start)
+                zeitintervall.setPausenStart(pausen_start);
+                TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall);
+                let date = new Date;
+                window.alert("Deine Pause hat um " + date.toLocaleTimeString() + " begonnen.\nSchöne Pause!");
+                this.getZeitintervall();
+                this.setState(this.initialState);
+                this.getZeitintervallbyPersonID();
+                this.setState({
+                    pausebutton: 1
+                })
+            }
+            else {
+                window.alert("Du hast noch nicht eingestempelt!")
+            }
 
+        }
+    }
 
     updatePause = () => {
         let zeitintervall = this.state.zeitintervall;
@@ -360,7 +375,6 @@ class Home extends Component {
         return parseFloat(hrs + '.' + mins + secs)
     }
 
-
     zeitraumClicked = () => {
         this.zeitraumZeitintervall(this.state.zeitraum);
     };
@@ -417,18 +431,16 @@ class Home extends Component {
         this.getZeitintervallbyPersonID()
     };
 
-
     componentDidMount() {
         this.getPerson();
         this.getZeitintervallbyPersonID();
-        // this.getZeitintervall();
+        this.getZeitintervall();
         this.getArbeitszeitkonto();
     }
 
     render() {
         const { currentUser } = this.props;
         const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto, authLoading, zeitraum, zeitraum_stunden } = this.state;
-        // console.log(zeitintervall)
 
 
         return (
