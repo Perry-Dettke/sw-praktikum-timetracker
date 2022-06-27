@@ -28,6 +28,7 @@ class Home extends Component {
             start: null,
             ende: null,
             authLoading: false,
+            pausebutton: 0,
         };
     }
     // **********MEIN PROFIL FUNKTIONEN**********\\
@@ -46,28 +47,28 @@ class Home extends Component {
         console.log(this.props.currentUser.uid)
         TimetrackerAPI.getAPI().getPersonByGoogle(this.props.currentUser.uid).then((person) =>
             this.setState({
-              person: person,
+                person: person,
             })
-          ).catch((e) =>
+        ).catch((e) =>
             this.setState({
-              person: null,
+                person: null,
             })
-          );
-      }; 
+        );
+    };
 
-      // SignUp anzeigen
-  closeSignup = (person) => {
-    this.setState({
-      currentUser: person.getID(),
-      person: person,
-    });
-  }
+    // SignUp anzeigen
+    closeSignup = (person) => {
+        this.setState({
+            currentUser: person.getID(),
+            person: person,
+        });
+    }
 
-  showPersonForm = () => {
-      if(!this.state.person) {
-          this.setState({ showPersonForm: true });
-      }
-  }
+    showPersonForm = () => {
+        if (!this.state.person) {
+            this.setState({ showPersonForm: true });
+        }
+    }
 
 
     //             person: personBO,
@@ -123,7 +124,7 @@ class Home extends Component {
     // muss current user ID rein
     getZeitintervall = () => {
         TimetrackerAPI.getAPI().getZeitintervallbyMaxIDandPersonID(2).then((zeitintervallBO) => {
-            if (zeitintervallBO) 
+            if (zeitintervallBO)
                 this.setState({
                     zeitintervall: zeitintervallBO,
                     authLoading: true,
@@ -185,12 +186,12 @@ class Home extends Component {
         });
     }
 
-    
+
     reloadUser = () => {
         console.log('reload')
         this.getPerson()
-            this.getArbeitszeitkonto()
-    
+        this.getArbeitszeitkonto()
+
     };
 
 
@@ -201,86 +202,104 @@ class Home extends Component {
     // Kommen Zeitpunkt und person ID adden
     // Rest wird vorerst auf 0 gesetzt 
     addZeitintervall = () => {
-        if (this.state.zeitintervall === null){
-        let newZeitintervall = new ZeitintervallBO()
-        let start = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
-        newZeitintervall.setID(0) // wird im Backend gesetzt
-        newZeitintervall.setStart(start)
-        newZeitintervall.setEnde("")
-        newZeitintervall.setDauer(0.0) // wird beim update angepasst
-        newZeitintervall.setPausenStart("") 
-        newZeitintervall.setPausenEnde("")
-        newZeitintervall.setPausenDauer(0.0) // wird beim update angepasst
-        newZeitintervall.setPerson_id(2) //current User
-        TimetrackerAPI.getAPI().addZeitintervall(newZeitintervall).then(zeitintervall => {
-            let date = new Date()
-            window.alert("Hallo " + this.state.person.getVor_name() + "! Schön, dass du da bist." + "\nDu hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " eingstempelt!\nEinen schönen Arbeitstag!")
-            this.getZeitintervall()
-            this.setState(this.initialState);
-            this.getZeitintervallbyPersonID();
-            // this.getArbeitszeitkonto();
-        })
-        this.setState({
-            start: new Date,
-        })
-    }
-    else{
-        window.alert("Du hast bereits eingestempelt")
-    }
+        if (this.state.zeitintervall === null) {
+            let newZeitintervall = new ZeitintervallBO()
+            let start = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
+            newZeitintervall.setID(0) // wird im Backend gesetzt
+            newZeitintervall.setStart(start)
+            newZeitintervall.setEnde("")
+            newZeitintervall.setDauer(0.0) // wird beim update angepasst
+            newZeitintervall.setPausenStart("")
+            newZeitintervall.setPausenEnde("")
+            newZeitintervall.setPausenDauer(0.0) // wird beim update angepasst
+            newZeitintervall.setPerson_id(2) //current User
+            TimetrackerAPI.getAPI().addZeitintervall(newZeitintervall).then(zeitintervall => {
+                let date = new Date()
+                window.alert("Hallo " + this.state.person.getVor_name() + "! Schön, dass du da bist." + "\nDu hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " eingstempelt!\nEinen schönen Arbeitstag!")
+                this.getZeitintervall()
+                this.setState(this.initialState);
+                this.getZeitintervallbyPersonID();
+                // this.getArbeitszeitkonto();
+            })
+            this.setState({
+                start: new Date,
+            })
+        }
+        else {
+            window.alert("Du hast bereits eingestempelt")
+        }
     }
 
     updateArbeitszeitkonto = () => {
-    let arbeitszeitkonto = this.state.arbeitszeitkonto
-    let start = new Date(this.startDatumSplitten())
-    let endefront = new Date()
-    let dauer = endefront.getTime() - start.getTime()
-    let gesamtstunden = arbeitszeitkonto.getGesamtstunden() + this.msToTime(dauer)
-    arbeitszeitkonto.setGesamtstunden(gesamtstunden)
-    TimetrackerAPI.getAPI().updateArbeitszeitkonto(arbeitszeitkonto).then(arbeitszeitkonto => {
-
-      })}
-
-    updateZeitintervall = () => {
-        let zeitintervall = this.state.zeitintervall;
-        if (this.state.zeitintervall != null){
-        let ende = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
+        let arbeitszeitkonto = this.state.arbeitszeitkonto
         let start = new Date(this.startDatumSplitten())
         let endefront = new Date()
         let dauer = endefront.getTime() - start.getTime()
-        zeitintervall.setEnde(ende)
-        zeitintervall.setDauer(this.msToTime(dauer).toFixed(3))
-        TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall)
-        let date = new Date
-        window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " ausgestempelt!\nDu hast heute " + this.msToTime(dauer).toFixed(3) +  " Stunden gearbeitet, und " + this.state.zeitintervall.getPausenDauer() + " Stunden Pause gemacht.\nAuf Wiedersehen!")
-        this.setState(this.initialState);
-        this.getZeitintervallbyPersonID();
-        this.getArbeitszeitkonto();
-        this.updateArbeitszeitkonto();
-        {
-        this.setState({
-            zeitintervall: null})}}
+        let gesamtstunden = arbeitszeitkonto.getGesamtstunden() + this.msToTime(dauer)
+        arbeitszeitkonto.setGesamtstunden(gesamtstunden)
+        TimetrackerAPI.getAPI().updateArbeitszeitkonto(arbeitszeitkonto).then(arbeitszeitkonto => {
 
-            else{
-                window.alert("Du hast noch nicht eingestempelt!")
-            }
+        })
     }
- 
-    
+
+    updateZeitintervall = () => {
+        let zeitintervall = this.state.zeitintervall;
+        if (this.state.zeitintervall != null) {
+            let ende = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
+            let start = new Date(this.startDatumSplitten())
+            let endefront = new Date()
+            let dauer = endefront.getTime() - start.getTime()
+            zeitintervall.setEnde(ende)
+            zeitintervall.setDauer(this.msToTime(dauer).toFixed(3))
+            TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall)
+            let date = new Date
+            window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " ausgestempelt!\nDu hast heute " + this.msToTime(dauer).toFixed(3) + " Stunden gearbeitet, und " + this.state.zeitintervall.getPausenDauer() + " Stunden Pause gemacht.\nAuf Wiedersehen!")
+            this.setState(this.initialState);
+            this.getZeitintervallbyPersonID();
+            this.getArbeitszeitkonto();
+            this.updateArbeitszeitkonto();
+            {
+                this.setState({
+                    zeitintervall: null
+                })
+            }
+        }
+
+        else {
+            window.alert("Du hast noch nicht eingestempelt!")
+        }
+    }
+
+
 
     // ********** PAUSEN FUNKTIONEN **********\\
     addPause = () => {
-        let zeitintervall = this.state.zeitintervall;
-        let pausen_start = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
-        console.log(pausen_start)
-        zeitintervall.setPausenStart(pausen_start);
-        TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall);
-        let date = new Date;
-        window.alert("Deine Pause hat um "  + date.toLocaleTimeString() + " begonnen.\nSchöne Pause!");
-        this.getZeitintervall();
-        this.setState(this.initialState);
-        this.getZeitintervallbyPersonID();
-    }
+        console.log(this.state.zeitintervall.getPausenStart())
+        if (this.state.pausebutton === 1) {
+            window.alert("Deine Pause hat bereits!")
+        }
+        else {
+            if (this.state.zeitintervall != null) {
+                let zeitintervall = this.state.zeitintervall;
+                let pausen_start = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
+                console.log(pausen_start)
+                zeitintervall.setPausenStart(pausen_start);
+                TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall);
+                let date = new Date;
+                window.alert("Deine Pause hat um " + date.toLocaleTimeString() + " begonnen.\nSchöne Pause!");
+                this.getZeitintervall();
+                this.setState(this.initialState);
+                this.getZeitintervallbyPersonID();
+                this.setState({
+                    pausebutton: 1
+                })
+            }
+            else {
+                window.alert("Du hast noch nicht eingestempelt!")
+            }
 
+        }
+    }
 
     updatePause = () => {
         let zeitintervall = this.state.zeitintervall;
@@ -292,7 +311,7 @@ class Home extends Component {
         zeitintervall.setPausenDauer(this.msToTime(dauer).toFixed(3));
         TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall)
         let date = new Date
-        window.alert("Du hast Pause "  + this.msToTime(dauer).toFixed(3) + " Stunden Pause gemacht.\nJetzt wird es wieder Zeit zu arbeiten!")
+        window.alert("Du hast Pause " + this.msToTime(dauer).toFixed(3) + " Stunden Pause gemacht.\nJetzt wird es wieder Zeit zu arbeiten!")
     }
 
 
@@ -325,7 +344,7 @@ class Home extends Component {
 
     pausenStartSplitten = () => {
         let date = this.state.zeitintervall.getPausenStart()
-        console.log("PAUSENSTART",this.state.zeitintervall.getPausenStart())
+        console.log("PAUSENSTART", this.state.zeitintervall.getPausenStart())
         let dateliste = date.split('')
         let year = String(dateliste[0] + dateliste[1] + dateliste[2] + dateliste[3])
         let month = String(dateliste[6])
@@ -352,15 +371,17 @@ class Home extends Component {
         return parseFloat(hrs + '.' + mins + secs)
     }
 
+
+
     componentDidMount() {
         this.getPerson();
         this.getZeitintervallbyPersonID();
-        // this.getZeitintervall();
+        this.getZeitintervall();
         this.getArbeitszeitkonto();
     }
 
     render() {
-        const {currentUser} = this.props;
+        const { currentUser } = this.props;
         const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto, authLoading } = this.state;
         // console.log(zeitintervall)
         // console.log(start)
@@ -369,112 +390,112 @@ class Home extends Component {
 
         return (
             <div><LoadingProgress show={authLoading} />
-            {person && arbeitszeitkonto ?
-            <div>
-                <Box
-                    sx={{
-                        float: "left",
-                        display: "flex",
-                        flexWrap: "wrap",
-                        "& > :not(style)": {
-                            m: 2,
-                            width: 500,
-                            height: 300,
-                            alignItems: "center",
-                        },
-                    }}
-                >
-                    <Paper elevation={3}>
-                        <div>
-                        <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
-                        Mein Profil
-                         </Typography>
-                            <Tooltip title="Bearbeiten" placement="right">
-                                <IconButton
-                                    variant="contained"
-                                    onClick={this.bearbeitenButtonClicked}
-                                >
-                                    <EditIcon />
-                                </IconButton>
-                            </Tooltip>
-                            <p>
-                                <strong>Name:</strong> {person.getVor_name()}{" "}
-                                {person.getNach_name()}
-                            </p>
+                {person && arbeitszeitkonto ?
+                    <div>
+                        <Box
+                            sx={{
+                                float: "left",
+                                display: "flex",
+                                flexWrap: "wrap",
+                                "& > :not(style)": {
+                                    m: 2,
+                                    width: 500,
+                                    height: 300,
+                                    alignItems: "center",
+                                },
+                            }}
+                        >
+                            <Paper elevation={3}>
+                                <div>
+                                    <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                                        Mein Profil
+                                    </Typography>
+                                    <Tooltip title="Bearbeiten" placement="right">
+                                        <IconButton
+                                            variant="contained"
+                                            onClick={this.bearbeitenButtonClicked}
+                                        >
+                                            <EditIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                    <p>
+                                        <strong>Name:</strong> {person.getVor_name()}{" "}
+                                        {person.getNach_name()}
+                                    </p>
 
-                            <p>
-                                <strong>Email:</strong> {person.getEmail()}
-                            </p>
-                            <p>
-                                <strong>Benutzername:</strong> {person.getBenutzer_name()}
-                            </p>
+                                    <p>
+                                        <strong>Email:</strong> {person.getEmail()}
+                                    </p>
+                                    <p>
+                                        <strong>Benutzername:</strong> {person.getBenutzer_name()}
+                                    </p>
 
-                            <br />
-                            <p>
-                                <Button variant="contained" onClick={this.deleteButtonClicked}>
-                                    Profil löschen
-                                </Button>
-                            </p>
-                        </div>
-                    </Paper>
-                    </Box>
-                    <Box sx={{
-                        float: "right",
-                        display: "flex",
-                        flexWrap: "wrap",
-                        "& > :not(style)": {
-                            m: 2,
-                            width: 800,
-                            height: 300,
-                            alignItems: "center",
-                        },
-                    }}>
-                    <Paper elevation={3}>
-                        <div>
-                        <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
-                        Mein Arbeitszeitkonto
-                         </Typography>
-                            <TableContainer
-                                component={Paper}
-                                sx={{ maxWidth: 750, margin: "auto" }}
-                            >
-                                <Table sx={{ minWidth: 180 }} aria-label="simple table">
-                                    <TableHead>
-                                        <Button variant="contained"  onClick={this.addZeitintervall}>
-                                            Kommen
+                                    <br />
+                                    <p>
+                                        <Button variant="contained" onClick={this.deleteButtonClicked}>
+                                            Profil löschen
                                         </Button>
-                                        <Button variant="contained" onClick={this.addPause}>
-                                            Pause
-                                        </Button>
-                                        <Button variant="contained"  onClick={this.updatePause}>
-                                            Pausen Beenden
-                                        </Button>
-                                        <Button variant="contained" onClick={this.updateZeitintervall}>
-                                            Gehen
-                                        </Button>
-                                        <TableRow>
-                                            <TableCell align="right">Gesamt Stunden {new Date().getFullYear()}</TableCell>
-                                            <TableCell align="right">Gearbeitete Stunden {new Date().getFullYear()}</TableCell>
-                                            <TableCell align="right">Urlaubstage {new Date().getFullYear()}</TableCell>
-                                            <TableCell align="right">Krankheitstage {new Date().getFullYear()}</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell align="center">1680</TableCell>
-                                            <TableCell align="center">{arbeitszeitkonto.getGesamtstunden().toFixed(3)}</TableCell>
-                                            <TableCell align="center">{arbeitszeitkonto.getUrlaubstage()}</TableCell>
-                                            <TableCell align="center">{arbeitszeitkonto.getKrankheitstage()}</TableCell>
-                                        </TableRow>
-                                        <Button variant="contained" onClick={this.ereignisBuchungAnlegenButtonClicked}>
-                                            Sonderbuchung
-                                        </Button>
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </div>
-                    </Paper>
-                </Box>
+                                    </p>
+                                </div>
+                            </Paper>
+                        </Box>
+                        <Box sx={{
+                            float: "right",
+                            display: "flex",
+                            flexWrap: "wrap",
+                            "& > :not(style)": {
+                                m: 2,
+                                width: 800,
+                                height: 300,
+                                alignItems: "center",
+                            },
+                        }}>
+                            <Paper elevation={3}>
+                                <div>
+                                    <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                                        Mein Arbeitszeitkonto
+                                    </Typography>
+                                    <TableContainer
+                                        component={Paper}
+                                        sx={{ maxWidth: 750, margin: "auto" }}
+                                    >
+                                        <Table sx={{ minWidth: 180 }} aria-label="simple table">
+                                            <TableHead>
+                                                <Button variant="contained" onClick={this.addZeitintervall}>
+                                                    Kommen
+                                                </Button>
+                                                <Button variant="contained" onClick={this.addPause}>
+                                                    Pause
+                                                </Button>
+                                                <Button variant="contained" onClick={this.updatePause}>
+                                                    Pausen Beenden
+                                                </Button>
+                                                <Button variant="contained" onClick={this.updateZeitintervall}>
+                                                    Gehen
+                                                </Button>
+                                                <TableRow>
+                                                    <TableCell align="right">Gesamt Stunden {new Date().getFullYear()}</TableCell>
+                                                    <TableCell align="right">Gearbeitete Stunden {new Date().getFullYear()}</TableCell>
+                                                    <TableCell align="right">Urlaubstage {new Date().getFullYear()}</TableCell>
+                                                    <TableCell align="right">Krankheitstage {new Date().getFullYear()}</TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                <TableRow>
+                                                    <TableCell align="center">1680</TableCell>
+                                                    <TableCell align="center">{arbeitszeitkonto.getGesamtstunden().toFixed(3)}</TableCell>
+                                                    <TableCell align="center">{arbeitszeitkonto.getUrlaubstage()}</TableCell>
+                                                    <TableCell align="center">{arbeitszeitkonto.getKrankheitstage()}</TableCell>
+                                                </TableRow>
+                                                <Button variant="contained" onClick={this.ereignisBuchungAnlegenButtonClicked}>
+                                                    Sonderbuchung
+                                                </Button>
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </div>
+                            </Paper>
+                        </Box>
 
                         <Grid container alignItems="center" xs={22} sx={{
                             backgroundColor: '#dedede'
@@ -510,21 +531,21 @@ class Home extends Component {
                         </Grid>
                         <Grid item xs={12}>
 
-                            {   
+                            {
                                 zeitintervallliste.map(zeitintervall =>
-                                    <ZeitintervallEintrag key={zeitintervall[zeitintervall.id]} zeitintervall={zeitintervall} getArbeitszeitkonto={this.getArbeitszeitkonto} show={this.props.show} getZeitintervallbyPersonID={this.getZeitintervallbyPersonID}/>)
+                                    <ZeitintervallEintrag key={zeitintervall[zeitintervall.id]} zeitintervall={zeitintervall} getArbeitszeitkonto={this.getArbeitszeitkonto} show={this.props.show} getZeitintervallbyPersonID={this.getZeitintervallbyPersonID} />)
                             }
                         </Grid>
 
-                <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
-                <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPersonbyID} />
-                <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} arbeitszeitkonto={arbeitszeitkonto} onClose={this.ereignisBuchungAnlegenClosed} getArbeitszeitkonto={this.getArbeitszeitkonto} />
-                </div>
-            : <div> 
-                <SignUp onClose={this.closeSignup} currentUser={currentUser} reloadUser={this.reloadUser} />
-                </div>}
-                </div>);
-            
+                        <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
+                        <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPersonbyID} />
+                        <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} arbeitszeitkonto={arbeitszeitkonto} onClose={this.ereignisBuchungAnlegenClosed} getArbeitszeitkonto={this.getArbeitszeitkonto} />
+                    </div>
+                    : <div>
+                        <SignUp onClose={this.closeSignup} currentUser={currentUser} reloadUser={this.reloadUser} />
+                    </div>}
+            </div>);
+
     }
 
 }
