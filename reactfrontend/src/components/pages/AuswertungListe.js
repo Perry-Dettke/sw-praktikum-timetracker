@@ -5,6 +5,7 @@ import { Grid, Typography, TextField, Paper, List, Fab, Tooltip, Button } from '
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import AuswertungListenEintrag from './AuswertungListenEintrag';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import LoadingProgress from '../dialogs/LoadingProgress'
 
 
 class Auswertung extends Component {
@@ -18,6 +19,7 @@ class Auswertung extends Component {
             ende: null,
             projektliste: [],
             aktivitaet: [],
+            authLoading: false,
         };
 
     }
@@ -25,10 +27,15 @@ class Auswertung extends Component {
     /** Fetches all PersonBOs from the backend */
     getProjektbyProjekterstellerID = () => {
         var pro = TimetrackerAPI.getAPI();
-        pro.getProjektbyProjekterstellerID(3).then((projektBOs) => {
+        pro.getProjektbyProjekterstellerID(this.props.currentPerson.getID()).then((projektBOs) => {
             this.setState({
                 projektliste: projektBOs,
+                authLoading: false,
             });
+        });
+        // set loading to true
+        this.setState({
+            authLoading: true,
         });
     }
 
@@ -57,11 +64,12 @@ class Auswertung extends Component {
     /** Renders the component */
     render() {
         const { expandedState } = this.props;
-        const { projektliste, start, ende } = this.state;
+        const { projektliste, start, ende, authLoading } = this.state;
         console.log(projektliste.length)
 
         return (
-            projektliste.length != 0 ?
+            <div><LoadingProgress show={authLoading} />
+            {projektliste.length != 0 ?
                 <div>
                     <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
                     Es werden dir nur die Projekte angezeigt, die du selbst erstellt hast!
@@ -80,9 +88,11 @@ class Auswertung extends Component {
                             </List>
                         </Grid>
                     </Grid>
+                    
                 </div>
                 : <div> <h1>Bisher hast du noch keine Projekte erstellt.</h1>
                     <h3>Gehe auf die Projekt Übersicht um neue Projekte zu erstellen.</h3>
+                </div>}
                 </div>
         );
     }

@@ -44,7 +44,7 @@ CREATE TABLE `aktivitaet` (
 
 LOCK TABLES `aktivitaet` WRITE;
 /*!40000 ALTER TABLE `aktivitaet` DISABLE KEYS */;
-INSERT INTO `aktivitaet` VALUES (1,'2022-05-17 20:00:00','Lernen',300,1),(2,'2022-05-17 20:00:00','Pandas',20,3),(3,'2022-05-17 20:00:00','Programmieren',200,3),(4,'2022-05-17 20:00:00','Filmen',10,4),(5,'2022-05-17 20:00:00','Rapid Miner',20,5),(6,'2022-05-17 20:00:00','Nix',20,2),(7,'2022-06-17 11:31:40','Lernen2',100,1);
+INSERT INTO `aktivitaet` VALUES (1,'2022-05-17 20:00:00','Lernen',300,1),(2,'2022-05-17 20:00:00','Pandas',20,3),(3,'2022-05-17 20:00:00','Programmieren',200,3),(4,'2022-05-17 20:00:00','Filmen',10,4),(5,'2022-05-17 20:00:00','Rapid Miner',20,5),(6,'2022-05-17 20:00:00','Nix',20,2),(7,'2022-06-17 11:31:40','Lernen2',100,1),(8,'2022-06-22 22:10:18','aa',1,14),(9,'2022-06-22 22:10:35','a',1,15);
 /*!40000 ALTER TABLE `aktivitaet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,7 +71,7 @@ CREATE TABLE `arbeitszeitkonto` (
 
 LOCK TABLES `arbeitszeitkonto` WRITE;
 /*!40000 ALTER TABLE `arbeitszeitkonto` DISABLE KEYS */;
-INSERT INTO `arbeitszeitkonto` VALUES (2,'2022-05-17 20:00:00',0,30,0),(4,'2022-05-17 20:00:00',0,30,0),(5,'2022-05-17 20:00:00',0,30,0),(6,'2022-05-17 20:00:00',0,30,0),(7,'2022-05-17 20:00:00',32,30,0),(8,'2022-06-17 16:58:46',21,20,20);
+INSERT INTO `arbeitszeitkonto` VALUES (2,'2022-06-23 15:37:03',0.00742274,0,22),(4,'2022-06-25 11:11:51',0.0146471,30,0),(5,'2022-05-17 20:00:00',0,30,0),(6,'2022-05-17 20:00:00',0,30,0),(7,'2022-05-17 20:00:00',32,30,0),(8,'2022-06-17 16:58:46',21,20,20),(11,'2022-06-25 11:11:21',0,0,0);
 /*!40000 ALTER TABLE `arbeitszeitkonto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +87,6 @@ CREATE TABLE `buchung` (
   `letzte_aenderung` datetime NOT NULL,
   `datum` date NOT NULL,
   `stunden` float NOT NULL,
-  `ereignisbuchung` tinyint DEFAULT NULL,
   `person_id` int DEFAULT NULL,
   `aktivitaet_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -100,7 +99,7 @@ CREATE TABLE `buchung` (
 
 LOCK TABLES `buchung` WRITE;
 /*!40000 ALTER TABLE `buchung` DISABLE KEYS */;
-INSERT INTO `buchung` VALUES (2,'2022-06-16 19:17:12','2022-06-16',2,0,1,2),(5,'2022-06-17 11:30:56','2022-06-17',1,0,2,5),(7,'2022-06-17 11:30:56','2022-06-17',1,0,1,1),(8,'2022-06-17 11:30:56','2022-06-17',1,0,4,5),(9,'2022-06-17 11:30:56','2022-06-17',1,0,1,2),(10,'2022-06-21 11:49:57','2022-06-20',9,0,3,1),(11,'2022-06-21 17:36:32','2022-06-21',18,0,3,1);
+INSERT INTO `buchung` VALUES (2,'2022-06-16 19:17:12','2022-06-16',2,1,2),(5,'2022-06-17 11:30:56','2022-06-17',1,2,5),(7,'2022-06-17 11:30:56','2022-06-17',1,1,1),(8,'2022-06-17 11:30:56','2022-06-17',1,4,5),(9,'2022-06-17 11:30:56','2022-06-17',1,1,2),(10,'2022-06-21 11:49:57','2022-06-20',9,3,1),(11,'2022-06-21 17:36:32','2022-06-21',18,3,1),(12,'2022-06-22 15:23:31','2022-06-22',3.38,3,5),(13,'2022-06-22 22:09:20','2022-06-22',0,3,1),(14,'2022-06-22 22:10:45','2022-06-22',0,3,8),(15,'2022-06-22 22:10:59','2022-06-22',0,3,9),(16,'2022-06-22 22:11:53','2022-06-22',0,3,8),(17,'2022-06-23 20:10:37','2022-06-23',0,3,8),(18,'2022-06-23 20:10:45','2022-06-23',0,3,9),(19,'2022-06-23 20:17:26','2022-06-23',0,3,8);
 /*!40000 ALTER TABLE `buchung` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,7 +154,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (1,'2022-06-02 10:54:32','Lisaaa','Mülleraa','MüllerMailaa','müüllleeeraa','dwqjnw8931u489',1),(2,'2022-06-14 16:10:08','a','a','a','a','',2),(3,'2022-06-20 23:55:39','Tom','string','string','string','kajsnfkjansfi3',0),(4,'2022-05-17 20:00:00','Ralf','Roller','ralf.roller@web.de','ralle44','diuh128231',4),(5,'2022-06-01 22:14:26','Peter','Panne','ppmail','pppi','kwuqie8714',5),(6,'2022-06-13 21:33:29','Perry','Dettke','pp@mail-de','pdpdwa','',6),(7,'2022-06-13 21:35:47','a','a','a','a','',7);
+INSERT INTO `person` VALUES (1,'2022-06-02 10:54:32','Lisaaa','Mülleraa','MüllerMailaa','müüllleeeraa','dwqjnw8931u489',1),(2,'2022-06-22 14:51:02','Tom','Tommer','email@web.de','Tommi','',2),(3,'2022-06-20 23:55:39','Tom','string','string','string','kajsnfkjansfi3',0),(4,'2022-05-17 20:00:00','Ralf','Roller','ralf.roller@web.de','ralle44','diuh128231',4),(5,'2022-06-01 22:14:26','Peter','Panne','ppmail','pppi','kwuqie8714',5),(6,'2022-06-13 21:33:29','Perry','Dettke','pp@mail-de','pdpdwa','',6),(7,'2022-06-13 21:35:47','a','a','a','a','',7),(10,'2022-06-25 11:11:21','a','a','a','a','2u80WZosnadhZ7cjTgzHNcrj46I3',11);
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,9 +170,11 @@ CREATE TABLE `projekt` (
   `letzte_aenderung` datetime NOT NULL,
   `bezeichnung` varchar(45) NOT NULL,
   `auftraggeber` varchar(45) NOT NULL,
+  `startzeitraum` varchar(45) NOT NULL,
+  `endzeitraum` varchar(45) NOT NULL,
   `projektersteller_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +183,7 @@ CREATE TABLE `projekt` (
 
 LOCK TABLES `projekt` WRITE;
 /*!40000 ALTER TABLE `projekt` DISABLE KEYS */;
-INSERT INTO `projekt` VALUES (1,'2022-06-01 18:56:42','Mathe','Lehrer',1),(3,'2022-05-17 20:00:00','Pneumatik','Mildenberger',1),(4,'2022-05-17 20:00:00','Web-Technologien','Kunz',2),(5,'2022-05-17 20:00:00','Datenbanken','Lehmamn',2),(6,'2022-06-17 11:21:52','testt','testt',2);
+INSERT INTO `projekt` VALUES (1,'2022-06-23 19:58:00','Mathe','Lehrer','2022-06-12','2022-06-28',1),(3,'2022-05-17 20:00:00','Pneumatik','Mildenberger','2022-06-29T19:43:00.000Z','2022-06-01',1),(4,'2022-05-17 20:00:00','Web-Technologien','Kunz','2022-06-29T19:43:00.000Z','2022-06-01',2),(5,'2022-05-17 20:00:00','Datenbanken','Lehmamn','2022-06-01','2022-06-01',2),(6,'2022-06-17 11:21:52','testt','testt','2022-06-01','2022-06-01',2),(7,'2022-06-22 21:43:26','testt','testt','2022-06-29T19:43:00.000Z','2022-06-30T19:43:01.000Z',3),(8,'2022-06-22 21:43:26','testt','testt','2022-06-29T19:43:00.000Z','2022-06-30T19:43:01.000Z',3),(9,'2022-06-22 21:43:45','flugbrot','q','2022-06-28T19:43:41.000Z','2022-06-30T19:43:43.000Z',3),(10,'2022-06-22 22:02:18','flugbrot','a','1656446534000','1656619336000',3),(11,'2022-06-22 22:02:53','flugbrot','a','1656446534000','1656619336000',3),(12,'2022-06-22 22:06:02','a','a','2022-06-30T20:05:58.000Z','2022-06-30T20:06:00.000Z',3),(13,'2022-06-22 22:06:14','a','a','2022-06-19T22:00:00.000Z','2022-06-30T20:06:00.000Z',3),(14,'2022-06-22 22:10:07','True','a','2022-06-12T20:09:58.000Z','2022-06-30T20:10:01.000Z',3),(15,'2022-06-22 22:10:28','False','a','2022-06-29T20:09:58.000Z','2022-06-30T20:10:01.000Z',3),(16,'2022-06-23 19:47:08','aaa','flugbrot','2022-06-23','2022-06-30',3),(17,'2022-06-25 09:11:11','flugbrot','flugbrot','2022-06-22','2022-06-30',3),(18,'2022-06-25 11:12:09','a','a','2022-06-21','2022-06-30',3);
 /*!40000 ALTER TABLE `projekt` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,7 +199,7 @@ CREATE TABLE `projekt_person` (
   `person_id` int NOT NULL,
   `projekt_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +208,7 @@ CREATE TABLE `projekt_person` (
 
 LOCK TABLES `projekt_person` WRITE;
 /*!40000 ALTER TABLE `projekt_person` DISABLE KEYS */;
-INSERT INTO `projekt_person` VALUES (1,1,1),(2,3,1),(3,2,3),(4,2,1),(5,3,5);
+INSERT INTO `projekt_person` VALUES (1,1,1),(3,2,3),(5,3,5),(23,0,7),(24,3,8),(25,2,8),(26,3,9),(27,1,9),(28,3,10),(29,2,10),(30,3,7),(31,3,8),(32,4,7),(33,4,8),(34,3,9),(35,1,9),(36,3,10),(37,2,10),(38,3,11),(39,2,11),(40,3,12),(41,2,12),(42,3,13),(43,2,13),(44,3,14),(45,1,14),(46,3,15),(47,1,15),(48,3,16),(49,2,16),(50,1,1),(51,3,17),(52,4,17),(53,3,18),(54,4,18);
 /*!40000 ALTER TABLE `projekt_person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,6 +225,9 @@ CREATE TABLE `zeitintervall` (
   `start` varchar(45) NOT NULL,
   `ende` varchar(45) DEFAULT NULL,
   `dauer` float DEFAULT NULL,
+  `pausen_start` varchar(45) DEFAULT NULL,
+  `pausen_ende` varchar(45) DEFAULT NULL,
+  `pausen_dauer` float DEFAULT NULL,
   `person_id` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -235,7 +239,7 @@ CREATE TABLE `zeitintervall` (
 
 LOCK TABLES `zeitintervall` WRITE;
 /*!40000 ALTER TABLE `zeitintervall` DISABLE KEYS */;
-INSERT INTO `zeitintervall` VALUES (3,'2022-06-21 17:24:29','2022-06-18 15:45:37','2022-06-18 18:45:37',3,2),(4,'2022-06-18 17:45:51','2022-06-18 17:45:51','2022-06-19 17:56:24',2.5,2),(8,'2022-06-21 12:33:18','2022-06-18 17:54:50','2022-06-18 18:54:50',1,2),(10,'2022-06-21 12:40:23','2022-06-21 12:40:21','2022-06-21 12:40:23',0.001,2),(11,'2022-06-21 12:42:03','2022-06-21 12:41:44','2022-06-21 12:42:02',0.005,2),(12,'2022-06-21 14:26:46','2022-06-21 14:26:39','2022-06-21 14:26:45',0.002,2),(13,'2022-06-21 16:48:10','2022-06-21 16:48:10',NULL,0,2),(14,'2022-06-21 17:21:30','2022-06-21 17:21:08','2022-06-21 17:21:30',0.006,2),(15,'2022-06-21 17:23:10','2022-06-21 17:22:38','2022-06-21 17:23:09',0.009,2),(16,'2022-06-21 17:31:35','2022-06-21 17:31:27','2022-06-21 17:31:34',0.002,2),(17,'2022-06-21 17:47:15','2022-06-21 17:47:14',NULL,0,2),(18,'2022-06-21 17:47:59','2022-06-21 17:47:29','2022-06-21 17:47:59',0.008,2);
+INSERT INTO `zeitintervall` VALUES (1,'2022-06-23 14:28:02','2022-06-23 14:27:59','2022-06-23 14:28:01',0.001,NULL,NULL,0,2),(2,'2022-06-23 14:28:20','2022-06-23 14:28:16','2022-06-23 14:28:19',0.001,NULL,NULL,0,2),(3,'2022-06-23 14:30:34','2022-06-23 14:30:29','2022-06-23 14:30:33',0.001,NULL,NULL,0,2),(5,'2022-06-23 14:31:48','2022-06-23 14:31:41','2022-06-23 14:31:47',0.002,NULL,NULL,0,2),(6,'2022-06-23 15:37:02','2022-06-23 15:36:58','2022-06-23 15:37:02',0.001,NULL,NULL,0,2),(8,'2022-06-24 20:56:55','2022-06-24 20:56:52','2022-06-24 20:56:55',0.001,NULL,NULL,0,2),(9,'2022-06-25 09:10:39','2022-06-25 09:10:34','2022-06-25 09:10:38',0.001,NULL,NULL,0,2),(10,'2022-06-25 11:10:15','2022-06-25 11:10:10','2022-06-25 11:10:14',0.001,NULL,NULL,0,2);
 /*!40000 ALTER TABLE `zeitintervall` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -248,4 +252,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-21 17:57:20
+-- Dump completed on 2022-06-25 11:27:12

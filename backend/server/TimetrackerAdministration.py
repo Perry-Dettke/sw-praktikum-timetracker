@@ -117,10 +117,7 @@ class TimetrackerAdministration (object):
     """
     Arbeitszeitkonto-spezifische Methoden
     """
-    def create_arbeitszeitkonto(self, arbeitszeitkonto): 
-        """Arbeitszeitkonto anlegen"""
-        with ArbeitszeitkontoMapper() as mapper:
-            return mapper.insert(arbeitszeitkonto)
+    # Arbeitszeitkonto wird automatisch mit Person erstellt
 
     def get_arbeitszeitkonto_by_id(self, id):
         """Das Arbeitszeitkonto mit der gegebenen ID auslesen."""
@@ -130,10 +127,14 @@ class TimetrackerAdministration (object):
         with ZeitintervallMapper() as mapper:
             zeitintervallliste = mapper.find_by_person_id(id)
 
+            dauer = 0
+            pause = 0
             stunden = 0
             for i in zeitintervallliste:
-                stunden += i.get_dauer()
-            
+                dauer += i.get_dauer()
+                pause += i.get_pausen_dauer()
+
+            stunden = dauer - pause
             azt.set_gesamtstunden(stunden)
 
         return azt
@@ -287,8 +288,10 @@ class TimetrackerAdministration (object):
     """
     def create_person(self, person): 
         """Person anlegen"""
+        with ArbeitszeitkontoMapper() as mapper:
+            azk = mapper.insert()
         with PersonMapper() as mapper:
-            return mapper.insert(person)
+            return mapper.insert(person, azk.get_id())
 
     def get_person_by_id(self, id):
         """Den Personen mit der gegebenen ID auslesen."""
@@ -460,8 +463,10 @@ class TimetrackerAdministration (object):
     """
     def create_zeitintervall(self, zeitintervall): 
         """Zeitintervall anlegen"""
+        self.save_arbeitszeitkonto
         with ZeitintervallMapper() as mapper:
             return mapper.insert(zeitintervall)
+
 
     def get_zeitintervall_by_id(self, id):
         """Das Zeitintervall mit der gegebenen ID auslesen."""
@@ -475,33 +480,15 @@ class TimetrackerAdministration (object):
 
     def save_zeitintervall(self, zeitintervall):
         """Das gegebenen Zeitintervall speichern."""
-        with ZeitintervallMapper() as mapper:
-            return mapper.update(zeitintervall)
 
-
-    def save_zeitintervall_dauer(self, zeitintervall):
-        """Das gegebenen Zeitintervall speichern."""
-        self.save_zeitintervall(zeitintervall)
-        with ZeitintervallMapper() as mapper:
-            zi = mapper.find_by_max_id_and_person_id(zeitintervall.get_person_id())
-
-            print(zi)
-            for i in zi:
-                i.set_dauer(1)
-            return  mapper.update(zeitintervall)
-
-
-
-
-             # with ZeitintervallMapper() as mapper:
-        #     Zeitintervallbo = mapper.find_by_max_id_and_person_id(zeitintervall.get_person_id())
-        #     dauer = Zeitintervallbo.get_ende() - Zeitintervallbo.get_start()
-        #     Zeitintervallbo.set_dauer(dauer)
-        #     self.update(zeitintervallbo)
+        if float(zeitintervall.get_dauer()) > 10.5:
+            zeitintervall.set_dauer(10.5)
+        if float(zeitintervall.get_dauer()) > 5.999:
+            zeitintervall.set_pausen_dauer(0.5)
         
 
-
-
+        with ZeitintervallMapper() as mapper:
+            return mapper.update(zeitintervall)
 
 
     def delete_zeitintervall(self, zeitintervall):

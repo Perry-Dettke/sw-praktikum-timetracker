@@ -89,8 +89,8 @@ class Person(bo.BusinessObjekt):
         obj.set_email(dictionary["email"])
         obj.set_benutzer_name(dictionary["benutzer_name"])
         obj.set_stunden(dictionary["stunden"])
-        # obj.set_google_user_id(dictionary["google_user_id"])
-        # obj.set_arbeitszeitkonto_id(dictionary["arbeitszeitkonto_id"])
+        obj.set_google_user_id(dictionary["google_user_id"])
+        #obj.set_arbeitszeitkonto_id(dictionary["arbeitszeitkonto_id"])
 
         return obj
 

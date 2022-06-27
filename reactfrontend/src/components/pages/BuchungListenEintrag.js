@@ -25,6 +25,7 @@ class BuchungListenEintrag extends Component {
             showBuchungDelete: false,
             aktivitaetliste: [],
             tablehead: null,
+            currentPerson: this.props.currentPerson
         };
     }
 
@@ -33,15 +34,7 @@ class BuchungListenEintrag extends Component {
         this.props.getBuchungbyPersonID();
     }
 
-    ereignisbuchungCheck = () => {
-        if (this.props.buchung.getEreignisbuchung() === true) {
-            return "Ereignisbuchung"
-        }
-        else {
-            return "Zetintervallbuchung"
-        }
 
-    }
 
     getAktivitaet = () => {
         TimetrackerAPI.getAPI().getAktivitaetbyID(this.props.buchung.getAktivitaet_id()).then((aktivitaetBOs) => {
@@ -128,7 +121,7 @@ class BuchungListenEintrag extends Component {
 
     //Renders the component
     render() {
-        const { buchung } = this.props;
+        const { buchung, currentPerson } = this.props;
         const { aktivitaet, projekt, showBuchungBearbeiten, showBuchungDelete, aktivitaetliste, tablehead } = this.state;
         // console.log(projekt)
         // console.log(this.state.aktivitaet.getProjektID())
@@ -146,9 +139,6 @@ class BuchungListenEintrag extends Component {
                         <Typography>{aktivitaet.getBezeichnung()}</Typography>
                     </Grid>
                     <Grid item xs={2}>
-                        <Typography>{this.ereignisbuchungCheck()}</Typography>
-                    </Grid>
-                    <Grid item xs={2}>
                         <Typography>{buchung.getStunden()}</Typography>
                     </Grid>
                     <Grid item xs={1}>
@@ -164,7 +154,7 @@ class BuchungListenEintrag extends Component {
                     <Grid item xs={12}>
                         <Divider />
                     </Grid>
-                    <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
+                    <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} currentPerson={currentPerson} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
                     <BuchungDelete show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchungbyPersonID={this.props.getBuchungbyPersonID}/>
                 </Grid>
                     

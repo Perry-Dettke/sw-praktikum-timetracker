@@ -69,8 +69,6 @@ buchung = api.inherit('Buchung', bo, {
                                 description='Datum an dem die Buchung durchgeführt wurde'),
     'stunden': fields.Float(attribute='_stunden',
                                 description='Stunden der Buchung'),
-    'ereignisbuchung': fields.Boolean(attribute='_ereignisbuchung',
-                                description='1/0 Ja oder Nein ob es eine Ereignisbuchung ist, falls nein = Zeitintervallbuchung'),
     'person_id': fields.Integer(attribute='_person_id',
                                 description='ID der Person, die die Buchung durchgeführt hat'),
     'aktivitaet_id': fields.Integer(attribute='_aktivitaet_id',
@@ -105,6 +103,10 @@ projekt = api.inherit('Projekt', bo, {
                                 description='Bezeichnung eines Projekts'),
     'auftraggeber': fields.String(attribute='_auftraggeber',
                                 description='Auftraggeber des Projekts'),
+    'startzeitraum': fields.String(attribute='_startzeitraum',
+                                description='Startzeitraum des Projekts'),
+    'endzeitraum': fields.String(attribute='_endzeitraum',
+                                description='Endzeitraum des Projekts'),
     'projektersteller_id': fields.Integer(attribute='_projektersteller_id',
                                 description='Projektersteller ID des Projekts'),
 })
@@ -116,9 +118,16 @@ zeitintervall = api.inherit('Zeitintervall', bo, {
                             description='Ende eines Zeitintervall'),
     'dauer': fields.Float(attribute='_dauer',                             
                             description='Dauer eines Zeitintervall'),
+    'pausen_start': fields.String(attribute='_pausen_start',                             
+                            description='Start einer Pause'),
+    'pausen_ende': fields.String(attribute='_pausen_ende',                                
+                            description='Ende einer Pause'),
+    'pausen_dauer': fields.Float(attribute='_pausen_dauer',                             
+                            description='Dauer einer Pause'),
     'person_id': fields.Integer(attribute='_person_id',                                
                             description='Person ID die das Zeitintervall erstellt hat'),
 })
+
 
 
 #Aktivitaet related
@@ -653,28 +662,27 @@ class PersonbyAktivitaetOperations(Resource):
         else:
             return '', 500 
 
-# Brauchen wir die Funktion üverhaupt?
 
-# @timetracker.route('/personbygoogle/<string:google_user_id>')     
-# @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-# class PersonGoogleOperations(Resource):
-#     @timetracker.marshal_with(person)
-#     def get(self, google_user_id):
-#         """Auslesen eines bestimmten Person-Objekts.
-#         Das auszulesende Objekt wird durch die ```google_id``` in dem URI bestimmt.
-#         """
-#         adm = TimetrackerAdministration()
-#         pe = adm.get_person_by_google_user_id(google_user_id)
-#         if pe is not None:
-#             return pe
-#         else:
-#             return '', 500 
+@timetracker.route('/personbygoogle/<string:google_user_id>')     
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class PersonGoogleOperations(Resource):
+    @timetracker.marshal_with(person)
+    def get(self, google_user_id):
+        """Auslesen eines bestimmten Person-Objekts.
+        Das auszulesende Objekt wird durch die ```google_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        pe = adm.get_person_by_google_user_id(google_user_id)
+        if pe is not None:
+            return pe
+        else:
+            return '', 500 
 
-#     def post(self, google_user_id):
-#         ''' Person das erste mal anlegen '''
-#         adm = TimetrackerAdministration()
-#         adm.add_person_google_user_id(google_user_id)
-#         return '', 200
+    def post(self, google_user_id):
+        ''' Person das erste mal anlegen '''
+        adm = TimetrackerAdministration()
+        adm.add_person_google_user_id(google_user_id)
+        return '', 200
 
 
 

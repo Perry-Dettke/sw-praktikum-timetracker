@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import { Button, Tooltip, TextField, InputAdornment, IconButton, Grid, Typography, List, Box, Fab, TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-
 import BuchungListenEintrag from './BuchungListenEintrag.js'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import ZeitintervallBuchungAnlegen from '../dialogs/ZeitintervallBuchungAnlegen.js';
-import EreignisBuchungAnlegen from '../dialogs/EreignisBuchungAnlegen.js';
+import LoadingProgress from '../dialogs/LoadingProgress'
 
 
 
@@ -23,14 +20,29 @@ class BuchungListe extends Component {
       buchungliste: [],
       showZeitintervallBuchungAnlegen: false,
       showEreignisBuchungAnlegen: false,
+      authLoading: false,
+      currentPerson: this.props.currentPerson,
+  
     };
   }
 
+ 
+
+
+
+  
+
   getBuchungbyPersonID = () => {
-    TimetrackerAPI.getAPI().getBuchungbyPersonID(3).then((buchungBOs) => {
+    console.log(this.props.currentPerson)
+    TimetrackerAPI.getAPI().getBuchungbyPersonID(this.props.currentPerson.getID()).then((buchungBOs) => {
       this.setState({
         buchungliste: buchungBOs,
+        authLoading: false,
       });
+    });
+    // set loading to true
+    this.setState({
+      authLoading: true,
     });
   }
 
@@ -45,47 +57,20 @@ class BuchungListe extends Component {
 
   /// Zeitintervallbuchung Erstellen Dialog schließen
   zeitintervallBuchungAnlegenClosed = buchung => {
-    this.getBuchungbyPersonID();
-
     if (buchung) {
       const newBuchungList = [...this.state.buchung, buchung];
       this.setState({
         buchung: newBuchungList,
-        showZeitintervallBuchungAnlegen: false
+        showZeitintervallBuchungAnlegen: false,
       });
     } else {
       this.setState({
-        showZeitintervallBuchungAnlegen: false
+        showZeitintervallBuchungAnlegen: false,
       });
     }
   }
 
   
-// Ereignisbuchung Erstellen Dialog anzeigen
-  ereignisBuchungAnlegenButtonClicked = event => {
-    event.stopPropagation();
-    this.setState({
-      showEreignisBuchungAnlegen: true,
-    });
-  }
-
-  //Ereignisbuchung Dialog schließen
-  ereignisBuchungAnlegenClosed = buchung => {
-    this.getBuchungbyPersonID();
-
-    if (buchung) {
-      const newBuchungList = [...this.state.buchung, buchung];
-      this.setState({
-        buchung: newBuchungList,
-        showEreignisBuchungAnlegen: false
-      });
-    } else {
-      this.setState({
-        showEreignisBuchungAnlegen: false
-      });
-    }
-  }
-
 
 
   componentDidMount() {
@@ -96,9 +81,8 @@ class BuchungListe extends Component {
   /** Renders the component */
   render() {
 
-    const { buchung, showZeitintervallBuchungAnlegen, showEreignisBuchungAnlegen, buchungliste } = this.state;
-    // console.log(buchungliste)
-
+    const { currentPerson, showZeitintervallBuchungAnlegen, buchungliste, authLoading } = this.state;
+    console.log(currentPerson)
 
     return (
       buchungliste ?
@@ -144,9 +128,6 @@ class BuchungListe extends Component {
                 <Typography>Aktivität</Typography>
               </Grid>
               <Grid item xs={2}>
-                <Typography>Art der Buchung (Zeitintervall/Ereignis)</Typography>
-              </Grid>
-              <Grid item xs={2}>
                 <Typography>Stunden, die gebucht wurden</Typography>
               </Grid>
               <Grid item xs={1}>
@@ -159,14 +140,14 @@ class BuchungListe extends Component {
             <Grid item xs={12}>
               {
                 buchungliste.map(buchung =>
-                    <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} getBuchung={this.getBuchungbyPersonID} />)
+                    <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} currentPerson={currentPerson} getBuchung={this.getBuchungbyPersonID} />)
               }
             </Grid>
           </Grid>
-          <ZeitintervallBuchungAnlegen show={showZeitintervallBuchungAnlegen} onClose={this.zeitintervallBuchungAnlegenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
-          <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} onClose={this.ereignisBuchungAnlegenClosed}/>
+          <ZeitintervallBuchungAnlegen show={showZeitintervallBuchungAnlegen} onClose={this.zeitintervallBuchungAnlegenClosed} currentPerson={currentPerson} getBuchungbyPersonID={this.getBuchungbyPersonID} />
+          <LoadingProgress show={authLoading} />
         </div>
-        : null
+      : null
     );
   }
 }
