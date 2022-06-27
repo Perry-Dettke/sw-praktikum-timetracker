@@ -28,11 +28,10 @@ class Home extends Component {
             zeitintervallliste: [],
             start: null,
             ende: null,
-            zeitraum_start: null,
-            zeitraum_ende: null,
-            zeitraum_zeitintervall: [],
+            zeitraum: null,
             zeitraum_stunden: 0,
             authLoading: false,
+            zeitraumClicked: false,
         };
     }
     // **********MEIN PROFIL FUNKTIONEN**********\\
@@ -360,38 +359,63 @@ class Home extends Component {
 
         return parseFloat(hrs + '.' + mins + secs)
     }
-    
-//Zeitraumfilter
-getZeitintervallbyPersonIDzeitraum = (start = "2000-01-01", ende = "3000-01-01") => {
-    TimetrackerAPI.getAPI().getZeitintervallbyPersonIDbyTime(2,start,ende).then((zeitintervallBOs) => {
-        this.setState({
-            zeitraum_zeitintervall: zeitintervallBOs,
-            authLoading: false,
-        });
-    });
-    // set loading to true
-    this.setState({
-        authLoading: true,
-    });
-}
 
-  zeitraumClicked = () => {
-    this.getZeitintervallbyPersonIDzeitraum(this.state.zeitraum_start, this.state.zeitraum_ende);
-  };
 
-  // Textfelder ändern
-  textFieldValueChange = (event) => {
-    const value = event.target.value;
+    zeitraumClicked = () => {
+        this.zeitraumZeitintervall(this.state.zeitraum);
+    };
 
-    let error = false;
-    if (value.trim().length === 0) {
-      error = true;
+
+    zeitraumZeitintervall = (zeitraum) => {
+        this.state.zeitraum_stunden = 0
+        this.state.zeitintervallliste.map(zeitintervall => {
+            if (zeitintervall.getStart().includes(zeitraum)) {
+                this.state.zeitraum_stunden += zeitintervall.getDauer();
+            }
+        },
+        )
+        this.zeitraumListe(zeitraum);
+        this.zeitraumZeitintervallState()
     }
 
-    this.setState({
-      [event.target.id]: event.target.value,
-    });
-  };
+    zeitraumZeitintervallState = () => {
+        this.setState({
+            zeitraumClicked: true
+        })
+    }
+
+    // Erstellt eine List emit Zeitintervalle in dem gegeben Monat
+    zeitraumListe = (zeitraum) => {
+        let liste = []
+        console.log(zeitraum)
+        this.state.zeitintervallliste.map(zeitintervall => {
+            if (zeitintervall.getStart().includes(zeitraum)) {
+                liste.push(zeitintervall)
+            }
+        })
+        this.zeitraumListeState(liste)
+    }
+    // State der zeitintervalliste wird neu gesetzt
+    zeitraumListeState = (liste) => {
+        this.setState({
+            zeitintervallliste: liste
+        })
+    }
+
+    // Textfelder ändern
+    textFieldValueChange = (event) => {
+        const value = event.target.value;
+
+        let error = false;
+        if (value.trim().length === 0) {
+            error = true;
+        }
+
+        this.setState({
+            [event.target.id]: event.target.value,
+        });
+        this.getZeitintervallbyPersonID()
+    };
 
 
     componentDidMount() {
@@ -403,10 +427,9 @@ getZeitintervallbyPersonIDzeitraum = (start = "2000-01-01", ende = "3000-01-01")
 
     render() {
         const { currentUser } = this.props;
-        const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto, authLoading, zeitraum_start, zeitraum_ende, zeitraum_zeitintervall, zeitraum_stunden } = this.state;
+        const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto, authLoading, zeitraum, zeitraum_stunden } = this.state;
         // console.log(zeitintervall)
-        // console.log(start)
-        console.log(zeitraum_zeitintervall)
+
 
         return (
             <div><LoadingProgress show={authLoading} />
@@ -471,57 +494,55 @@ getZeitintervallbyPersonIDzeitraum = (start = "2000-01-01", ende = "3000-01-01")
                             },
                         }}>
                             <Paper elevation={3}>
-                                    <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
-                                        Mein Arbeitszeitkonto
-                                    </Typography>
-                                    <TableContainer
-                                        component={Paper}
-                                        sx={{ maxWidth: 750, margin: "auto" }}
-                                    >
-                                        <Table sx={{ minWidth: 180 }} aria-label="simple table">
-                                            <TableHead>
-                                                <Button variant="contained" onClick={this.addZeitintervall}>
-                                                    Kommen
-                                                </Button>
-                                                <Button variant="contained" onClick={this.addPause}>
-                                                    Pause
-                                                </Button>
-                                                <Button variant="contained" onClick={this.updatePause}>
-                                                    Pausen Beenden
-                                                </Button>
-                                                <Button variant="contained" onClick={this.updateZeitintervall}>
-                                                    Gehen
-                                                </Button>
-                                                <Button variant="contained" onClick={this.ereignisBuchungAnlegenButtonClicked}>
-                                                    Sonderbuchung
-                                                </Button>
-                                                <TableRow>
-                                                    <TableCell align="right">Gesamt Stunden {new Date().getFullYear()}</TableCell>
-                                                    <TableCell align="right">Gearbeitete Stunden {new Date().getFullYear()}</TableCell>
-                                                    <TableCell align="right">Urlaubstage {new Date().getFullYear()}</TableCell>
-                                                    <TableCell align="right">Krankheitstage {new Date().getFullYear()}</TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                <TableRow>
-                                                    <TableCell align="center">1680</TableCell>
-                                                    <TableCell align="center">{arbeitszeitkonto.getGesamtstunden().toFixed(3)}</TableCell>
-                                                    <TableCell align="center">{arbeitszeitkonto.getUrlaubstage()}</TableCell>
-                                                    <TableCell align="center">{arbeitszeitkonto.getKrankheitstage()}</TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
+                                <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                                    Mein Arbeitszeitkonto
+                                </Typography>
+                                <TableContainer
+                                    component={Paper}
+                                    sx={{ maxWidth: 750, margin: "auto" }}
+                                >
+                                    <Table sx={{ minWidth: 180 }} aria-label="simple table">
+                                        <TableHead>
+                                            <Button variant="contained" onClick={this.addZeitintervall}>
+                                                Kommen
+                                            </Button>
+                                            <Button variant="contained" onClick={this.addPause}>
+                                                Pause
+                                            </Button>
+                                            <Button variant="contained" onClick={this.updatePause}>
+                                                Pausen Beenden
+                                            </Button>
+                                            <Button variant="contained" onClick={this.updateZeitintervall}>
+                                                Gehen
+                                            </Button>
+                                            <Button variant="contained" onClick={this.ereignisBuchungAnlegenButtonClicked}>
+                                                Sonderbuchung
+                                            </Button>
+                                            <TableRow>
+                                                <TableCell align="right">Gesamt Stunden {new Date().getFullYear()}</TableCell>
+                                                <TableCell align="right">Gearbeitete Stunden {new Date().getFullYear()}</TableCell>
+                                                <TableCell align="right">Urlaubstage {new Date().getFullYear()}</TableCell>
+                                                <TableCell align="right">Krankheitstage {new Date().getFullYear()}</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell align="center">1680</TableCell>
+                                                <TableCell align="center">{arbeitszeitkonto.getGesamtstunden().toFixed(3)}</TableCell>
+                                                <TableCell align="center">{arbeitszeitkonto.getUrlaubstage()}</TableCell>
+                                                <TableCell align="center">{arbeitszeitkonto.getKrankheitstage()}</TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
                                 <Grid>
                                     <Grid item xs={12}>
                                         <Typography align="left">Um nach einem bestimmten Zeitraum zu suchen, fülle die Such-Felder aus und klicke den Button. Dies führt zu einer Aktualisierung der Ist-Stunden und der Restkapazität.</Typography>
                                     </Grid>
                                     <Grid item xs={4}>
-                                        <TextField autoFocus type='text' required fullWidth margin='normal' id='zeitraum_start' label='Start: (yyyy-mm-dd)' value={zeitraum_start} onChange={this.textFieldValueChange} />
+                                        <TextField autoFocus type='text' required fullWidth margin='normal' id='zeitraum' label='Monat: (yyyy-mm)' value={zeitraum} onChange={this.textFieldValueChange} />
                                     </Grid>
-                                    <Grid item xs={4}>
-                                        <TextField autoFocus type='text' required fullWidth margin='normal' id='zeitraum_ende' label='Ende: (yyyy-mm-dd)' value={zeitraum_ende} onChange={this.textFieldValueChange} />
-                                    </Grid>
+
                                     <Grid item xs={3}
                                         sx={{
                                             height: 75,
@@ -542,18 +563,14 @@ getZeitintervallbyPersonIDzeitraum = (start = "2000-01-01", ende = "3000-01-01")
                                             Zeitraum suchen
                                         </Button>
                                     </Grid>
-                                    {zeitraum_zeitintervall ?
-                                    <div>
+
                                     <Grid item xs={12}>
-                                        <Typography align="left">Deine gearbeiteten Stunden im Zeitraum {zeitraum_start} - {zeitraum_ende}:</Typography>
+                                        <Typography align="left">Deine gearbeiteten Stunden im Monat {zeitraum}:</Typography>
                                     </Grid>
-                                    {zeitraum_zeitintervall.map(zeitintervall =>
-                                    zeitraum_stunden+=zeitintervall.getDauer()-zeitintervall.getPausenDauer()
-                                    )}
+
                                     <Grid item xs={12}>
-                                        <Typography align="left">{zeitraum_stunden}</Typography>
-                                    </Grid></div>
-                                    : null}
+                                        <Typography align="left">{zeitraum_stunden.toFixed(3)}</Typography>
+                                    </Grid>
                                 </Grid>
                             </Paper>
                         </Box>
