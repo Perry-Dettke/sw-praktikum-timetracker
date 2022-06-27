@@ -507,8 +507,8 @@ class Home extends Component {
                 </div>
             : <div> 
                 <SignUp onClose={this.closeSignup} currentUser={currentUser} reloadUser={this.reloadUser} />
-                </div>}
-                </div>);
+            </div>
+                
             
     }
 
