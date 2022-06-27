@@ -1005,6 +1005,23 @@ class ZeitintervallPersonIDOperations(Resource):
         else:
             return '', 500 
 
+@timetracker.route('/zeitintervallbypersonidbytime/<int:person_id>/<string:start>/<string:ende>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('id', 'Die ID des Zeitintervall-Objekts.')
+class ZeitintervallPersonIDTimeOperations(Resource):
+
+    @timetracker.marshal_with(zeitintervall)
+    def get(self, person_id, start, ende):
+        """Auslesen eines bestimmten Zeitintervall-Objekts mit der Personen ID.
+        Das auszulesende Objekt wird durch die ```person_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        zi = adm.get_zeitintervall_by_person_id_time(person_id, start, ende)
+
+        if zi is not None:
+            return zi
+        else:
+            return '', 500 
 
 
 
