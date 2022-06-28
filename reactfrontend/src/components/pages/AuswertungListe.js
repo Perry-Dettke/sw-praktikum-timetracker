@@ -26,6 +26,7 @@ class Auswertung extends Component {
 
     /** Fetches all PersonBOs from the backend */
     getProjektbyProjekterstellerID = () => {
+        if (this.props.currentPerson.getID())
         var pro = TimetrackerAPI.getAPI();
         pro.getProjektbyProjekterstellerID(this.props.currentPerson.getID()).then((projektBOs) => {
             this.setState({
@@ -63,11 +64,13 @@ class Auswertung extends Component {
 
     /** Renders the component */
     render() {
-        const { expandedState } = this.props;
+        const { expandedState, currentPerson } = this.props;
         const { projektliste, start, ende, authLoading } = this.state;
         console.log(projektliste.length)
 
         return (
+            currentPerson ?
+            <div>
             <div><LoadingProgress show={authLoading} />
             {projektliste.length != 0 ?
                 <div>
@@ -94,6 +97,7 @@ class Auswertung extends Component {
                     <h3>Gehe auf die Projekt Übersicht um neue Projekte zu erstellen.</h3>
                 </div>}
                 </div>
+                </div> : <h1>Bisher hast du noch keine Projekte erstellt.</h1>
         );
     }
 }
