@@ -685,6 +685,21 @@ class PersonGoogleOperations(Resource):
         return '', 200
 
 
+@timetracker.route('/personbyarbeitszeitkonto/<string:arbeitszeitkonto_id>')     
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class PersonGoogleOperations(Resource):
+    @timetracker.marshal_with(person)
+    def get(self, arbeitszeitkonto_id):
+        """Auslesen eines bestimmten Person-Objekts.
+        Das auszulesende Objekt wird durch die ```arbeitszeitkonto_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        pe = adm.get_person_by_arbeitszeitkonto_id(arbeitszeitkonto_id)
+        if pe is not None:
+            return pe
+        else:
+            return '', 500 
+
 
 #Projekt related
 @timetracker.route('/projekt')

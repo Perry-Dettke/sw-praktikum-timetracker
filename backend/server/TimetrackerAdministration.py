@@ -123,13 +123,15 @@ class TimetrackerAdministration (object):
         """Das Arbeitszeitkonto mit der gegebenen ID auslesen."""
         with ArbeitszeitkontoMapper() as mapper:
             azt = mapper.find_by_id(id)
+        
+        with PersonMapper() as mapper:
+            person = mapper.find_by_arbeitszeitkonto_id(azt.get_id())
 
         with ZeitintervallMapper() as mapper:
-            zeitintervallliste = mapper.find_by_person_id(id)
+            zeitintervallliste = mapper.find_by_person_id(person.get_id())
 
             dauer = 0
             pause = 0
-            stunden = 0
             for i in zeitintervallliste:
                 dauer += i.get_dauer()
                 pause += i.get_pausen_dauer()
@@ -308,6 +310,11 @@ class TimetrackerAdministration (object):
         with PersonMapper() as mapper:
             return mapper.find_by_google_user_id(id)
 
+    def get_person_by_arbeitszeitkonto_id(self, id):
+        """Den Personen mit der gegebenen Arbeitszeitkonto ID auslesen."""
+        with PersonMapper() as mapper:
+            return mapper.find_by_arbeitszeitkonto_id(id)
+
     def get_all_person(self):
         """Alle Personen auslesen."""
         with PersonMapper() as mapper:
@@ -324,7 +331,10 @@ class TimetrackerAdministration (object):
             a = mapper.find_by_id(id)
         with ArbeitszeitkontoMapper() as mapper:
             mapper.delete(a.get_arbeitszeitkonto_id())
+        with ZeitintervallMapper() as mapper:
+            mapper.delete_by_person_id(id)
         with PersonMapper() as mapper:
+            mapper.delete_person_projekt(id)
             mapper.delete(id)
         with BuchungMapper() as mapper:
             mapper.delete_by_person_id(id)

@@ -147,6 +147,44 @@ class PersonMapper (Mapper):
 
         return person
 
+    def find_by_arbeitszeitkonto_id(self, arbeitszeitkonto_id):
+        """Suchen eines Benutzers mit vorgegebener Google ID. Da diese eindeutig ist,
+        wird genau ein Objekt zurückgegeben.
+
+        :param arbeitszeitkonto_id die Google ID des gesuchten Users.
+        :return User-Objekt, das die übergebene Google ID besitzt,
+            None bei nicht vorhandenem DB-Tupel.
+        """
+
+
+        cursor = self._cnx.cursor()
+        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, arbeitszeitkonto_id  FROM person WHERE arbeitszeitkonto_id='{}'".format(arbeitszeitkonto_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, arbeitszeitkonto_id) = tuples[0]
+            person = Person()
+            person.set_id(id)
+            person.set_letzte_aenderung(letzte_aenderung)
+            person.set_vor_name(vor_name)
+            person.set_nach_name(nach_name)
+            person.set_email(email)
+            person.set_benutzer_name(benutzer_name)
+            person.set_google_user_id(google_user_id)
+            person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
+
+
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            person = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return person
+
     def insert(self, person, arbeitszeitkonto_id):
 
         """Einfügen eines Person-Objekts in die Datenbank.
@@ -215,6 +253,19 @@ class PersonMapper (Mapper):
         cursor = self._cnx.cursor()
 
         command = "DELETE FROM person WHERE id={}".format(id)
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+
+    def delete_person_projekt(self, person_id):
+        """Löschen der Daten eines Personen-Objekts aus der Datenbank 
+    
+        :param id
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM projekt_person WHERE person_id={}".format(person_id)
         cursor.execute(command)
 
         self._cnx.commit()

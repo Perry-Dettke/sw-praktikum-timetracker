@@ -52,7 +52,8 @@ class Home extends Component {
         TimetrackerAPI.getAPI().getPersonByGoogle(this.props.currentUser.uid).then((person) =>
             this.setState({
                 person: person,
-            })
+            }
+            )
         ).catch((e) =>
             this.setState({
                 person: null,
@@ -73,17 +74,6 @@ class Home extends Component {
             this.setState({ showPersonForm: true });
         }
     }
-
-
-    //             person: personBO,
-    //             authLoading: false,
-    //         });
-    //     });
-    //     // set loading to true
-    //     this.setState({
-    //         authLoading: true,
-    //     });
-    // };
 
     //Person bearbeiten
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
@@ -127,18 +117,22 @@ class Home extends Component {
 
     // muss current user ID rein
     getZeitintervall = () => {
-        TimetrackerAPI.getAPI().getZeitintervallbyMaxIDandPersonID(2).then((zeitintervallBO) => {
+        this.timer = setTimeout(() => {
+        TimetrackerAPI.getAPI().getZeitintervallbyMaxIDandPersonID(this.state.person.getID()).then((zeitintervallBO) => {
             if (zeitintervallBO)
                 this.setState({
                     zeitintervall: zeitintervallBO,
                     authLoading: true,
                 });
         });
+        }
+        , 200);
     }
 
     // muss current user ID rein
     getZeitintervallbyPersonID = () => {
-        TimetrackerAPI.getAPI().getZeitintervallbyPersonID(2).then((zeitintervallBOs) => {
+        this.timer = setTimeout(() => {
+        TimetrackerAPI.getAPI().getZeitintervallbyPersonID(this.state.person.getID()).then((zeitintervallBOs) => {
             this.setState({
                 zeitintervallliste: zeitintervallBOs,
                 authLoading: false,
@@ -148,6 +142,8 @@ class Home extends Component {
         this.setState({
             authLoading: true,
         });
+    }
+    , 200);
     }
 
     // ********** EREIGNISBUCHUNG FUNKTIONEN **********\\
@@ -178,7 +174,10 @@ class Home extends Component {
 
     // currentuser.getArbeitszeitkontoID() in die Klammer statt 1
     getArbeitszeitkonto = () => {
-        TimetrackerAPI.getAPI().getArbeitszeitkonto(2).then((arbeitszeitkontoBO) => {
+        this.timer = setTimeout(() => {
+
+        console.log(this.state.person.getArbeitszeitkonto_id())
+        TimetrackerAPI.getAPI().getArbeitszeitkonto(this.state.person.getArbeitszeitkonto_id()).then((arbeitszeitkontoBO) => {
             this.setState({
                 arbeitszeitkonto: arbeitszeitkontoBO,
                 authLoading: false,
@@ -189,13 +188,16 @@ class Home extends Component {
             authLoading: true,
         });
     }
+    , 200);
+    }
 
 
     reloadUser = () => {
         console.log('reload')
         this.getPerson()
         this.getArbeitszeitkonto()
-
+        this.getZeitintervallbyPersonID()
+        this.getZeitintervall()
     };
 
 
@@ -216,7 +218,7 @@ class Home extends Component {
             newZeitintervall.setPausenStart("")
             newZeitintervall.setPausenEnde("")
             newZeitintervall.setPausenDauer(0.0) // wird beim update angepasst
-            newZeitintervall.setPerson_id(2) //current User
+            newZeitintervall.setPerson_id(this.state.person.getID()) //current User
             TimetrackerAPI.getAPI().addZeitintervall(newZeitintervall).then(zeitintervall => {
                 let date = new Date()
                 window.alert("Hallo " + this.state.person.getVor_name() + "! Schön, dass du da bist." + "\nDu hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " eingstempelt!\nEinen schönen Arbeitstag!")
@@ -314,6 +316,9 @@ class Home extends Component {
         zeitintervall.setPausenEnde(pausen_ende);
         zeitintervall.setPausenDauer(this.msToTime(dauer).toFixed(3));
         TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall)
+        this.setState({
+            pausebutton: 0
+        })
         let date = new Date
         window.alert("Du hast Pause " + this.msToTime(dauer).toFixed(3) + " Stunden Pause gemacht.\nJetzt wird es wieder Zeit zu arbeiten!")
     }
@@ -384,7 +389,7 @@ class Home extends Component {
         this.state.zeitraum_stunden = 0
         this.state.zeitintervallliste.map(zeitintervall => {
             if (zeitintervall.getStart().includes(zeitraum)) {
-                this.state.zeitraum_stunden += zeitintervall.getDauer();
+                this.state.zeitraum_stunden += zeitintervall.getDauer() - zeitintervall.getPausenDauer();
             }
         },
         )
@@ -626,7 +631,6 @@ class Home extends Component {
                                     <ZeitintervallEintrag key={zeitintervall[zeitintervall.id]} zeitintervall={zeitintervall} getArbeitszeitkonto={this.getArbeitszeitkonto} show={this.props.show} getZeitintervallbyPersonID={this.getZeitintervallbyPersonID} />)
                             }
                         </Grid>
-
                         <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
                         <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPerson} />
                         <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} arbeitszeitkonto={arbeitszeitkonto} onClose={this.ereignisBuchungAnlegenClosed} getArbeitszeitkonto={this.getArbeitszeitkonto} />

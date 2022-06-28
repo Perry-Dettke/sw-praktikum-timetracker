@@ -271,6 +271,19 @@ class ZeitintervallMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
+    def delete_by_person_id(self, person_id):
+        """Löschen der Daten eines Zeitintervall aus der Datenbank
+
+        :param person_id 
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM zeitintervall WHERE person_id={}".format(person_id)
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+
 
 """Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
 um die grundsätzliche Funktion zu überprüfen.
