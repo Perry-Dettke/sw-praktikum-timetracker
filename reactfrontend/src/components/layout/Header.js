@@ -36,7 +36,7 @@ class Header extends Component {
         <Grid container justifyContent="center" spacing={0} alignItems="center" xs={12}>
           <Grid item xs={2}/>
           <Grid item xs={2}>
-            <img src="logo.png" align='center' width="180" height="165"></img>
+            <img src="foto_klein.png" align='center' width="160" height="145"></img>
           </Grid>
           <Grid item xs={2}>
             <div id="aussen">
