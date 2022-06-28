@@ -83,7 +83,7 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 			  person: "errornichtda",
 			})
 		  );
-		 } , 5000);
+		 } , 1000);
 	  }; 
 
 	/**
@@ -169,8 +169,8 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 											
 									} />
 									<Route path={process.env.PUBLIC_URL + '/home'} element={<Home  currentUser={currentUser} getPerson={this.getPerson}/> }/>
-									<Route path={process.env.PUBLIC_URL + '/projekt_uebersicht'} element={<Projekt_uebersicht  currentPerson={currentPerson} /> }/>
-									<Route path={process.env.PUBLIC_URL + '/buchung'} element={<BuchungListe  currentPerson={currentPerson} /> }/>
+									<Route path={process.env.PUBLIC_URL + '/projekt_uebersicht'} element={<Projekt_uebersicht currentUser={currentUser} currentPerson={currentPerson} /> }/>
+									<Route path={process.env.PUBLIC_URL + '/buchung'} element={<BuchungListe  currentUser={currentUser} currentPerson={currentPerson} /> }/>
 									<Route path={process.env.PUBLIC_URL + '/auswertung'} element={<Auswertung  currentPerson={currentPerson} /> }/>
 								</Route>
 							</Routes>

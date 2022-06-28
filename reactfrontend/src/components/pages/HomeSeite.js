@@ -47,10 +47,9 @@ class Home extends Component {
     // };
 
 
-getPerson1 = () => {
+getNewPerson = () => {
     this.props.getPerson()
 }
-
 
     getPerson = () => {
         TimetrackerAPI.getAPI().getPersonByGoogle(this.props.currentUser.uid).then((person) =>
@@ -202,7 +201,7 @@ getPerson1 = () => {
         this.getArbeitszeitkonto()
         this.getZeitintervallbyPersonID()
         this.getZeitintervall()
-        this.getPerson1()
+        this.getNewPerson()
     };
 
 
@@ -446,7 +445,7 @@ getPerson1 = () => {
         this.getZeitintervallbyPersonID();
         this.getZeitintervall();
         this.getArbeitszeitkonto();
-        // this.getPerson1();
+        this.getNewPerson();
     }
 
     render() {
@@ -638,7 +637,7 @@ getPerson1 = () => {
                             }
                         </Grid>
                         <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
-                        <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPerson} />
+                        <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPerson} currentPersonNull={this.currentPersonNull} />
                         <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} arbeitszeitkonto={arbeitszeitkonto} onClose={this.ereignisBuchungAnlegenClosed} getArbeitszeitkonto={this.getArbeitszeitkonto} />
                     </div>
                     : <div>

@@ -27,6 +27,7 @@ class Projekt_uebersicht extends Component {
         //init empty state
         this.state = {
             projekt: [],
+            person: false,
             showProjektAnlegen: false,
             authLoading: false,
         };
@@ -47,13 +48,31 @@ class Projekt_uebersicht extends Component {
     }
 
 
+
+    getPerson = () => {
+        TimetrackerAPI.getAPI().getPersonByGoogle(this.props.currentUser.uid).then((person) =>
+            this.setState({
+                person: true,
+            }
+            )
+        ).catch((e) =>
+            this.setState({
+                person: false,
+            })
+        );
+    };
+
     // Projekt Anlegen Button geklickt - Oeffnet den Projekt anlegen Dialog
 
     projektAnlegenButtonClicked = event => {
+        if (this.state.person){
         event.stopPropagation();
         this.setState({
             showProjektAnlegen: true,
         });
+    }
+        else{ window.alert("Du musst dich erst anmelden!")
+}
     }
 
     //ProjektDialog schließen
@@ -74,6 +93,7 @@ class Projekt_uebersicht extends Component {
 
     componentDidMount() {
         this.getProjekt();
+        this.getPerson();
     }
 
 
