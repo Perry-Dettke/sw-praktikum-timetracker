@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import TextField from '@material-ui/core/TextField';
 import InputLabel from "@mui/material/InputLabel";
 
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuItem } from '@mui/material';
-import { TableCell } from '@material-ui/core';
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-import ProjektBO from '../../api/ProjektBO'
 
+/*
+* In diesem Dialog wird ein Formular angezeigt, mit dem Buchungen für ein bestimmtes Projekt angelegt werden können.
+*/
 
 class BuchungDialog extends Component {
 

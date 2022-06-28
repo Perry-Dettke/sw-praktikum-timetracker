@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import {Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
-
 import TimetrackerAPI from "../../api/TimetrackerAPI";
+
+/**
+ * In diesem Dialog wird ein Formular angezeigt, mit dem der angemeldete User ein von ihm angelegtes Projekt löschen kann.
+*/
 
 class ProjektLoeschen extends Component {
 
@@ -22,7 +25,6 @@ class ProjektLoeschen extends Component {
   }
 
   render() {
-
     const { show, projekt } = this.props;
     
     return (
@@ -52,8 +54,5 @@ class ProjektLoeschen extends Component {
   }
 
 }
-
-
-
 
 export default ProjektLoeschen;
