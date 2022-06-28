@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { Button, Grid, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import InputLabel from "@mui/material/InputLabel";
+import { Typography, Button, Grid, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField } from '@mui/material';
 
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { MenuItem } from '@mui/material';
-import AktivitaetBO from '../../api/AktivitaetBO';
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 
+/*
+* In diesem Dialog wird ein Formular angezeigt, mit dem man die angelegten Aktivitäten bearbeiten kann.
+*/
 
 class AktivitaetBearbeiten extends Component {
 
@@ -38,7 +35,6 @@ class AktivitaetBearbeiten extends Component {
         })
     }
 
-
     // Textfelder ändern
     textFieldValueChange = (event) => {
         const value = event.target.value;
@@ -67,58 +63,62 @@ class AktivitaetBearbeiten extends Component {
 
         return (
             show ?
-                    <div>
-                        <Dialog open={show} onClose={this.handleClose} maxWidth='xl'>
-                            <DialogTitle id='form-dialog-title'>
-                                {title}
-                            </DialogTitle>
-                            <DialogContent>
-                                <Grid container spacing={1}>
-                                    <Grid item xs={12}>
-                                        <DialogContentText>
-                                            <b>{projekt.getBezeichnung()}</b>
-                                        </DialogContentText>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        {/* Bezeichnung auswählen */}
-                                        <TextField
-                                            id="bezeichnung"
-                                            label='Bezeichnung:'
-                                            variant="outlined"
-                                            size="medium"
-                                            value={bezeichnung}
-                                            defaultValue={aktivitaet.getBezeichnung()}
-                                            onChange={this.textFieldValueChange}
-                                            autocomplete='off'
-                                            fullWidth
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        {/* Kapazität auswählen */}
-                                        <TextField
-                                            id="kapazitaet"
-                                            label='Kapazität in Stunden:'
-                                            variant="outlined"
-                                            size="medium"
-                                            value={kapazitaet}
-                                            defaultValue={aktivitaet.getKapazitaet()}
-                                            onChange={this.textFieldValueChange}
-                                            autocomplete='off'
-                                            fullWidth
-                                        />
-                                    </Grid>
+                <div>
+                    <Dialog open={show} onClose={this.handleClose} maxWidth='xl'>
+                        <DialogTitle id='form-dialog-title'>
+                            {title}
+                        </DialogTitle>
+                        <DialogContent>
+                            <Grid container spacing={1}>
+                                <Grid item xs={12}>
+                                    <DialogContentText>
+                                        <Typography>
+                                            <b>Projektname: </b>
+                                            {projekt.getBezeichnung()}
+                                        </Typography>
+                                    </DialogContentText>
                                 </Grid>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button color='secondary' onClick={this.handleClose}>
-                                    Abbrechen
-                                </Button>
-                                <Button variant='contained' color='primary' onClick={this.updateAktivitaet}>
-                                    Bestätigen
-                                </Button>
-                            </DialogActions>
-                        </Dialog></div>
-                : null
+                                <Grid item xs={12}>
+                                    {/* Bezeichnung auswählen */}
+                                    <TextField
+                                        id="bezeichnung"
+                                        label='Bezeichnung:'
+                                        variant="outlined"
+                                        size="medium"
+                                        value={bezeichnung}
+                                        defaultValue={aktivitaet.getBezeichnung()}
+                                        onChange={this.textFieldValueChange}
+                                        autocomplete='off'
+                                        fullWidth
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    {/* Kapazität auswählen */}
+                                    <TextField
+                                        id="kapazitaet"
+                                        label='Kapazität in Stunden:'
+                                        variant="outlined"
+                                        size="medium"
+                                        value={kapazitaet}
+                                        defaultValue={aktivitaet.getKapazitaet()}
+                                        onChange={this.textFieldValueChange}
+                                        autocomplete='off'
+                                        fullWidth
+                                    />
+                                </Grid>
+                            </Grid>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button color='secondary' onClick={this.handleClose}>
+                                Abbrechen
+                            </Button>
+                            <Button variant='contained' color='primary' onClick={this.updateAktivitaet}>
+                                Bestätigen
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
+            : null
         );
     }
 }

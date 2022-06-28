@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { Component } from 'react';
+import { Grid, Typography, List } from '@mui/material';
 
-import { Grid, Typography, TextField, Paper, List, Fab, Tooltip, Button } from '@mui/material';
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import AuswertungListenEintrag from './AuswertungListenEintrag';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LoadingProgress from '../dialogs/LoadingProgress'
 
+/*
+* Auf dieser Seite werden alle selbst erstellten Projekte angezeigt. Dies geschieht mithilfe eines Listeneintrags und einer Map-Funktion.
+*/
 
 class Auswertung extends Component {
 
@@ -21,10 +23,9 @@ class Auswertung extends Component {
             aktivitaet: [],
             authLoading: false,
         };
-
     }
 
-    /** Fetches all PersonBOs from the backend */
+    /* Fetches all PersonBOs from the backend */
     getProjektbyProjekterstellerID = () => {
         if (this.props.currentPerson.getID())
         var pro = TimetrackerAPI.getAPI();
@@ -54,13 +55,10 @@ class Auswertung extends Component {
         });
     }
 
-
-
     componentDidMount() {
         this.getProjektbyProjekterstellerID();
 
     }
-
 
     /** Renders the component */
     render() {

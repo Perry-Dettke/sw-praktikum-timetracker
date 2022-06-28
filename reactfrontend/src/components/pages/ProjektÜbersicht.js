@@ -1,23 +1,18 @@
 import * as React from 'react';
 import { Component } from 'react';
-//import Table from '@mui/material/Table';
-//import TableBody from '@mui/material/TableBody';
-//import TableCell from '@mui/material/TableCell';
-//import TableContainer from '@mui/material/TableContainer';
-//import TableHead from '@mui/material/TableHead';
-//import TableRow from '@mui/material/TableRow';
-//import Paper from '@mui/material/Paper';
-//import List from '@mui/material/List';
+import { Button, Grid, Typography, List } from '@mui/material';
 
-import { Button, TextField, InputAdornment, IconButton, Grid, Typography, Paper, List, Fab, Tooltip, Divider } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import ProjektUebersichtEintrag from './ProjektUebersichtEintrag';
 import ProjektAnlegen from '../dialogs/ProjektAnlegen';
 import LoadingProgress from '../dialogs/LoadingProgress'
 
+/*
+* Auf dieser Seite sieht man alle Projekte in denen der angemeldete User Teilnehmer oder Ersteller ist.
+* Dies geschieht mithilfe eines Listeneintrags und einer Map-Funktion.
+*/
 
 class Projekt_uebersicht extends Component {
 
@@ -32,7 +27,7 @@ class Projekt_uebersicht extends Component {
         };
     }
 
-    /** Fetches all ProjektBOs from the backend */
+    /* Fetches all ProjektBOs from the backend */
     getProjekt = () => {
         TimetrackerAPI.getAPI().getProjektbyPersonID(this.props.currentPerson.getID()).then((projektBOs) => {
             this.setState({
@@ -46,9 +41,7 @@ class Projekt_uebersicht extends Component {
         });
     }
 
-
     // Projekt Anlegen Button geklickt - Oeffnet den Projekt anlegen Dialog
-
     projektAnlegenButtonClicked = event => {
         event.stopPropagation();
         this.setState({
@@ -71,25 +64,31 @@ class Projekt_uebersicht extends Component {
         }
     }
 
-
     componentDidMount() {
         this.getProjekt();
     }
 
-
-    /** Renders the component */
+    /* Renders the component */
     render() {
-        const { expandedState, currentPerson } = this.props;
-
+        const { currentPerson } = this.props;
         const { projekt, showProjektAnlegen, authLoading } = this.state;
 
         return (
             <div>
                 <Grid container spacing={1} alignItems="left">
-                    <Grid item xs={12}>
-                        <Typography><h3>Hier werden alle Projekte in denen du Teilnehmer bist angezeigt (Der Ersteller ist immer auch Teilnehmer)</h3></Typography>
-                        <Typography><h4>Nur der Ersteller eines Projekts kann ein Projekt bearbeiten und löschen oder Aktivitäten hinzufügen und löschen.</h4></Typography>
+                    <Grid item xs={1}/>
+                    <Grid item xs={10}>
+                        <Typography  variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                            Hier werden alle Projekte in denen du Teilnehmer bist angezeigt.
+                        </Typography>
+                        <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                            (Der Ersteller ist immer auch Teilnehmer)
+                        </Typography>
+                        <Typography variant='h9' component='h7' align='center' color='#323748' fontFamily='Verdana'>
+                            Nur der Ersteller eines Projekts kann ein Projekt bearbeiten und löschen oder Aktivitäten hinzufügen und löschen.
+                        </Typography>
                     </Grid>
+                    <Grid item xs={1}/>
                     <Grid item xs={12}>
                         <Button
                             sx={{
@@ -117,7 +116,5 @@ class Projekt_uebersicht extends Component {
         );
     }
 }
-
-
 
 export default Projekt_uebersicht;

@@ -1,13 +1,16 @@
 import React, { Component } from "react";
-
-import {Typography, Button, IconButton, Grid, TextField, Accordion, AccordionSummary, AccordionDetails, Table, TableCell, TableHead, TableRow, TableBody, Box} from "@mui/material";
+import {Typography, Button, Grid, TextField, Accordion, AccordionSummary, AccordionDetails, Table, TableCell, TableHead, TableRow, TableBody} from "@mui/material";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-import { BorderAllOutlined, BorderColor, StayCurrentLandscapeTwoTone } from "@mui/icons-material";
 import AuswertungListenEintragPerson from "./AuswertungListenEintragPerson";
+
+/*
+* Auf dieser Seite wird der Listeneintrag beschrieben, welcher auf der Auswertungsseite angezeigt wird. 
+* Wobei die Arbeitsstunden der einzelnen Personen pro Projekt mithilfe eines weiteren Listeneintrags und einer Map-Funktion angezeigt werden. 
+*/
 
 class AuswertungListenEintrag extends Component {
   constructor(props) {
@@ -39,6 +42,7 @@ class AuswertungListenEintrag extends Component {
       });
   };
 
+  //Wird ausgeführt wenn der "Zeitraum suchen" Button geklickt wird
   zeitraumClicked = () => {
     this.getAktivitaetbyProjektID(this.state.start, this.state.ende);
   };
@@ -57,41 +61,6 @@ class AuswertungListenEintrag extends Component {
     });
   };
 
-  // getBuchungbyAktivitaetID = () => {
-
-  //     if (this.state.aktivitaetliste) {
-  //         for (let i = 0; i < this.state.aktivitaetliste.length; i++) {
-  //             let id = this.state.aktivitaetliste[i].getID()
-  //             TimetrackerAPI.getAPI().getBuchungbyAktivitaetID(id).then((buchungBOs) => {
-  //                 let stunden = 0
-  //                 buchungBOs.map(buchungBO => {
-  //                     stunden += buchungBO.getStunden()
-  //                 })
-  //                 this.state.aktivitaetliste[i].setStunden(stunden)
-  //             });
-  //         };
-  //     };
-  // }
-
-  // getBuchungbyAktivitaetID = () => {
-  //     this.timer = setTimeout(() => {
-  //         if (this.state.aktivitaetliste) {
-  //             var aktivitaetliste = this.state.aktivitaetliste
-  //             for (let i = 0; i < aktivitaetliste.length; i++) {
-  //                 let id = aktivitaetliste[i].getID()
-  //                 TimetrackerAPI.getAPI().getBuchungbyAktivitaetID(id).then((stundenAPI) => {
-
-  //                     this.setState({
-  //                         stundenliste: [...this.state.stundenliste, stundenAPI]
-
-  //                     });
-  //                 })
-  //             };
-  //         };
-  //     }
-  //         , 1000);
-  // }
-
   componentDidMount() {
     this.getAktivitaetbyProjektID();
   }
@@ -99,9 +68,7 @@ class AuswertungListenEintrag extends Component {
   //Renders the component
   render() {
     const { projekt } = this.props;
-    const { aktivitaetliste, buchungliste, personliste, start, ende } = this.state;
-    // console.log("Akti", aktivitaetliste)
-    console.log(aktivitaetliste, "Test");
+    const { aktivitaetliste, start, ende } = this.state;
 
     return aktivitaetliste ? (
       <div>

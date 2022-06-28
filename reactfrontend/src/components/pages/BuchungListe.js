@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { Button, Tooltip, TextField, InputAdornment, IconButton, Grid, Typography, List, Box, Fab, TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import { Button, Grid, Typography, Box } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
+
 import BuchungListenEintrag from './BuchungListenEintrag.js'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import ZeitintervallBuchungAnlegen from '../dialogs/ZeitintervallBuchungAnlegen.js';
 import LoadingProgress from '../dialogs/LoadingProgress'
 
-
+/*
+* Auf dieser Seite wird die Übersicht aller Projekt-Buchungen angezeigt, die der angemeldete User erstellt hat.
+*/
 
 class BuchungListe extends Component {
 
@@ -26,12 +29,6 @@ class BuchungListe extends Component {
     };
   }
 
- 
-
-
-
-  
-
   getBuchungbyPersonID = () => {
     console.log(this.props.currentPerson)
     TimetrackerAPI.getAPI().getBuchungbyPersonID(this.props.currentPerson.getID()).then((buchungBOs) => {
@@ -46,7 +43,6 @@ class BuchungListe extends Component {
     });
   }
 
-
   // Zeitintervallbuchung Erstellen Dialog anzeigen
   zeitintervallBuchungAnlegenButtonClicked = event => {
     event.stopPropagation();
@@ -55,7 +51,7 @@ class BuchungListe extends Component {
     });
   }
 
-  /// Zeitintervallbuchung Erstellen Dialog schließen
+  // Zeitintervallbuchung Erstellen Dialog schließen
   zeitintervallBuchungAnlegenClosed = buchung => {
     if (buchung) {
       const newBuchungList = [...this.state.buchung, buchung];
@@ -70,52 +66,40 @@ class BuchungListe extends Component {
     }
   }
 
-  
-
-
   componentDidMount() {
     this.getBuchungbyPersonID();
   }
 
-
   /** Renders the component */
   render() {
-
     const { currentPerson, showZeitintervallBuchungAnlegen, buchungliste, authLoading } = this.state;
-    console.log(currentPerson)
 
     return (
       buchungliste ?
         <div>
           <Box>
             <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
-            Hier kannst du neue Buchungen erstellen.
-                    </Typography>
-                    <Typography variant='h9' component='h7' align='center' color='#323748' fontFamily='Verdana'>
-                    Zudem werden dir deine bereits erstellten Buchungen angezeigt und du kannst diese bearbeiten oder löschen.
-                    </Typography>
-            
+              Hier kannst du neue Buchungen erstellen.
+            </Typography>
+            <Typography variant='h9' component='h7' align='center' color='#323748' fontFamily='Verdana'>
+              Zudem werden dir deine bereits erstellten Buchungen angezeigt und du kannst diese bearbeiten oder löschen.
+            </Typography> 
           </Box>
           <Grid>
-            {/* <Button variant="contained" sx={{width:250}} onClick={this.showBuchungDialog}> Neue Buchung Erstellen</Button> */}
             <Box sx={{ flexGrow: 1 }}>
-              <Grid container spacing={1}>
-                <Grid item xs={6} >
-                  <Button
-                    sx={{
-                      m: 1,
-                      width: 350,
-                      height: 50,
-                      alignItems: 'center',
-                    }} variant="contained" color="primary" aria-label="add" onClick={this.zeitintervallBuchungAnlegenButtonClicked}>
-                    <AddIcon />
-                    &nbsp; Projekt-Buchung erstellen
-                  </Button>
-                </Grid>
-              </Grid>
+              <Button
+                sx={{
+                  m: 1,
+                  width: 350,
+                  height: 50,
+                  alignItems: 'center',
+                }} variant="contained" color="primary" aria-label="add" onClick={this.zeitintervallBuchungAnlegenButtonClicked}>
+                <AddIcon />
+                &nbsp; Projekt-Buchung erstellen
+              </Button>
             </Box>
             <br/><br/>
-            <Grid container alignItems="center" spacing={3} xs={12} sx={{
+            <Grid container direction="row" justifyContent="center" alignItems="center" spacing={3} xs={12} sx={{
                 backgroundColor: '#dedede'
               }}>
               <Grid item xs={2}>
@@ -130,10 +114,10 @@ class BuchungListe extends Component {
               <Grid item xs={2}>
                 <Typography>Stunden, die gebucht wurden</Typography>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={2}>
                 <Typography>Bearbeiten</Typography>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={2}>
                 <Typography>Löschen</Typography>
               </Grid>
             </Grid>
@@ -152,12 +136,4 @@ class BuchungListe extends Component {
   }
 }
 
-
-
-
 export default BuchungListe;
-
-
-
-
-

@@ -3,12 +3,7 @@ import PropTypes from 'prop-types';
 import { LinearProgress } from '@mui/material';
 
 /**
- * Shows a loading progress, if the show prop is true.
- * 
- * @See See Materiel-UIs [Progress](https://mui.com/material-ui/react-progress/)
- * @See See Materiel-UIs [LinearProgress](https://mui.com/material-ui/api/linear-progress/)
- * 
- * @author [Christoph Kunz](https://github.com/christophkunz)
+ * Zeigt den Ladeprozess, wenn show prop ist true.
  */
 class LoadingProgress extends Component {
 

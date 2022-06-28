@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {Button, IconButton, Dialog, DialogContent, DialogContentText,DialogTitle, DialogActions, TextField} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-//import { withStyles } from '@mui/styles';
-
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import PersonBO from "../../api/PersonBO";
 
+/**
+ * In diesem Dialog wird ein Formular angezeigt, mit dem ein User sein Profil erstellen kann.
+*/
 
 class PersonForm extends Component {
 
@@ -88,20 +88,14 @@ class PersonForm extends Component {
     });
   }
 
-
-
-
     handleClose = () => {
         this.setState(this.initialState);
         this.props.onClose(null);
     }
 
-
-
     render() {
-        const { classes, show, person, currentUser } = this.props;
+        const { show, person, currentUser } = this.props;
         const {vor_name, nach_name, benutzer_name, email } = this.state;
-        console.log(currentUser)
         let title = '';
         let header = '';
 
@@ -114,11 +108,8 @@ class PersonForm extends Component {
             header = 'Person einfügen';
         }
 
-
-
         return (
             show ?
-
                 <Dialog open={show}  onClose={this.handleClose} maxWidth='xs' fullWidth>
                     <DialogTitle >{title}
                         <IconButton  onClick={this.handleClose}>
@@ -129,18 +120,12 @@ class PersonForm extends Component {
                         <DialogContentText>
                             {header}
                         </DialogContentText>
-
                         <form  noValidate autoComplete='off'>
-
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='vor_name' label='Vorname:' value={vor_name} onChange={this.textFieldValueChange} />
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='nach_name' label='Nachname:' value={nach_name} onChange={this.textFieldValueChange} />
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='email' label='Email:' value={email} onChange={this.textFieldValueChange} />
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='benutzer_name' label='Benutzername:' value={benutzer_name} onChange={this.textFieldValueChange} />
-
-
-
+                            <TextField autoFocus type='text' required fullWidth margin='normal' id='vor_name' label='Vorname:' value={vor_name} onChange={this.textFieldValueChange} />
+                            <TextField autoFocus type='text' required fullWidth margin='normal' id='nach_name' label='Nachname:' value={nach_name} onChange={this.textFieldValueChange} />
+                            <TextField autoFocus type='text' required fullWidth margin='normal' id='email' label='Email:' value={email} onChange={this.textFieldValueChange} />
+                            <TextField autoFocus type='text' required fullWidth margin='normal' id='benutzer_name' label='Benutzername:' value={benutzer_name} onChange={this.textFieldValueChange} />
                         </form>
-
                     </DialogContent>
                     <DialogActions>
               <Button color='secondary' onClick={this.handleClose}>
