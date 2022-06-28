@@ -248,10 +248,14 @@ class ProjektUebersichtEintrag extends Component {
                                             <Typography align='left'><li>{person.getVor_name()} {person.getNach_name()} </li></Typography>
                                         )}
                                     </ul><br />
+                                    {currentPerson.getID() == projekt.getProjekterstellerID() ?
+                                    <div>
                                     <Grid item xs={3}>
                                         <Button variant="contained" color="primary" aria-label="add" onClick={this.aktivitaetDialogButtonClicked} startIcon={<AddIcon />}>
                                             Aktivität hinzufügen</Button>
                                     </Grid>
+                                    </div>
+                                    : null}
                                     <br />
                                     <Table>
                                         <TableHead sx={{
