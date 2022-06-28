@@ -42,6 +42,19 @@ class Projekt_uebersicht extends Component {
         });
     }
 
+    getPerson = () => {
+        TimetrackerAPI.getAPI().getPersonByGoogle(this.props.currentUser.uid).then((person) =>
+            this.setState({
+                person: true,
+            }
+            )
+        ).catch((e) =>
+            this.setState({
+                person: false,
+            })
+        );
+    };
+
     // Projekt Anlegen Button geklickt - Oeffnet den Projekt anlegen Dialog
     projektAnlegenButtonClicked = event => {
         if (this.state.person){

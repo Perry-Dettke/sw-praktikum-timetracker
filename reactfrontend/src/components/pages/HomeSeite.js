@@ -213,7 +213,7 @@ getNewPerson = () => {
     // Kommen Zeitpunkt und person ID adden
     // Rest wird vorerst auf 0 gesetzt 
     addZeitintervall = () => {
-        if (this.state.zeitintervall === null) {
+        if (this.state.zeitintervall == null || this.state.zeitintervall.getStart() && this.state.zeitintervall.getEnde()) {
             let newZeitintervall = new ZeitintervallBO()
             let start = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
             newZeitintervall.setID(0) // wird im Backend gesetzt
@@ -255,7 +255,7 @@ getNewPerson = () => {
 
     updateZeitintervall = () => {
         let zeitintervall = this.state.zeitintervall;
-        if (this.state.zeitintervall != null) {
+        if (this.state.zeitintervall.getStart() != null && this.state.zeitintervall.getEnde() == null) {
             let ende = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
             let start = new Date(this.startDatumSplitten())
             let endefront = new Date()
@@ -267,6 +267,7 @@ getNewPerson = () => {
             window.alert("Du hast am " + date.toLocaleDateString() + " um " + date.toLocaleTimeString() + " ausgestempelt!\nDu hast heute " + this.msToTime(dauer).toFixed(3) + " Stunden gearbeitet, und " + this.state.zeitintervall.getPausenDauer() + " Stunden Pause gemacht.\nAuf Wiedersehen!")
             this.setState(this.initialState);
             this.getZeitintervallbyPersonID();
+            this.getZeitintervall();
             this.getArbeitszeitkonto();
             this.updateArbeitszeitkonto();
             {
@@ -285,7 +286,7 @@ getNewPerson = () => {
 
     addPause = () => {
         if (this.state.pausebutton === 1) {
-            window.alert("Deine Pause hat bereits!")
+            window.alert("Deine Pause hat bereits begonnen!")
         }
         else {
             if (this.state.zeitintervall != null) {
