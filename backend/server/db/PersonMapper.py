@@ -230,14 +230,13 @@ class PersonMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE person " + "SET letzte_aenderung=%s, vor_name=%s, nach_name=%s, email=%s, benutzer_name=%s, arbeitszeitkonto_id=%s WHERE id=%s"
+        command = "UPDATE person " + "SET letzte_aenderung=%s, vor_name=%s, nach_name=%s, email=%s, benutzer_name=%s WHERE id=%s"
         data = (
             person.get_letzte_aenderung(),
             person.get_vor_name(),
             person.get_nach_name(),
             person.get_email(),
             person.get_benutzer_name(),
-            person.get_arbeitszeitkonto_id(),
             person.get_id(),)
 
         cursor.execute(command, data)

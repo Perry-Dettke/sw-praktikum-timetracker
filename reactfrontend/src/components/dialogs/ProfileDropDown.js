@@ -44,6 +44,7 @@ class ProfileDropDown extends Component {
    */
   handleSignOutButtonClicked = () => {
     const auth = getAuth();
+    window.location.replace("SignIn.js");
     signOut(auth);
   }
 

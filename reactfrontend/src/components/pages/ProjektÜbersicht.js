@@ -22,6 +22,7 @@ class Projekt_uebersicht extends Component {
         //init empty state
         this.state = {
             projekt: [],
+            person: false,
             showProjektAnlegen: false,
             authLoading: false,
         };
@@ -43,10 +44,14 @@ class Projekt_uebersicht extends Component {
 
     // Projekt Anlegen Button geklickt - Oeffnet den Projekt anlegen Dialog
     projektAnlegenButtonClicked = event => {
+        if (this.state.person){
         event.stopPropagation();
         this.setState({
             showProjektAnlegen: true,
         });
+    }
+        else{ window.alert("Du musst dich erst anmelden!")
+}
     }
 
     //ProjektDialog schließen
@@ -66,13 +71,14 @@ class Projekt_uebersicht extends Component {
 
     componentDidMount() {
         this.getProjekt();
+        this.getPerson();
     }
 
     /* Renders the component */
     render() {
         const { currentPerson } = this.props;
         const { projekt, showProjektAnlegen, authLoading } = this.state;
-
+        console.log(currentPerson)
         return (
             <div>
                 <Grid container spacing={1} alignItems="left">

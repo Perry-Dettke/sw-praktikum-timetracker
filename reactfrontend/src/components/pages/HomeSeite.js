@@ -55,8 +55,11 @@ class Home extends Component {
     // };
 
 
+getNewPerson = () => {
+    this.props.getPerson()
+}
+
     getPerson = () => {
-        console.log(this.props.currentUser.uid)
         TimetrackerAPI.getAPI().getPersonByGoogle(this.props.currentUser.uid).then((person) =>
             this.setState({
                 person: person,
@@ -182,8 +185,6 @@ class Home extends Component {
     // currentuser.getArbeitszeitkontoID() in die Klammer statt 1
     getArbeitszeitkonto = () => {
         this.timer = setTimeout(() => {
-
-        console.log(this.state.person.getArbeitszeitkonto_id())
         TimetrackerAPI.getAPI().getArbeitszeitkonto(this.state.person.getArbeitszeitkonto_id()).then((arbeitszeitkontoBO) => {
             this.setState({
                 arbeitszeitkonto: arbeitszeitkontoBO,
@@ -204,6 +205,7 @@ class Home extends Component {
         this.getArbeitszeitkonto()
         this.getZeitintervallbyPersonID()
         this.getZeitintervall()
+        this.getNewPerson()
     };
 
     // ********** ZEITINTERVALL FUNKTIONEN **********\\
@@ -282,7 +284,6 @@ class Home extends Component {
     // ********** PAUSEN FUNKTIONEN **********\\
 
     addPause = () => {
-        console.log(this.state.zeitintervall.getPausenStart())
         if (this.state.pausebutton === 1) {
             window.alert("Deine Pause hat bereits!")
         }
@@ -330,7 +331,6 @@ class Home extends Component {
     //Datum und Zeit vom Frontend wird das richtige Backend Format umgewandelt
     dateSplit = () => {
         let newDate = new Date()
-        console.log(new Date())
         let date = newDate.toLocaleDateString() + " " + newDate.toLocaleTimeString()
         let dateliste = date.split('')
         let day = String(dateliste[0] + dateliste[1])
@@ -349,13 +349,11 @@ class Home extends Component {
         let hours = String(dateliste[11] + dateliste[12])
         let min = String(dateliste[14] + dateliste[15])
         let sek = String(dateliste[17] + dateliste[18])
-        console.log("Y", year, "M", month, "D", day, "TIME", hours, min, sek)
         return new Date(year, month - 1, day, hours, min, sek) // month -1: Monate von [0-11]
     }
 
     pausenStartSplitten = () => {
         let date = this.state.zeitintervall.getPausenStart()
-        console.log("PAUSENSTART", this.state.zeitintervall.getPausenStart())
         let dateliste = date.split('')
         let year = String(dateliste[0] + dateliste[1] + dateliste[2] + dateliste[3])
         let month = String(dateliste[6])
@@ -363,7 +361,6 @@ class Home extends Component {
         let hours = String(dateliste[11] + dateliste[12])
         let min = String(dateliste[14] + dateliste[15])
         let sek = String(dateliste[17] + dateliste[18])
-        console.log("Y", year, "M", month, "D", day, "TIME", hours, min, sek)
         return new Date(year, month - 1, day, hours, min, sek)
     }
 
@@ -373,10 +370,8 @@ class Home extends Component {
         let ms = (s % 1000) / 60
         s = (s - ms) / 1000
         let secs = (s % 60) / 60
-        console.log('secs', secs)
         s = (s - secs) / 60
         let mins = (s % 60) / 60
-        console.log('minuten', mins)
         let hrs = (s - mins) / 60
 
         return parseFloat(hrs + '.' + mins + secs)
@@ -407,7 +402,6 @@ class Home extends Component {
     // Erstellt eine List emit Zeitintervalle in dem gegeben Monat
     zeitraumListe = (zeitraum) => {
         let liste = []
-        console.log(zeitraum)
         this.state.zeitintervallliste.map(zeitintervall => {
             if (zeitintervall.getStart().includes(zeitraum)) {
                 liste.push(zeitintervall)
@@ -443,6 +437,7 @@ class Home extends Component {
         this.getZeitintervallbyPersonID();
         this.getZeitintervall();
         this.getArbeitszeitkonto();
+        this.getNewPerson();
     }
 
     render() {
@@ -632,7 +627,7 @@ class Home extends Component {
                             }
                         </Grid>
                         <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
-                        <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPerson} />
+                        <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPerson} currentPersonNull={this.currentPersonNull} />
                         <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} arbeitszeitkonto={arbeitszeitkonto} onClose={this.ereignisBuchungAnlegenClosed} getArbeitszeitkonto={this.getArbeitszeitkonto} />
                     </div>
                     : <div>

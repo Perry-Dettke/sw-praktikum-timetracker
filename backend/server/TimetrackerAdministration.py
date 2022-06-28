@@ -338,6 +338,8 @@ class TimetrackerAdministration (object):
             mapper.delete(id)
         with BuchungMapper() as mapper:
             mapper.delete_by_person_id(id)
+        with ProjektMapper() as mapper:
+            mapper.delete_by_projektersteller(id)
 
     def add_person_google_user_id(self,google_user_id):
         with PersonMapper() as mapper:
