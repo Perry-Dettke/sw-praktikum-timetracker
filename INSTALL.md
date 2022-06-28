@@ -8,12 +8,13 @@ Folgende Packages werden benötigt:
 Die folgenden Node-Packages können mit dem Befehl `npm install` im Verzeichnis `/reactfrontend` installiert werden.
 
 - @material-ui/core
-- @mui/icons-material"s
-- @material-ui/lab
-- @material-ui/icons
+- @mui/icons-material
+- @mui/lab
+- @mui/icons-material
 - @material-ui/pickers
 - @mui/material"
 - @date-io/date-fns@1.x date-fns
+- date-fns
 - react-router-dom
 - firebase
 
