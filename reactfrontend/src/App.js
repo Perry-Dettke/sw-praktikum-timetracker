@@ -5,7 +5,7 @@ import { Container, ThemeProvider, CssBaseline } from '@mui/material';
 import Header from './components/layout/Header';
 import Home from './components/pages/HomeSeite';
 import BuchungListe from './components/pages/BuchungListe';
-import Projekt_uebersicht from './components/pages/ProjektÜbersicht';
+import Projekt_uebersicht from './components/pages/ProjektUebersicht';
 import Auswertung from './components/pages/AuswertungListe';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
@@ -18,14 +18,9 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 
 
 /**
- * The main bank administration app. It uses Googles firebase to log into the bank end. For routing the 
+ * The main timetracker administration app. It uses Googles firebase to log into the bank end. For routing the 
  * user to the respective pages, react-router-dom ist used.
  * 
- * @see See Google [firebase.auth()](https://firebase.google.com/docs/reference/js/firebase.auth.Auth)
- * @see See Google [firebase.auth().signInWithRedirect](https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signinwithredirect)
- * @see [react-router-dom](https://reacttraining.com/react-router/web/guides/quick-start)
- * 
- * @author [Christoph Kunz](https://github.com/christophkunz)
  */
  class App extends React.Component {
 
@@ -111,7 +106,6 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 					// token (which is verified server-side) in a cookie; do not add other
 					// user information.
 					document.cookie = `token=${token};path=/`;
-					// console.log("Token is: " + document.cookie);
 
 					// Set the user not before the token arrived 
 					this.setState({

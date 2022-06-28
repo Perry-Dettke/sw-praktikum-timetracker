@@ -21,6 +21,7 @@ class AuswertungListenEintragPerson extends Component {
         };
     }
 
+    //Gibt alle Person zurück die in dem gegeben Zeitraum an der Aktivitaet gearbeitet haben
     getPersonbyAktivitaetID = (start = "2000-01-01", ende = "3000-01-01") => {
         TimetrackerAPI.getAPI().getPersonbyAktivitaetID(this.props.aktivitaet.getID(), start, ende).then((personBOs) => {
             this.setState({

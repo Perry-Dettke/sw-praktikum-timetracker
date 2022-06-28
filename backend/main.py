@@ -292,7 +292,7 @@ class ArbeitszeitkontoIDOperations(Resource):
             return '', 500
 
     @timetracker.marshal_with(arbeitszeitkonto, code=200)
-    @timetracker.expect(arbeitszeitkonto)  # Wir erwarten ein Arbeitszeitkonto-Objekt von Client-Seite.
+    @timetracker.expect(arbeitszeitkonto) 
     #@secured
     def put(self, id):
         """Update eines bestimmten Arbeitszeitkonto-Objekts."""
@@ -318,25 +318,6 @@ class ArbeitszeitkontoIDOperations(Resource):
             return azt
         else:
             return '', 500 
-
-# @timetracker.route('/arbeitszeitkontobypersonid/<int:person_id>')
-# @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-# class ArbeitszeitkontoByPersonOperations(Resource):
-#     @timetracker.marshal_with(arbeitszeitkonto)
-#     def get(self, person_id):
-#         """Auslesen eines bestimmten Arbeitszeitkonto-Objekts aufgrund seiner Projekt ID.
-#         Das auszulesende Objekt wird durch die ```person_id``` in dem URI bestimmt.
-#         """
-#         adm = TimetrackerAdministration()
-#         azt = adm.get_arbeitszeitkonto_by_person_id(person_id)
-
-#         if azt is not None:
-#             return azt
-#         else:
-#             return '', 500 
-
-
-
 
 
 #Buchung related
@@ -456,24 +437,6 @@ class BuchungByAktivitaetIDOperations(Resource):
             return bu
         else:
             return '', 500 
-
-# @timetracker.route('/buchungbyaktiviaet_idanddatum/<int:aktivitaet_id>')
-# @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-# class BuchungByAktivitaetIDOperations(Resource):
-#     @timetracker.marshal_with(buchung)
-#     def get(self, aktivitaet_id):
-#         """Auslesen eines bestimmten Buchung-Objekts aufgrund seiner Arbeitszeitkonto ID.
-#         Das auszulesende Objekt wird durch die ```aktivitaet_id``` in dem URI bestimmt.
-#         """
-#         adm = TimetrackerAdministration()
-#         bu = adm.get_buchung_by_datum(aktivitaet_id)
-
-#         if bu is not None:
-#             return bu
-#         else:
-#             return '', 500 
-
-
 
 #Ereignis related
 @timetracker.route('/ereignis')

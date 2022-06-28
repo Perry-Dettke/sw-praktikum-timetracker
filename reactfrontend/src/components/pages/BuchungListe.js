@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 import BuchungListenEintrag from './BuchungListenEintrag.js'
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-import ZeitintervallBuchungAnlegen from '../dialogs/ZeitintervallBuchungAnlegen.js';
+import ProjektBuchungAnlegen from '../dialogs/ProjektBuchungAnlegen.js';
 import LoadingProgress from '../dialogs/LoadingProgress'
 
 /*
@@ -21,7 +21,7 @@ class BuchungListe extends Component {
     this.state = {
       buchung: [],
       buchungliste: [],
-      showZeitintervallBuchungAnlegen: false,
+      showProjektBuchungAnlegen: false,
       showEreignisBuchungAnlegen: false,
       authLoading: false,
       currentPerson: this.props.currentPerson,
@@ -29,8 +29,8 @@ class BuchungListe extends Component {
     };
   }
 
+  //Gibt alle Buchungen einer Person zurück
   getBuchungbyPersonID = () => {
-    console.log(this.props.currentPerson)
     TimetrackerAPI.getAPI().getBuchungbyPersonID(this.props.currentPerson.getID()).then((buchungBOs) => {
       this.setState({
         buchungliste: buchungBOs,
@@ -43,25 +43,25 @@ class BuchungListe extends Component {
     });
   }
 
-  // Zeitintervallbuchung Erstellen Dialog anzeigen
-  zeitintervallBuchungAnlegenButtonClicked = event => {
+  // Projektbuchung Erstellen Dialog anzeigen
+  projektBuchungAnlegenButtonClicked = event => {
     event.stopPropagation();
     this.setState({
-      showZeitintervallBuchungAnlegen: true,
+      showProjektBuchungAnlegen: true,
     });
   }
 
-  // Zeitintervallbuchung Erstellen Dialog schließen
-  zeitintervallBuchungAnlegenClosed = buchung => {
+  // Projektbuchung Erstellen Dialog schließen
+  projektBuchungAnlegenClosed = buchung => {
     if (buchung) {
       const newBuchungList = [...this.state.buchung, buchung];
       this.setState({
         buchung: newBuchungList,
-        showZeitintervallBuchungAnlegen: false,
+        showProjektBuchungAnlegen: false,
       });
     } else {
       this.setState({
-        showZeitintervallBuchungAnlegen: false,
+        showProjektBuchungAnlegen: false,
       });
     }
   }
@@ -72,7 +72,7 @@ class BuchungListe extends Component {
 
   /** Renders the component */
   render() {
-    const { currentPerson, showZeitintervallBuchungAnlegen, buchungliste, authLoading } = this.state;
+    const { currentPerson, showProjektBuchungAnlegen, buchungliste, authLoading } = this.state;
 
     return (
       buchungliste ?
@@ -93,7 +93,7 @@ class BuchungListe extends Component {
                   width: 350,
                   height: 50,
                   alignItems: 'center',
-                }} variant="contained" color="primary" aria-label="add" onClick={this.zeitintervallBuchungAnlegenButtonClicked}>
+                }} variant="contained" color="primary" aria-label="add" onClick={this.projektBuchungAnlegenButtonClicked}>
                 <AddIcon />
                 &nbsp; Projekt-Buchung erstellen
               </Button>
@@ -128,7 +128,7 @@ class BuchungListe extends Component {
               }
             </Grid>
           </Grid>
-          <ZeitintervallBuchungAnlegen show={showZeitintervallBuchungAnlegen} onClose={this.zeitintervallBuchungAnlegenClosed} currentPerson={currentPerson} getBuchungbyPersonID={this.getBuchungbyPersonID} />
+          <ProjektBuchungAnlegen show={showProjektBuchungAnlegen} onClose={this.projektBuchungAnlegenClosed} currentPerson={currentPerson} getBuchungbyPersonID={this.getBuchungbyPersonID} />
           <LoadingProgress show={authLoading} />
         </div>
       : null

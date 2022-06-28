@@ -156,11 +156,3 @@ class EreignisMapper(Mapper):
 
         return result
 
-
-if (__name__ == "__main__"):
-    with EreignisMapper() as mapper:
-        result = mapper.find_all()
-        for ereignis in result:
-            print(ereignis)
-
-            print(type(ereignis))

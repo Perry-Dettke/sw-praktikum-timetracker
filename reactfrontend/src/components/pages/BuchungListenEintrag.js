@@ -35,6 +35,7 @@ class BuchungListenEintrag extends Component {
         this.props.getBuchungbyPersonID();
     }
 
+    //Gibt die Aktivität der Buchung zurücl
     getAktivitaet = () => {
         TimetrackerAPI.getAPI().getAktivitaetbyID(this.props.buchung.getAktivitaet_id()).then((aktivitaetBOs) => {
             this.setState({
@@ -43,6 +44,7 @@ class BuchungListenEintrag extends Component {
         });
     }
 
+    //Gibt das Projekt der Aktivität zurück
     getProjekt = () => {
         this.timer = setTimeout(() => {
             TimetrackerAPI.getAPI().getProjektbyID(this.state.aktivitaet.getProjektID()).then((projektBOs) => {
@@ -51,19 +53,19 @@ class BuchungListenEintrag extends Component {
                 });
             });
         }
-            , 2000);
+            , 1000);
     }
 
+    // Gibt die Aktivität des Projekt zurück
     getAktivitaetbyProjektID = () => {
         this.timer = setTimeout(() => {
-
             TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.state.aktivitaet.getProjektID()).then((aktivitaetBOs) => {
                 this.setState({
                     aktivitaetliste: aktivitaetBOs,
                 });
             });
         }
-            , 2000);
+            , 1000);
     }
 
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird

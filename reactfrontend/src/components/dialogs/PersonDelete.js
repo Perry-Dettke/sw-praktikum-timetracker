@@ -29,7 +29,6 @@ class PersonDelete extends Component {
   };
 
   handleClose = () => {
-    console.log("Test")
     this.props.onClose();
     this.props.getPersonbyID();
   }
@@ -37,8 +36,6 @@ class PersonDelete extends Component {
   deletePerson = () => {
     TimetrackerAPI.getAPI().deletePerson(this.state.person)
       .then(() => {
-          console.log("geklickt")
-
         this.props.onClose(null);
       });
   }

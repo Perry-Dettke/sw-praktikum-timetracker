@@ -33,6 +33,7 @@ class PersonForm extends Component {
         this.initialState = this.state;
     }
 
+    //Wird mit dem onClick ausgeführt
     addPerson = () => {
         let newPerson = new PersonBO()
         newPerson.setID(0) // wird im Backend gesetzt
@@ -42,13 +43,12 @@ class PersonForm extends Component {
         newPerson.setBenutzer_name(this.state.benutzer_name)
         newPerson.setGoogle_user_id(this.props.currentUser.uid)
         TimetrackerAPI.getAPI().addPerson(newPerson).then(person => {
-            console.log(person)
-            console.log(this.props.currentUser.uid)
             this.setState(this.initialState);
             this.props.onClose(person); //Aufrufen parent in backend
         })
     }
 
+    //Wird mit dem onClick ausgeführt
     updatePerson = () => {
         let person = this.props.person;
         person.setVor_name(this.state.vor_name)

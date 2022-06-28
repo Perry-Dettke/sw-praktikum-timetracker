@@ -10,6 +10,7 @@ class PersonMapper (Mapper):
         super().__init__()
 
     def find_all(self):
+        """"Ausgeben aller Personen"""
 
         result = []
         cursor = self._cnx.cursor()
@@ -73,42 +74,6 @@ class PersonMapper (Mapper):
 
         return person
 
-    def find_by_email(self, email):
-        """Auslesen aller Benutzer anhand der zugeordneten E-Mail-Adresse.
-
-        :param mail_address E-Mail-Adresse der zugehörigen Benutzer.
-        :return Eine Sammlung mit Personen-Objekten, die sämtliche Benutzer
-            mit der gewünschten E-Mail-Adresse enthält.
-        """
-
-
-        cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, arbeitszeitkonto_id FROM person WHERE email={}".format(email)
-        cursor.execute(command)
-        tuples = cursor.fetchall()
-
-        try:
-            (id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, arbeitszeitkonto_id) = tuples[0]
-            person = Person()
-            person.set_id(id)
-            person.set_letzte_aenderung(letzte_aenderung)
-            person.set_vor_name(vor_name)
-            person.set_nach_name(nach_name)
-            person.set_email(email)
-            person.set_benutzer_name(benutzer_name)
-            person.set_google_user_id(google_user_id)
-            person.set_arbeitszeitkonto_id
-
-        except IndexError:
-            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
-            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            person = None
-
-        self._cnx.commit()
-        cursor.close()
-
-        return person
-
     def find_by_google_user_id(self, google_user_id):
         """Suchen eines Benutzers mit vorgegebener Google ID. Da diese eindeutig ist,
         wird genau ein Objekt zurückgegeben.
@@ -148,11 +113,10 @@ class PersonMapper (Mapper):
         return person
 
     def find_by_arbeitszeitkonto_id(self, arbeitszeitkonto_id):
-        """Suchen eines Benutzers mit vorgegebener Google ID. Da diese eindeutig ist,
-        wird genau ein Objekt zurückgegeben.
+        """Suchen eines Benutzers mit vorgegebener Arbeitszeitkonto ID.
 
         :param arbeitszeitkonto_id die Google ID des gesuchten Users.
-        :return User-Objekt, das die übergebene Google ID besitzt,
+        :return User-Objekt, das die übergebene Arbeitszeitkonto ID besitzt,
             None bei nicht vorhandenem DB-Tupel.
         """
 
@@ -269,11 +233,4 @@ class PersonMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
-
-
-"""Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
-um die grundsätzliche Funktion zu überprüfen.
-
-Anmerkung: Nicht professionell aber hilfreich..."""
-# if (__name__ == "__main__"):
 

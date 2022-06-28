@@ -64,7 +64,6 @@ class Auswertung extends Component {
     render() {
         const { expandedState, currentPerson } = this.props;
         const { projektliste, start, ende, authLoading } = this.state;
-        console.log(projektliste.length)
 
         return (
             currentPerson ?

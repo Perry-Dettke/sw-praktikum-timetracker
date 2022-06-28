@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogActions} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@material-ui/core/TextField';
-
-
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 
-
-
+/**
+ * In diesem Dialog wird ein Formular angezeigt, mit dem der angemeldete User ein von ihm angelegtes Zeitintervall bearbeiten kann.
+*/
 
 class ZeitintervallBearbeiten extends Component {
 
@@ -41,7 +40,6 @@ class ZeitintervallBearbeiten extends Component {
         zeitintervall.setStart(this.state.start)
         zeitintervall.setEnde(this.state.ende)
         let dauer = new Date(this.state.ende).getTime() - new Date(this.state.start).getTime()
-        console.log(this.msToTime(dauer))
         zeitintervall.setDauer(this.msToTime(dauer))
         TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall).then(zeitintervall => {
             // this.props.getZeitintervallbyPersonID()
@@ -78,14 +76,13 @@ class ZeitintervallBearbeiten extends Component {
         this.props.onClose();
     }
 
+    //Berechnung von Millisekunden in Stunden
     msToTime = (s) => {
         let ms = (s % 1000) / 60
         s = (s - ms) / 1000
         let secs = (s % 60) / 60
-        console.log('secs', secs)
         s = (s - secs) / 60
         let mins = (s % 60) / 60
-        console.log('minuten', mins)
         let hrs = (s - mins) / 60
 
         return parseFloat(hrs + '.' + mins + secs)

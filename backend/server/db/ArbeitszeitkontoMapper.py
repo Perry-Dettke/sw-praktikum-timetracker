@@ -46,8 +46,6 @@ class ArbeitszeitkontoMapper (Mapper):
             nicht vorhandenem DB-Tupel.
         """
 
-
-
         cursor = self._cnx.cursor()
         command = "SELECT * FROM arbeitszeitkonto WHERE id={}".format(id)
         cursor.execute(command)
@@ -134,9 +132,3 @@ class ArbeitszeitkontoMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
-
-
-# with ArbeitszeitkontoMapper() as mapper:
-#     result = mapper.find_all()
-#     for t in result:    
-#         print(t)

@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PersonForm from "../dialogs/PersonForm";
 import PersonDelete from "../dialogs/PersonDelete";
-import EreignisBuchungAnlegen from "../dialogs/EreignisBuchungAnlegen.js";
+import SonderBuchungAnlegen from "../dialogs/SonderBuchungAnlegen.js";
 import SignUp from './SignUp';
 import LoadingProgress from '../dialogs/LoadingProgress';
 
@@ -31,7 +31,7 @@ class Home extends Component {
             person: null,
             showPersonForm: false,
             showPersonDelete: false,
-            showEreignisBuchungAnlegen: false,
+            showSonderBuchungAnlegen: false,
             zeitintervall: null,
             zeitintervallliste: [],
             start: null,
@@ -43,22 +43,7 @@ class Home extends Component {
             pausebutton: 0,
         };
     }
-    // **********MEIN PROFIL FUNKTIONEN**********\\
-
-    // getPersonbyID = () => {
-    //     var api = TimetrackerAPI.getAPI();
-    //     api.getPersonbyID(2).then((personBO) => {
-    //         this.setState({
-    //             person: personBO,
-    //         });
-    //     });
-    // };
-
-
-getNewPerson = () => {
-    this.props.getPerson()
-}
-
+    // Die Person die angemeldet ist wird anhand der google_user_id in den State geladen
     getPerson = () => {
         TimetrackerAPI.getAPI().getPersonByGoogle(this.props.currentUser.uid).then((person) =>
             this.setState({
@@ -72,6 +57,7 @@ getNewPerson = () => {
         );
     };
 
+    // **********MEIN PROFIL FUNKTIONEN**********\\
     // SignUp anzeigen
     closeSignup = (person) => {
         this.setState({
@@ -126,7 +112,8 @@ getNewPerson = () => {
         });
     };
 
-    // muss current user ID rein
+    // ********** ARBEITSZEITKONTO FUNKTIONEN **********\\
+    // Gibt das akteullste Zeitintervall der Person zurück
     getZeitintervall = () => {
         this.timer = setTimeout(() => {
         TimetrackerAPI.getAPI().getZeitintervallbyMaxIDandPersonID(this.state.person.getID()).then((zeitintervallBO) => {
@@ -140,49 +127,25 @@ getNewPerson = () => {
         , 200);
     }
 
-    // muss current user ID rein
-    getZeitintervallbyPersonID = () => {
-        this.timer = setTimeout(() => {
-        TimetrackerAPI.getAPI().getZeitintervallbyPersonID(this.state.person.getID()).then((zeitintervallBOs) => {
-            this.setState({
-                zeitintervallliste: zeitintervallBOs,
-                authLoading: false,
+        // Gibt das alle Zeitintervalle der Person zurück
+        getZeitintervallbyPersonID = () => {
+            this.timer = setTimeout(() => {
+            TimetrackerAPI.getAPI().getZeitintervallbyPersonID(this.state.person.getID()).then((zeitintervallBOs) => {
+                this.setState({
+                    zeitintervallliste: zeitintervallBOs,
+                    authLoading: false,
+                });
             });
-        });
-        // set loading to true
-        this.setState({
-            authLoading: true,
-        });
-    }
-    , 200);
-    }
-
-    // ********** EREIGNISBUCHUNG FUNKTIONEN **********\\
-
-    // Ereignisbuchung Erstellen Dialog anzeigen
-    ereignisBuchungAnlegenButtonClicked = event => {
-        event.stopPropagation();
-        this.setState({
-            showEreignisBuchungAnlegen: true,
-        });
-    }
-
-    ereignisBuchungAnlegenClosed = (arbeitszeitkonto) => {
-        if (arbeitszeitkonto) {
+            // set loading to true
             this.setState({
-                showEreignisBuchungAnlegen: false,
-            });
-            this.getArbeitszeitkonto()
-        } else {
-            this.setState({
-                showEreignisBuchungAnlegen: false,
+                authLoading: true,
             });
         }
-    }
+        , 200);
+        }
 
     // ********** ARBEITSZEITKONTO FUNKTIONEN **********\\
-
-    // currentuser.getArbeitszeitkontoID() in die Klammer statt 1
+    // Gibt das Arbeitszeitkonto der Person zurück
     getArbeitszeitkonto = () => {
         this.timer = setTimeout(() => {
         TimetrackerAPI.getAPI().getArbeitszeitkonto(this.state.person.getArbeitszeitkonto_id()).then((arbeitszeitkontoBO) => {
@@ -199,14 +162,27 @@ getNewPerson = () => {
     , 200);
     }
 
-    reloadUser = () => {
-        console.log('reload')
-        this.getPerson()
-        this.getArbeitszeitkonto()
-        this.getZeitintervallbyPersonID()
-        this.getZeitintervall()
-        this.getNewPerson()
-    };
+    // ********** SONDERBUCHUNG FUNKTIONEN **********\\
+    // Sonderbuchung Erstellen Dialog anzeigen
+    sonderBuchungAnlegenButtonClicked = event => {
+        event.stopPropagation();
+        this.setState({
+            showSonderBuchungAnlegen: true,
+        });
+    }
+
+    sonderBuchungAnlegenClosed = (arbeitszeitkonto) => {
+        if (arbeitszeitkonto) {
+            this.setState({
+                showSonderBuchungAnlegen: false,
+            });
+            this.getArbeitszeitkonto()
+        } else {
+            this.setState({
+                showSonderBuchungAnlegen: false,
+            });
+        }
+    }
 
     // ********** ZEITINTERVALL FUNKTIONEN **********\\
 
@@ -253,6 +229,7 @@ getNewPerson = () => {
         })
     }
 
+    // Ende des Zeitintervall wird gesetzt und die Dauer wird berechnet 
     updateZeitintervall = () => {
         let zeitintervall = this.state.zeitintervall;
         if (this.state.zeitintervall.getStart() != null && this.state.zeitintervall.getEnde() == null) {
@@ -283,7 +260,7 @@ getNewPerson = () => {
     }
 
     // ********** PAUSEN FUNKTIONEN **********\\
-
+    // Pausenstart wird gesetzt 
     addPause = () => {
         if (this.state.pausebutton === 1) {
             window.alert("Deine Pause hat bereits begonnen!")
@@ -292,7 +269,6 @@ getNewPerson = () => {
             if (this.state.zeitintervall != null) {
                 let zeitintervall = this.state.zeitintervall;
                 let pausen_start = this.dateSplit(); // Aktuelle Datetime wird aufgerufen und umgewandelt
-                console.log(pausen_start)
                 zeitintervall.setPausenStart(pausen_start);
                 TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall);
                 let date = new Date;
@@ -310,7 +286,7 @@ getNewPerson = () => {
 
         }
     }
-
+    // Pausenende wird gesetzt und die Dauer wird berechnet 
     updatePause = () => {
         let zeitintervall = this.state.zeitintervall;
         let pausen_start = new Date(this.pausenStartSplitten())
@@ -328,7 +304,6 @@ getNewPerson = () => {
     }
 
     // ********** ZEITUMRECHNUNG FUNKTIONEN **********\\
-
     //Datum und Zeit vom Frontend wird das richtige Backend Format umgewandelt
     dateSplit = () => {
         let newDate = new Date()
@@ -433,6 +408,20 @@ getNewPerson = () => {
         this.getZeitintervallbyPersonID()
     };
 
+    // Wird aufgerufen wenn man sich neu anmeldet
+    reloadUser = () => {
+        this.getPerson()
+        this.getArbeitszeitkonto()
+        this.getZeitintervallbyPersonID()
+        this.getZeitintervall()
+        this.getNewPerson()
+    };
+
+    getNewPerson = () => {
+        this.props.getPerson()
+    }
+
+
     componentDidMount() {
         this.getPerson();
         this.getZeitintervallbyPersonID();
@@ -443,7 +432,7 @@ getNewPerson = () => {
 
     render() {
         const { currentUser } = this.props;
-        const { person, showPersonForm, showPersonDelete, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto, authLoading, zeitraum, zeitraum_stunden } = this.state;
+        const { person, showPersonForm, showPersonDelete, zeitintervallliste, showSonderBuchungAnlegen, arbeitszeitkonto, authLoading, zeitraum, zeitraum_stunden } = this.state;
 
         return (
             <div><LoadingProgress show={authLoading} />
@@ -532,7 +521,7 @@ getNewPerson = () => {
                                         </Button>
                                     </Grid>
                                     <Grid item xs={3}>
-                                        <Button variant="contained" onClick={this.ereignisBuchungAnlegenButtonClicked}>
+                                        <Button variant="contained" onClick={this.sonderBuchungAnlegenButtonClicked}>
                                             Sonderbuchung
                                         </Button>
                                     </Grid>
@@ -562,7 +551,7 @@ getNewPerson = () => {
                                     <Grid item xs={1}/>
                                     <Grid item xs={1}/>
                                     <Grid item xs={10}>
-                                        <Typography align="left">Um nach einem bestimmten Zeitraum zu suchen, fülle die Such-Felder aus und klicke den Button. Dies führt zu einer Aktualisierung der Ist-Stunden und der Restkapazität.</Typography>
+                                        <Typography align="left">Um nach deine Stunden in einem bestimmten Monat zu suchen, fülle das Such-Feld aus und klicke den Button.</Typography>
                                     </Grid>
                                     <Grid item xs={2}/>
                                     <Grid item xs={4}>
@@ -629,7 +618,7 @@ getNewPerson = () => {
                         </Grid>
                         <PersonForm show={showPersonForm} person={person} onClose={this.personFormClosed} />
                         <PersonDelete show={showPersonDelete} person={person} onClose={this.personDeleteClosed} getPersonbyID={this.getPerson} currentPersonNull={this.currentPersonNull} />
-                        <EreignisBuchungAnlegen show={showEreignisBuchungAnlegen} arbeitszeitkonto={arbeitszeitkonto} onClose={this.ereignisBuchungAnlegenClosed} getArbeitszeitkonto={this.getArbeitszeitkonto} />
+                        <SonderBuchungAnlegen show={showSonderBuchungAnlegen} arbeitszeitkonto={arbeitszeitkonto} onClose={this.sonderBuchungAnlegenClosed} getArbeitszeitkonto={this.getArbeitszeitkonto} />
                     </div>
                     : <div>
                         <SignUp onClose={this.closeSignup} currentUser={currentUser} reloadUser={this.reloadUser} />

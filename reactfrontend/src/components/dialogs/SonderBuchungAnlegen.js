@@ -7,7 +7,7 @@ import TimetrackerAPI from "../../api/TimetrackerAPI";
  * In diesem Dialog wird ein Formular angezeigt, mit dem Sonderbuchungen angelegt werden können.
 */
 
-class EreignisBuchungAnlegen extends Component {
+class SonderBuchungAnlegen extends Component {
 
   constructor(props) {
     super(props);
@@ -64,7 +64,6 @@ class EreignisBuchungAnlegen extends Component {
   }
 
   ereignisCheck = () => {
-    console.log("Check")
     if (this.state.ereignis == "Urlaub")
       this.updateArbeitszeitkontoUrlaubstage()
     else 
@@ -94,7 +93,7 @@ class EreignisBuchungAnlegen extends Component {
                 <FormControl fullWidth>
                   <InputLabel id="ereignis">Art</InputLabel>
                   <Select
-                    labelId="Ereignis"
+                    labelId="Sonderbuchung"
                     name="ereignis"
                     size="large"
                     label="Art"
@@ -129,4 +128,4 @@ class EreignisBuchungAnlegen extends Component {
   }
 }
 
-export default EreignisBuchungAnlegen;
+export default SonderBuchungAnlegen;

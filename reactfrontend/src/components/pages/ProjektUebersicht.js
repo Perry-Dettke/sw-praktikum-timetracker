@@ -42,6 +42,7 @@ class Projekt_uebersicht extends Component {
         });
     }
 
+    //Gibt die eingeloggte Person zurück
     getPerson = () => {
         TimetrackerAPI.getAPI().getPersonByGoogle(this.props.currentUser.uid).then((person) =>
             this.setState({
@@ -91,7 +92,7 @@ class Projekt_uebersicht extends Component {
     render() {
         const { currentPerson } = this.props;
         const { projekt, showProjektAnlegen, authLoading } = this.state;
-        console.log(currentPerson)
+        
         return (
             <div>
                 <Grid container spacing={1} alignItems="left">

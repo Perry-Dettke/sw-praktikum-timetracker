@@ -88,7 +88,6 @@ class ProjektUebersichtEintrag extends Component {
 
     //Wird aufgerufen, wenn der Aktivität Bearbeiten Button geklickt wird
     aktivitaetBearbeitenClicked = (aktivitaet) => {
-        console.log(aktivitaet);
         this.setState({
             currentAktivitaet: aktivitaet,
         },

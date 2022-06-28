@@ -272,36 +272,9 @@ export default class TimetrackerAPI {
     })
 
   }
-  /// Stunden aus buchungen
-
-  //  getBuchungbyAktivitaetID(aktivitaet_id) {
-  //     // Aktivitaet abfragen
-  //       return this.#fetchAdvanced(this.#getBuchungbyAktivitaetIDURL(aktivitaet_id)).then((responseJSON) => {
-  //       let stunden = 0;
-  //       responseJSON.map(item => {
-  //         let buchungstunden = BuchungBO.fromJSON(item).getStunden();
-  //         stunden += buchungstunden;
-  //         console.log(stunden)
-  //       })
-  //       return new Promise(function (resolve) {
-  //         resolve(stunden)
-  //       })
-  //     })
-  //   }
-
-  // getBuchungbyID(buchungID) {
-  //   // Buchung abfragen
-  //   return this.#fetchAdvanced(this.#getBuchungbyIDURL(buchungID)).then((responseJSON) => {
-  //     let buchung = BuchungBO.fromJSON(responseJSON);
-  //     return new Promise(function (resolve) {
-  //       resolve(buchung)
-  //     })
-  //   })
-  // }
 
   addBuchung(buchungBO) {
     // Person neu anlegen
-    console.log(buchungBO)
     return this.#fetchAdvanced(this.#addBuchungURL(), {
       method: 'POST',
       headers: {
@@ -386,24 +359,6 @@ export default class TimetrackerAPI {
     })
   }
 
-
-  /* updateEreignis(ereignisBO) {
-    // Ereignis updaten
-    return this.#fetchAdvanced(this.#updateEreignisURL(ereignisBO.getID()), {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json, text/plain',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(ereignisBO)
-    }).then((responseJSON) => {
-      let responseEreignisBO = EreignisBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(responseEreignisBO);
-      })
-    })
-  } */
-
   deleteEreignis(EreignisBO) {
     // Ereignis löschen
     return this.#fetchAdvanced(this.#deleteEreignisURL(EreignisBO.getID()), {
@@ -458,7 +413,6 @@ export default class TimetrackerAPI {
   }
 
   getPersonByGoogle(googleid) {
-    console.log(googleid)
     // Person anhand der GoogleID auslesen
     return this.#fetchAdvanced(this.#getPersonByGoogleURL(googleid)).then((responseJSON) => {
       let person = PersonBO.fromJSON(responseJSON);
@@ -635,7 +589,6 @@ export default class TimetrackerAPI {
   getProjektByPerson(person_id) {
     // Teilnehmer eines Projekt abfragen
     return this.#fetchAdvanced(this.#getProjektByPersonURL(person_id)).then((responseJSON) => {
-      console.log(responseJSON)
       let projektliste = [];
       responseJSON.map(item => {
         let projekt = ProjektBO.fromJSON(item);
@@ -750,7 +703,6 @@ export default class TimetrackerAPI {
 
   addZeitintervall(zeitintervallBO) {
     // Zeitintervall neu anlegen
-    console.log(zeitintervallBO)
     return this.#fetchAdvanced(this.#addZeitintervallURL(), {
       method: 'POST',
       headers: {

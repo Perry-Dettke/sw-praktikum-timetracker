@@ -53,7 +53,6 @@ class ZeitintervallMapper (Mapper):
         """
 
 
-
         cursor = self._cnx.cursor()
         command = "SELECT * FROM zeitintervall WHERE id={}".format(id)
         cursor.execute(command)
@@ -85,8 +84,7 @@ class ZeitintervallMapper (Mapper):
 
 
     def find_by_person_id(self, person_id):
-        """Suchen eines Benutzers mit vorgegebener Zeitintervall ID. Da diese eindeutig ist,
-        wird genau ein Objekt zurückgegeben.
+        """Suchen eines Zeitintervall mit vorgegebener Person ID.
 
         :param id Primärschlüsselattribut (->DB)
         :return Zeitintervall-Objekt, das dem übergebenen Schlüssel entspricht, None bei
@@ -128,8 +126,7 @@ class ZeitintervallMapper (Mapper):
 
 
     def find_by_max_id_and_person_id(self, person_id):
-        """Suchen eines Benutzers mit vorgegebener Zeitintervall ID. Da diese eindeutig ist,
-        wird genau ein Objekt zurückgegeben.
+        """Suchen eines Zeitinterval anhand der MAX ID und Person ID.
 
         :param id Primärschlüsselattribut (->DB)
         :return Zeitintervall-Objekt, das dem übergebenen Schlüssel entspricht, None bei
@@ -283,14 +280,3 @@ class ZeitintervallMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
-
-
-"""Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
-um die grundsätzliche Funktion zu überprüfen.
-
-Anmerkung: Nicht professionell aber hilfreich..."""
-if (__name__ == "__main__"):
-    with ZeitintervallMapper() as mapper:
-        result = mapper.find_all()
-        for zeitintervall in result:
-            print(zeitintervall)
