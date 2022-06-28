@@ -47,8 +47,12 @@ class Home extends Component {
     // };
 
 
+getPerson1 = () => {
+    this.props.getPerson()
+}
+
+
     getPerson = () => {
-        console.log(this.props.currentUser.uid)
         TimetrackerAPI.getAPI().getPersonByGoogle(this.props.currentUser.uid).then((person) =>
             this.setState({
                 person: person,
@@ -198,6 +202,7 @@ class Home extends Component {
         this.getArbeitszeitkonto()
         this.getZeitintervallbyPersonID()
         this.getZeitintervall()
+        this.getPerson1()
     };
 
 
@@ -441,12 +446,13 @@ class Home extends Component {
         this.getZeitintervallbyPersonID();
         this.getZeitintervall();
         this.getArbeitszeitkonto();
+        // this.getPerson1();
     }
 
     render() {
         const { currentUser } = this.props;
         const { person, showPersonForm, showPersonDelete, zeitintervall, zeitintervallliste, showEreignisBuchungAnlegen, arbeitszeitkonto, authLoading, zeitraum, zeitraum_stunden } = this.state;
-
+        console.log(person)
 
         return (
             <div><LoadingProgress show={authLoading} />

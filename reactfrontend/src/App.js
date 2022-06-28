@@ -80,10 +80,10 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 			})
 		  ).catch((e) =>
 			this.setState({
-			  person: null,
+			  person: "errornichtda",
 			})
 		  );
-		 } , 1000);
+		 } , 5000);
 	  }; 
 
 	/**
@@ -141,7 +141,9 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 	/** Renders the whole app */
 	render() {
 		const { currentUser, appError, authError, authLoading, currentPerson } = this.state;
-		console.log(currentPerson)
+		console.log(currentPerson, "CurrentPerson APP")
+		console.log(currentUser, "CurretntUser APP")
+
 		return (
 				<Router>
 					<div className='App'>
@@ -166,7 +168,7 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 											<SignIn onSignIn={this.handleSignIn} />
 											
 									} />
-									<Route path={process.env.PUBLIC_URL + '/home'} element={<Home  currentUser={currentUser} /> }/>
+									<Route path={process.env.PUBLIC_URL + '/home'} element={<Home  currentUser={currentUser} getPerson={this.getPerson}/> }/>
 									<Route path={process.env.PUBLIC_URL + '/projekt_uebersicht'} element={<Projekt_uebersicht  currentPerson={currentPerson} /> }/>
 									<Route path={process.env.PUBLIC_URL + '/buchung'} element={<BuchungListe  currentPerson={currentPerson} /> }/>
 									<Route path={process.env.PUBLIC_URL + '/auswertung'} element={<Auswertung  currentPerson={currentPerson} /> }/>

@@ -82,7 +82,7 @@ class Projekt_uebersicht extends Component {
         const { expandedState, currentPerson } = this.props;
 
         const { projekt, showProjektAnlegen, authLoading } = this.state;
-
+        console.log(currentPerson)
         return (
             <div>
                 <Grid container spacing={1} alignItems="left">
