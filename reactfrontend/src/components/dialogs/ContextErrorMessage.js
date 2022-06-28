@@ -4,13 +4,9 @@ import { Button, Alert, AlertTitle } from '@mui/material';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 /**
- * Shows an in-line error message in a given component context,
- * if the error object is not null
- * 
- * @See See Material-UIs [Alert](https://mui.com/material-ui/react-alert/)
- * 
- * @author [Christoph Kunz](https://github.com/christophkunz)
+ * Zeigt eine error message in den jeweiligen Componenten.
  */
+
 class ContextErrorMessage extends Component {
   #standardText = 'This should not have happend. Soooo sorry...';
 

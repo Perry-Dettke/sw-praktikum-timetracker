@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Typography, TextField, IconButton, OutlinedInput, Box, Chip, Stack } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import InputLabel from "@mui/material/InputLabel";
-
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { MenuItem } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Typography, TextField, Box, Chip, Stack, InputLabel, FormControl, Select, MenuItem } from '@mui/material';
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -14,7 +8,9 @@ import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import ProjektBO from '../../api/ProjektBO';
 
-
+/**
+ * In diesem Dialog wird ein Formular angezeigt, mit dem der angemeldete User ein neues Projekt anlegen kann.
+*/
 
 class ProjektAnlegen extends Component {
 
@@ -76,7 +72,6 @@ class ProjektAnlegen extends Component {
         TimetrackerAPI.getAPI().addPersonInProjekt(projekt.getID(), this.state.personen).then(projekt => {
             this.props.onClose(projekt)
         })
-
     }
 
     // Textfelder ändern
@@ -100,9 +95,7 @@ class ProjektAnlegen extends Component {
         });
     }
 
-
     renderBranch = () => {
-        const { values } = this.state
         return (
             <>
                 <div>
@@ -122,7 +115,6 @@ class ProjektAnlegen extends Component {
                         size="small"
                         autocomplete='off'
                     />
-
                 </div>
                 <br />
             </>
@@ -228,15 +220,16 @@ class ProjektAnlegen extends Component {
                                                     </Box>
                                                 )}
                                             >
-
-                                                {allePersonen.map((person) => (
+                                                {
+                                                allePersonen.map((person) => (
                                                     <MenuItem
                                                         key={person.getID()}
                                                         value={person}
                                                     >
                                                         {person.getVor_name()} {person.getNach_name()}
                                                     </MenuItem>
-                                                ))}
+                                                ))
+                                                }
                                             </Select>
                                             <br></br>
                                             <DialogContentText>
@@ -244,9 +237,6 @@ class ProjektAnlegen extends Component {
                                             </DialogContentText>
                                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                                 <Stack spacing={3}>
-                                                
- 
-
                                                     <DesktopDatePicker
                                                         label="Startzeitraum"
                                                         inputFormat="MM/dd/yyyy"
@@ -257,10 +247,8 @@ class ProjektAnlegen extends Component {
                                                 </Stack>
                                             </LocalizationProvider>
                                             <br></br>
-
                                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                                 <Stack spacing={3}>
-
                                                     <DesktopDatePicker
                                                         label="Endzeitraum"
                                                         inputFormat="MM/dd/yyyy"
