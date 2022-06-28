@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Alert } from '@mui/material';
-import Snackbar from '@mui/material/Snackbar';
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
+
+/*
+* In diesem Dialog wird ein Formular angezeigt, mit dem die angelegten Aktivitäten gelöscht werden können.
+*/
 
 class AktivitaetLoeschen extends Component {
 
@@ -22,9 +24,7 @@ class AktivitaetLoeschen extends Component {
             });
     }
 
-
     render() {
-
         const { show, aktivitaet } = this.props;
         
         return (
@@ -32,7 +32,7 @@ class AktivitaetLoeschen extends Component {
                 <Dialog
                     open={show}
                     onClose={this.handleClose}
-                    maxWidth='xs'
+                    maxWidth='s'
                 >
                     <DialogTitle>{"Bist du dir sicher?"}</DialogTitle>
                     <DialogContent>
@@ -52,10 +52,6 @@ class AktivitaetLoeschen extends Component {
             </div>
         );
     }
-
 }
-
-
-
 
 export default AktivitaetLoeschen;

@@ -185,6 +185,19 @@ class ProjektMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
+    def delete_by_projektersteller(self, projektersteller_id):
+        """Löschen der Daten eines Projekt-Objekts aus der Datenbank anhand der Projektersteller ID.
+
+        :param projektersteller_id das aus der DB zu löschende "Objekt"
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM projekt WHERE projektersteller_id={}".format(projektersteller_id)
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+
 
 
     def find_person_in_projekt(self, projekt_id):
@@ -211,7 +224,7 @@ class ProjektMapper (Mapper):
         return result
 
     def find_projekt_by_person(self, person_id):
-        """Auslesen aller Teilnehmer eines Projekts."""
+        """Auslesen aller Projekte einer Person."""
 
         result = []
         cursor = self._cnx.cursor()
@@ -234,7 +247,7 @@ class ProjektMapper (Mapper):
         return result
 
     def find_projekt_by_person_id(self, person_id):
-        """Auslesen aller Teilnehmer eines Projekts."""
+        """Auslesen aller Projekte einer Person anhand der Person ID."""
 
         result = []
         cursor = self._cnx.cursor()
@@ -286,16 +299,4 @@ class ProjektMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
-
-"""Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
-um die grundsätzliche Funktion zu überprüfen.
-
-Anmerkung: Nicht professionell aber hilfreich..."""
-if (__name__ == "__main__"):
-    with ProjektMapper() as mapper:
-        result = mapper.find_all()
-        for projekt in result:
-            print(projekt)
-
-            
 

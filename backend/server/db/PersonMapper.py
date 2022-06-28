@@ -10,6 +10,7 @@ class PersonMapper (Mapper):
         super().__init__()
 
     def find_all(self):
+        """"Ausgeben aller Personen"""
 
         result = []
         cursor = self._cnx.cursor()
@@ -73,17 +74,18 @@ class PersonMapper (Mapper):
 
         return person
 
-    def find_by_email(self, email):
-        """Auslesen aller Benutzer anhand der zugeordneten E-Mail-Adresse.
+    def find_by_google_user_id(self, google_user_id):
+        """Suchen eines Benutzers mit vorgegebener Google ID. Da diese eindeutig ist,
+        wird genau ein Objekt zurückgegeben.
 
-        :param mail_address E-Mail-Adresse der zugehörigen Benutzer.
-        :return Eine Sammlung mit Personen-Objekten, die sämtliche Benutzer
-            mit der gewünschten E-Mail-Adresse enthält.
+        :param google_user_id die Google ID des gesuchten Users.
+        :return User-Objekt, das die übergebene Google ID besitzt,
+            None bei nicht vorhandenem DB-Tupel.
         """
 
 
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, arbeitszeitkonto_id FROM person WHERE email={}".format(email)
+        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, arbeitszeitkonto_id  FROM person WHERE google_user_id='{}'".format(google_user_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -97,7 +99,8 @@ class PersonMapper (Mapper):
             person.set_email(email)
             person.set_benutzer_name(benutzer_name)
             person.set_google_user_id(google_user_id)
-            person.set_arbeitszeitkonto_id
+            person.set_arbeitszeitkonto_id(arbeitszeitkonto_id)
+
 
         except IndexError:
             """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
@@ -109,18 +112,17 @@ class PersonMapper (Mapper):
 
         return person
 
-    def find_by_google_user_id(self, google_user_id):
-        """Suchen eines Benutzers mit vorgegebener Google ID. Da diese eindeutig ist,
-        wird genau ein Objekt zurückgegeben.
+    def find_by_arbeitszeitkonto_id(self, arbeitszeitkonto_id):
+        """Suchen eines Benutzers mit vorgegebener Arbeitszeitkonto ID.
 
-        :param google_user_id die Google ID des gesuchten Users.
-        :return User-Objekt, das die übergebene Google ID besitzt,
+        :param arbeitszeitkonto_id die Google ID des gesuchten Users.
+        :return User-Objekt, das die übergebene Arbeitszeitkonto ID besitzt,
             None bei nicht vorhandenem DB-Tupel.
         """
 
 
         cursor = self._cnx.cursor()
-        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, arbeitszeitkonto_id  FROM person WHERE google_user_id='{}'".format(google_user_id)
+        command = "SELECT id, letzte_aenderung, vor_name, nach_name, email, benutzer_name, google_user_id, arbeitszeitkonto_id  FROM person WHERE arbeitszeitkonto_id='{}'".format(arbeitszeitkonto_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -191,14 +193,13 @@ class PersonMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE person " + "SET letzte_aenderung=%s, vor_name=%s, nach_name=%s, email=%s, benutzer_name=%s, arbeitszeitkonto_id=%s WHERE id=%s"
+        command = "UPDATE person " + "SET letzte_aenderung=%s, vor_name=%s, nach_name=%s, email=%s, benutzer_name=%s WHERE id=%s"
         data = (
             person.get_letzte_aenderung(),
             person.get_vor_name(),
             person.get_nach_name(),
             person.get_email(),
             person.get_benutzer_name(),
-            person.get_arbeitszeitkonto_id(),
             person.get_id(),)
 
         cursor.execute(command, data)
@@ -219,10 +220,16 @@ class PersonMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
+    def delete_person_projekt(self, person_id):
+        """Löschen der Daten eines Personen-Objekts aus der Datenbank 
+    
+        :param id
+        """
+        cursor = self._cnx.cursor()
 
-"""Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
-um die grundsätzliche Funktion zu überprüfen.
+        command = "DELETE FROM projekt_person WHERE person_id={}".format(person_id)
+        cursor.execute(command)
 
-Anmerkung: Nicht professionell aber hilfreich..."""
-# if (__name__ == "__main__"):
+        self._cnx.commit()
+        cursor.close()
 

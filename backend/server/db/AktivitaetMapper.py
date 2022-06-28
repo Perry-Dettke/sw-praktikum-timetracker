@@ -197,18 +197,3 @@ class AktivitaetMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
-
-
-
-
-
-    """Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
-    um die grundsätzliche Funktion zu überprüfen.
-    
-    Anmerkung: Nicht professionell aber hilfreich..."""
-
-    
-with AktivitaetMapper() as mapper:
-    result = mapper.find_all()
-    for t in result:
-        print(t)

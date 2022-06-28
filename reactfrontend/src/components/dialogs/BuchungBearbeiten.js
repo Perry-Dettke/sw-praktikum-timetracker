@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
-import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from "@mui/material/InputLabel";
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, InputLabel, FormControl, Select, MenuItem} from '@mui/material';
 
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { MenuItem } from '@mui/material';
-import { TableCell } from '@material-ui/core';
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-import ProjektBO from '../../api/ProjektBO'
-import { EventBusyRounded } from '@mui/icons-material';
-import AktivitaetBO from '../../api/AktivitaetBO';
 
+/*
+* In diesem Dialog wird ein Formular angezeigt, mit dem man die angelegten Projekt-Buchungen bearbeiten kann.
+*/
 
 class BuchungBearbeiten extends Component {
 
@@ -32,13 +25,10 @@ class BuchungBearbeiten extends Component {
         this.state = {
             stunden: st,
             bezeichnung: ak,
-            aktivitaet_id: ai,
-          
+            aktivitaet_id: ai,  
         };
 
         this.initialState = this.state;
- 
-
     }
 
     updateBuchung = () => {
@@ -87,14 +77,9 @@ class BuchungBearbeiten extends Component {
         this.props.onClose();
     }
 
-
-
-
-
     render() {
         const { show, aktivitaet, aktivitaetliste } = this.props;
         const {stunden, aktivitaet_id } = this.state;
-        // console.log(aktivitaet_id)
 
         return (
             show ?

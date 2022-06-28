@@ -292,7 +292,7 @@ class ArbeitszeitkontoIDOperations(Resource):
             return '', 500
 
     @timetracker.marshal_with(arbeitszeitkonto, code=200)
-    @timetracker.expect(arbeitszeitkonto)  # Wir erwarten ein Arbeitszeitkonto-Objekt von Client-Seite.
+    @timetracker.expect(arbeitszeitkonto) 
     #@secured
     def put(self, id):
         """Update eines bestimmten Arbeitszeitkonto-Objekts."""
@@ -318,25 +318,6 @@ class ArbeitszeitkontoIDOperations(Resource):
             return azt
         else:
             return '', 500 
-
-# @timetracker.route('/arbeitszeitkontobypersonid/<int:person_id>')
-# @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-# class ArbeitszeitkontoByPersonOperations(Resource):
-#     @timetracker.marshal_with(arbeitszeitkonto)
-#     def get(self, person_id):
-#         """Auslesen eines bestimmten Arbeitszeitkonto-Objekts aufgrund seiner Projekt ID.
-#         Das auszulesende Objekt wird durch die ```person_id``` in dem URI bestimmt.
-#         """
-#         adm = TimetrackerAdministration()
-#         azt = adm.get_arbeitszeitkonto_by_person_id(person_id)
-
-#         if azt is not None:
-#             return azt
-#         else:
-#             return '', 500 
-
-
-
 
 
 #Buchung related
@@ -456,24 +437,6 @@ class BuchungByAktivitaetIDOperations(Resource):
             return bu
         else:
             return '', 500 
-
-# @timetracker.route('/buchungbyaktiviaet_idanddatum/<int:aktivitaet_id>')
-# @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-# class BuchungByAktivitaetIDOperations(Resource):
-#     @timetracker.marshal_with(buchung)
-#     def get(self, aktivitaet_id):
-#         """Auslesen eines bestimmten Buchung-Objekts aufgrund seiner Arbeitszeitkonto ID.
-#         Das auszulesende Objekt wird durch die ```aktivitaet_id``` in dem URI bestimmt.
-#         """
-#         adm = TimetrackerAdministration()
-#         bu = adm.get_buchung_by_datum(aktivitaet_id)
-
-#         if bu is not None:
-#             return bu
-#         else:
-#             return '', 500 
-
-
 
 #Ereignis related
 @timetracker.route('/ereignis')
@@ -684,6 +647,21 @@ class PersonGoogleOperations(Resource):
         adm.add_person_google_user_id(google_user_id)
         return '', 200
 
+
+@timetracker.route('/personbyarbeitszeitkonto/<string:arbeitszeitkonto_id>')     
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class PersonGoogleOperations(Resource):
+    @timetracker.marshal_with(person)
+    def get(self, arbeitszeitkonto_id):
+        """Auslesen eines bestimmten Person-Objekts.
+        Das auszulesende Objekt wird durch die ```arbeitszeitkonto_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        pe = adm.get_person_by_arbeitszeitkonto_id(arbeitszeitkonto_id)
+        if pe is not None:
+            return pe
+        else:
+            return '', 500 
 
 
 #Projekt related
@@ -1005,6 +983,23 @@ class ZeitintervallPersonIDOperations(Resource):
         else:
             return '', 500 
 
+@timetracker.route('/zeitintervallbypersonidbytime/<int:person_id>/<string:start>/<string:ende>')
+@timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@timetracker.param('id', 'Die ID des Zeitintervall-Objekts.')
+class ZeitintervallPersonIDTimeOperations(Resource):
+
+    @timetracker.marshal_with(zeitintervall)
+    def get(self, person_id, start, ende):
+        """Auslesen eines bestimmten Zeitintervall-Objekts mit der Personen ID.
+        Das auszulesende Objekt wird durch die ```person_id``` in dem URI bestimmt.
+        """
+        adm = TimetrackerAdministration()
+        zi = adm.get_zeitintervall_by_person_id_time(person_id, start, ende)
+
+        if zi is not None:
+            return zi
+        else:
+            return '', 500 
 
 
 

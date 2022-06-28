@@ -4,17 +4,11 @@ import { Popover, IconButton, Avatar, ClickAwayListener, Typography, Paper, Butt
 import { getAuth, signOut } from "firebase/auth";
 
 /**
- * Shows a drop down list for the account infos and a possibility to log out. For closing the pop up menu if 
- * the mouse is clicked outside the menu, the ClickAwayListener component is used.For logging out,
- * firebase.auth().signOut() method is used.
- * 
- * @see See Material-UIs [Popover](https://mui.com/material-ui/react-popover/)
- * @see See Material-UIs [ClickAwayListener](https://mui.com/material-ui/react-click-away-listener/)
- * @see See Googles [firebase authentication](https://firebase.google.com/docs/web/setup)
- * @see See Googles [firebase API reference](https://firebase.google.com/docs/reference/js)
- * 
- * @author [Christoph Kunz](https://github.com/christophkunz)
+ * Zeigt eine Drop Down Liste mit Profilinformationen und einem Logout Button.
+ * Um Drop Down zu schließen kann außerhalb geklickt werden.
+ * Log Out ist mit firebase.auth().signOut() method umgesetzt.
  */
+
 class ProfileDropDown extends Component {
 
   // a refernce to the avatar button
@@ -38,8 +32,6 @@ class ProfileDropDown extends Component {
 
   /** 
    * Handles click events from the ClickAwayListener.
-   * 
-   * @see See Material-UIs [ClickAwayListener](https://mui.com/material-ui/react-click-away-listener/)
    */
   handleClose = () => {
     this.setState({
@@ -49,12 +41,10 @@ class ProfileDropDown extends Component {
 
   /** 
    * Handles the click event of the sign in button and uses the firebase.auth() component to sign in.
-   * 
-   * @see See Google [firebase.auth](https://firebase.google.com/docs/reference/js/firebase.auth.Auth)
-   * @see See Google [firebase.auth().signOut](https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signout)
    */
   handleSignOutButtonClicked = () => {
     const auth = getAuth();
+    window.location.replace("SignIn.js");
     signOut(auth);
   }
 
@@ -69,7 +59,6 @@ class ProfileDropDown extends Component {
           <IconButton sx={{ float: 'right' }} ref={this.#avatarButtonRef} onClick={this.handleAvatarButtonClick}>
             <Avatar src={currentUser.photoURL} />
           </IconButton>
-
           <Popover open={open} anchorEl={this.#avatarButtonRef.current} onClose={this.handleClose}
             anchorOrigin={{
               vertical: 'top',

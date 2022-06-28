@@ -81,7 +81,7 @@ class BuchungMapper(Mapper):
 
 
     def find_by_person_id(self, person_id):
-        """Auslesen aller Buchungen anhand der Arbeitszeitkonto ID."""
+        """Auslesen aller Buchungen anhand der Personen ID."""
 
         result = []
         cursor = self._cnx.cursor()
@@ -111,7 +111,7 @@ class BuchungMapper(Mapper):
         return result
 
     def find_by_aktivitaet_id_and_datum(self, aktivitaet_id, start, ende):
-        """Auslesen aller Buchungen anhand der Arbeitszeitkonto ID."""
+        """Auslesen aller Buchungen anhand der Aktivität ID und eines Zeitraums."""
 
         result = []
         cursor = self._cnx.cursor()
@@ -141,7 +141,7 @@ class BuchungMapper(Mapper):
         return result
 
     def find_by_person_id_and_datum(self, person_id, start, ende):
-        """Auslesen aller Buchungen anhand der Arbeitszeitkonto ID."""
+        """Auslesen aller Buchungen anhand der Personen ID und eines Zeitraums."""
 
         result = []
         cursor = self._cnx.cursor()
@@ -171,7 +171,7 @@ class BuchungMapper(Mapper):
         return result
 
     def find_by_aktivitaet_id(self, aktivitaet_id):
-        """Auslesen aller Buchungen anhand der Arbeitszeitkonto ID."""
+        """Auslesen aller Buchungen anhand der Aktivitaet ID."""
 
         result = []
         cursor = self._cnx.cursor()
@@ -300,13 +300,6 @@ class BuchungMapper(Mapper):
         self._cnx.commit()
         cursor.close()
         
-'''Only for testing purpose'''
-
-if (__name__ == "__main__"):
-    with BuchungMapper() as mapper:
-        result = mapper.find_all()
-        for Buchung in result:
-            print(Buchung)
 
 
 

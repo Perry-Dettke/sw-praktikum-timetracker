@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import {Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
-
 import TimetrackerAPI from "../../api/TimetrackerAPI";
+
+/*
+* In diesem Dialog wird ein Formular angezeigt, mit dem die angelegten Projekt-Buchungen gelöscht werden können.
+*/
 
 class BuchungDeleteDialog extends Component {
 
@@ -22,13 +25,11 @@ class BuchungDeleteDialog extends Component {
   deleteBuchung = () => {
     TimetrackerAPI.getAPI().deleteBuchung(this.state.buchung)
       .then(() => {
-          console.log("geklickt")
         this.props.onClose(null);
       });
   }
 
   render() {
-
     const { show } = this.props;
     
     return (

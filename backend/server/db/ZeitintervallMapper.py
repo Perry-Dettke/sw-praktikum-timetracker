@@ -53,7 +53,6 @@ class ZeitintervallMapper (Mapper):
         """
 
 
-
         cursor = self._cnx.cursor()
         command = "SELECT * FROM zeitintervall WHERE id={}".format(id)
         cursor.execute(command)
@@ -85,8 +84,7 @@ class ZeitintervallMapper (Mapper):
 
 
     def find_by_person_id(self, person_id):
-        """Suchen eines Benutzers mit vorgegebener Zeitintervall ID. Da diese eindeutig ist,
-        wird genau ein Objekt zurückgegeben.
+        """Suchen eines Zeitintervall mit vorgegebener Person ID.
 
         :param id Primärschlüsselattribut (->DB)
         :return Zeitintervall-Objekt, das dem übergebenen Schlüssel entspricht, None bei
@@ -128,8 +126,7 @@ class ZeitintervallMapper (Mapper):
 
 
     def find_by_max_id_and_person_id(self, person_id):
-        """Suchen eines Benutzers mit vorgegebener Zeitintervall ID. Da diese eindeutig ist,
-        wird genau ein Objekt zurückgegeben.
+        """Suchen eines Zeitinterval anhand der MAX ID und Person ID.
 
         :param id Primärschlüsselattribut (->DB)
         :return Zeitintervall-Objekt, das dem übergebenen Schlüssel entspricht, None bei
@@ -166,6 +163,38 @@ class ZeitintervallMapper (Mapper):
         cursor.close()
 
         return zeitintervall
+
+    def find_by_person_id_and_datum(self, person_id, start, ende):
+        """Auslesen aller Zeitintervalle einer Person im ausgewählten Zeitraum."""
+
+        result = []
+        cursor = self._cnx.cursor()
+        command = f"SELECT * FROM zeitintervall WHERE person_id={person_id} AND start BETWEEN '{start}' AND '{ende}'"
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            (id, letzte_aenderung, start, ende, dauer, pausen_start, pausen_ende, pausen_dauer, person_id) = tuples[0]
+            zeitintervall = Zeitintervall()
+            zeitintervall.set_id(id)
+            zeitintervall.set_letzte_aenderung(letzte_aenderung)
+            zeitintervall.set_start(start)
+            zeitintervall.set_ende(ende)
+            zeitintervall.set_dauer(dauer)
+            zeitintervall.set_pausen_start(pausen_start)
+            zeitintervall.set_pausen_ende(pausen_ende)
+            zeitintervall.set_pausen_dauer(pausen_dauer)
+            zeitintervall.set_person_id(person_id)
+
+        except IndexError:
+            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
+            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
+            zeitintervall = None
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
 
 
 
@@ -239,13 +268,15 @@ class ZeitintervallMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
+    def delete_by_person_id(self, person_id):
+        """Löschen der Daten eines Zeitintervall aus der Datenbank
 
-"""Zu Testzwecken können wir diese Datei bei Bedarf auch ausführen, 
-um die grundsätzliche Funktion zu überprüfen.
+        :param person_id 
+        """
+        cursor = self._cnx.cursor()
 
-Anmerkung: Nicht professionell aber hilfreich..."""
-if (__name__ == "__main__"):
-    with ZeitintervallMapper() as mapper:
-        result = mapper.find_all()
-        for zeitintervall in result:
-            print(zeitintervall)
+        command = "DELETE FROM zeitintervall WHERE person_id={}".format(person_id)
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()

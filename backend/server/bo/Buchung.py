@@ -58,7 +58,6 @@ class Buchung(bo.BusinessObjekt):
         obj = Buchung()
         obj.set_datum(dictionary["datum"])
         obj.set_stunden(dictionary["stunden"])
-
         obj.set_person_id(dictionary["person_id"])
         obj.set_aktivitaet_id(dictionary["aktivitaet_id"])
         return obj

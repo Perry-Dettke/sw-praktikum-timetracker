@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import { Typography, Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Box, Chip, Stack } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import InputLabel from "@mui/material/InputLabel";
+import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Box, Chip, Stack, InputLabel, FormControl, Select, MenuItem } from '@mui/material';
+
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { MenuItem } from '@mui/material';
-import ProjektBO from '../../api/AktivitaetBO';
+
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 
+/**
+ * In diesem Dialog wird ein Formular angezeigt, mit dem der angemeldete User ein von ihm angelegtes Projekt bearbeiten kann.
+*/
 
 class ProjektBearbeiten extends Component {
 
@@ -36,7 +35,6 @@ class ProjektBearbeiten extends Component {
         this.baseState = this.state;
     }
 
-
     //Projekt bearbeiten
     updateProjekt = () => {
         let projekt = this.props.projekt;
@@ -53,8 +51,7 @@ class ProjektBearbeiten extends Component {
         TimetrackerAPI.getAPI().getPerson().then((personenBOs) => {
             let allePersonen = []
             personenBOs.map(person => {
-                if (person.getID() != 3) {
-                    //if (person.getID() != this.props.person.getID()){
+                if (person.getID() != this.props.currentPerson.getID()){
                     allePersonen.push(person)
                 }
             })
@@ -106,7 +103,6 @@ class ProjektBearbeiten extends Component {
         });
     }
 
-
     handleChangeStart = (e) => {
         this.setState({ startzeitraum: e });
     }
@@ -115,7 +111,6 @@ class ProjektBearbeiten extends Component {
         this.setState({ endzeitraum: e });
     }
 
-
     // Dialog schließen
     handleClose = () => {
         this.setState(this.baseState);
@@ -123,12 +118,11 @@ class ProjektBearbeiten extends Component {
     }
 
     render() {
-        const { show, projekt, personen } = this.props
+        const { show } = this.props
         const { bezeichnung, auftraggeber, startzeitraum, endzeitraum, allePersonen, selectedPersonen } = this.state
 
-
-
         let title = 'Projekt bearbeiten';
+
         return (
             show && allePersonen ?
                 <div>
@@ -150,7 +144,7 @@ class ProjektBearbeiten extends Component {
                                         autocomplete='off'
                                     />
                                 </FormControl>
-                                <br /><br />
+                                <br/><br/>
                                 <FormControl fullWidth>
                                     <TextField
                                         label="Auftraggeber"
@@ -163,7 +157,7 @@ class ProjektBearbeiten extends Component {
                                         autocomplete='off'
                                     />
                                 </FormControl>
-                                <br /><br />
+                                <br/><br/>
                                 <Typography>Füge alle Personen hinzu, die in dem Projekt teilnehmen sollen.</Typography>
                                 <div>
                                     <FormControl fullWidth>
@@ -185,7 +179,6 @@ class ProjektBearbeiten extends Component {
                                                 </Box>
                                             )}
                                         >
-
                                             {allePersonen.map((person) => (
                                                 <MenuItem
                                                     key={person.getID()}
@@ -195,7 +188,7 @@ class ProjektBearbeiten extends Component {
                                                 </MenuItem>
                                             ))}
                                         </Select>
-                                        <br></br>
+                                        <br/>
                                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                                             <Stack spacing={3}>
                                                 <DesktopDatePicker
@@ -207,11 +200,9 @@ class ProjektBearbeiten extends Component {
                                                 />
                                             </Stack>
                                         </LocalizationProvider>
-                                        <br></br>
-
+                                        <br/>
                                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                                             <Stack spacing={3}>
-
                                                 <DesktopDatePicker
                                                     label="Endzeitraum"
                                                     inputFormat="MM/dd/yyyy"
@@ -224,8 +215,7 @@ class ProjektBearbeiten extends Component {
                                     </FormControl>
 
                                 </div>
-
-                                <br />
+                                <br/>
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>

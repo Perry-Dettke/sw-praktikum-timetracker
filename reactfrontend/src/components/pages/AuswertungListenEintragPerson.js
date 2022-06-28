@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-
-import { Typography, TextField, Button, IconButton, Grid, Tooltip, Accordion, AccordionSummary, AccordionDetails, Table, TableCell, TableHead, TableRow, TableBody, List } from '@mui/material';
+import { Typography, TextField, Button, Grid, TableCell, TableRow, List } from '@mui/material';
 
 import PersonIcon from '@mui/icons-material/Person';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 
-
+/*
+* Auf dieser Seite sieht man den Listeneintrag, der die Anzahl der Stunden pro Person pro Aktivität anzeigt.
+*/
 
 class AuswertungListenEintragPerson extends Component {
 
@@ -21,11 +21,9 @@ class AuswertungListenEintragPerson extends Component {
         };
     }
 
+    //Gibt alle Person zurück die in dem gegeben Zeitraum an der Aktivitaet gearbeitet haben
     getPersonbyAktivitaetID = (start = "2000-01-01", ende = "3000-01-01") => {
-        console.log(start, ende)
         TimetrackerAPI.getAPI().getPersonbyAktivitaetID(this.props.aktivitaet.getID(), start, ende).then((personBOs) => {
-            console.log(start, ende, "START")
-            console.log(personBOs)
             this.setState({
                 personliste: personBOs
             })
@@ -36,32 +34,28 @@ class AuswertungListenEintragPerson extends Component {
         this.getPersonbyAktivitaetID(this.props.start, this.props.ende);
       }
 
+    // Textfelder ändern
+    textFieldValueChange = (event) => {
+        const value = event.target.value;
 
-  // Textfelder ändern
-  textFieldValueChange = (event) => {
-    const value = event.target.value;
+        let error = false;
+        if (value.trim().length === 0) {
+        error = true;
+        }
 
-    let error = false;
-    if (value.trim().length === 0) {
-      error = true;
+        this.setState({
+        [event.target.id]: event.target.value,
+        });
     }
-
-    this.setState({
-      [event.target.id]: event.target.value,
-    });
-  }
-
-
 
     componentDidMount() {
         this.getPersonbyAktivitaetID();
-
     }
 
+    //Renders the component
     render() {
         const { start, ende} = this.props;
         const { personliste } = this.state;
-        console.log(personliste)
 
         return (
             <Grid container spacing={1} alignItems="center">

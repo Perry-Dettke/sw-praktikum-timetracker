@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-
-import { Typography, IconButton, Grid, Tooltip, ListItem, Divider, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
+import { Typography, IconButton, Grid, Tooltip, Divider } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-
 
 import TimetrackerAPI from '../../api/TimetrackerAPI';
 import BuchungDelete from '../dialogs/BuchungDelete';
 import BuchungBearbeiten from '../dialogs/BuchungBearbeiten';
 
-
+/*
+* Auf dieser Seite wird der Eintrag auf der Buchungsseite angezeigt. 
+* Dies beinhaltet alle Projekt-Buchungen die der angemeldete User getätigt hat,
+*/
 
 class BuchungListenEintrag extends Component {
 
@@ -25,6 +26,7 @@ class BuchungListenEintrag extends Component {
             showBuchungDelete: false,
             aktivitaetliste: [],
             tablehead: null,
+            currentPerson: this.props.currentPerson
         };
     }
 
@@ -33,8 +35,7 @@ class BuchungListenEintrag extends Component {
         this.props.getBuchungbyPersonID();
     }
 
-
-
+    //Gibt die Aktivität der Buchung zurücl
     getAktivitaet = () => {
         TimetrackerAPI.getAPI().getAktivitaetbyID(this.props.buchung.getAktivitaet_id()).then((aktivitaetBOs) => {
             this.setState({
@@ -43,8 +44,7 @@ class BuchungListenEintrag extends Component {
         });
     }
 
-
-
+    //Gibt das Projekt der Aktivität zurück
     getProjekt = () => {
         this.timer = setTimeout(() => {
             TimetrackerAPI.getAPI().getProjektbyID(this.state.aktivitaet.getProjektID()).then((projektBOs) => {
@@ -53,22 +53,20 @@ class BuchungListenEintrag extends Component {
                 });
             });
         }
-            , 2000);
+            , 1000);
     }
 
-
+    // Gibt die Aktivität des Projekt zurück
     getAktivitaetbyProjektID = () => {
         this.timer = setTimeout(() => {
-
             TimetrackerAPI.getAPI().getAktivitaetbyProjektID(this.state.aktivitaet.getProjektID()).then((aktivitaetBOs) => {
                 this.setState({
                     aktivitaetliste: aktivitaetBOs,
                 });
             });
         }
-            , 2000);
+            , 1000);
     }
-
 
     //Wird aufgerufen, wenn der Button Bearbeiten geklickt wird
     bearbeitenButtonClicked = event => {
@@ -112,22 +110,16 @@ class BuchungListenEintrag extends Component {
         this.getAktivitaet();
         this.getProjekt();
         this.getAktivitaetbyProjektID()
-
     }
-
-
-
 
     //Renders the component
     render() {
-        const { buchung } = this.props;
-        const { aktivitaet, projekt, showBuchungBearbeiten, showBuchungDelete, aktivitaetliste, tablehead } = this.state;
-        // console.log(projekt)
-        // console.log(this.state.aktivitaet.getProjektID())
+        const { buchung, currentPerson } = this.props;
+        const { aktivitaet, projekt, showBuchungBearbeiten, showBuchungDelete, aktivitaetliste } = this.state;
 
         return (
             aktivitaet && projekt ?
-                <Grid container alignItems="center" xs={12}>
+                <Grid container direction="row" justifyContent="center" alignItems="center" xs={12}>
                     <Grid item xs={2}>
                         <Typography>{buchung.getDatum()}</Typography>
                     </Grid>
@@ -140,17 +132,21 @@ class BuchungListenEintrag extends Component {
                     <Grid item xs={2}>
                         <Typography>{buchung.getStunden()}</Typography>
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={2}>
                         <Tooltip title='Bearbeiten' placement="bottom">
                             <IconButton variant='contained' onClick={this.bearbeitenButtonClicked}><EditIcon /></IconButton>
                         </Tooltip>
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={2}>
                         <Tooltip title='Löschen' placement="bottom">
                             <IconButton variant="contained" onClick={this.buchungDeleteButtonClicked}><DeleteIcon /></IconButton>
                         </Tooltip>
                     </Grid>
-                    <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
+                    <Grid item xs={12}>
+                        <Divider/>
+                    </Grid>
+
+                    <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} currentPerson={currentPerson} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
                     <BuchungDelete show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchungbyPersonID={this.props.getBuchungbyPersonID}/>
                 </Grid>
                     
@@ -159,8 +155,4 @@ class BuchungListenEintrag extends Component {
     }
 }
 
-
-
 export default BuchungListenEintrag;
-
-

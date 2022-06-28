@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Stack, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from "@mui/material/InputLabel";
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, InputLabel, FormControl, Select, MenuItem } from '@mui/material';
 
-
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { MenuItem } from '@mui/material';
-import { TableCell } from '@material-ui/core';
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-import ProjektBO from '../../api/ProjektBO'
-import { EventBusyRounded } from '@mui/icons-material';
-import BuchungBO from "../../api/BuchungBO";
 
+/** 
+ * In diesem Dialog wird ein Formular angezeigt, mit dem Sonderbuchungen angelegt werden können.
+*/
 
-
-class EreignisBuchungAnlegen extends Component {
-
-
+class SonderBuchungAnlegen extends Component {
 
   constructor(props) {
     super(props);
@@ -74,9 +63,7 @@ class EreignisBuchungAnlegen extends Component {
     window.alert("Gute Besserung!")
   }
 
-
   ereignisCheck = () => {
-    console.log("Check")
     if (this.state.ereignis == "Urlaub")
       this.updateArbeitszeitkontoUrlaubstage()
     else 
@@ -84,7 +71,6 @@ class EreignisBuchungAnlegen extends Component {
   }
 
   render() {
-
     const { show } = this.props;
     const { tage } = this.state;
 
@@ -102,33 +88,30 @@ class EreignisBuchungAnlegen extends Component {
               <DialogContentText>
                 {title2}
               </DialogContentText>
-              <div>
+              <form  noValidate autoComplete='off'>
+                <br/>
                 <FormControl fullWidth>
                   <InputLabel id="ereignis">Art</InputLabel>
                   <Select
-                    labelId="Ereignis"
+                    labelId="Sonderbuchung"
                     name="ereignis"
-                    size="medium"
+                    size="large"
                     label="Art"
-                    autoWidth
+                    fullWidth
                     onChange={this.handleChange}
                   >
                     <MenuItem value={"Urlaub"}>Urlaub</MenuItem>
                     <MenuItem value={"Krankheitstage"}>Krankheitstage</MenuItem>
                   </Select>
                 </FormControl>
-              </div>
-              <br></br>
-              <FormControl fullWidth>
-                <DialogContentText>
-                  {title3}
-                </DialogContentText>
-                <TextField inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} autoFocus type='number' required fullWidth margin='normal' id='tage' label='Tage:' value={tage} onChange={this.handleChangeText} />
-
-
-              </FormControl>
-
-
+                <br></br>
+                <FormControl fullWidth>
+                  <DialogContentText>
+                    {title3}
+                  </DialogContentText>
+                  <TextField inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} autoFocus type='number' required fullWidth margin='normal' id='tage' label='Tage:' value={tage} onChange={this.handleChangeText} />
+                </FormControl>
+              </form>
             </DialogContent>
             <DialogActions>
               <Button color='secondary' onClick={this.handleClose}>
@@ -145,4 +128,4 @@ class EreignisBuchungAnlegen extends Component {
   }
 }
 
-export default EreignisBuchungAnlegen;
+export default SonderBuchungAnlegen;

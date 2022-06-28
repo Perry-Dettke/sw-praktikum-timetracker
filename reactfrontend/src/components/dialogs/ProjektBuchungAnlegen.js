@@ -16,9 +16,11 @@ import ProjektBO from '../../api/ProjektBO'
 import { EventBusyRounded } from '@mui/icons-material';
 import BuchungBO from "../../api/BuchungBO";
 
+/**
+ * In diesem Dialog wird ein Formular angezeigt, mit dem der angemeldete User eine Projektbuchung anlegen kann.
+*/
 
-
-class ZeitintervallBuchungAnlegen extends Component {
+class ProjektBuchungAnlegen extends Component {
 
 
 
@@ -41,7 +43,7 @@ class ZeitintervallBuchungAnlegen extends Component {
 
   //Gibt Projekte der Person zurück
   getProjektByPerson = () => {
-    TimetrackerAPI.getAPI().getProjektByPerson(3).then((projektBOs) => {
+    TimetrackerAPI.getAPI().getProjektByPerson(this.props.currentPerson.getID()).then((projektBOs) => {
       this.setState({
         projektliste: projektBOs,
       });
@@ -57,17 +59,16 @@ class ZeitintervallBuchungAnlegen extends Component {
     });
   }
 
-
+  //Erstellt eine Buchung, wird mit dem Button aufgerufen
   addBuchung = () => {
     if( this.dateSplit() > this.state.projekt.getStartzeitraum() && this.dateSplit() < this.state.projekt.getEndzeitraum()){
     let newBuchung = new BuchungBO()
     newBuchung.setID(0) // bekommt im Backend die max id
     newBuchung.setDatum("2000-01-01") // bekommt im Backend das aktuelle Datum
     newBuchung.setStunden(this.msToTime((this.state.ende.getTime() - this.state.start.getTime())))
-    newBuchung.setPerson_id(3) // muss id vom current user rein
+    newBuchung.setPerson_id(this.props.currentPerson.getID()) // muss id vom current user rein
     newBuchung.setAktivitaet_id(this.state.aktivitaet_id)
     TimetrackerAPI.getAPI().addBuchung(newBuchung).then(buchung => {
-      console.log(newBuchung)
       this.setState(this.initialState);
       this.props.onClose(buchung);
       this.props.getBuchungbyPersonID();
@@ -78,10 +79,9 @@ class ZeitintervallBuchungAnlegen extends Component {
     }
   }
 
-
+  // Datum wird in das richtige Format gebracht
   dateSplit = () => {
     let newDate = new Date()
-    console.log(new Date())
     let date = newDate.toLocaleDateString() + " " + newDate.toLocaleTimeString()
     let dateliste = date.split('')
     let day = String(dateliste[0] + dateliste[1])
@@ -98,6 +98,7 @@ class ZeitintervallBuchungAnlegen extends Component {
     this.getProjektByPerson()
   }
 
+  //State für Projekt ändern (Dropdown)
   handleChange = (e) => {
     this.setState({ projekt: e.target.value });
     this.timer = setTimeout(() =>
@@ -105,36 +106,29 @@ class ZeitintervallBuchungAnlegen extends Component {
       , 200);
   }
 
+  //State für Aktivitaet ändern (Dropdown)
   handleChange2 = (e) => {
     this.setState({ aktivitaet_id: e.target.value });
   }
 
+  //State für Startzeitraum ändern (DatePicker)
   handleChangeStart = (e) => {
     this.setState({ start: e });
   }
 
+  //State für Endzeitraum ändern (DatePicker)
   handleChangeEnde = (e) => {
     this.setState({ ende: e });
   }
 
+  // Millisekunden werden in Stunden umgerechnet
   msToTime = (duration) => {
     var minutes = Math.floor(duration / (1000 * 60) % 60),
-      hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-
+    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
     hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
-    console.log(minutes, "miins")
     return parseFloat(hours + "." + ((minutes)/6) * 10)
   }
-
-  // stundenBerechnen = () => {
-  // let stunden = this.msToTime((this.state.ende.getTime() - this.state.start.getTime()));
-  // console.log(stunden)
-  // return stunden
-  // }
-
-
-
 
   // Textfelder ändern
   textFieldValueChange = (event) => {
@@ -158,18 +152,14 @@ class ZeitintervallBuchungAnlegen extends Component {
 
   render() {
 
-    const { show } = this.props;
+    const { show, currentPerson } = this.props;
     const { projektliste, projekt, aktivitaetliste, start, ende } = this.state;
-    console.log(start, ende)
 
-
-
-
-    let title = 'Neue Zeitintervallbuchung';
+    let title = 'Neue Projektbuchung';
     let title2 = "Wählen Sie das Projekt auf das Sie buchen möchten."
     let title3 = "Wählen Sie die Aktivität auf die Sie buchen möchten."
-    let title4 = "Wählen den Startzeitpunkt für ihre Zeitintervallbuchung."
-    let title5 = "Wählen den Endzeitpunkt für ihre Zeitintervallbuchung."
+    let title4 = "Wählen den Startzeitpunkt für ihre Projektbuchung."
+    let title5 = "Wählen den Endzeitpunkt für ihre Projektbuchung."
     return (
       show ?
         <div>
@@ -278,4 +268,4 @@ class ZeitintervallBuchungAnlegen extends Component {
   }
 }
 
-export default ZeitintervallBuchungAnlegen;
+export default ProjektBuchungAnlegen;
