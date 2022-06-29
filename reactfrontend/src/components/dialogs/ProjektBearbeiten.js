@@ -51,7 +51,7 @@ class ProjektBearbeiten extends Component {
         TimetrackerAPI.getAPI().getPerson().then((personenBOs) => {
             let allePersonen = []
             personenBOs.map(person => {
-                if (person.getID() != this.props.currentPerson.getID()){
+                if (person.getID() != this.props.currentPerson.getID()) {
                     allePersonen.push(person)
                 }
             })
@@ -70,12 +70,23 @@ class ProjektBearbeiten extends Component {
 
     //Datum und Zeit vom Frontend wird das richtige Backend Format umgewandelt
     dateSplit = (date) => {
-        let newDate = date.toLocaleDateString() + " " + date.toLocaleTimeString()
-        let dateliste = newDate.split('')
-        let day = String(dateliste[0] + dateliste[1])
-        let month = "0" + String(dateliste[3])
-        let year = String(dateliste[5] + dateliste[6] + dateliste[7] + dateliste[8])
-        return year + "-" + month + "-" + day
+        if (date.toLocaleDateString().length === 9) {
+            let date2 = new Date(date)
+            let newDate = date2.toLocaleDateString() + " " + date2.toLocaleTimeString()
+            let dateliste = newDate.split('')
+            let day = String(dateliste[0] + dateliste[1])
+            let month = "0" + String(dateliste[3])
+            let year = String(dateliste[5] + dateliste[6] + dateliste[7] + dateliste[8])
+            return year + "-" + month + "-" + day
+        }
+        else {
+            let newDate = date.toLocaleDateString() + " " + date.toLocaleTimeString()
+            let dateliste = newDate.split('')
+            let day = String(dateliste[0])
+            let month = "0" + String(dateliste[2])
+            let year = String(dateliste[4] + dateliste[5] + dateliste[6] + dateliste[7])
+            return year + "-" + month + "-" + "0" + day
+        }
     }
 
     // Textfelder ändern
@@ -144,7 +155,7 @@ class ProjektBearbeiten extends Component {
                                         autocomplete='off'
                                     />
                                 </FormControl>
-                                <br/><br/>
+                                <br /><br />
                                 <FormControl fullWidth>
                                     <TextField
                                         label="Auftraggeber"
@@ -157,7 +168,7 @@ class ProjektBearbeiten extends Component {
                                         autocomplete='off'
                                     />
                                 </FormControl>
-                                <br/><br/>
+                                <br /><br />
                                 <Typography>Füge alle Personen hinzu, die in dem Projekt teilnehmen sollen.</Typography>
                                 <div>
                                     <FormControl fullWidth>
@@ -188,7 +199,7 @@ class ProjektBearbeiten extends Component {
                                                 </MenuItem>
                                             ))}
                                         </Select>
-                                        <br/>
+                                        <br />
                                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                                             <Stack spacing={3}>
                                                 <DesktopDatePicker
@@ -200,7 +211,7 @@ class ProjektBearbeiten extends Component {
                                                 />
                                             </Stack>
                                         </LocalizationProvider>
-                                        <br/>
+                                        <br />
                                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                                             <Stack spacing={3}>
                                                 <DesktopDatePicker
@@ -215,7 +226,7 @@ class ProjektBearbeiten extends Component {
                                     </FormControl>
 
                                 </div>
-                                <br/>
+                                <br />
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>

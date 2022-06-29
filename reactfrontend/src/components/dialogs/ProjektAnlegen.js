@@ -47,6 +47,8 @@ class ProjektAnlegen extends Component {
     addProjekt = () => {
         let newProjekt = new ProjektBO()
         newProjekt.setID(0)
+        console.log(this.dateSplit(this.state.startzeitraum))
+        console.log(this.dateSplit(this.state.endzeitraum))
         newProjekt.setBezeichnung(this.state.projektBezeichnung)
         newProjekt.setAuftraggeber(this.state.auftraggeber)
         newProjekt.setStartzeitraum(this.dateSplit(this.state.startzeitraum))
@@ -59,12 +61,22 @@ class ProjektAnlegen extends Component {
 
     //Datum und Zeit vom Frontend wird das richtige Backend Format umgewandelt
     dateSplit = (date) => {
+        if ( date.toLocaleDateString().length === 9){
         let newDate = date.toLocaleDateString() + " " + date.toLocaleTimeString()
         let dateliste = newDate.split('')
         let day = String(dateliste[0] + dateliste[1])
         let month = "0" + String(dateliste[3])
         let year = String(dateliste[5] + dateliste[6] + dateliste[7] + dateliste[8])
         return year + "-" + month + "-" + day
+        }
+        else{
+            let newDate = date.toLocaleDateString() + " " + date.toLocaleTimeString()
+            let dateliste = newDate.split('')
+            let day = String(dateliste[0])
+            let month = "0" + String(dateliste[2])
+            let year = String(dateliste[4] + dateliste[5] + dateliste[6] + dateliste[7])
+            return year + "-" + month + "-" + "0" + day 
+        }
     }
 
     // Person in Projekt hinzufügen
