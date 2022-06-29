@@ -70,8 +70,8 @@ class ProjektBearbeiten extends Component {
 
     //Datum und Zeit vom Frontend wird das richtige Backend Format umgewandelt
     dateSplit = (date) => {
-        if (date.toLocaleDateString().length === 9) {
-            let date2 = new Date(date)
+        let date2 = new Date(date)
+        if (date2.toLocaleDateString().length === 9) {
             let newDate = date2.toLocaleDateString() + " " + date2.toLocaleTimeString()
             let dateliste = newDate.split('')
             let day = String(dateliste[0] + dateliste[1])
@@ -80,7 +80,7 @@ class ProjektBearbeiten extends Component {
             return year + "-" + month + "-" + day
         }
         else {
-            let newDate = date.toLocaleDateString() + " " + date.toLocaleTimeString()
+            let newDate = date2.toLocaleDateString() + " " + date2.toLocaleTimeString()
             let dateliste = newDate.split('')
             let day = String(dateliste[0])
             let month = "0" + String(dateliste[2])
