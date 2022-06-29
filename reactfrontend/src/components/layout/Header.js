@@ -32,46 +32,43 @@ class Header extends Component {
   render() {
     const { currentUser } = this.props;
     return (
-      <Paper variant='outlined'>
-        <Grid container justifyContent="center" spacing={0} alignItems="center" xs={12}>
-          <Grid item xs={2}/>
-          <Grid item xs={2}>
-            <img src="foto_klein.png" align='center' width="160" height="145"></img>
-          </Grid>
-          <Grid item xs={2}>
-            <div id="aussen">
-              <div class="b1">
-                <Typography variant='h3' component='h1' color='#323748' fontFamily='Verdana'>
-                  TIME
+      <Grid container xs={12} spacing={2}>
+        <Grid item xs={12}>
+          <Paper variant='outlined'>
+            <Grid item xs={12}/>
+            <Grid container spacing={1} alignItems="center" xs={12}>
+              <Grid item xs={2}/>
+              <Grid item xs={1}>
+                <img src="foto_klein.png" align='center' width="100" height="82"/>
+              </Grid>
+              <Grid item xs={1}/>
+              <Grid item xs={4}>
+                <Typography color='#0098da' variant='h6' fontFamily='Verdana'>
+                  <b>TIME TRACKER</b>
                 </Typography>
-              </div>
-              <div class="b1">
-                <Typography variant='h3' component='h1'  color='#0098da' fontFamily='Courier'>
-                  TRACKER
+                <Typography align='center' color='#323748' fontFamily='Verdana' >
+                  <b>Zeiterfassungssystem</b>
                 </Typography>
-              </div> 
-            </div>
-            <Typography variant='h5' component='h2' align='center' color='#323748' fontFamily='Verdana' >
-              Zeiterfassungssystem
-            </Typography>
-          </Grid>
-          <Grid item xs={3}/>
-          <Grid item xs={1}>
-            <ProfileDropDown currentUser={currentUser} />
-          </Grid>
+              </Grid>
+              <Grid item xs={2}/>
+              <Grid item xs={1}>
+                <ProfileDropDown currentUser={currentUser} />
+              </Grid>
+            </Grid>
+            {
+                currentUser?
+            
+              <Tabs indicatorColor='primary' textColor='primary' centered value={this.state.tabindex} onChange={this.handleTabChange} >
+                <Tab label='Home'component={RouterLink} to={process.env.PUBLIC_URL + '/home'} />
+                <Tab label='Projekte' component={RouterLink} to={process.env.PUBLIC_URL + '/projekt_uebersicht'} />     
+                <Tab label='Buchung' component={RouterLink} to={process.env.PUBLIC_URL + '/buchung'} />
+                <Tab label='Auswertung' component={RouterLink} to={process.env.PUBLIC_URL + '/auswertung'} />
+              </Tabs>
+              : null
+            } 
+          </Paper>
         </Grid>
-        {
-            currentUser?
-        
-          <Tabs indicatorColor='primary' textColor='primary' centered value={this.state.tabindex} onChange={this.handleTabChange} >
-            <Tab label='Home'component={RouterLink} to={process.env.PUBLIC_URL + '/home'} />
-            <Tab label='Projekte' component={RouterLink} to={process.env.PUBLIC_URL + '/projekt_uebersicht'} />     
-            <Tab label='Buchung' component={RouterLink} to={process.env.PUBLIC_URL + '/buchung'} />
-            <Tab label='Auswertung' component={RouterLink} to={process.env.PUBLIC_URL + '/auswertung'} />
-          </Tabs>
-          : null
-        } 
-      </Paper>
+      </Grid>
     )   
   } 
 }
