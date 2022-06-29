@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 
@@ -18,10 +18,12 @@ class BuchungDeleteDialog extends Component {
     };
   }
 
+  // Dialog schließen
   handleClose = () => {
     this.props.onClose(null);
   }
 
+  // Buchung löschen
   deleteBuchung = () => {
     TimetrackerAPI.getAPI().deleteBuchung(this.state.buchung)
       .then(() => {
@@ -31,7 +33,7 @@ class BuchungDeleteDialog extends Component {
 
   render() {
     const { show } = this.props;
-    
+
     return (
       <div>
         <Dialog

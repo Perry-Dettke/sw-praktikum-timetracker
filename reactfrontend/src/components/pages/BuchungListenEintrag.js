@@ -143,13 +143,13 @@ class BuchungListenEintrag extends Component {
                         </Tooltip>
                     </Grid>
                     <Grid item xs={12}>
-                        <Divider/>
+                        <Divider />
                     </Grid>
 
                     <BuchungBearbeiten show={showBuchungBearbeiten} buchung={buchung} aktivitaet={aktivitaet} currentPerson={currentPerson} aktivitaetliste={aktivitaetliste} onClose={this.buchungBearbeitenClosed} getBuchungbyPersonID={this.getBuchungbyPersonID} />
-                    <BuchungDelete show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchungbyPersonID={this.props.getBuchungbyPersonID}/>
+                    <BuchungDelete show={showBuchungDelete} buchung={buchung} onClose={this.buchungDeleteClosed} getBuchungbyPersonID={this.props.getBuchungbyPersonID} />
                 </Grid>
-                    
+
                 : null
         );
     }

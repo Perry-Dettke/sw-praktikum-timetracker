@@ -3,7 +3,7 @@ import BusinessObject from './BusinessObject';
 
 export default class AktivitaetBO extends BusinessObject {
 
-    constructor( bezeichnung, kapazitaet, projekt_id){
+    constructor(bezeichnung, kapazitaet, projekt_id) {
         super();
         this.bezeichnung = bezeichnung;
         this.kapazitaet = kapazitaet;
@@ -14,48 +14,48 @@ export default class AktivitaetBO extends BusinessObject {
 
     // Bezeichnung setzen 
     setBezeichnung(bezeichnung) {
-    this.bezeichnung = bezeichnung;
+        this.bezeichnung = bezeichnung;
     }
     // Bezeichnung auslesen 
     getBezeichnung() {
-    return this.bezeichnung;
+        return this.bezeichnung;
     }
     // Kapazitaet setzen
     setKapazitaet(kapazitaet) {
-    this.kapazitaet = kapazitaet;
+        this.kapazitaet = kapazitaet;
     }
     // Kapazitaet auslesen 
     getKapazitaet() {
-    return this.kapazitaet;
+        return this.kapazitaet;
     }
 
     // Projekt ID setzen
     setProjektID(projekt_id) {
-    this.projekt_id = projekt_id;
+        this.projekt_id = projekt_id;
     }
     // Projekt ID auslesen 
     getProjektID() {
-    return this.projekt_id;
+        return this.projekt_id;
     }
     // Stunden  setzen
     setStunden(stunden) {
-    this.stunden = stunden;
+        this.stunden = stunden;
     }
     // Stunden auslesen 
     getStunden() {
-    return this.stunden;
+        return this.stunden;
     }
     // Stunden  setzen
     setAllStunden(allstunden) {
-    this.allstunden = allstunden;
+        this.allstunden = allstunden;
     }
     // Stunden auslesen 
     getAllStunden() {
-    return this.allstunden;
+        return this.allstunden;
     }
     static fromJSON(aktivitaet) {
-    // Objekt anhand einer JSON-Struktur erstellen
-    let p = Object.setPrototypeOf(aktivitaet, AktivitaetBO.prototype);
-    return p;
+        // Objekt anhand einer JSON-Struktur erstellen
+        let p = Object.setPrototypeOf(aktivitaet, AktivitaetBO.prototype);
+        return p;
     }
 }

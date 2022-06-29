@@ -33,22 +33,26 @@ class SonderBuchungAnlegen extends Component {
     this.props.onClose();
   }
 
+  // Urlaubstage bearbeiten
   updateArbeitszeitkontoUrlaubstage = () => {
     let arbeitszeitkonto = this.props.arbeitszeitkonto;
-    if (arbeitszeitkonto.getUrlaubstage() < parseInt(this.state.tage)){
-    window.alert("Du hast leider nur noch " + arbeitszeitkonto.getUrlaubstage() + " Tage Urlaub!")}
-    else{
-    let neuetage = arbeitszeitkonto.getUrlaubstage() - parseInt(this.state.tage)
-    arbeitszeitkonto.setUrlaubstage(neuetage)
-    TimetrackerAPI.getAPI().updateArbeitszeitkonto(arbeitszeitkonto).then(arbeitszeitkonto => {
-      this.props.getArbeitszeitkonto();
-      this.setState(this.initialState);
-      this.props.onClose(arbeitszeitkonto); //Aufrufen parent in backend
-    })
-    this.props.onClose(arbeitszeitkonto)
-    window.alert("Einen schönen Urlaub, erhol dich gut!")
-  }}
+    if (arbeitszeitkonto.getUrlaubstage() < parseInt(this.state.tage)) {
+      window.alert("Du hast leider nur noch " + arbeitszeitkonto.getUrlaubstage() + " Tage Urlaub!")
+    }
+    else {
+      let neuetage = arbeitszeitkonto.getUrlaubstage() - parseInt(this.state.tage)
+      arbeitszeitkonto.setUrlaubstage(neuetage)
+      TimetrackerAPI.getAPI().updateArbeitszeitkonto(arbeitszeitkonto).then(arbeitszeitkonto => {
+        this.props.getArbeitszeitkonto();
+        this.setState(this.initialState);
+        this.props.onClose(arbeitszeitkonto); //Aufrufen parent in backend
+      })
+      this.props.onClose(arbeitszeitkonto)
+      window.alert("Einen schönen Urlaub, erhol dich gut!")
+    }
+  }
 
+  // Krankheitstage bearbeiten
   updateArbeitszeitkontoKrankheitstage = () => {
     let arbeitszeitkonto = this.props.arbeitszeitkonto;
     let neuetage = arbeitszeitkonto.getKrankheitstage() + parseInt(this.state.tage)
@@ -63,10 +67,11 @@ class SonderBuchungAnlegen extends Component {
     window.alert("Gute Besserung!")
   }
 
+  // Art der Sonderbuchung checken
   ereignisCheck = () => {
     if (this.state.ereignis == "Urlaub")
       this.updateArbeitszeitkontoUrlaubstage()
-    else 
+    else
       this.updateArbeitszeitkontoKrankheitstage()
   }
 
@@ -88,8 +93,8 @@ class SonderBuchungAnlegen extends Component {
               <DialogContentText>
                 {title2}
               </DialogContentText>
-              <form  noValidate autoComplete='off'>
-                <br/>
+              <form noValidate autoComplete='off'>
+                <br />
                 <FormControl fullWidth>
                   <InputLabel id="ereignis">Art</InputLabel>
                   <Select

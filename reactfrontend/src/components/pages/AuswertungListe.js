@@ -28,7 +28,7 @@ class Auswertung extends Component {
     /* Fetches all PersonBOs from the backend */
     getProjektbyProjekterstellerID = () => {
         if (this.props.currentPerson.getID())
-        var pro = TimetrackerAPI.getAPI();
+            var pro = TimetrackerAPI.getAPI();
         pro.getProjektbyProjekterstellerID(this.props.currentPerson.getID()).then((projektBOs) => {
             this.setState({
                 projektliste: projektBOs,
@@ -67,33 +67,33 @@ class Auswertung extends Component {
 
         return (
             currentPerson ?
-            <div>
-            <div><LoadingProgress show={authLoading} />
-            {projektliste.length != 0 ?
                 <div>
-                    <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
-                    Es werden dir nur die Projekte angezeigt, die du selbst erstellt hast!
-                    </Typography>
-                    <Grid container spacing={4} alignItems="left">
-                        <Grid item xs={12}>
-                        </Grid>
-                        <Grid item xs={12}>
+                    <div><LoadingProgress show={authLoading} />
+                        {projektliste.length != 0 ?
+                            <div>
+                                <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                                    Es werden dir nur die Projekte angezeigt, die du selbst erstellt hast!
+                                </Typography>
+                                <Grid container spacing={4} alignItems="left">
+                                    <Grid item xs={12}>
+                                    </Grid>
+                                    <Grid item xs={12}>
 
 
-                            <List >
-                                {
-                                    projektliste.map(projekt =>
-                                        <AuswertungListenEintrag key={(projekt)[projekt.id]} projekt={projekt} ref={this.child} />)
-                                }
-                            </List>
-                        </Grid>
-                    </Grid>
-                    
-                </div>
-                : <div> <h1>Bisher hast du noch keine Projekte erstellt.</h1>
-                    <h3>Gehe auf die Projekt Übersicht um neue Projekte zu erstellen.</h3>
-                </div>}
-                </div>
+                                        <List >
+                                            {
+                                                projektliste.map(projekt =>
+                                                    <AuswertungListenEintrag key={(projekt)[projekt.id]} projekt={projekt} ref={this.child} />)
+                                            }
+                                        </List>
+                                    </Grid>
+                                </Grid>
+
+                            </div>
+                            : <div> <h1>Bisher hast du noch keine Projekte erstellt.</h1>
+                                <h3>Gehe auf die Projekt Übersicht um neue Projekte zu erstellen.</h3>
+                            </div>}
+                    </div>
                 </div> : <h1>Bisher hast du noch keine Projekte erstellt.</h1>
         );
     }

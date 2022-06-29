@@ -1,29 +1,29 @@
 export default class BusinessObject {
 
-    constructor() {
-      this.id = 0;
-      this.letzte_aenderung = 0;
-    }
-  
-    // ID setzen
-    setID(id) {
-      this.id = id;
-    }
+  constructor() {
+    this.id = 0;
+    this.letzte_aenderung = 0;
+  }
 
-    // ID auslesen
-    getID() {
-      return this.id;
-    }
+  // ID setzen
+  setID(id) {
+    this.id = id;
+  }
 
-    // letzte_aenderung setzen
-    setLetzte_aenderung(letzte_aenderung) {
-      this.letzte_aenderung = letzte_aenderung
-    }
-    // letzte_aenderung auslesen
-    getLetzte_aenderung() {
-      return this.letzte_aenderung
-    }
-  
+  // ID auslesen
+  getID() {
+    return this.id;
+  }
+
+  // letzte_aenderung setzen
+  setLetzte_aenderung(letzte_aenderung) {
+    this.letzte_aenderung = letzte_aenderung
+  }
+  // letzte_aenderung auslesen
+  getLetzte_aenderung() {
+    return this.letzte_aenderung
+  }
+
 
   toString() {
     let result = "";

@@ -17,6 +17,7 @@ class AktivitaetLoeschen extends Component {
         this.props.onClose(null);
     }
 
+    //Aktivität löschen
     deleteAktivitaet = () => {
         TimetrackerAPI.getAPI().deleteAktivitaet(this.props.aktivitaet)
             .then(() => {
@@ -26,7 +27,7 @@ class AktivitaetLoeschen extends Component {
 
     render() {
         const { show, aktivitaet } = this.props;
-        
+
         return (
             <div>
                 <Dialog

@@ -33,7 +33,7 @@ class ProjektAnlegen extends Component {
         TimetrackerAPI.getAPI().getPerson().then((personenBOs) => {
             let allePersonen = []
             personenBOs.map(person => {
-                if (person.getID() != this.props.currentPerson.getID()){
+                if (person.getID() != this.props.currentPerson.getID()) {
                     allePersonen.push(person)
                 }
             })
@@ -47,8 +47,6 @@ class ProjektAnlegen extends Component {
     addProjekt = () => {
         let newProjekt = new ProjektBO()
         newProjekt.setID(0)
-        console.log(this.dateSplit(this.state.startzeitraum))
-        console.log(this.dateSplit(this.state.endzeitraum))
         newProjekt.setBezeichnung(this.state.projektBezeichnung)
         newProjekt.setAuftraggeber(this.state.auftraggeber)
         newProjekt.setStartzeitraum(this.dateSplit(this.state.startzeitraum))
@@ -61,21 +59,21 @@ class ProjektAnlegen extends Component {
 
     //Datum und Zeit vom Frontend wird das richtige Backend Format umgewandelt
     dateSplit = (date) => {
-        if ( date.toLocaleDateString().length === 9){
-        let newDate = date.toLocaleDateString() + " " + date.toLocaleTimeString()
-        let dateliste = newDate.split('')
-        let day = String(dateliste[0] + dateliste[1])
-        let month = "0" + String(dateliste[3])
-        let year = String(dateliste[5] + dateliste[6] + dateliste[7] + dateliste[8])
-        return year + "-" + month + "-" + day
+        if (date.toLocaleDateString().length === 9) {
+            let newDate = date.toLocaleDateString() + " " + date.toLocaleTimeString()
+            let dateliste = newDate.split('')
+            let day = String(dateliste[0] + dateliste[1])
+            let month = "0" + String(dateliste[3])
+            let year = String(dateliste[5] + dateliste[6] + dateliste[7] + dateliste[8])
+            return year + "-" + month + "-" + day
         }
-        else{
+        else {
             let newDate = date.toLocaleDateString() + " " + date.toLocaleTimeString()
             let dateliste = newDate.split('')
             let day = String(dateliste[0])
             let month = "0" + String(dateliste[2])
             let year = String(dateliste[4] + dateliste[5] + dateliste[6] + dateliste[7])
-            return year + "-" + month + "-" + "0" + day 
+            return year + "-" + month + "-" + "0" + day
         }
     }
 
@@ -107,57 +105,14 @@ class ProjektAnlegen extends Component {
         });
     }
 
-    renderBranch = () => {
-        return (
-            <>
-                <div>
-                    <TextField
-                        label="Aktivität"
-                        variant="outlined"
-                        name="name"
-                        size="small"
-                        autocomplete='off'
-                    />
-                    &emsp;
-                    <TextField
-                        label="Kapazität in Stunden"
-                        variant="outlined"
-                        multiline
-                        name="name"
-                        size="small"
-                        autocomplete='off'
-                    />
-                </div>
-                <br />
-            </>
-        )
-    }
-
-    renderBranches = () => {
-        const { counter } = this.state
-        const result = []
-        for (let i = 0; i <= counter; i++) {
-            result.push(this.renderBranch(i))
-        }
-        return result
-    }
-
-    appendDiv = () => {
-        this.setState({
-            counter: this.state.counter + 1,
-            values: [
-                ...this.state.values,
-            ]
-        })
-    }
-
+    // Start und Ende setzen
     handleChangeStart = (e) => {
         this.setState({ startzeitraum: e });
-      }
-    
-      handleChangeEnde = (e) => {
+    }
+
+    handleChangeEnde = (e) => {
         this.setState({ endzeitraum: e });
-      }
+    }
 
     //Dialog schließen
     handleClose = () => {
@@ -233,14 +188,14 @@ class ProjektAnlegen extends Component {
                                                 )}
                                             >
                                                 {
-                                                allePersonen.map((person) => (
-                                                    <MenuItem
-                                                        key={person.getID()}
-                                                        value={person}
-                                                    >
-                                                        {person.getVor_name()} {person.getNach_name()}
-                                                    </MenuItem>
-                                                ))
+                                                    allePersonen.map((person) => (
+                                                        <MenuItem
+                                                            key={person.getID()}
+                                                            value={person}
+                                                        >
+                                                            {person.getVor_name()} {person.getNach_name()}
+                                                        </MenuItem>
+                                                    ))
                                                 }
                                             </Select>
                                             <br></br>

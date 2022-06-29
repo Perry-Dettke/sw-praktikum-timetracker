@@ -3,7 +3,7 @@ import BusinessObject from './BusinessObject';
 
 export default class ArbeitszeitkontoBO extends BusinessObject {
 
-    constructor(gesamtstunden, urlaubstage, krankheitstage){
+    constructor(gesamtstunden, urlaubstage, krankheitstage) {
         super();
         this.gesamtstunden = gesamtstunden;
         this.urlaubstage = urlaubstage;
@@ -11,33 +11,33 @@ export default class ArbeitszeitkontoBO extends BusinessObject {
     }
 
     // Gesamtstunden setzen 
-    setGesamtstunden(gesamtstunden){
+    setGesamtstunden(gesamtstunden) {
         this.gesamtstunden = gesamtstunden
     }
     // Gesamtstunden auslesen
-    getGesamtstunden(){
+    getGesamtstunden() {
         return this.gesamtstunden
     }
 
     // Urlaubstage setzen 
-    setUrlaubstage(urlaubstage){
+    setUrlaubstage(urlaubstage) {
         this.urlaubstage = urlaubstage
     }
     // Urlaubstage auslesen
-    getUrlaubstage(){
+    getUrlaubstage() {
         return this.urlaubstage
     }
-    
+
     // Krankheitstage setzen 
-    setKrankheitstage(krankheitstage){
+    setKrankheitstage(krankheitstage) {
         this.krankheitstage = krankheitstage
     }
     // Krankheitstage auslesen
-    getKrankheitstage(){
+    getKrankheitstage() {
         return this.krankheitstage
     }
-    
-    
+
+
     // Objekt anhand einer JSON-Struktur erstellen
     static fromJSON(arbeitszeitkonto) {
         let p = Object.setPrototypeOf(arbeitszeitkonto, ArbeitszeitkontoBO.prototype);

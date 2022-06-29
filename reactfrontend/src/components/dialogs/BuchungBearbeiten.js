@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, InputLabel, FormControl, Select, MenuItem} from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, InputLabel, FormControl, Select, MenuItem } from '@mui/material';
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 
@@ -25,7 +25,7 @@ class BuchungBearbeiten extends Component {
         this.state = {
             stunden: st,
             bezeichnung: ak,
-            aktivitaet_id: ai,  
+            aktivitaet_id: ai,
         };
 
         this.initialState = this.state;
@@ -53,19 +53,20 @@ class BuchungBearbeiten extends Component {
         this.props.onClose(buchung)
     }
 
+    // Textfelder ändern
     textFieldValueChange = (event) => {
         const value = event.target.value;
-    
+
         let error = false;
         if (value.trim().length === 0) {
-          error = true;
+            error = true;
         }
-    
+
         this.setState({
-          [event.target.id]: event.target.value,
+            [event.target.id]: event.target.value,
         });
-      }
-    
+    }
+
     handleChange = (e) => {
         this.setState({ aktivitaet_id: e.target.value });
     }
@@ -79,34 +80,34 @@ class BuchungBearbeiten extends Component {
 
     render() {
         const { show, aktivitaet, aktivitaetliste } = this.props;
-        const {stunden, aktivitaet_id } = this.state;
+        const { stunden, aktivitaet_id } = this.state;
 
         return (
             show ?
-                <Dialog open={show}  onClose={this.handleClose} maxWidth='xs' fullWidth>
-                    <DialogTitle > 
+                <Dialog open={show} onClose={this.handleClose} maxWidth='xs' fullWidth>
+                    <DialogTitle >
                         {"Buchung Bearbeiten"}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             Hier kannst du eine neue Stundenanzahl oder Aktivität angeben.
                         </DialogContentText>
-                        <form  noValidate autoComplete='off'>
-                            <br/>
+                        <form noValidate autoComplete='off'>
+                            <br />
                             {/* Textfeld für die Stunden */}
                             <TextField autoFocus type='text' required fullWidth size="large" margin='normal' id='stunden' label='Stunden:' value={stunden} onChange={this.textFieldValueChange} />
-                            <br/><br/>
+                            <br /><br />
                             {/* Dropdown für Aktivitaet */}
                             <FormControl fullWidth>
                                 <InputLabel id='aktivitaet-label'>Aktivität</InputLabel>
                                 <Select labelId='aktivitaet-label' id='aktivitaet' size="large" value={aktivitaet_id} defaultValue={aktivitaet.bezeichnung} onChange={this.handleChange}>
                                     {
-                                    aktivitaetliste.map((aktivitaet) => {
-                                        return (
-                                            <MenuItem
-                                                value={aktivitaet.getID()}>
+                                        aktivitaetliste.map((aktivitaet) => {
+                                            return (
+                                                <MenuItem
+                                                    value={aktivitaet.getID()}>
                                                     {aktivitaet.getBezeichnung()}
-                                            </MenuItem>
+                                                </MenuItem>
                                             )
                                         })
                                     }
@@ -123,7 +124,7 @@ class BuchungBearbeiten extends Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
-            : null
+                : null
         );
     }
 }

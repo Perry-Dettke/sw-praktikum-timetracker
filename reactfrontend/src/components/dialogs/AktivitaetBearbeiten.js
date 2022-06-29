@@ -118,7 +118,7 @@ class AktivitaetBearbeiten extends Component {
                         </DialogActions>
                     </Dialog>
                 </div>
-            : null
+                : null
         );
     }
 }

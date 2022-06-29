@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, IconButton, Dialog, DialogContent, DialogContentText,DialogTitle, DialogActions, TextField} from '@mui/material';
+import { Button, IconButton, Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
@@ -14,7 +14,7 @@ class PersonForm extends Component {
     constructor(props) {
         super(props);
 
-        let vn = "", nn = "", em = "", bn = "", ui="";
+        let vn = "", nn = "", em = "", bn = "", ui = "";
         if (props.person) {
             vn = props.person.vor_name;
             nn = props.person.nach_name;
@@ -23,10 +23,10 @@ class PersonForm extends Component {
             ui = props.person.google_user_id;
         }
         this.state = {
-            vor_name : vn,
-            nach_name : nn,
-            email : em,
-            benutzer_name : bn,
+            vor_name: vn,
+            nach_name: nn,
+            email: em,
+            benutzer_name: bn,
             google_user_id: ui,
         };
 
@@ -73,21 +73,22 @@ class PersonForm extends Component {
         this.props.onClose(person)
     }
 
- 
-  // Textfelder ändern
-  textFieldValueChange = (event) => {
-    const value = event.target.value;
 
-    let error = false;
-    if (value.trim().length === 0) {
-      error = true;
+    // Textfelder ändern
+    textFieldValueChange = (event) => {
+        const value = event.target.value;
+
+        let error = false;
+        if (value.trim().length === 0) {
+            error = true;
+        }
+
+        this.setState({
+            [event.target.id]: event.target.value,
+        });
     }
 
-    this.setState({
-      [event.target.id]: event.target.value,
-    });
-  }
-
+    //Dialog schließen
     handleClose = () => {
         this.setState(this.initialState);
         this.props.onClose(null);
@@ -95,7 +96,7 @@ class PersonForm extends Component {
 
     render() {
         const { show, person, currentUser } = this.props;
-        const {vor_name, nach_name, benutzer_name, email } = this.state;
+        const { vor_name, nach_name, benutzer_name, email } = this.state;
         let title = '';
         let header = '';
 
@@ -110,9 +111,9 @@ class PersonForm extends Component {
 
         return (
             show ?
-                <Dialog open={show}  onClose={this.handleClose} maxWidth='xs' fullWidth>
+                <Dialog open={show} onClose={this.handleClose} maxWidth='xs' fullWidth>
                     <DialogTitle >{title}
-                        <IconButton  onClick={this.handleClose}>
+                        <IconButton onClick={this.handleClose}>
                             <CloseIcon />
                         </IconButton>
                     </DialogTitle>
@@ -120,7 +121,7 @@ class PersonForm extends Component {
                         <DialogContentText>
                             {header}
                         </DialogContentText>
-                        <form  noValidate autoComplete='off'>
+                        <form noValidate autoComplete='off'>
                             <TextField autoFocus type='text' required fullWidth margin='normal' id='vor_name' label='Vorname:' value={vor_name} onChange={this.textFieldValueChange} />
                             <TextField autoFocus type='text' required fullWidth margin='normal' id='nach_name' label='Nachname:' value={nach_name} onChange={this.textFieldValueChange} />
                             <TextField autoFocus type='text' required fullWidth margin='normal' id='email' label='Email:' value={email} onChange={this.textFieldValueChange} />
@@ -128,18 +129,18 @@ class PersonForm extends Component {
                         </form>
                     </DialogContent>
                     <DialogActions>
-              <Button color='secondary' onClick={this.handleClose}>
-                Abbrechen
-              </Button>
-              {person ?
-                <Button variant='contained' color='primary' onClick={this.updatePerson}>
-                  Speichern
-                  </Button>
-                : <Button variant='contained' color='primary' onClick={this.addPerson}>
-                  Anlegen
-                  </Button>
-              }
-            </DialogActions>
+                        <Button color='secondary' onClick={this.handleClose}>
+                            Abbrechen
+                        </Button>
+                        {person ?
+                            <Button variant='contained' color='primary' onClick={this.updatePerson}>
+                                Speichern
+                            </Button>
+                            : <Button variant='contained' color='primary' onClick={this.addPerson}>
+                                Anlegen
+                            </Button>
+                        }
+                    </DialogActions>
                 </Dialog>
                 : null
         );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 
 /**
@@ -17,10 +17,12 @@ class ZeitintervallLoeschen extends Component {
     };
   }
 
+  // Dialog schließen
   handleClose = () => {
     this.props.onClose(null);
   }
 
+  // Zeitintervall löschen
   deleteZeitintervall = () => {
     TimetrackerAPI.getAPI().deleteZeitintervall(this.state.zeitintervall)
       .then(() => {
@@ -31,7 +33,7 @@ class ZeitintervallLoeschen extends Component {
   render() {
 
     const { show } = this.props;
-    
+
     return (
       <div>
         <Dialog
@@ -59,8 +61,6 @@ class ZeitintervallLoeschen extends Component {
   }
 
 }
-
-
 
 
 export default ZeitintervallLoeschen;

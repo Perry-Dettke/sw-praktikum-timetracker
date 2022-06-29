@@ -95,13 +95,13 @@ class ZeitintervallEintrag extends Component {
                         </Tooltip>
                     </Grid>
                     <Grid item xs={12}>
-                        <Divider/>
+                        <Divider />
                     </Grid>
 
                     <ZeitintervallBearbeiten show={showZeitintervallBearbeiten} zeitintervall={zeitintervall} onClose={this.zeitintervallBearbeitenClosed} getZeitintervallbyPersonID={this.getZeitintervallbyPersonID} />
                     <ZeitintervallLoeschen show={showZeitintervallLoeschen} zeitintervall={zeitintervall} onClose={this.zeitintervallLoeschenClosed} getZeitintervallbyPersonID={this.props.getZeitintervallbyPersonID} />
                 </Grid>
-            : null
+                : null
         );
     }
 }

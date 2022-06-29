@@ -5,7 +5,7 @@ const white = '#f0f5f9';
 const black = '#000000';
 const blue = '#8ee5ee';
 const white_paper = '#393e46';
-const text_white ='#eeeeee';
+const text_white = '#eeeeee';
 
 // A custom theme for this app
 const theme = createTheme({
@@ -60,7 +60,7 @@ const theme = createTheme({
     },
     icon: colors.blueGrey[600],
     divider: colors.grey[200]
-  }, 
+  },
 });
 
 export default theme;

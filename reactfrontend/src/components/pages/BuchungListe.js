@@ -25,7 +25,7 @@ class BuchungListe extends Component {
       showEreignisBuchungAnlegen: false,
       authLoading: false,
       currentPerson: this.props.currentPerson,
-  
+
     };
   }
 
@@ -83,7 +83,7 @@ class BuchungListe extends Component {
             </Typography>
             <Typography variant='h9' component='h7' align='center' color='#323748' fontFamily='Verdana'>
               Zudem werden dir deine bereits erstellten Buchungen angezeigt und du kannst diese bearbeiten oder löschen.
-            </Typography> 
+            </Typography>
           </Box>
           <Grid>
             <Box sx={{ flexGrow: 1 }}>
@@ -98,10 +98,10 @@ class BuchungListe extends Component {
                 &nbsp; Projekt-Buchung erstellen
               </Button>
             </Box>
-            <br/><br/>
+            <br /><br />
             <Grid container direction="row" justifyContent="center" alignItems="center" spacing={3} xs={12} sx={{
-                backgroundColor: '#dedede'
-              }}>
+              backgroundColor: '#dedede'
+            }}>
               <Grid item xs={2}>
                 <Typography>Datum</Typography>
               </Grid>
@@ -124,14 +124,14 @@ class BuchungListe extends Component {
             <Grid item xs={12}>
               {
                 buchungliste.map(buchung =>
-                    <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} currentPerson={currentPerson} getBuchung={this.getBuchungbyPersonID} />)
+                  <BuchungListenEintrag key={buchung[buchung.id]} buchung={buchung} show={this.props.show} currentPerson={currentPerson} getBuchung={this.getBuchungbyPersonID} />)
               }
             </Grid>
           </Grid>
           <ProjektBuchungAnlegen show={showProjektBuchungAnlegen} onClose={this.projektBuchungAnlegenClosed} currentPerson={currentPerson} getBuchungbyPersonID={this.getBuchungbyPersonID} />
           <LoadingProgress show={authLoading} />
         </div>
-      : null
+        : null
     );
   }
 }

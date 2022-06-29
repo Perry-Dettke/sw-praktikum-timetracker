@@ -22,7 +22,7 @@ import TimetrackerAPI from './api/TimetrackerAPI';
  * user to the respective pages, react-router-dom ist used.
  * 
  */
- class App extends React.Component {
+class App extends React.Component {
 
 	/** Constructor of the app, which initializes firebase  */
 	constructor(props) {
@@ -69,17 +69,17 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 
 	getPerson = () => {
 		this.timer = setTimeout(() => {
-		TimetrackerAPI.getAPI().getPersonByGoogle(this.state.currentUser.uid).then((person) =>
-			this.setState({
-			  currentPerson: person,
-			})
-		  ).catch((e) =>
-			this.setState({
-			  person: "errornichtda",
-			})
-		  );
-		 } , 1000);
-	  }; 
+			TimetrackerAPI.getAPI().getPersonByGoogle(this.state.currentUser.uid).then((person) =>
+				this.setState({
+					currentPerson: person,
+				})
+			).catch((e) =>
+				this.setState({
+					person: "errornichtda",
+				})
+			);
+		}, 1000);
+	};
 
 	/**
 	 * Lifecycle method, which is called when the component gets inserted into the browsers DOM.
@@ -135,49 +135,47 @@ import TimetrackerAPI from './api/TimetrackerAPI';
 	/** Renders the whole app */
 	render() {
 		const { currentUser, appError, authError, authLoading, currentPerson } = this.state;
-		console.log(currentPerson, "CurrentPerson APP")
-		console.log(currentUser, "CurretntUser APP")
 
 		return (
-				<Router>
-					<div className='App'>
-						<Header currentUser={currentUser} />
-						<div className='content'>
-							<Routes>
-								<Route path={process.env.PUBLIC_URL} >
-									<Route path={process.env.PUBLIC_URL + '/'} element={
-										// For some special cases we need to handle the root route
-										// Redirect if the user is signed in
-										currentUser ?
-											<Navigate replace to={process.env.PUBLIC_URL + '/home'} />
-											:
-											<SignIn onSignIn={this.handleSignIn} />
-									} />
-									<Route path={process.env.PUBLIC_URL + '/*'} element={
-										// Firebase redirects to index.html
-										// Redirect if the user is signed in
-										currentUser ?
-											<Navigate replace to={process.env.PUBLIC_URL + '/home'} />
-											:
-											<SignIn onSignIn={this.handleSignIn} />
-											
-									} />
-									<Route path={process.env.PUBLIC_URL + '/home'} element={<Home  currentUser={currentUser} getPerson={this.getPerson}/> }/>
-									<Route path={process.env.PUBLIC_URL + '/projekt_uebersicht'} element={<Projekt_uebersicht currentUser={currentUser} currentPerson={currentPerson} /> }/>
-									<Route path={process.env.PUBLIC_URL + '/buchung'} element={<BuchungListe  currentUser={currentUser} currentPerson={currentPerson} /> }/>
-									<Route path={process.env.PUBLIC_URL + '/auswertung'} element={<Auswertung  currentPerson={currentPerson} /> }/>
-								</Route>
-							</Routes>
-							<LoadingProgress show={authLoading} />
-							<ContextErrorMessage error={authError} contextErrorMsg={`Something went wrong during sign in process.`} onReload={this.handleSignIn} />
-							<ContextErrorMessage error={appError} contextErrorMsg={`Something went wrong inside the app. Please reload the page.`} />
-						</div>
+			<Router>
+				<div className='App'>
+					<Header currentUser={currentUser} />
+					<div className='content'>
+						<Routes>
+							<Route path={process.env.PUBLIC_URL} >
+								<Route path={process.env.PUBLIC_URL + '/'} element={
+									// For some special cases we need to handle the root route
+									// Redirect if the user is signed in
+									currentUser ?
+										<Navigate replace to={process.env.PUBLIC_URL + '/home'} />
+										:
+										<SignIn onSignIn={this.handleSignIn} />
+								} />
+								<Route path={process.env.PUBLIC_URL + '/*'} element={
+									// Firebase redirects to index.html
+									// Redirect if the user is signed in
+									currentUser ?
+										<Navigate replace to={process.env.PUBLIC_URL + '/home'} />
+										:
+										<SignIn onSignIn={this.handleSignIn} />
+
+								} />
+								<Route path={process.env.PUBLIC_URL + '/home'} element={<Home currentUser={currentUser} getPerson={this.getPerson} />} />
+								<Route path={process.env.PUBLIC_URL + '/projekt_uebersicht'} element={<Projekt_uebersicht currentUser={currentUser} currentPerson={currentPerson} />} />
+								<Route path={process.env.PUBLIC_URL + '/buchung'} element={<BuchungListe currentUser={currentUser} currentPerson={currentPerson} />} />
+								<Route path={process.env.PUBLIC_URL + '/auswertung'} element={<Auswertung currentPerson={currentPerson} />} />
+							</Route>
+						</Routes>
+						<LoadingProgress show={authLoading} />
+						<ContextErrorMessage error={authError} contextErrorMsg={`Something went wrong during sign in process.`} onReload={this.handleSignIn} />
+						<ContextErrorMessage error={appError} contextErrorMsg={`Something went wrong inside the app. Please reload the page.`} />
 					</div>
-					
-				</Router>
-			);
-		}
+				</div>
+
+			</Router>
+		);
 	}
+}
 
 export default App;
 

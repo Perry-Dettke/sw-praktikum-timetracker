@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 
@@ -13,10 +13,12 @@ class ProjektLoeschen extends Component {
     super(props);
   }
 
+  // Dialog schließen
   handleClose = () => {
     this.props.onClose(null);
   }
 
+  // Projekt löschen
   deleteProjekt = () => {
     TimetrackerAPI.getAPI().deleteProjekt(this.props.projekt)
       .then(() => {
@@ -26,7 +28,7 @@ class ProjektLoeschen extends Component {
 
   render() {
     const { show, projekt } = this.props;
-    
+
     return (
       <div>
         <Dialog

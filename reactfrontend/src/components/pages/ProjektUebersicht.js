@@ -58,17 +58,18 @@ class Projekt_uebersicht extends Component {
 
     // Projekt Anlegen Button geklickt - Oeffnet den Projekt anlegen Dialog
     projektAnlegenButtonClicked = event => {
-        if (this.state.person){
-        event.stopPropagation();
-        this.setState({
-            showProjektAnlegen: true,
-        });
-    }
-        else{ window.alert("Du musst dich erst anmelden!")
-}
+        if (this.state.person) {
+            event.stopPropagation();
+            this.setState({
+                showProjektAnlegen: true,
+            });
+        }
+        else {
+            window.alert("Du musst dich erst anmelden!")
+        }
     }
 
-    //ProjektDialog schließen
+    //Projekt Anlegen schließen
     projektAnlegenClosed = projekt => {
         if (projekt) {
             const newProjektList = [...this.state.projekt, projekt];
@@ -92,13 +93,13 @@ class Projekt_uebersicht extends Component {
     render() {
         const { currentPerson } = this.props;
         const { projekt, showProjektAnlegen, authLoading } = this.state;
-        
+
         return (
             <div>
                 <Grid container spacing={1} alignItems="left">
-                    <Grid item xs={1}/>
+                    <Grid item xs={1} />
                     <Grid item xs={10}>
-                        <Typography  variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                        <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
                             Hier werden alle Projekte in denen du Teilnehmer bist angezeigt.
                         </Typography>
                         <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
@@ -108,7 +109,7 @@ class Projekt_uebersicht extends Component {
                             Nur der Ersteller eines Projekts kann ein Projekt bearbeiten und löschen oder Aktivitäten hinzufügen und löschen.
                         </Typography>
                     </Grid>
-                    <Grid item xs={1}/>
+                    <Grid item xs={1} />
                     <Grid item xs={12}>
                         <Button
                             sx={{
@@ -130,7 +131,7 @@ class Projekt_uebersicht extends Component {
                         </List>
                     </Grid>
                 </Grid>
-                <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} currentPerson={currentPerson}/>
+                <ProjektAnlegen show={showProjektAnlegen} onClose={this.projektAnlegenClosed} currentPerson={currentPerson} />
                 <LoadingProgress show={authLoading} />
             </div>
         );

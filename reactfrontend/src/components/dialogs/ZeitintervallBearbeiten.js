@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogActions} from '@mui/material';
+import { Button, IconButton, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@material-ui/core/TextField';
 import TimetrackerAPI from "../../api/TimetrackerAPI";
@@ -27,14 +27,15 @@ class ZeitintervallBearbeiten extends Component {
             start: st,
             ende: en,
             dauer: da,
-          
+
         };
 
         this.initialState = this.state;
- 
+
 
     }
 
+    // Zeitintervall bearbeiten
     updateZeitintervall = () => {
         let zeitintervall = this.props.zeitintervall;
         zeitintervall.setStart(this.state.start)
@@ -48,6 +49,7 @@ class ZeitintervallBearbeiten extends Component {
         })
     }
 
+    // Textfelder ändern
     textFieldValueChange = (event) => {
         const value = event.target.value;
 
@@ -59,12 +61,14 @@ class ZeitintervallBearbeiten extends Component {
         this.setState({
             [event.target.id]: event.target.value,
         });
-        }
+    }
 
+    // Start bearbeiten
     handleChangeStart = (e) => {
         this.setState({ start: e });
     }
 
+    // Ende bearbeiten
     handleChangeEnde = (e) => {
         this.setState({ ende: e });
     }
@@ -92,34 +96,34 @@ class ZeitintervallBearbeiten extends Component {
 
     render() {
         const { show } = this.props;
-        const {dauer, start, ende } = this.state;
+        const { dauer, start, ende } = this.state;
         let title = 'Kommen';
         let title2 = "Gehen"
         return (
             show ?
-                <Dialog open={show}  onClose={this.handleClose} maxWidth='xs' fullWidth>
+                <Dialog open={show} onClose={this.handleClose} maxWidth='xs' fullWidth>
                     <DialogTitle > {"Zeitintervall Bearbeiten"}
-                        <IconButton  onClick={this.handleClose} right>
+                        <IconButton onClick={this.handleClose} right>
                             <CloseIcon />
                         </IconButton>
                     </DialogTitle>
                     <DialogContent>
 
-                        <form  noValidate autoComplete='off'>
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start:' value={start} onChange={this.textFieldValueChange} />
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende:' value={ende} onChange={this.textFieldValueChange} />
+                        <form noValidate autoComplete='off'>
+                            <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start:' value={start} onChange={this.textFieldValueChange} />
+                            <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende:' value={ende} onChange={this.textFieldValueChange} />
                         </form>
 
                     </DialogContent>
                     <DialogActions>
-              <Button color='secondary' onClick={this.handleClose}>
-                Abbrechen
-              </Button>
+                        <Button color='secondary' onClick={this.handleClose}>
+                            Abbrechen
+                        </Button>
 
-                <Button variant='contained' color='primary' onClick={this.updateZeitintervall}>
-                  Speichern
-                  </Button>
-            </DialogActions>
+                        <Button variant='contained' color='primary' onClick={this.updateZeitintervall}>
+                            Speichern
+                        </Button>
+                    </DialogActions>
                 </Dialog>
                 : null
         );

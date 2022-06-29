@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Typography, Button, Grid, TextField, Accordion, AccordionSummary, AccordionDetails, Table, TableCell, TableHead, TableRow, TableBody} from "@mui/material";
+import { Typography, Button, Grid, TextField, Accordion, AccordionSummary, AccordionDetails, Table, TableCell, TableHead, TableRow, TableBody } from "@mui/material";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -93,37 +93,37 @@ class AuswertungListenEintrag extends Component {
                 }}
               >
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <Typography align="left">Um nach einem bestimmten Zeitraum zu suchen, fülle die Such-Felder aus und klicke den Button. Dies führt zu einer Aktualisierung der Ist-Stunden und der Restkapazität.</Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start: (yyyy-mm-dd)' value={start} onChange={this.textFieldValueChange} />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende: (yyyy-mm-dd)' value={ende} onChange={this.textFieldValueChange} />
-                    </Grid>
-                    <Grid item xs={3} 
-                        sx={{
-                            height: 75,
-                            marginTop: 2,
-                        }}>
-                        <Button
-                        variant="contained"
-                        color="primary"
-                        aria-label="add"
-                        fullWidth
-                        onClick={this.zeitraumClicked}
-                        startIcon={<AccessTimeIcon />}
-                        sx={{
-                            height: 50,
-                            width: 250,
-                            }}
-                        >
-                        Zeitraum suchen
-                        </Button>
-                    </Grid>
+                  <Grid item xs={12}>
+                    <Typography align="left">Um nach einem bestimmten Zeitraum zu suchen, fülle die Such-Felder aus und klicke den Button. Dies führt zu einer Aktualisierung der Ist-Stunden und der Restkapazität.</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <TextField autoFocus type='text' required fullWidth margin='normal' id='start' label='Start: (yyyy-mm-dd)' value={start} onChange={this.textFieldValueChange} />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <TextField autoFocus type='text' required fullWidth margin='normal' id='ende' label='Ende: (yyyy-mm-dd)' value={ende} onChange={this.textFieldValueChange} />
+                  </Grid>
+                  <Grid item xs={3}
+                    sx={{
+                      height: 75,
+                      marginTop: 2,
+                    }}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      aria-label="add"
+                      fullWidth
+                      onClick={this.zeitraumClicked}
+                      startIcon={<AccessTimeIcon />}
+                      sx={{
+                        height: 50,
+                        width: "auto",
+                      }}
+                    >
+                      Zeitraum suchen
+                    </Button>
+                  </Grid>
                 </Grid>
-                <br/>
+                <br />
                 <Table>
                   <TableHead
                     sx={{
@@ -160,7 +160,7 @@ class AuswertungListenEintrag extends Component {
                                 backgroundColor: "#eeeeee",
                               }}
                             >
-                               <AuswertungListenEintragPerson key={(aktivitaet)[aktivitaet.id]} aktivitaet={aktivitaet} start={start} ende={ende} />
+                              <AuswertungListenEintragPerson key={(aktivitaet)[aktivitaet.id]} aktivitaet={aktivitaet} start={start} ende={ende} />
                             </AccordionDetails>
                           </Accordion>
                         </TableCell>

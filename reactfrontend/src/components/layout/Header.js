@@ -35,13 +35,13 @@ class Header extends Component {
       <Grid container xs={12} spacing={2}>
         <Grid item xs={12}>
           <Paper variant='outlined'>
-            <Grid item xs={12}/>
+            <Grid item xs={12} />
             <Grid container spacing={1} alignItems="center" xs={12}>
-              <Grid item xs={2}/>
+              <Grid item xs={2} />
               <Grid item xs={1}>
-                <img src="foto_klein.png" align='center' width="100" height="82"/>
+                <img src="foto_klein.png" align='center' width="100" height="82" />
               </Grid>
-              <Grid item xs={1}/>
+              <Grid item xs={1} />
               <Grid item xs={4}>
                 <Typography color='#0098da' variant='h6' fontFamily='Verdana'>
                   <b>TIME TRACKER</b>
@@ -50,30 +50,30 @@ class Header extends Component {
                   <b>Zeiterfassungssystem</b>
                 </Typography>
               </Grid>
-              <Grid item xs={2}/>
+              <Grid item xs={2} />
               <Grid item xs={1}>
                 <ProfileDropDown currentUser={currentUser} />
               </Grid>
             </Grid>
             {
-                currentUser?
-            
-              <Tabs indicatorColor='primary' textColor='primary' centered value={this.state.tabindex} onChange={this.handleTabChange} >
-                <Tab label='Home'component={RouterLink} to={process.env.PUBLIC_URL + '/home'} />
-                <Tab label='Projekte' component={RouterLink} to={process.env.PUBLIC_URL + '/projekt_uebersicht'} />     
-                <Tab label='Buchung' component={RouterLink} to={process.env.PUBLIC_URL + '/buchung'} />
-                <Tab label='Auswertung' component={RouterLink} to={process.env.PUBLIC_URL + '/auswertung'} />
-              </Tabs>
-              : null
-            } 
+              currentUser ?
+
+                <Tabs indicatorColor='primary' textColor='primary' centered value={this.state.tabindex} onChange={this.handleTabChange} >
+                  <Tab label='Home' component={RouterLink} to={process.env.PUBLIC_URL + '/home'} />
+                  <Tab label='Projekte' component={RouterLink} to={process.env.PUBLIC_URL + '/projekt_uebersicht'} />
+                  <Tab label='Buchung' component={RouterLink} to={process.env.PUBLIC_URL + '/buchung'} />
+                  <Tab label='Auswertung' component={RouterLink} to={process.env.PUBLIC_URL + '/auswertung'} />
+                </Tabs>
+                : null
+            }
           </Paper>
         </Grid>
       </Grid>
-    )   
-  } 
+    )
+  }
 }
 
-/**/ 
+/**/
 Header.propTypes = {
 
   currentUser: PropTypes.object,

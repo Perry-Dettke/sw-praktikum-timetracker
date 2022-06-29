@@ -24,9 +24,9 @@ class SignIn extends Component {
 	render() {
 		return (
 			<div>
-				<Typography sx={{margin: 2}} align='center' variant='h6'>Willkommen zum Time Tracker</Typography>
-				<Typography sx={{margin: 2}} align='center'>Es sieht so aus als wärs du noch nicht eingeloggt</Typography>
-				<Typography sx={{margin: 2}} align='center'>Bitte melde dich mit deiner Email an.</Typography>
+				<Typography sx={{ margin: 2 }} align='center' variant='h6'>Willkommen zum Time Tracker</Typography>
+				<Typography sx={{ margin: 2 }} align='center'>Es sieht so aus als wärs du noch nicht eingeloggt</Typography>
+				<Typography sx={{ margin: 2 }} align='center'>Bitte melde dich mit deiner Email an.</Typography>
 				<Grid container justifyContent='center'>
 					<Grid item>
 						<Button variant='contained' color='primary' onClick={this.handleSignInButtonClicked}>

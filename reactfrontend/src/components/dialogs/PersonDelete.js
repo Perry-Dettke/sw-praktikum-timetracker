@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 
@@ -15,24 +15,16 @@ class PersonDelete extends Component {
     // Status initalisieren
     this.state = {
       person: props.person,
-      showSnackbar: false,
     };
   }
 
-  closeSnackbar = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    this.setState({
-      showSnackbar: false
-    });
-  };
-
+  // Dialog schließen
   handleClose = () => {
     this.props.onClose();
     this.props.getPersonbyID();
   }
 
+  // Person löschen
   deletePerson = () => {
     TimetrackerAPI.getAPI().deletePerson(this.state.person)
       .then(() => {

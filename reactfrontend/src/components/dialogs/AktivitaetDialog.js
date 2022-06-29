@@ -12,11 +12,11 @@ class AktivitaetDialog extends Component {
 
     constructor(props) {
         super(props);
-        
+
         //gebe einen leeren status
         this.state = {
-        bezeichnung: null,
-        kapazitaet: null,
+            bezeichnung: null,
+            kapazitaet: null,
         };
     }
 
@@ -28,7 +28,7 @@ class AktivitaetDialog extends Component {
         newAktivitaet.setKapazitaet(this.state.kapazitaet)
         newAktivitaet.setProjektID(this.props.projekt.getID())
         TimetrackerAPI.getAPI().addAktivitaet(newAktivitaet).then(aktivitaet => {
-            this.props.onClose(aktivitaet); 
+            this.props.onClose(aktivitaet);
         })
     }
 
@@ -54,7 +54,7 @@ class AktivitaetDialog extends Component {
 
     render() {
         const { show, projekt } = this.props
-        const {bezeichnung, kapazitaet} = this.state
+        const { bezeichnung, kapazitaet } = this.state
 
         let title = 'Neue Aktivität';
 
@@ -63,7 +63,7 @@ class AktivitaetDialog extends Component {
                 <div>
                     <Dialog open={show} onClose={this.handleClose} maxWidth='xl'>
                         <DialogTitle id='form-dialog-title'>
-                            {title}  
+                            {title}
                         </DialogTitle>
                         <DialogContent>
                             <Grid container spacing={1}>
@@ -106,13 +106,13 @@ class AktivitaetDialog extends Component {
                             <Button color='secondary' onClick={this.handleClose}>
                                 Abbrechen
                             </Button>
-                            <Button variant='contained' color='primary'  onClick={this.addAktivitaet}>
+                            <Button variant='contained' color='primary' onClick={this.addAktivitaet}>
                                 Bestätigen
                             </Button>
                         </DialogActions>
                     </Dialog>
                 </div>
-            : null
+                : null
         );
     }
 }

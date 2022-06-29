@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Component } from "react";
-import { Paper, Box, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Table, IconButton, Grid, Typography, TextField, Divider } from "@mui/material";
+import { Paper, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Table, Grid, Typography, TextField, Divider } from "@mui/material";
 import TimetrackerAPI from "../../api/TimetrackerAPI";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -13,11 +13,10 @@ import LoadingProgress from '../dialogs/LoadingProgress';
 
 import ZeitintervallBO from "../../api/ZeitintervallBO";
 import ZeitintervallEintrag from './ZeitintervallEintrag.js'
-import { CoPresent } from "@mui/icons-material";
 
 /**
  * Auf dieser Seite sieht man drei Dinge:
- * 1. das eingene Profil
+ * 1. das eigene Profil
  * 2. Eine Übersicht des Arbeitzeitkontos mit den Funktionen Kommen, Gehen, Pause und Sonderbuchungen, so wie eine Zeitraumsuche
  * 3. Eine Auflistung aller Kommen, Gehen und Pause Buchungen mit einer bearbeiten und löschen Funktion
  */
@@ -116,20 +115,20 @@ class Home extends Component {
     // Gibt das akteullste Zeitintervall der Person zurück
     getZeitintervall = () => {
         this.timer = setTimeout(() => {
-        TimetrackerAPI.getAPI().getZeitintervallbyMaxIDandPersonID(this.state.person.getID()).then((zeitintervallBO) => {
-            if (zeitintervallBO)
-                this.setState({
-                    zeitintervall: zeitintervallBO,
-                    authLoading: true,
-                });
-        });
+            TimetrackerAPI.getAPI().getZeitintervallbyMaxIDandPersonID(this.state.person.getID()).then((zeitintervallBO) => {
+                if (zeitintervallBO)
+                    this.setState({
+                        zeitintervall: zeitintervallBO,
+                        authLoading: true,
+                    });
+            });
         }
-        , 200);
+            , 200);
     }
 
-        // Gibt das alle Zeitintervalle der Person zurück
-        getZeitintervallbyPersonID = () => {
-            this.timer = setTimeout(() => {
+    // Gibt das alle Zeitintervalle der Person zurück
+    getZeitintervallbyPersonID = () => {
+        this.timer = setTimeout(() => {
             TimetrackerAPI.getAPI().getZeitintervallbyPersonID(this.state.person.getID()).then((zeitintervallBOs) => {
                 this.setState({
                     zeitintervallliste: zeitintervallBOs,
@@ -141,25 +140,25 @@ class Home extends Component {
                 authLoading: true,
             });
         }
-        , 200);
-        }
+            , 200);
+    }
 
     // ********** ARBEITSZEITKONTO FUNKTIONEN **********\\
     // Gibt das Arbeitszeitkonto der Person zurück
     getArbeitszeitkonto = () => {
         this.timer = setTimeout(() => {
-        TimetrackerAPI.getAPI().getArbeitszeitkonto(this.state.person.getArbeitszeitkonto_id()).then((arbeitszeitkontoBO) => {
-            this.setState({
-                arbeitszeitkonto: arbeitszeitkontoBO,
-                authLoading: false,
+            TimetrackerAPI.getAPI().getArbeitszeitkonto(this.state.person.getArbeitszeitkonto_id()).then((arbeitszeitkontoBO) => {
+                this.setState({
+                    arbeitszeitkonto: arbeitszeitkontoBO,
+                    authLoading: false,
+                });
             });
-        });
-        // set loading to true
-        this.setState({
-            authLoading: true,
-        });
-    }
-    , 200);
+            // set loading to true
+            this.setState({
+                authLoading: true,
+            });
+        }
+            , 200);
     }
 
     // ********** SONDERBUCHUNG FUNKTIONEN **********\\
@@ -439,59 +438,59 @@ class Home extends Component {
                 {person && arbeitszeitkonto ?
                     <div>
                         <Grid container xs={12} spacing={2} alignItems="center">
-                            <Grid item xs={12}/>
-                            <Grid item xs={12}/>
+                            <Grid item xs={12} />
+                            <Grid item xs={12} />
                             <Grid item xs={12}>
                                 <Paper elevation={3}>
                                     <Grid container xs={12} spacing={2}>
                                         <Grid item xs={12}>
-                                        <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
-                                            Mein Profil
-                                        </Typography>
-                                        <br/>
+                                            <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                                                Mein Profil
+                                            </Typography>
+                                            <br />
                                         </Grid>
-                                        <Grid item xs={3}/>
+                                        <Grid item xs={3} />
                                         <Grid item xs={6}>
                                             <Typography>
                                                 <strong>Name:</strong> {person.getVor_name()}{" "}
                                                 {person.getNach_name()}
                                             </Typography>
                                         </Grid>
-                                        <Grid item xs={3}/>
-                                        <Grid item xs={3}/>
+                                        <Grid item xs={3} />
+                                        <Grid item xs={3} />
                                         <Grid item xs={6}>
                                             <Typography>
                                                 <strong>Email:</strong> {person.getEmail()}
                                             </Typography>
                                         </Grid>
-                                        <Grid item xs={3}/>
-                                        <Grid item xs={3}/>
+                                        <Grid item xs={3} />
+                                        <Grid item xs={3} />
                                         <Grid item xs={6}>
                                             <Typography>
                                                 <strong>Benutzername:</strong> {person.getBenutzer_name()}
                                             </Typography>
-                                            <br/>
-                                            <Divider/>
-                                            <br/>
+                                            <br />
+                                            <Divider />
+                                            <br />
                                         </Grid>
-                                        <Grid item xs={3}/>
+                                        <Grid item xs={3} />
                                         <Grid item xs={12}>
                                             <Button variant="contained" onClick={this.bearbeitenButtonClicked}>
-                                                <EditIcon/>
+                                                <EditIcon />
                                                 &nbsp; Profil bearbeiten
                                             </Button>
                                             &ensp; &ensp;
                                             <Button variant="contained" onClick={this.deleteButtonClicked}>
-                                                <DeleteIcon/>
+                                                <DeleteIcon />
                                                 &nbsp; Profil löschen
                                             </Button>
                                         </Grid>
-                                        <Grid item xs={12}/>
+                                        <Grid item xs={12} />
                                     </Grid>
                                 </Paper>
                             </Grid>
-                        
-                            <Grid item xs={12}/>
+
+                            <Grid item xs={12} />
                             <Grid item xs={12}>
                                 <Paper elevation={3}>
                                     <Grid container spacing={1} xs={12}>
@@ -505,11 +504,11 @@ class Home extends Component {
                                                 Sonderbuchung
                                             </Button>
                                         </Grid>
-                                        <Grid item xs={1}/>
+                                        <Grid item xs={1} />
                                         <Grid item xs={10}>
                                             <TableContainer component={Paper}>
                                                 <Table>
-                                                    <TableHead sx={{backgroundColor: '#dedede'}}>
+                                                    <TableHead sx={{ backgroundColor: '#dedede' }}>
                                                         <TableRow>
                                                             <TableCell align="left">Gesamt Stunden {new Date().getFullYear()}</TableCell>
                                                             <TableCell align="left">Gearbeitete Stunden {new Date().getFullYear()}</TableCell>
@@ -528,12 +527,12 @@ class Home extends Component {
                                                 </Table>
                                             </TableContainer>
                                         </Grid>
-                                        <Grid item xs={1}/>
+                                        <Grid item xs={1} />
                                         <Grid item xs={12}>
                                             <Typography align="center">Um nach deine Stunden in einem bestimmten Monat zu suchen, fülle das Such-Feld aus und klicke den Button.</Typography>
                                         </Grid>
                                         <Grid item align="right" xs={6}>
-                                            <TextField autoFocus  type='text' required margin='normal' id='zeitraum' label='Monat: (yyyy-mm)' value={zeitraum} onChange={this.textFieldValueChange} />
+                                            <TextField autoFocus type='text' required margin='normal' id='zeitraum' label='Monat: (yyyy-mm)' value={zeitraum} onChange={this.textFieldValueChange} />
                                         </Grid>
                                         <Grid item xs={6} align="left"
                                             sx={{
@@ -558,52 +557,52 @@ class Home extends Component {
                                         <Grid item xs={12}>
                                             <Typography align="center"><b>Deine gearbeiteten Stunden im Monat {zeitraum}: </b> {zeitraum_stunden.toFixed(3)}</Typography>
                                         </Grid>
-                                        <Grid item xs={2}/>
-                                    </Grid>           
+                                        <Grid item xs={2} />
+                                    </Grid>
                                 </Paper>
                             </Grid>
-                            <Grid item xs={12}/>
-                                <Grid item xs={12}>
-                                    <Paper>
-                                        <Grid container xs={12} spacing={2}>
-                                            <Grid item xs={12}>
-                                                <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
-                                                    Stempelfunktion
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={2}/>
-                                            <Grid item xs={2}>
-                                                <Button variant="contained" onClick={this.addZeitintervall}>
-                                                    Kommen
-                                                </Button>
-                                            </Grid>
-                                            <Grid item xs={2}>
-                                                <Button variant="outlined" onClick={this.addPause}>
-                                                    Pause
-                                                </Button>
-                                            </Grid>
-                                            <Grid item xs={3}>
-                                                <Button variant="outlined" onClick={this.updatePause}>
-                                                    Pause beenden
-                                                </Button>
-                                            </Grid>
-                                            <Grid item xs={2}>
-                                                <Button variant="contained" onClick={this.updateZeitintervall}>
-                                                    Gehen
-                                                </Button>
-                                            </Grid>
-                                            <Grid item xs={1}/>
-                                            <Grid item xs={12}/>
+                            <Grid item xs={12} />
+                            <Grid item xs={12}>
+                                <Paper>
+                                    <Grid container xs={12} spacing={2}>
+                                        <Grid item xs={12}>
+                                            <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                                                Stempelfunktion
+                                            </Typography>
                                         </Grid>
-                                    </Paper>
-                                </Grid>
-                            <Grid item xs={12}/> 
+                                        <Grid item xs={2} />
+                                        <Grid item xs={2}>
+                                            <Button variant="contained" onClick={this.addZeitintervall}>
+                                                Kommen
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={2}>
+                                            <Button variant="outlined" onClick={this.addPause}>
+                                                Pause
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={3}>
+                                            <Button variant="outlined" onClick={this.updatePause}>
+                                                Pause beenden
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={2}>
+                                            <Button variant="contained" onClick={this.updateZeitintervall}>
+                                                Gehen
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={1} />
+                                        <Grid item xs={12} />
+                                    </Grid>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} />
                         </Grid>
-                        
+
                         <Grid container xs={12} sx={{
                             backgroundColor: '#dedede'
                         }}>
-                            <Grid item xs={12}/>
+                            <Grid item xs={12} />
                             <Grid item xs={2}>
                                 <Typography>Kommen</Typography>
                             </Grid>

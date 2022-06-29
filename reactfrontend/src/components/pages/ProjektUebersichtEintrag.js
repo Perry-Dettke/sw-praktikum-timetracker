@@ -130,11 +130,11 @@ class ProjektUebersichtEintrag extends Component {
             this.setState({
                 showAktivitaetLoeschen: false,
             },
-            () => this.getAktivitaetbyProjektID(),
-            () => this.getErstellerbyID(),
-            () => this.getPersonInProjekt(),
+                () => this.getAktivitaetbyProjektID(),
+                () => this.getErstellerbyID(),
+                () => this.getPersonInProjekt(),
             );
-            
+
         } else {
             this.setState({
                 showAktivitaetLoeschen: false
@@ -156,9 +156,9 @@ class ProjektUebersichtEintrag extends Component {
             this.setState({
                 showProjektLoeschen: false,
             },
-            this.props.getProjekt()
+                this.props.getProjekt()
             );
-            
+
         } else {
             this.setState({
                 showProjektLoeschen: false
@@ -180,7 +180,7 @@ class ProjektUebersichtEintrag extends Component {
             this.setState({
                 showProjektBearbeiten: false
             },
-            () => this.getPersonInProjekt()
+                () => this.getPersonInProjekt()
             );
         } else {
             this.setState({
@@ -199,7 +199,7 @@ class ProjektUebersichtEintrag extends Component {
     render() {
         const { projekt, currentPerson } = this.props;
         const { ersteller, showAktivitaetDialog, showAktivitaetBearbeiten, showAktivitaetLoeschen, showProjektBearbeiten, aktivitaetliste,
-            showProjektLoeschen, currentAktivitaet, personenliste } = this.state; 
+            showProjektLoeschen, currentAktivitaet, personenliste } = this.state;
 
         return (
             aktivitaetliste && personenliste && projekt ?
@@ -220,29 +220,29 @@ class ProjektUebersichtEintrag extends Component {
                                 <AccordionDetails sx={{
                                     backgroundColor: "#eeeeee",
                                 }}>
-                                {currentPerson.getID() == projekt.getProjekterstellerID() ?
-                                    <div>
-                                        <Grid container spacing={2}>
-                                            <Grid item xs={3}>
-                                                <Button variant='outlined' startIcon={<EditIcon />} onClick={() => this.projektBearbeitenClicked(projekt)}>
-                                                    <Typography>Projekt bearbeiten</Typography>
-                                                </Button>
+                                    {currentPerson.getID() == projekt.getProjekterstellerID() ?
+                                        <div>
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={3}>
+                                                    <Button variant='outlined' startIcon={<EditIcon />} onClick={() => this.projektBearbeitenClicked(projekt)}>
+                                                        <Typography>Projekt bearbeiten</Typography>
+                                                    </Button>
+                                                </Grid>
+                                                <br />
+                                                <Grid item xs={3}>
+                                                    <Button variant='outlined' startIcon={<DeleteIcon />} onClick={() => this.projektLoeschenClicked(projekt)}>
+                                                        <Typography>Projekt löschen</Typography>
+                                                    </Button>
+                                                </Grid>
                                             </Grid>
-                                            <br />
-                                            <Grid item xs={3}>
-                                                <Button variant='outlined' startIcon={<DeleteIcon />} onClick={() => this.projektLoeschenClicked(projekt)}>
-                                                    <Typography>Projekt löschen</Typography>
-                                                </Button>
-                                            </Grid>
-                                        </Grid>
-                                    </div>
-                                    : null}
+                                        </div>
+                                        : null}
                                     <br />
                                     <Typography align='left'><b>Auftraggeber: </b>{projekt.getAuftraggeber()}<br /></Typography>
                                     {ersteller ?
                                         <Typography align='left'><b>Ersteller: </b>{ersteller.getVor_name()} {ersteller.getNach_name()}<br /></Typography>
                                         : null}
-                                        <Typography align='left'><b>Zeitraum: </b>{projekt.getStartzeitraum()} - {projekt.getEndzeitraum()}<br /></Typography>
+                                    <Typography align='left'><b>Zeitraum: </b>{projekt.getStartzeitraum()} - {projekt.getEndzeitraum()}<br /></Typography>
                                     <Typography align='left'><b>Teilnehmer: </b></Typography>
                                     <ul>
                                         {personenliste.map(person =>
@@ -250,13 +250,13 @@ class ProjektUebersichtEintrag extends Component {
                                         )}
                                     </ul><br />
                                     {currentPerson.getID() == projekt.getProjekterstellerID() ?
-                                    <div>
-                                    <Grid item xs={3}>
-                                        <Button variant="contained" color="primary" aria-label="add" onClick={this.aktivitaetDialogButtonClicked} startIcon={<AddIcon />}>
-                                            Aktivität hinzufügen</Button>
-                                    </Grid>
-                                    </div>
-                                    : null}
+                                        <div>
+                                            <Grid item xs={3}>
+                                                <Button variant="contained" color="primary" aria-label="add" onClick={this.aktivitaetDialogButtonClicked} startIcon={<AddIcon />}>
+                                                    Aktivität hinzufügen</Button>
+                                            </Grid>
+                                        </div>
+                                        : null}
                                     <br />
                                     <Table>
                                         <TableHead sx={{
@@ -276,20 +276,20 @@ class ProjektUebersichtEintrag extends Component {
                                                         <TableCell><Typography> {aktivitaet.getBezeichnung()}</Typography></TableCell>
                                                         <TableCell><Typography> {aktivitaet.getKapazitaet()}</Typography></TableCell>
                                                         <TableCell>
-                                                        {currentPerson.getID() == projekt.getProjekterstellerID() ?
-                                                            <Tooltip title='Bearbeiten' placement="bottom">
-                                                                <IconButton variant='contained' onClick={() => this.aktivitaetBearbeitenClicked(aktivitaet)}>
-                                                                    <EditIcon />
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                        : null}
+                                                            {currentPerson.getID() == projekt.getProjekterstellerID() ?
+                                                                <Tooltip title='Bearbeiten' placement="bottom">
+                                                                    <IconButton variant='contained' onClick={() => this.aktivitaetBearbeitenClicked(aktivitaet)}>
+                                                                        <EditIcon />
+                                                                    </IconButton>
+                                                                </Tooltip>
+                                                                : null}
                                                         </TableCell>
                                                         <TableCell>
-                                                        {currentPerson.getID() == projekt.getProjekterstellerID() ?
-                                                            <Tooltip title='Löschen' placement="bottom">
-                                                                <IconButton variant="contained" onClick={() => this.aktivitaetLoeschenClicked(aktivitaet)}><DeleteIcon /></IconButton>
-                                                            </Tooltip>
-                                                        : null}
+                                                            {currentPerson.getID() == projekt.getProjekterstellerID() ?
+                                                                <Tooltip title='Löschen' placement="bottom">
+                                                                    <IconButton variant="contained" onClick={() => this.aktivitaetLoeschenClicked(aktivitaet)}><DeleteIcon /></IconButton>
+                                                                </Tooltip>
+                                                                : null}
                                                         </TableCell>
                                                     </TableRow>
                                                 )}
@@ -314,7 +314,7 @@ class ProjektUebersichtEintrag extends Component {
                     }
 
                 </div >
-            : null
+                : null
         );
     }
 }

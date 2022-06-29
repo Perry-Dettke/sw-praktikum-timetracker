@@ -38,21 +38,14 @@ class SignUp extends Component {
             this.setState({ showPersonForm: false });
         }
     }
-    
-
-    
-
-
-
-
 
     render() {
 
         const { classes, currentUser } = this.props;
-        const { person, showPersonForm} = this.state;
+        const { person, showPersonForm } = this.state;
         return (
             <div>
-                { <div>
+                {<div>
                     <Paper variant='outlined' className={classes.root}>
                         <div className={classes.content}>
                             <Typography variant='h6'>
@@ -65,14 +58,14 @@ class SignUp extends Component {
                                     </Button></div>
 
                                 : <div><p>Personendaten erfolgreich gespeichert. (ID: {person.getID()})</p>
-                                  <Button variant='contained' color='primary' onClick={this.props.reloadUser}>
+                                    <Button variant='contained' color='primary' onClick={this.props.reloadUser}>
                                         weiterleiten
-                                </Button></div>}
-                                    
-                                    
+                                    </Button></div>}
+
+
                         </div>
-                    </Paper>  
-                    <PersonForm show={showPersonForm} person={person} onClose={this.closePersonForm} currentUser={currentUser} />   
+                    </Paper>
+                    <PersonForm show={showPersonForm} person={person} onClose={this.closePersonForm} currentUser={currentUser} />
                 </div>}
             </div>
         );
@@ -96,4 +89,4 @@ SignUp.propTypes = {
 }
 
 export default withStyles(styles)(SignUp);
- 
+

@@ -47,6 +47,7 @@ class ProjektBearbeiten extends Component {
         })
     }
 
+    // alle Personen auslesen
     getPersonen = () => {
         TimetrackerAPI.getAPI().getPerson().then((personenBOs) => {
             let allePersonen = []
@@ -114,10 +115,12 @@ class ProjektBearbeiten extends Component {
         });
     }
 
+    // Start bearbeiten
     handleChangeStart = (e) => {
         this.setState({ startzeitraum: e });
     }
 
+    // Ende bearbeiten
     handleChangeEnde = (e) => {
         this.setState({ endzeitraum: e });
     }

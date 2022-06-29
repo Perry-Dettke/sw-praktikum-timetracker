@@ -17,8 +17,6 @@ from server.bo.Person import Person
 from server.bo.Projekt import Projekt
 from server.bo.Zeitintervall import Zeitintervall
 
-'''Außerdem nutzen wir einen selbstgeschriebenen Decorator, der die Authentifikation übernimmt'''
-#from SecurityDecorator import secured
 
 """Hier wird Flask instanziert"""
 app = Flask(__name__)
@@ -135,7 +133,6 @@ zeitintervall = api.inherit('Zeitintervall', bo, {
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class AktivitaetOperations(Resource):
     @timetracker.marshal_with(aktivitaet)
-    #@secured
     def get(self):
         """Auslesen aller Aktivitaet-Objekte
         """
@@ -145,7 +142,6 @@ class AktivitaetOperations(Resource):
 
     @timetracker.marshal_list_with(aktivitaet, code=200)
     @timetracker.expect(aktivitaet)
-    #@secured
     def post(self):
         """Anlegen eines neuen Aktivitaet-Objekts.
         **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
@@ -188,7 +184,6 @@ class AktivitaetIDOperations(Resource):
 
     @timetracker.marshal_with(aktivitaet, code=200)
     @timetracker.expect(aktivitaet)  # Wir erwarten ein Aktivitaet-Objekt von Client-Seite.
-    #@secured
     def put(self, id):
         """Update eines bestimmten Aktivitaet-Objekts."""
         adm = TimetrackerAdministration()
@@ -240,7 +235,6 @@ class AktivitaetbyProjektOperations(Resource):
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ArbeitszeitkontoOperations(Resource):
     @timetracker.marshal_with(arbeitszeitkonto)
-    #@secured
     def get(self):
         """Auslesen aller Arbeitszeitkonto-Objekte
         """
@@ -250,7 +244,6 @@ class ArbeitszeitkontoOperations(Resource):
 
     @timetracker.marshal_list_with(arbeitszeitkonto, code=200)
     @timetracker.expect(arbeitszeitkonto)
-    #@secured
     def post(self):
         """Anlegen eines neuen Arbeitszeitkonto-Objekts.
         **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
@@ -293,7 +286,6 @@ class ArbeitszeitkontoIDOperations(Resource):
 
     @timetracker.marshal_with(arbeitszeitkonto, code=200)
     @timetracker.expect(arbeitszeitkonto) 
-    #@secured
     def put(self, id):
         """Update eines bestimmten Arbeitszeitkonto-Objekts."""
         adm = TimetrackerAdministration()
@@ -325,7 +317,6 @@ class ArbeitszeitkontoIDOperations(Resource):
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class BuchungOperations(Resource):
     @timetracker.marshal_with(buchung)
-    #@secured
     def get(self):
         """Auslesen aller Buchung-Objekte
         """
@@ -335,7 +326,6 @@ class BuchungOperations(Resource):
 
     @timetracker.marshal_list_with(buchung, code=200)
     @timetracker.expect(buchung)
-    #@secured
     def post(self):
         """Anlegen eines neuen Buchung-Objekts.
         **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
@@ -378,7 +368,6 @@ class BuchungIDOperations(Resource):
 
     @timetracker.marshal_with(buchung, code=200)
     @timetracker.expect(buchung)  # Wir erwarten ein Buchung-Objekt von Client-Seite.
-    #@secured
     def put(self, id):
         """Update eines bestimmten Buchung-Objekts."""
         adm = TimetrackerAdministration()
@@ -443,7 +432,6 @@ class BuchungByAktivitaetIDOperations(Resource):
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class EreignisOperations(Resource):
     @timetracker.marshal_with(ereignis)
-    #@secured
     def get(self):
         """Auslesen aller Ereignis-Objekte
         """
@@ -453,7 +441,6 @@ class EreignisOperations(Resource):
 
     @timetracker.marshal_list_with(ereignis, code=200)
     @timetracker.expect(ereignis)
-    #@secured
     def post(self):
         """Anlegen eines neuen Ereignis-Objekts.
         **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
@@ -496,7 +483,6 @@ class EreignisIDOperations(Resource):
 
     @timetracker.marshal_with(ereignis, code=200)
     @timetracker.expect(ereignis)  # Wir erwarten ein Ereignis-Objekt von Client-Seite.
-    #@secured
     def put(self, id):
         """Update eines bestimmten Ereignis-Objekts."""
         adm = TimetrackerAdministration()
@@ -529,7 +515,6 @@ class EreignisIDOperations(Resource):
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class PersonOperations(Resource):
     @timetracker.marshal_with(person)
-    #@secured
     def get(self):
         """Auslesen aller Person-Objekte
         """
@@ -539,7 +524,6 @@ class PersonOperations(Resource):
 
     @timetracker.marshal_list_with(person, code=200)
     @timetracker.expect(person)
-    #@secured
     def post(self):
         """Anlegen eines neuen Person-Objekts.
         **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
@@ -582,7 +566,6 @@ class PersonIDOperations(Resource):
 
     @timetracker.marshal_with(person, code=200)
     @timetracker.expect(person)  # Wir erwarten ein Person-Objekt von Client-Seite.
-    #@secured
     def put(self, id):
         """Update eines bestimmten Person-Objekts."""
         adm = TimetrackerAdministration()
@@ -669,7 +652,6 @@ class PersonGoogleOperations(Resource):
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ProjektOperations(Resource):
     @timetracker.marshal_with(projekt)
-    #@secured
     def get(self):
         """Auslesen aller Projekt-Objekte
         """
@@ -679,7 +661,6 @@ class ProjektOperations(Resource):
 
     @timetracker.marshal_list_with(projekt, code=200)
     @timetracker.expect(projekt)
-    #@secured
     def post(self):
         """Anlegen eines neuen Projekt-Objekts.
         **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
@@ -724,7 +705,6 @@ class ProjektIDOperations(Resource):
 
     @timetracker.marshal_with(projekt, code=200)
     @timetracker.expect(projekt)  # Wir erwarten ein Projekt-Objekt von Client-Seite.
-    #@secured
     def put(self, id):
         """Update eines bestimmten Projekt-Objekts."""
         adm = TimetrackerAdministration()
@@ -773,7 +753,6 @@ class ProjektbyProjekterstellerIDOperations(Resource):
 @timetracker.param('projekt_id', 'Die ID des Projekt-Objekts.')
 class ProjektPersonOperations(Resource):
     @timetracker.marshal_list_with(projekt, code=200)
-    #@secured
     def get(self, person_id):
         """Auslesen aller Projekte einer Person.
         """
@@ -787,7 +766,6 @@ class ProjektPersonOperations(Resource):
 @timetracker.param('person_id', 'Die ID des Person-Objekts.')
 class PersonenInProjektOperations(Resource):
     @timetracker.marshal_list_with(person, code=200)
-    #@secured
     def get(self, projekt_id):
         """Auslesen aller Teilnehmer eines Projekts
         """
@@ -796,7 +774,6 @@ class PersonenInProjektOperations(Resource):
         return personenliste  
 
     @timetracker.marshal_list_with(projekt, code=200)
-    #@secured
     def post(self, projekt_id):
         """Anlegen eines neuen Projekt-Person-Objekts.
         """
@@ -808,7 +785,6 @@ class PersonenInProjektOperations(Resource):
             return '' , 500
 
     @timetracker.marshal_list_with(projekt, code=200)
-    #@secured
     def put(self, projekt_id):
         """Bearbeiten eines Projekt-Person-Objekts.
         """
@@ -837,7 +813,6 @@ class PersonenInProjektOperations(Resource):
 @timetracker.param('projekt_id', 'Die ID des Projekt-Objekts.')
 class ProjektPersonOperations(Resource):
     @timetracker.marshal_list_with(person, code=200)
-    #@secured
     def get(self, projekt_id, start, ende):
         """Auslesen aller Teilnehmer eines Projekts
         """
@@ -849,7 +824,6 @@ class ProjektPersonOperations(Resource):
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ProjektByPersonOperations(Resource):
     @timetracker.marshal_list_with(projekt, code=200)
-    #@secured
     def get(self, person_id):
         """Auslesen aller Projekte einer Person
         """
@@ -867,7 +841,6 @@ class ProjektByPersonOperations(Resource):
 @timetracker.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ZeitintervallOperations(Resource):
     @timetracker.marshal_with(zeitintervall)
-    #@secured
     def get(self):
         """Auslesen aller Zeitintervall-Objekte
         """
@@ -877,7 +850,6 @@ class ZeitintervallOperations(Resource):
 
     @timetracker.marshal_list_with(zeitintervall, code=200)
     @timetracker.expect(zeitintervall)
-    #@secured
     def post(self):
         """Anlegen eines neuen Zeitintervall-Objekts.
         **ACHTUNG:** Wir fassen die vom Client gesendeten Daten als Vorschlag auf.
@@ -920,7 +892,6 @@ class ZeitintervallIDOperations(Resource):
 
     @timetracker.marshal_with(zeitintervall, code=200)
     @timetracker.expect(zeitintervall)  # Wir erwarten ein Zeitintervall-Objekt von Client-Seite.
-    #@secured
     def put(self, id):
         """Update eines bestimmten Zeitintervall-Objekts."""
         adm = TimetrackerAdministration()

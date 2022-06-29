@@ -1,11 +1,3 @@
-from .bo.Aktivitaet import Aktivitaet
-from .bo.Arbeitszeitkonto import Arbeitszeitkonto
-from .bo.Buchung import Buchung
-from .bo.Ereignis import Ereignis
-from .bo.Person import Person
-from .bo.Projekt import Projekt
-from .bo.Zeitintervall import Zeitintervall
-
 from .db.AktivitaetMapper import AktivitaetMapper
 from .db.ArbeitszeitkontoMapper import ArbeitszeitkontoMapper
 from .db.BuchungMapper import BuchungMapper

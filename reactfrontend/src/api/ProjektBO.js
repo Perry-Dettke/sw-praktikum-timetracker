@@ -3,7 +3,7 @@ import BusinessObject from './BusinessObject';
 
 export default class ProjektBO extends BusinessObject {
 
-    constructor(bezeichnung, auftraggeber, startzeitraum, endzeitraum, projektersteller_id){
+    constructor(bezeichnung, auftraggeber, startzeitraum, endzeitraum, projektersteller_id) {
         super();
         this.bezeichnung = bezeichnung;
         this.auftraggeber = auftraggeber;
@@ -12,43 +12,43 @@ export default class ProjektBO extends BusinessObject {
         this.projektersteller_id = projektersteller_id;
     }
     // Bezeichnung setzen
-    setBezeichnung(bezeichnung){
+    setBezeichnung(bezeichnung) {
         this.bezeichnung = bezeichnung;
     }
     // Bezeichnung auslesen
-    getBezeichnung(){
+    getBezeichnung() {
         return this.bezeichnung;
     }
     // Auftraggeber setzen
-    setAuftraggeber(auftraggeber){
+    setAuftraggeber(auftraggeber) {
         this.auftraggeber = auftraggeber;
     }
     // Auftraggeber auslesen
-    getAuftraggeber(){
+    getAuftraggeber() {
         return this.auftraggeber;
     }
     // Startzeitraum  setzen
-    setStartzeitraum(startzeitraum){
+    setStartzeitraum(startzeitraum) {
         this.startzeitraum = startzeitraum;
     }
     // Startzeitraum ID auslesen
-    getStartzeitraum(){
+    getStartzeitraum() {
         return this.startzeitraum;
     }
     // Endzeitraum  setzen
-    setEndzeitraum(endzeitraum){
+    setEndzeitraum(endzeitraum) {
         this.endzeitraum = endzeitraum;
     }
     // Endzeitraum ID auslesen
-    getEndzeitraum(){
+    getEndzeitraum() {
         return this.endzeitraum;
     }
     // Projektersteller ID setzen
-    setProjekterstellerID(projektersteller_id){
+    setProjekterstellerID(projektersteller_id) {
         this.projektersteller_id = projektersteller_id;
     }
     // Projektersteller ID auslesen
-    getProjekterstellerID(){
+    getProjekterstellerID() {
         return this.projektersteller_id;
     }
 

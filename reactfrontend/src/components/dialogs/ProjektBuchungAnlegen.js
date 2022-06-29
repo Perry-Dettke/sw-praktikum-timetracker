@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Stack, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from "@mui/material/InputLabel";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -10,10 +9,7 @@ import DateTimePicker from '@mui/lab/DateTimePicker';
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuItem } from '@mui/material';
-import { TableCell } from '@material-ui/core';
 import TimetrackerAPI from "../../api/TimetrackerAPI";
-import ProjektBO from '../../api/ProjektBO'
-import { EventBusyRounded } from '@mui/icons-material';
 import BuchungBO from "../../api/BuchungBO";
 
 /**
@@ -61,21 +57,22 @@ class ProjektBuchungAnlegen extends Component {
 
   //Erstellt eine Buchung, wird mit dem Button aufgerufen
   addBuchung = () => {
-    if( this.dateSplit() > this.state.projekt.getStartzeitraum() && this.dateSplit() < this.state.projekt.getEndzeitraum()){
-    let newBuchung = new BuchungBO()
-    newBuchung.setID(0) // bekommt im Backend die max id
-    newBuchung.setDatum("2000-01-01") // bekommt im Backend das aktuelle Datum
-    newBuchung.setStunden(this.msToTime((this.state.ende.getTime() - this.state.start.getTime())))
-    newBuchung.setPerson_id(this.props.currentPerson.getID()) // muss id vom current user rein
-    newBuchung.setAktivitaet_id(this.state.aktivitaet_id)
-    TimetrackerAPI.getAPI().addBuchung(newBuchung).then(buchung => {
-      this.setState(this.initialState);
-      this.props.onClose(buchung);
-      this.props.getBuchungbyPersonID();
-      this.getProjektByPerson()
-    })}
-    else{
-      window.alert("Buchung nicht möglich!\nDie Projektlaufzeit hat noch nicht begonnen oder ist breits abgelaufen.\nDie Projektlaufzeit ist vom "  + this.state.projekt.getStartzeitraum() + " - " + this.state.projekt.getEndzeitraum() +".")
+    if (this.dateSplit() > this.state.projekt.getStartzeitraum() && this.dateSplit() < this.state.projekt.getEndzeitraum()) {
+      let newBuchung = new BuchungBO()
+      newBuchung.setID(0) // bekommt im Backend die max id
+      newBuchung.setDatum("2000-01-01") // bekommt im Backend das aktuelle Datum
+      newBuchung.setStunden(this.msToTime((this.state.ende.getTime() - this.state.start.getTime())))
+      newBuchung.setPerson_id(this.props.currentPerson.getID()) // muss id vom current user rein
+      newBuchung.setAktivitaet_id(this.state.aktivitaet_id)
+      TimetrackerAPI.getAPI().addBuchung(newBuchung).then(buchung => {
+        this.setState(this.initialState);
+        this.props.onClose(buchung);
+        this.props.getBuchungbyPersonID();
+        this.getProjektByPerson()
+      })
+    }
+    else {
+      window.alert("Buchung nicht möglich!\nDie Projektlaufzeit hat noch nicht begonnen oder ist breits abgelaufen.\nDie Projektlaufzeit ist vom " + this.state.projekt.getStartzeitraum() + " - " + this.state.projekt.getEndzeitraum() + ".")
     }
   }
 
@@ -89,7 +86,7 @@ class ProjektBuchungAnlegen extends Component {
     let year = String(dateliste[5] + dateliste[6] + dateliste[7] + dateliste[8])
     let time = String(dateliste[10] + dateliste[11] + dateliste[12] + dateliste[13] + dateliste[14] + dateliste[15] + dateliste[16] + dateliste[17])
     return year + "-" + month + "-" + day + " " + time
-}
+  }
 
   // Dialog schließen
   handleClose = () => {
@@ -124,10 +121,10 @@ class ProjektBuchungAnlegen extends Component {
   // Millisekunden werden in Stunden umgerechnet
   msToTime = (duration) => {
     var minutes = Math.floor(duration / (1000 * 60) % 60),
-    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+      hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
     hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
-    return parseFloat(hours + "." + ((minutes)/6) * 10)
+    return parseFloat(hours + "." + ((minutes) / 6) * 10)
   }
 
   // Textfelder ändern
