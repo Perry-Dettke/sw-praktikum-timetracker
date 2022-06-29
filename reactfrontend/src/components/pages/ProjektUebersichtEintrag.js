@@ -132,7 +132,7 @@ class ProjektUebersichtEintrag extends Component {
             },
             () => this.getAktivitaetbyProjektID(),
             () => this.getErstellerbyID(),
-            () => this.getPersonInProjekt()
+            () => this.getPersonInProjekt(),
             );
             
         } else {
@@ -141,6 +141,7 @@ class ProjektUebersichtEintrag extends Component {
             });
         }
     }
+
 
     //Wird aufgerufen, wenn der Delete Projekt Button geklickt wird
     projektLoeschenClicked = () => {
