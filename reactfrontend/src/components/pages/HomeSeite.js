@@ -578,12 +578,12 @@ class Home extends Component {
                                                 </Button>
                                             </Grid>
                                             <Grid item xs={2}>
-                                                <Button variant="contained" onClick={this.addPause}>
+                                                <Button variant="outlined" onClick={this.addPause}>
                                                     Pause
                                                 </Button>
                                             </Grid>
                                             <Grid item xs={3}>
-                                                <Button variant="contained" onClick={this.updatePause}>
+                                                <Button variant="outlined" onClick={this.updatePause}>
                                                     Pause beenden
                                                 </Button>
                                             </Grid>
