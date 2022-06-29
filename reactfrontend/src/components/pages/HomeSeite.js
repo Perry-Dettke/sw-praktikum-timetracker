@@ -438,155 +438,168 @@ class Home extends Component {
             <div><LoadingProgress show={authLoading} />
                 {person && arbeitszeitkonto ?
                     <div>
-                        <Box
-                            sx={{
-                                float: "left",
-                                display: "flex",
-                                flexWrap: "wrap",
-                                "& > :not(style)": {
-                                    m: 1,
-                                    width: 500,
-                                    height: 425,
-                                    alignItems: "center",
-                                },
-                            }}
-                        >
-                            <Paper elevation={3}>
-                                <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
-                                    Mein Profil
-                                </Typography>
-                                <br/>
-                                <Typography>
-                                    <strong>Name:</strong> {person.getVor_name()}{" "}
-                                    {person.getNach_name()}
-                                </Typography>
-                                <br/>
-                                <Typography>
-                                    <strong>Email:</strong> {person.getEmail()}
-                                </Typography>
-                                <br/>
-                                <Typography>
-                                    <strong>Benutzername:</strong> {person.getBenutzer_name()}
-                                </Typography>
-                                <br/>
-                                <Divider/>
-                                <br/>
-                                <Button variant="contained" onClick={this.bearbeitenButtonClicked}>
-                                    <EditIcon/>
-                                    &nbsp; Profil bearbeiten
-                                </Button>
-                                &ensp; &ensp;
-                                <Button variant="contained" onClick={this.deleteButtonClicked}>
-                                    <DeleteIcon/>
-                                    &nbsp; Profil löschen
-                                </Button>
-                            </Paper>
-                        </Box>
-                        <Box sx={{
-                            float: "right",
-                            display: "flex",
-                            flexWrap: "wrap",
-                            "& > :not(style)": {
-                                m: 1,
-                                width: 825,
-                                height: 425,
-                                alignItems: "center",
-                            },
-                        }}>
-                            <Paper elevation={3}>
-                                <Grid container spacing={1} xs={12}>
-                                    <Grid item xs={12}>
+                        <Grid container xs={12} spacing={2} alignItems="center">
+                            <Grid item xs={12}/>
+                            <Grid item xs={12}/>
+                            <Grid item xs={12}>
+                                <Paper elevation={3}>
+                                    <Grid container xs={12} spacing={2}>
+                                        <Grid item xs={12}>
                                         <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
-                                            Mein Arbeitszeitkonto
+                                            Mein Profil
                                         </Typography>
+                                        <br/>
+                                        </Grid>
+                                        <Grid item xs={3}/>
+                                        <Grid item xs={6}>
+                                            <Typography>
+                                                <strong>Name:</strong> {person.getVor_name()}{" "}
+                                                {person.getNach_name()}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={3}/>
+                                        <Grid item xs={3}/>
+                                        <Grid item xs={6}>
+                                            <Typography>
+                                                <strong>Email:</strong> {person.getEmail()}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={3}/>
+                                        <Grid item xs={3}/>
+                                        <Grid item xs={6}>
+                                            <Typography>
+                                                <strong>Benutzername:</strong> {person.getBenutzer_name()}
+                                            </Typography>
+                                            <br/>
+                                            <Divider/>
+                                            <br/>
+                                        </Grid>
+                                        <Grid item xs={3}/>
+                                        <Grid item xs={12}>
+                                            <Button variant="contained" onClick={this.bearbeitenButtonClicked}>
+                                                <EditIcon/>
+                                                &nbsp; Profil bearbeiten
+                                            </Button>
+                                            &ensp; &ensp;
+                                            <Button variant="contained" onClick={this.deleteButtonClicked}>
+                                                <DeleteIcon/>
+                                                &nbsp; Profil löschen
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={12}/>
                                     </Grid>
-                                    <Grid item xs={2}>
-                                        <Button variant="contained" onClick={this.addZeitintervall}>
-                                            Kommen
-                                        </Button>
-                                    </Grid>
-                                    <Grid item xs={2}>
-                                        <Button variant="contained" onClick={this.addPause}>
-                                            Pause
-                                        </Button>
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        <Button variant="contained" onClick={this.updatePause}>
-                                            Pause beenden
-                                        </Button>
-                                    </Grid>
-                                    <Grid item xs={2}>
-                                        <Button variant="contained" onClick={this.updateZeitintervall}>
-                                            Gehen
-                                        </Button>
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        <Button variant="contained" onClick={this.sonderBuchungAnlegenButtonClicked}>
-                                            Sonderbuchung
-                                        </Button>
-                                    </Grid>
-                                    <Grid item xs={1}/>
-                                    <Grid item xs={10}>
-                                        <TableContainer component={Paper}>
-                                            <Table>
-                                                <TableHead sx={{backgroundColor: '#dedede'}}>
-                                                    <TableRow>
-                                                        <TableCell align="left">Gesamt Stunden {new Date().getFullYear()}</TableCell>
-                                                        <TableCell align="left">Gearbeitete Stunden {new Date().getFullYear()}</TableCell>
-                                                        <TableCell align="left">Urlaubstage {new Date().getFullYear()}</TableCell>
-                                                        <TableCell align="left">Krankheitstage {new Date().getFullYear()}</TableCell>
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    <TableRow>
-                                                        <TableCell align="center">1680</TableCell>
-                                                        <TableCell align="center">{arbeitszeitkonto.getGesamtstunden().toFixed(3)}</TableCell>
-                                                        <TableCell align="center">{arbeitszeitkonto.getUrlaubstage()}</TableCell>
-                                                        <TableCell align="center">{arbeitszeitkonto.getKrankheitstage()}</TableCell>
-                                                    </TableRow>
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                    </Grid>
-                                    <Grid item xs={1}/>
-                                    <Grid item xs={1}/>
-                                    <Grid item xs={10}>
-                                        <Typography align="left">Um nach deine Stunden in einem bestimmten Monat zu suchen, fülle das Such-Feld aus und klicke den Button.</Typography>
-                                    </Grid>
-                                    <Grid item xs={2}/>
-                                    <Grid item xs={4}>
-                                        <TextField autoFocus type='text' required margin='normal' id='zeitraum' label='Monat: (yyyy-mm)' value={zeitraum} onChange={this.textFieldValueChange} />
-                                    </Grid>
-                                    <Grid item xs={4}
-                                        sx={{
-                                            height: 75,
-                                            marginTop: 2,
-                                        }}>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            aria-label="add"
-                                            fullWidth
-                                            onClick={this.zeitraumClicked}
-                                            startIcon={<AccessTimeIcon />}
+                                </Paper>
+                            </Grid>
+                        
+                            <Grid item xs={12}/>
+                            <Grid item xs={12}>
+                                <Paper elevation={3}>
+                                    <Grid container spacing={1} xs={12}>
+                                        <Grid item xs={12}>
+                                            <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                                                Mein Arbeitszeitkonto
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Button variant="contained" onClick={this.sonderBuchungAnlegenButtonClicked}>
+                                                Sonderbuchung
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={1}/>
+                                        <Grid item xs={10}>
+                                            <TableContainer component={Paper}>
+                                                <Table>
+                                                    <TableHead sx={{backgroundColor: '#dedede'}}>
+                                                        <TableRow>
+                                                            <TableCell align="left">Gesamt Stunden {new Date().getFullYear()}</TableCell>
+                                                            <TableCell align="left">Gearbeitete Stunden {new Date().getFullYear()}</TableCell>
+                                                            <TableCell align="left">Urlaubstage {new Date().getFullYear()}</TableCell>
+                                                            <TableCell align="left">Krankheitstage {new Date().getFullYear()}</TableCell>
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody>
+                                                        <TableRow>
+                                                            <TableCell align="center">1680</TableCell>
+                                                            <TableCell align="center">{arbeitszeitkonto.getGesamtstunden().toFixed(3)}</TableCell>
+                                                            <TableCell align="center">{arbeitszeitkonto.getUrlaubstage()}</TableCell>
+                                                            <TableCell align="center">{arbeitszeitkonto.getKrankheitstage()}</TableCell>
+                                                        </TableRow>
+                                                    </TableBody>
+                                                </Table>
+                                            </TableContainer>
+                                        </Grid>
+                                        <Grid item xs={1}/>
+                                        <Grid item xs={12}>
+                                            <Typography align="center">Um nach deine Stunden in einem bestimmten Monat zu suchen, fülle das Such-Feld aus und klicke den Button.</Typography>
+                                        </Grid>
+                                        <Grid item align="right" xs={6}>
+                                            <TextField autoFocus  type='text' required margin='normal' id='zeitraum' label='Monat: (yyyy-mm)' value={zeitraum} onChange={this.textFieldValueChange} />
+                                        </Grid>
+                                        <Grid item xs={6} align="left"
                                             sx={{
-                                                height: 50,
-                                                width: 250,
-                                            }}
-                                        >
-                                            Zeitraum suchen
-                                        </Button>
-                                    </Grid>
-                                    <Grid item xs={2}/>
-                                    <Grid item xs={2}/>
-                                    <Grid item xs={10}>
-                                        <Typography align="left"><b>Deine gearbeiteten Stunden im Monat {zeitraum}: </b> {zeitraum_stunden.toFixed(3)}</Typography>
-                                    </Grid>
-                                    <Grid item xs={2}/>
-                                </Grid>           
-                            </Paper> 
-                        </Box>
-
+                                                height: 75,
+                                                marginTop: 2,
+                                            }}>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                aria-label="add"
+                                                fullWidth
+                                                onClick={this.zeitraumClicked}
+                                                startIcon={<AccessTimeIcon />}
+                                                sx={{
+                                                    height: 50,
+                                                    width: 250,
+                                                }}
+                                            >
+                                                Zeitraum suchen
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Typography align="center"><b>Deine gearbeiteten Stunden im Monat {zeitraum}: </b> {zeitraum_stunden.toFixed(3)}</Typography>
+                                        </Grid>
+                                        <Grid item xs={2}/>
+                                    </Grid>           
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12}/>
+                                <Grid item xs={12}>
+                                    <Paper>
+                                        <Grid container xs={12} spacing={2}>
+                                            <Grid item xs={12}>
+                                                <Typography variant='h5' component='h1' align='center' color='#0098da' fontFamily='Courier'>
+                                                    Stempelfunktion
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={2}/>
+                                            <Grid item xs={2}>
+                                                <Button variant="contained" onClick={this.addZeitintervall}>
+                                                    Kommen
+                                                </Button>
+                                            </Grid>
+                                            <Grid item xs={2}>
+                                                <Button variant="contained" onClick={this.addPause}>
+                                                    Pause
+                                                </Button>
+                                            </Grid>
+                                            <Grid item xs={3}>
+                                                <Button variant="contained" onClick={this.updatePause}>
+                                                    Pause beenden
+                                                </Button>
+                                            </Grid>
+                                            <Grid item xs={2}>
+                                                <Button variant="contained" onClick={this.updateZeitintervall}>
+                                                    Gehen
+                                                </Button>
+                                            </Grid>
+                                            <Grid item xs={1}/>
+                                            <Grid item xs={12}/>
+                                        </Grid>
+                                    </Paper>
+                                </Grid>
+                            <Grid item xs={12}/> 
+                        </Grid>
+                        
                         <Grid container xs={12} sx={{
                             backgroundColor: '#dedede'
                         }}>
