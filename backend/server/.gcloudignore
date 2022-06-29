@@ -1,0 +1,19 @@
+# this file specifies, which files should not be uploaded to the google cloud
+.gcloudignore
+
+.git
+.gitignore
+
+# Ignore Markdown Files
+*.md
+
+# Ignore some development specific directories
+mysql/
+docs/
+reactfrontend/
+
+# Python pycache:
+__pycache__/
+
+# Ignored by the build system
+/setup.cfg
