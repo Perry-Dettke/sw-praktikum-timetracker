@@ -8,7 +8,7 @@ class Arbeitszeitkonto(bo.BusinessObjekt):
         # Definieren der Attribute, der Klasse Arbeitszeitkonto
         super().__init__()
         self._gesamtstunden = 0.0
-        self._urlaubstage = round(((12- int(datetime.datetime.now().strftime("%m"))) * 2.5),0)
+        self._urlaubstage = round(((13- int(datetime.datetime.now().strftime("%m"))) * 2.5),0)
         self._krankheitstage = 0
 
 

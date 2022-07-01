@@ -41,7 +41,7 @@ class ZeitintervallBearbeiten extends Component {
         zeitintervall.setStart(this.state.start)
         zeitintervall.setEnde(this.state.ende)
         let dauer = new Date(this.state.ende).getTime() - new Date(this.state.start).getTime()
-        zeitintervall.setDauer(this.msToTime(dauer))
+        zeitintervall.setDauer(this.msToTime(dauer).toFixed(3))
         TimetrackerAPI.getAPI().updateZeitintervall(zeitintervall).then(zeitintervall => {
             // this.props.getZeitintervallbyPersonID()
             this.setState(this.initialState);

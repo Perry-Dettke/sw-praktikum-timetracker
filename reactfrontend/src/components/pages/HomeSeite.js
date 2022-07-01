@@ -307,12 +307,22 @@ class Home extends Component {
     dateSplit = () => {
         let newDate = new Date()
         let date = newDate.toLocaleDateString() + " " + newDate.toLocaleTimeString()
+        if(date.length === 17){
         let dateliste = date.split('')
-        let day = String(dateliste[0] + dateliste[1])
-        let month = "0" + String(dateliste[3])
-        let year = String(dateliste[5] + dateliste[6] + dateliste[7] + dateliste[8])
-        let time = String(dateliste[10] + dateliste[11] + dateliste[12] + dateliste[13] + dateliste[14] + dateliste[15] + dateliste[16] + dateliste[17])
+        let day = String(0 + dateliste[0])
+        let month = "0" + String(dateliste[2])
+        let year = String(dateliste[4] + dateliste[5] + dateliste[6] + dateliste[7])
+        let time = String(dateliste[9] + dateliste[10] + dateliste[11] + dateliste[12] + dateliste[13] + dateliste[14] + dateliste[15] + dateliste[16])
         return year + "-" + month + "-" + day + " " + time
+        }
+        else{
+            let dateliste = date.split('')
+            let day = String(dateliste[0] + dateliste[1])
+            let month = "0" + String(dateliste[3])
+            let year = String(dateliste[5] + dateliste[6] + dateliste[7] + dateliste[8])
+            let time = String(dateliste[10] + dateliste[11] + dateliste[12] + dateliste[13] + dateliste[14] + dateliste[15] + dateliste[16] + dateliste[17])
+            return year + "-" + month + "-" + day + " " + time
+        }
     }
 
     startDatumSplitten = () => {
